@@ -24,24 +24,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
  * 目前对于空字符串的约定：当从excel取出来的值是""时，执行往数据库插入数据时，需要加个判断，如果=="",则拼接sql可以处理成字段=''
  */
 public class ExcelUtils {
-	public static void main(String[] args) {
-		List<Map<String,String>> data = getExcelRecords("D:/教师信息表.xls",0 );
-		int cnt=0;
-		for(Map<String,String> row  : data){
-			
-			cnt++;
-			if(cnt == 1){
-				for(String column : row.keySet()){
-					System.out.print(column+"\t");
-				}
-				System.out.println();
-			}
-			for(String column : row.keySet()){
-				System.out.print(row.get(column)+"\t");
-			}
-			System.out.println();
-		}
-	}
 	/*
 	 * 获取excel File
 	 * return java.io.file
@@ -66,22 +48,22 @@ public class ExcelUtils {
 		if(sheetName==null){
 			throw new RuntimeException("标签页名称不能为空！");
 		}
-		return getExcelRecords(excelDir, sheetName, -1);
+		return getExcelRecords(excelDir, sheetName, -1,0);
 	}
 	/*
 	 * 获取指定标签页索引的数据
 	 */
-	public static List<Map<String,String>> getExcelRecords(String excelDir,int sheetIndex){
+	public static List<Map<String,String>> getExcelRecords(String excelDir,int sheetIndex,int titleIndex){
 		if(sheetIndex<0){
 			throw new RuntimeException("指定标签页索引不合法，请输入非负数！");
 		}
-		return getExcelRecords(excelDir, null, sheetIndex);
+		return getExcelRecords(excelDir, null, sheetIndex,titleIndex);
 	}
 	/*
 	 * 获取指定excel文件、指定标签页（标签页名称、标签页索引）的内容，返回值格式：List<List<Object>>
 	 * 入参excel_file格式：bpm\\test1.xls,bsp\\test2.xls
 	 */
-	private static List<Map<String,String>> getExcelRecords(String excelDir,String sheetName,int sheetIndex){
+	private static List<Map<String,String>> getExcelRecords(String excelDir,String sheetName,int sheetIndex,int titleIndex){
 
 		File excelFile = getExcelFile(excelDir);
 		List<Map<String,String>> recordList = new ArrayList<Map<String,String>>();
@@ -124,11 +106,11 @@ public class ExcelUtils {
 		}
 
 		//不为空的单元格数  ，第一行是标题列
-		HSSFRow keyRow = sheet.getRow(0);
+		HSSFRow keyRow = sheet.getRow(titleIndex);
 		int cellNumber = keyRow.getPhysicalNumberOfCells();
 
 		//循环遍历，第一行是标题，所以从 1 开始遍历（0表示第一行，1表示第二行）
-		for (int r = 1; r < rows; r++) {
+		for (int r = titleIndex+1; r < rows; r++) {
 			Map<String,String> record = new LinkedHashMap<String,String>();//使用HashMap的话，存进去的顺序与取出来的顺序是不一致的，此处需要使用LinkedHashMap
 			HSSFRow row = sheet.getRow(r);
 			String value = null;
@@ -302,7 +284,7 @@ public class ExcelUtils {
 		HSSFWorkbook workbook=null;
 		try {
 			workbook = new HSSFWorkbook(new FileInputStream(excelFile));
-			HSSFRow row = workbook.getSheetAt(sheetIndex).getRow(0);//第一行（row 0）是标题列
+			HSSFRow row = workbook.getSheetAt(sheetIndex).getRow(rowIndex);//第一行（row 0）是标题列
 			
 			if(row != null){
 				for( int i= 0;i<row.getPhysicalNumberOfCells();i++){

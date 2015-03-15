@@ -6,18 +6,25 @@
 <!-- 
 	<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
 	 -->
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	 
 <meta name="renderer" content="webkit">
 <meta name="viewport" content="width=device-width,initial-scal=1">
-<script src="${pageContext.request.contextPath}/js/html5shiv.js"></script>
-<!-- 
-      <script src="${pageContext.request.contextPath}/js/respond.src.js"></script>
-       -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
+  
 <link rel="stylesheet"
 	href="http://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
 <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
 <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+
+<!--[if lte IE 9]>
+<script src="${pageContext.request.contextPath}/js/html5shiv.js"></script>
+<script src="${pageContext.request.contextPath}/js/respond.min.js"></script>
+<![endif]-->
+
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/tree.js"></script>
 <link rel="stylesheet" type="text/css"

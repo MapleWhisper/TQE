@@ -10,15 +10,23 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.util.StringUtils;
+
+import com.tqe.po.Course;
 import com.tqe.po.Student;
 import com.tqe.po.Teacher;
 
 public abstract class ExcelReader<E> {
 	
+	/**
+	 * 检查文件是否符合
+	 * @param excelDir
+	 * @return
+	 */
 	public abstract boolean checkFile(String excelDir);
 	
-	private Class<?> clazz = null;
-	public ExcelReader() {
+	private Class<?> clazz = null;	
+	public ExcelReader() {	//获取泛型类型
 		ParameterizedType type =   (ParameterizedType) this.getClass().getGenericSuperclass();
 		this.clazz = (Class<?>) type.getActualTypeArguments()[0];
 	}
@@ -43,8 +51,16 @@ public abstract class ExcelReader<E> {
 	 */
 	public List<E> getAll(String excelDir,boolean isSetPassword) throws FileNotFoundException {
 		List<E> list = new ArrayList<E>();
+		int titleIndex = 0;
+		if(clazz==Teacher.class){
+			titleIndex = 0;
+		}else if(clazz == Course.class){
+			titleIndex = 2;
+		}else{
+			titleIndex = 0;
+		}
 		if(checkFile(excelDir)){
-			list = excelStringValueToPojoList(excelDir, list,isSetPassword);
+			list = excelStringValueToPojoList(excelDir, list,isSetPassword ,titleIndex) ;
 			
 		}else{
 			throw new FileNotFoundException("文件没有找到,或者上传Excle文件不是教师表");
@@ -59,9 +75,9 @@ public abstract class ExcelReader<E> {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	protected List<E> excelStringValueToPojoList(String excelDir, List<E> list,boolean isSetPassword) {
+	protected List<E> excelStringValueToPojoList(String excelDir, List<E> list,boolean isSetPassword,int titleIndex) {
 		
-		List<Map<String,String>> data = ExcelUtils.getExcelRecords(excelDir, 0);	//从excel中获取数据
+		List<Map<String,String>> data = ExcelUtils.getExcelRecords(excelDir, 0 ,titleIndex);	//从excel中获取数据
 		
 		if(data!=null && !data.isEmpty()){
 			for(Map<String,String> row :data){	//遍历每行数据
@@ -76,7 +92,12 @@ public abstract class ExcelReader<E> {
 				Field[] fields = clazz.getDeclaredFields();		//获取成员的全部Filed
 				for(Field f : fields){
 					String fieldName = f.getName();		//获取成员变量名
-					String columnName = ExcelProperty.getProperty(fieldName);	//获得excel中文列名
+					String fn = new String(fieldName);
+					if(clazz == Course.class){
+						fn="course."+fn;
+					}
+					String columnName = ExcelProperty.getProperty(fn);	//获得excel中文列名
+					
 					
 					String methodName = fieldNameToSetter(fieldName);
 					Method m;
@@ -158,7 +179,9 @@ public abstract class ExcelReader<E> {
 		}
 		try {
 			if(type == Integer.class){
-				method.invoke(obj, Integer.parseInt(value));
+				if(StringUtils.hasText(value)){
+					method.invoke(obj, (int)Double.parseDouble(value));
+				}
 			}else if(type == Double.class){
 				method.invoke(obj, Double.parseDouble(value));
 			}else if(type == Date.class){
@@ -177,4 +200,5 @@ public abstract class ExcelReader<E> {
 		}
 		
 	}
+	
 }

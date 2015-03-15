@@ -66,6 +66,9 @@
 							<li><span><i class="glyphicon glyphicon-leaf"></i>
 							<a href="${pageContext.request.contextPath}/admin/teacher">教师列表</a></span>
 							</li>
+							<li><span><i class="glyphicon glyphicon-leaf"></i>
+							<a href="${pageContext.request.contextPath}/admin/course">课程列表</a></span>
+							</li>
 						</ul>
 					</li>
 				<!-- 				系统管理 -->

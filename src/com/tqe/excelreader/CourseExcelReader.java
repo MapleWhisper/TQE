@@ -14,15 +14,17 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import com.tqe.dao.TeacherDao;
+import com.tqe.po.Course;
 import com.tqe.po.Teacher;
 
 @Component
-public class TeacherExcelReader extends ExcelReader<Teacher> {
+public class CourseExcelReader extends ExcelReader<Course> {
 	public static void main(String[] args) throws FileNotFoundException {
-		List<Teacher> list = new TeacherExcelReader().getAll("d:/课程班信息：课程-老师对应关系.xls");
+		List<Course> list = new CourseExcelReader().getAll("d:/课程班信息：课程-老师对应关系.xls");
 		//System.out.println(list.size());
-		for(Teacher t: list){
-			System.out.println(t.getName()+"\t"+t.getIdNumber()+"\t"+t.getId());
+		
+		for(Course c: list){
+			System.out.println(c.getName()+"\t"+c.getCid()+"\t"+c.getCno()+"\t");
 		}
 	}
 	
@@ -33,8 +35,9 @@ public class TeacherExcelReader extends ExcelReader<Teacher> {
 	 */
 	@Override
 	public boolean checkFile(String excelDir) {
-		List<String> list = ExcelUtils.getRow(excelDir, 0, 0);
-		return list.contains("教师号");
+		List<String> list = ExcelUtils.getRow(excelDir, 0, 2);
+		
+		return list.contains("课程号")&&list.contains("课程名称");
 	}
 	
 	

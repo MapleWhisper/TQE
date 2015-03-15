@@ -8,13 +8,13 @@
 </head>
 
 <body>
-	<div class="container-fluid">
+	<div class="container">
 		<%@ include file="../head.jsp" %>
 		<div class="row " style="margin-top: 70px">
-			<div class="col-sm-2">
+			<div class="col-xs-3">
 				<%@ include file="../left.jsp"%>
 			</div>
-			<div class="col-sm-10 ">
+			<div class="col-xs-9 ">
 				<div class="panel panel-primary">
 					<div class="panel-heading">管理员信息填写</div>
 
