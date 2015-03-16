@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tqe.po.Admin;
 import com.tqe.service.AdminServiceImpl;
+import com.tqe.service.CourseServiceImpl;
 
 
 
@@ -24,9 +25,10 @@ import com.tqe.service.AdminServiceImpl;
  *
  */
 @Controller()
-@RequestMapping("/course")
+@RequestMapping("/admin")
 public class CourseController {
-	
+	@Autowired
+	private CourseServiceImpl courseService;
 	
 	/**
 	 * 显示课程列表页面
@@ -34,35 +36,35 @@ public class CourseController {
 	 */
 	@RequestMapping("/course")
 	public String course(Model model){
-		
-		return "admin/course";				//直接返回  前缀加 字符串+jsp的页面
+		model.addAttribute("courseList",courseService.findAll());
+		return "course/course";				//直接返回  前缀加 字符串+jsp的页面
 	}
 	
 	/**
-	 * 增加管理员页面
+	 * 增加课程页面
 	 * @return
 	 */
 	@RequestMapping("/course/add")
 	public String addCourse(Model model){
 		//model.addAttribute("privilegeList", privilegeService.findAll());		
-		return "admin/addCourse";	//转到添加页面
+		return "course/addCourse";	//转到添加页面
 	}
 	
 	/**
-	 * 保存管理员
+	 * 保存课程
 	 * @return
 	 */
-	@RequestMapping("/admin/save")
+	@RequestMapping("/course/save")
 	public String save(@ModelAttribute Admin admin){
 		return "redirect:/admin/course";	//保存完成后  跳转到管理员列表页面
 	}
 	
 	/**
-	 * 删除管理员
-	 * @param id 需要删除的管理员id
-	 * @return	返回到管理员列表页面
+	 * 删除课程
+	 * @param id 需要删除课程Id
+	 * 	 * @return	返回到管理员列表页面
 	 */
-	@RequestMapping("admin/delete/{id}")
+	@RequestMapping("/course/delete/{id}")
 	public String delete(@PathVariable int id){
 		
 		//adminService.delete(id);

@@ -10,7 +10,7 @@
 </style>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.css"></link>
-<title>管理员列表</title>
+<title>课程列表</title>
 </head>
 
 <body>
@@ -23,26 +23,36 @@
 			<div class="col-sm-10 ">
 
 				<div class="panel panel-primary">
-					<div class="panel-heading">管理员列表</div>
+					<div class="panel-heading">课程列表</div>
 
 					<div class="panel-body">
-						<table class="table table-hover table-striped table-bordered">
+						<table class="table table-hover table-striped table-bordered table-condensed">
 							<thead>
 								<tr class="info">
-									<td>管理员账号</td>
-									<td>管理员姓名</td>
-									<td>管理员职位</td>
+									<td>课程名</td>
+									<td>课程号</td>
+									<td>课序号</td>
+									<td>教师名</td>
+									<td>学院</td>
+									<td>学期</td>
+									<td>学生数</td>
+									<td>学分</td>
 									<td>操作</td>
 									<td>操作</td>
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach items="${adminList}" var="admin">
+								<c:forEach items="${courseList}" var="c">
 									<tr>
 
-										<td>${admin.username }</td>
-										<td>${admin.name }</td>
-										<td>${admin.position }</td>
+										<td><a href="">${c.name }</a></td>
+										<td>${c.cid }</td>
+										<td>${c.cno }</td>
+										<td>${c.teacher.name }</td>
+										<td>${c.department }</td>
+										<td>${c.season }</td>
+										<td>${c.stuNumber }</td>
+										<td>${c.credit }</td>
 										<td><a href="admin/edit/${admin.id }"
 											class="btn btn-info"><span
 												class=" glyphicon glyphicon-edit"></span>&nbsp;&nbsp;修改</a></td>

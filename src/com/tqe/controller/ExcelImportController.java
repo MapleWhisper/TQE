@@ -48,7 +48,7 @@ public class ExcelImportController {
 			e.printStackTrace();
 		}
 
-		return "index";
+		return "reditect:/admin/admin";
 	}
 	@RequestMapping("/excelImport/course/{season}")
 	public String excelImportCourse(@PathVariable("season")String season){
@@ -63,7 +63,8 @@ public class ExcelImportController {
 			}
 		}
 
-		return "index";
+		return "reditect:/admin/admin";
+		
 	}
 
 }
