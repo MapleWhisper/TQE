@@ -27,4 +27,7 @@ public interface TeacherDao extends BaseDao<Teacher>{
 	
 	@Update("update teacher set password = #{password} where id = #{id}")
 	public int updatePwd(User user);
+	
+	@Select("select * from teacher limit  #{start},#{length}")
+	public List<Teacher> findByPage(@Param("start")int start, @Param("length")int length);
 }

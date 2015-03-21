@@ -40,7 +40,6 @@ public class AdminController {
 	 */
 	@RequestMapping("/admin")
 	public String admin(Model model){
-		
 		List<Admin> adminList = adminService.findAll();	//查询管理员列表
 		model.addAttribute("adminList", adminList);
 		return "admin/admin";				//直接返回  前缀加 字符串+jsp的页面

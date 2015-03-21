@@ -22,13 +22,9 @@ import com.tqe.service.TeacherServiceImpl;
  *
  */
 @Controller
-public class LoginController {
+public class LoginController extends BaseController{
 	
-	@Resource(name="adminServiceImpl")
-	private AdminServiceImpl adminService;
 	
-	@Autowired
-	private TeacherServiceImpl teacherService;
 	
 	/**
 	 * 用户登陆

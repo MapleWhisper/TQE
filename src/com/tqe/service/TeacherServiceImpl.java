@@ -53,4 +53,8 @@ public class TeacherServiceImpl implements BaseService<Teacher>{
 	public Teacher login(User user) {
 		return teacherDao.login(user);
 	}
+
+	public List<Teacher> findByPage(int start, int length) {
+		return teacherDao.findByPage(start ,length);
+	}
 }

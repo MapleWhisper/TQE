@@ -26,9 +26,8 @@ import com.tqe.service.CourseServiceImpl;
  */
 @Controller()
 @RequestMapping("/admin")
-public class CourseController {
-	@Autowired
-	private CourseServiceImpl courseService;
+public class CourseController extends BaseController{
+	
 	
 	/**
 	 * 显示课程列表页面

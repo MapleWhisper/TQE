@@ -63,7 +63,7 @@ public abstract class ExcelReader<E> {
 			list = excelStringValueToPojoList(excelDir, list,isSetPassword ,titleIndex) ;
 			
 		}else{
-			throw new FileNotFoundException("文件没有找到,或者上传Excle文件不是教师表");
+			throw new FileNotFoundException("文件没有找到");
 		}
 		return list;
 	}
@@ -95,6 +95,8 @@ public abstract class ExcelReader<E> {
 					String fn = new String(fieldName);
 					if(clazz == Course.class){
 						fn="course."+fn;
+					}else if(clazz == Student.class){
+						fn="student."+fn;
 					}
 					String columnName = ExcelProperty.getProperty(fn);	//获得excel中文列名
 					

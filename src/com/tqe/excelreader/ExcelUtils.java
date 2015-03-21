@@ -16,6 +16,7 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
 
 /*
  * 操作Excel工具类，建议首先将excel单元格设置成文本（设置单元格格式——数字——文本），
@@ -119,6 +120,7 @@ public class ExcelUtils {
 				value = null;
 				HSSFCell cell = row.getCell(c);
 				if(cell!=null){
+					cell.setCellType(Cell.CELL_TYPE_STRING);
 					value  =  cell.getStringCellValue();
 				}
 				

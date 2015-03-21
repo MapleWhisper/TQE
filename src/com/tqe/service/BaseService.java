@@ -2,6 +2,7 @@ package com.tqe.service;
 
 import java.util.List;
 
+
 public interface BaseService<E> {
 	public E getById(Integer id);
 	

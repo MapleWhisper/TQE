@@ -53,6 +53,9 @@
 							<li><span><i class="glyphicon glyphicon-leaf"></i>
 								<a href="${pageContext.request.contextPath}/admin/evalTable">评教指标</a></span>
 							</li>
+							<li><span><i class="glyphicon glyphicon-leaf"></i>
+								<a href="${pageContext.request.contextPath}/admin/batches">评教批次</a></span>
+							</li>
 						</ul>
 					</li>
 				
@@ -61,13 +64,19 @@
 					<li><span><i class="glyphicon glyphicon-minus-sign"></i>系统管理</span>
 						<ul>
 							<li><span><i class="glyphicon glyphicon-leaf"></i>
-							<a href="${pageContext.request.contextPath}/admin/admin">管理员列表</a></span>
+							<a href="${pageContext.request.contextPath}/admin/admin">管理员表</a></span>
 							</li>
+							
+							<li><span><i class="glyphicon glyphicon-leaf"></i>
+							<a href="${pageContext.request.contextPath}/admin/course">课程列表</a></span>
+							</li>
+							
 							<li><span><i class="glyphicon glyphicon-leaf"></i>
 							<a href="${pageContext.request.contextPath}/admin/teacher">教师列表</a></span>
 							</li>
+							
 							<li><span><i class="glyphicon glyphicon-leaf"></i>
-							<a href="${pageContext.request.contextPath}/admin/course">课程列表</a></span>
+							<a href="${pageContext.request.contextPath}/admin/student">学生列表</a></span>
 							</li>
 						</ul>
 					</li>

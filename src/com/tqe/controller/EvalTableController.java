@@ -14,10 +14,9 @@ import com.tqe.service.EvalTableServiceImpl;
 
 @Controller
 @RequestMapping("/admin")
-public class EvalTableController {
+public class EvalTableController extends BaseController{
 	
-	@Autowired
-	private EvalTableServiceImpl evalTableService;
+	
 	
 	@RequestMapping("/evalTable")
 	public String evalTable(Model model){
