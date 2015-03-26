@@ -42,9 +42,23 @@ public class ImageController {
 		int x,y,ans;
 		x= rd.nextInt(10);
 		y = rd.nextInt(10);
-		ans = x + y;
+		// 0 +
+		// 1 -
+		// 2 *
+		int op = rd.nextInt(3);
+		if(op==0){
+			ans = x + y;
+			sb.append(x).append("+").append(y).append("=?");
+		}else if(op==1){
+			ans = x - y;
+			sb.append(x).append("-").append(y).append("=?");
+		}else{
+			ans = x * y ;
+			sb.append(x).append("X").append(y).append("=?");
+		}
+		
 
-		sb.append(x).append("+").append(y).append("=?");
+		
 
 		g.setColor( Color.BLACK );  
 

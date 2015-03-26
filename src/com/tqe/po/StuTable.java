@@ -2,9 +2,9 @@ package com.tqe.po;
 
 public class StuTable {
 	private Integer id;	
-	private Integer sid;	//学生号
-	private Integer tid;	//评价表
-	private Integer cid;	//课程号
+	private String  sid;	//学生号
+	private Integer eid;	//评教表
+	private String  cid;	//课程号
 	private Integer cno;	//课程序号
 	private Integer bid;	//批次号
 	
@@ -20,17 +20,12 @@ public class StuTable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getSid() {
-		return sid;
+	
+	public Integer getEid() {
+		return eid;
 	}
-	public void setSid(Integer sid) {
-		this.sid = sid;
-	}
-	public Integer getTid() {
-		return tid;
-	}
-	public void setTid(Integer tid) {
-		this.tid = tid;
+	public void setEid(Integer eid) {
+		this.eid = eid;
 	}
 	public Integer getBid() {
 		return bid;
@@ -56,17 +51,23 @@ public class StuTable {
 	public void setJsonString(String jsonString) {
 		this.jsonString = jsonString;
 	}
-	public Integer getCid() {
-		return cid;
-	}
-	public void setCid(Integer cid) {
-		this.cid = cid;
-	}
 	public Integer getCno() {
 		return cno;
 	}
 	public void setCno(Integer cno) {
 		this.cno = cno;
+	}
+	public String getSid() {
+		return sid;
+	}
+	public void setSid(String sid) {
+		this.sid = sid;
+	}
+	public String getCid() {
+		return cid;
+	}
+	public void setCid(String cid) {
+		this.cid = cid;
 	}
 	
 	

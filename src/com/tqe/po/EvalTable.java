@@ -145,4 +145,16 @@ public class EvalTable {
 		return this;
 	}
 	
+	public void setAns(EvalTable src,EvalTable ans){
+		for(int i=0;i<src.getItemList().size();i++){
+			src.getItemList().get(i).setAns(ans.getItemList().get(i).getAns());
+		}
+		for(int i=0;i<src.getTableItemList().size();i++){
+			src.getTableItemList().get(i).setAns(ans.getTableItemList().get(i).getAns());
+		}
+		for(int i=0;i<src.getQuestionList().size();i++){
+			src.getQuestionList().get(i).setAns(ans.getQuestionList().get(i).getAns());
+		}
+	}
+	
 }

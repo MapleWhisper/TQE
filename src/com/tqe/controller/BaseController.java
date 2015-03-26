@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.tqe.service.AdminServiceImpl;
 import com.tqe.service.BatchesServiceImpl;
+import com.tqe.service.CommonServiceImpl;
 import com.tqe.service.CourseServiceImpl;
+import com.tqe.service.EvalServiceImpl;
 import com.tqe.service.EvalTableServiceImpl;
+import com.tqe.service.StuEvalServiceImpl;
 import com.tqe.service.StudentServiceImpl;
 import com.tqe.service.TeacherServiceImpl;
 
@@ -30,4 +33,13 @@ public class BaseController {
 	
 	@Autowired
 	protected StudentServiceImpl studentService;
+	
+	@Autowired
+	protected CommonServiceImpl commonService;
+	
+	@Autowired
+	protected StuEvalServiceImpl stuEvalService;
+	
+	@Autowired
+	protected EvalServiceImpl evalService;
 }

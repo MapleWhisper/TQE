@@ -5,15 +5,22 @@ import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
+
 import com.tqe.po.Course;
 
-public interface CourseDao extends BaseDao<Course>{
-	@Select("select * from course where cid = #{cid} and cno = #{cno}")
-	public Course getById(@Param("id")int cid,int cno);
+
+@Repository
+public interface CourseDao {
+	@Select("select * from `course` where cid=#{cid} and cno=#{cno}")
+	public Course getById(Course course);
 	
 	@Insert("INSERT INTO `tqe`.`course` (`cid`, `cno`, `name`, `stuNumber`, `peroid`, `credit`, `attr`, `examMode`, `nature`, `teacherId`, `department`, `campus`,`season`,`combine`) VALUES (#{cid}, #{cno}, #{name}, #{stuNumber}, #{peroid}, #{credit}, #{attr}, #{examMode}, #{nature}, #{teacherId}, #{department}, #{campus},#{season},#{combine});")
-	public void save(Course	Course);
+	public void save(Course	course);
 	
 	@Select("select c.*,t.name as `teacher.name` ,t.id as `teacher.id` from course c ,teacher t where  c.teacherId = t.id")
 	public List<Course> findAll();
+	
+	@Select("select c.*,t.name as `teacher.name` ,t.id as `teacher.id` from course c ,sc,teacher t  where c.cid = sc.cid and c.cno = sc.cno and  t.id = c.teacherId and sc.sid = #{sid}")
+	public List<Course> findAllBySid(@Param("sid")Integer sid);
 }

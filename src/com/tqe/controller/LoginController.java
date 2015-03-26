@@ -1,9 +1,7 @@
 package com.tqe.controller;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -11,10 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tqe.po.Admin;
+import com.tqe.po.Student;
 import com.tqe.po.Teacher;
 import com.tqe.po.User;
-import com.tqe.service.AdminServiceImpl;
-import com.tqe.service.TeacherServiceImpl;
 
 /**
  * 登陆控制器
@@ -58,7 +55,14 @@ public class LoginController extends BaseController{
 				return "redirect:/admin/admin";
 			}
 		}else{
-			
+			Student stu = studentService.login(user);
+			if(stu!=null){
+				System.out.println("学生登陆");
+				session.setAttribute("student", stu);
+				session.removeAttribute("teacher");
+				session.removeAttribute("admin");
+				return "redirect:/admin/stuEval";
+			}
 			//return "redirect:/admin/admin";
 		}
 		model.addAttribute("error","用户名或密码错误");

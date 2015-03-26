@@ -10,7 +10,7 @@
 </style>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.css"></link>
-<title>课程列表</title>
+<title>我的课程</title>
 </head>
 
 <body>
@@ -23,21 +23,18 @@
 			<div class="col-sm-10 ">
 
 				<div class="panel panel-primary">
-					<div class="panel-heading">课程列表</div>
+					<div class="panel-heading">我的课程</div>
 
 					<div class="panel-body">
 						<table class="table table-hover table-striped table-bordered table-condensed">
 							<thead>
 								<tr class="info">
 									<td>课程名</td>
-									<td>课程号</td>
-									<td>课序号</td>
 									<td>教师名</td>
 									<td>学院</td>
 									<td>学期</td>
 									<td>学生数</td>
 									<td>学分</td>
-									<td>操作</td>
 									<td>操作</td>
 								</tr>
 							</thead>
@@ -45,36 +42,37 @@
 								<c:forEach items="${courseList}" var="c">
 									<tr>
 
-										<td><a href="">${c.name }</a></td>
-										<td>${c.cid }</td>
-										<td>${c.cno }</td>
+										<td>${c.name }</td>
 										<td>${c.teacher.name }</td>
 										<td>${c.department }</td>
 										<td>${c.season }</td>
 										<td>${c.stuNumber }</td>
 										<td>${c.credit }</td>
-										<td><a href="admin/edit/${admin.id }"
-											class="btn btn-info"><span
-												class=" glyphicon glyphicon-edit"></span>&nbsp;&nbsp;修改</a></td>
-										<td><a href="admin/delete/${admin.id}"
-											class="btn btn-danger" onclick="return confirm('确认要删除吗？')"><span
-												class=" glyphicon  glyphicon-trash"></span>&nbsp;&nbsp;删除</a></td>
+										<c:if test="${c.isEvaled=='false'}">
+											<td><a href="${pageContext.request.contextPath}/admin/stuEval/eval/${c.cid}/${c.cno}"
+											class="btn btn-danger"><span
+												class=" glyphicon glyphicon-edit"></span>&nbsp;&nbsp;评价</a></td>
+										</c:if>
+										<c:if test="${c.isEvaled=='true'}">
+											<td><button  class="btn btn-default" disabled="disabled"><span
+												class=" glyphicon glyphicon-ok"></span>已评价</button></td>
+										</c:if>
 									</tr>
 								</c:forEach>
 
 							</tbody>
 						</table>
-						<!-- 
 						<div class="row">
 							<div class="col-xs-6 col-xs-offset-5">
 								<div class="no1">
-									<a class="btn btn-primary " href="admin/add">添加管理员</a>
+									<!-- 
+									<a class="btn btn-primary " href="admin/add"></a>
+									 -->
 								</div>
 
 							</div>
 
 						</div>
-						 -->
 
 
 					</div>

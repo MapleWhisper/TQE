@@ -5,22 +5,10 @@
 <%@ include file="../header.jspf"%>
 <title>评教指标显示|${evalTable.title}</title>
 <style type="text/css">
-.quest {
-	font-size: medium;
-	margin-top: 50px
-}
-
-.questArea {
-	margin-top: 10px;
-	padding-left: 50px
-}
-
-.nav-left {
-	position: fixed;
-	width: 60px;
-	height: 60px
-}
-</style>
+		.quest {font-size: medium;margin-top: 20px}
+		.questArea {margin-top: 10px;padding-left: 50px}
+		.nav-left {position: fixed;width: 60px;height: 60px}
+	</style>
 </head>
 
 <body>
@@ -33,6 +21,8 @@
 			<div class="col-sm-10">
 				<div style="text-align: center;margin-top: 100px">
 					<h2>${evalTable.title }</h2>
+					<h3>${course.name }</h3>
+					<h3>${course.teacher.name }</h3>
 				</div>
 				<div class="row">
 					<!--左侧的导航条 -->
@@ -45,18 +35,41 @@
 						</ul>
 					</div>
 					<!--左侧的导航条 -->
+					
 					<div class="col-xs-11">
-						
+					<hr>
+						<table class="table table-hover table-striped table-bordered table-condensed">
+								<tr class="warning">
+									<td>学院</td>
+									<td>学期</td>
+									<td>批次</td>
+									<td>开始日期</td>
+									<td>截止日期</td>
+								</tr>
+									<tr>
+										<td>${course.department }</td>
+										<td>${course.season }</td>
+										<td>${batches.name }</td>
+										<td><fm:formatDate value="${batches.beginDate}" pattern="yyyy-MM-dd"/></td>
+										<td><fm:formatDate value="${batches.endDate }" pattern="yyyy-MM-dd"/></td>
+									</tr>
+						</table>
+						<hr>
 						<form
-							action="${pageContext.request.contextPath}/admin/paper/answer"
+							action="${pageContext.request.contextPath}/admin/eval/save/${type}"
 							method="post">
-							<input type="hidden" name="id" value="${evalTable.id}">
-							<!--单选题 -->
+							<input type="hidden" name="eid" value="${evalTable.id}">
+							<input type="hidden" name="cid" value="${ course.cid}">
+							<input type="hidden" name="cno" value="${ course.cno}">
+							<input type="hidden" name="sid" value="${sessionScope.student.sid}">
+							<input type="hidden" name="sum" id="sum1" value="">
+							<input type="hidden" name="level" id="level1" value="">
+							<!--评教须知: -->
 							<div class="panel panel-primary" id="part1">
 								<div class="panel-heading">
 									<h3 class="panel-title">评教须知:</h3>
 								</div>
-								<div class="panel-body">${evalTable.note }</div>
+								<div class="panel-body">${evalTable.note}</div>
 							</div>
 
 							<div class="panel panel-primary" id="part2">
@@ -67,10 +80,10 @@
 									<table class="table table-striped table-hover table-bordered">
 
 										<c:forEach items="${evalTable.itemList}" var="item"
-											varStatus="s">
+											varStatus="s" >
 											<tr>
 												<td style="width: 100px;">${item.context}：</td>
-												<td><input type="text" class="form-control"></td>
+												<td><input type="text" class="form-control" name="itemList[${s.index}].ans"></td>
 											</tr>
 
 										</c:forEach>
@@ -79,7 +92,7 @@
 							</div>
 
 
-							<!-- 问答题 -->
+							<!-- 打分表和评价 -->
 							<div class="panel panel-primary" id="part3">
 								<div class="panel-heading">
 									<h3 class="panel-title">打分表和评价</h3>
@@ -99,7 +112,7 @@
 												<td>${item.context}</td>
 												<td>${item.level}</td>
 												<td><input type="number" class="form-control score"
-													required="required" value="0"></td>
+													required="required" value="0" name="tableItemList[${s.index}].ans"></td>
 											</tr>
 
 										</c:forEach>
@@ -130,7 +143,14 @@
 											<textarea class="form-control"></textarea>
 										</div>
 									</c:forEach>
-
+									
+									<div style="text-align: center;margin-top: 100px;">
+										<c:if test="${type=='student'}">
+											<input class="btn btn-info btn-lg btn-block" onclick="return confirm('一旦提交，不可修改，确认要提交');"
+												type="submit" value="提交评价" >
+										</c:if>
+										
+									</div>
 								</div>
 
 							</div>
@@ -182,6 +202,8 @@
 				$("#level").css("width",sum+"%");
 				$("#level").html(sum+"分   "+lev);
 				$("#sum").html(sum+"分   "+lev);
+				$("#sum1").val(sum);
+				$("#level1").val(lev);
 			});
 		});
 	</script>

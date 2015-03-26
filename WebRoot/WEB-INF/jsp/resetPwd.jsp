@@ -26,7 +26,7 @@
 								<div class="col-xs-6">
 									<input type="password" name="oldPwd" id="oldPwd"
 										class="form-control"> <input type="hidden" name="id"
-										value="${sessionScope.admin.id}${sessionScope.teacher.id}${sessionScope.studnet.id}">
+										value="${sessionScope.admin.id}${sessionScope.teacher.id}${sessionScope.student.sid}">
 
 								</div>
 							</div>

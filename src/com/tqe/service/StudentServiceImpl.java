@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.tqe.dao.StudentDao;
 import com.tqe.po.Student;
+import com.tqe.po.User;
 
 @Service
 public class StudentServiceImpl extends BaseService<Student>{
@@ -45,5 +46,9 @@ public class StudentServiceImpl extends BaseService<Student>{
 			
 			return f;
 			
+		}
+
+		public Student login(User user) {
+			return StudentDao.login(user);
 		}
 }

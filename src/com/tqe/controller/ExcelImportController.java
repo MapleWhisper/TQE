@@ -79,7 +79,7 @@ public class ExcelImportController extends BaseController{
 				e.printStackTrace();
 			}
 
-		return "reditect:/admin/admin";
+		return "redirect:/admin/admin";
 		
 	}
 

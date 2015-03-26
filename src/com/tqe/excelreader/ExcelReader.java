@@ -141,7 +141,7 @@ public abstract class ExcelReader<E> {
 		//首先获取证件号码
 		String idNumber = row.get("证件号码");
 		if(idNumber!=null && idNumber.length()==18){	//如果有证件号码
-			defaultPwd = idNumber.substring(11);
+			defaultPwd = idNumber.substring(10);
 		}else{
 			if(clazz == Teacher.class){
 				defaultPwd = row.get("教师号");

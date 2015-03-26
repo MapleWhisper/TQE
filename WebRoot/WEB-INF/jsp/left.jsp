@@ -14,16 +14,22 @@
 		<!-- 主菜单 -->
 		<li><span class="glyphicon glyphicon-folder-open">主菜单</span>
 			<ul>
-				<!-- 				
-				<li><span><i class="glyphicon glyphicon-minus-sign"></i>岗位管理</span>
+				<li><span><i class="glyphicon glyphicon-minus-sign"></i>评教中心</span>
 					<ul>
 						<li>
 							<span><i class="glyphicon glyphicon-leaf"></i>
-							<a href="${pageContext.request.contextPath}/admin/position">教师评价</a></span>
+							<a href="${pageContext.request.contextPath}/admin/stuEval">学生评教</a></span>
+						</li>
+						<li>
+							<span><i class="glyphicon glyphicon-leaf"></i>
+							<a href="${pageContext.request.contextPath}/admin/teaEval">教师评教</a></span>
+						</li>
+						<li>
+							<span><i class="glyphicon glyphicon-leaf"></i>
+							<a href="${pageContext.request.contextPath}/admin/LeaderEval">领导评教</a></span>
 						</li>
 					</ul>
 				</li>
-				岗位管理 -->
 						<!-- 				
 							
 							<c:if test="${p.name == '申请管理' }">

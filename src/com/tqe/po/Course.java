@@ -1,7 +1,7 @@
 package com.tqe.po;
 
 public class Course {
-	private String cid;	//课程号
+	private String cid;		//课程号
 	private Integer cno;	//课序号
 	private String name;		//课程名
 	private Integer stuNumber;	//选课人数
@@ -17,6 +17,7 @@ public class Course {
 	private String combine;	//合班
 	
 	private Teacher teacher;	//主讲教师
+	private boolean isEvaled ;	//是否已经评价过
 	
 
 	
@@ -142,6 +143,16 @@ public class Course {
 	public void setCombine(String combine) {
 		this.combine = combine;
 	}
+
+	public boolean getIsEvaled() {
+		return isEvaled;
+	}
+
+	public void setEvaled(boolean isEvaled) {
+		this.isEvaled = isEvaled;
+	}
+
+
 	
 	
 	

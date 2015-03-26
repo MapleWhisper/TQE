@@ -27,4 +27,7 @@ public interface BatchesDao extends BaseDao<Batches>{
 	@Insert("update  Batches set beginDate = #{beginDate}, endDate = #{endDate} , evalTableId = #{evalTableId} where id = #{id}")
 	public void update(Batches b);
 	
+	@Select("select * from batches b where now() between b.beginDate and b.endDate and b.season = #{season}")
+	public Batches getAvailiableBatches(@Param("season")String season);
+	
 }

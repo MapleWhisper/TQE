@@ -23,7 +23,7 @@
 			</ul>
 			<form class="navbar-form navbar-left" role="search"></form>
 			<ul class="nav navbar-nav navbar-right">
-				<li><p class="navbar-text">你好，${sessionScope.teacher.name}${sessionScope.studnet.name}${sessionScope.admin.name}</p></li>
+				<li class="active"><p class="navbar-text">你好，${sessionScope.teacher.name}${sessionScope.student.name}${sessionScope.admin.name}</p></li>
 
 				<li><a
 					href="${pageContext.request.contextPath}/admin/resetPwdUI">修改密码</a></li>

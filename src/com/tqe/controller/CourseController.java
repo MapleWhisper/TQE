@@ -1,11 +1,9 @@
 package com.tqe.controller;
 
-import java.util.HashSet;
+
+
 import java.util.List;
 
-import javax.annotation.Resource;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,8 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tqe.po.Admin;
-import com.tqe.service.AdminServiceImpl;
-import com.tqe.service.CourseServiceImpl;
+import com.tqe.po.Course;
 
 
 
@@ -35,7 +32,8 @@ public class CourseController extends BaseController{
 	 */
 	@RequestMapping("/course")
 	public String course(Model model){
-		model.addAttribute("courseList",courseService.findAll());
+		List<Course> list = courseService.findAll();
+		model.addAttribute("courseList",list);
 		return "course/course";				//直接返回  前缀加 字符串+jsp的页面
 	}
 	

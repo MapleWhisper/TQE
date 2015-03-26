@@ -40,4 +40,8 @@ public class BatchesServiceImpl extends BaseService<Batches>{
 	public void update(Batches b) {
 		batchesDao.update(b);
 	}
+	
+	public Batches getAvailiableBatches(String season){
+		return batchesDao.getAvailiableBatches(season);
+	}
 }

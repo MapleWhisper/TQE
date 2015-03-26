@@ -54,4 +54,11 @@
     
 
 	<import resource="spring-mybatis.xml"/>
+	
+	<mvc:interceptors>
+    	<mvc:interceptor>
+    		<mvc:mapping path="/admin/stuEval*"/>
+    		<bean class="com.tqe.interceptor.StuEvalInterceptor"></bean>
+    	</mvc:interceptor>
+    </mvc:interceptors>
 </beans>

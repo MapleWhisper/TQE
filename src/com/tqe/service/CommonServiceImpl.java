@@ -9,12 +9,7 @@ import com.tqe.po.Admin;
 import com.tqe.po.User;
 
 @Controller
-public class CommonServiceImpl {
-	@Autowired
-	private AdminDao adminDao;
-	
-	@Autowired
-	private TeacherDao teacherDao;
+public class CommonServiceImpl extends BaseService<Object>{
 	
 	public void updatePwd(User user){
 		if(user.getType().equals("admin")){
@@ -22,7 +17,7 @@ public class CommonServiceImpl {
 		}else if(user.getType().equals("teacher")){
 			teacherDao.updatePwd(user);
 		}else{
-			
+			studentDao.updatePwd(user);
 		}
 	}
 }
