@@ -13,7 +13,7 @@ import com.tqe.po.Teacher;
 import com.tqe.po.User;
 
 @Service
-public class TeacherServiceImpl implements BaseService<Teacher>{
+public class TeacherServiceImpl extends BaseService<Teacher>{
 	@Resource(name="teacherDao")
 	private TeacherDao teacherDao;
 	@Override

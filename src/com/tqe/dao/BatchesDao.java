@@ -24,4 +24,7 @@ public interface BatchesDao extends BaseDao<Batches>{
 	@Delete("delete from Batches where id = #{id}")
 	public void delete(int id);
 	
+	@Insert("update  Batches set beginDate = #{beginDate}, endDate = #{endDate} , evalTableId = #{evalTableId} where id = #{id}")
+	public void update(Batches b);
+	
 }

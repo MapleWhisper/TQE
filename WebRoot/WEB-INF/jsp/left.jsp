@@ -14,16 +14,17 @@
 		<!-- 主菜单 -->
 		<li><span class="glyphicon glyphicon-folder-open">主菜单</span>
 			<ul>
-				<!-- 				岗位管理 -->
+				<!-- 				
 				<li><span><i class="glyphicon glyphicon-minus-sign"></i>岗位管理</span>
 					<ul>
 						<li>
 							<span><i class="glyphicon glyphicon-leaf"></i>
-							<a href="${pageContext.request.contextPath}/admin/position">岗位列表</a></span>
+							<a href="${pageContext.request.contextPath}/admin/position">教师评价</a></span>
 						</li>
 					</ul>
 				</li>
-						<!-- 				简历管理 -->
+				岗位管理 -->
+						<!-- 				
 							
 							<c:if test="${p.name == '申请管理' }">
 								<li><span><i class="glyphicon glyphicon-minus-sign"></i>申请管理</span>
@@ -36,7 +37,6 @@
 							</c:if>
 							
 						
-				<!-- 				试卷管理 -->
 				<li><span><i class="glyphicon glyphicon-minus-sign"></i>试卷试题</span>
 					<ul>
 							
@@ -46,6 +46,7 @@
 						
 					</ul>
 				</li>
+				简历管理 -->
 				
 				
 					<li><span><i class="glyphicon glyphicon-minus-sign"></i>评教管理</span>

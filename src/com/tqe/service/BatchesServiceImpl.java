@@ -12,12 +12,15 @@ import com.tqe.po.Batches;
 import com.tqe.po.Batches;
 
 @Service
-public class BatchesServiceImpl implements BaseService<Batches>{
+public class BatchesServiceImpl extends BaseService<Batches>{
 	@Autowired
 	private BatchesDao batchesDao;
 	@Override
 	public Batches getById(Integer id) {
-		return batchesDao.getById(id);
+		Batches b = batchesDao.getById(id);
+		b.setDefaultEval(evalTableDao.getById(b.getEvalTableId()));
+				
+		return b;
 	}
 	
 	@Override
@@ -32,5 +35,9 @@ public class BatchesServiceImpl implements BaseService<Batches>{
 	public void delete(int id) {
 		batchesDao.delete(id);
 		
+	}
+
+	public void update(Batches b) {
+		batchesDao.update(b);
 	}
 }

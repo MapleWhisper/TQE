@@ -3,23 +3,9 @@
 <html>
 <head>
 <%@ include file="../header.jspf"%>
-<title>评教指标显示|${evalTable.title}</title>
+<title>评教批次详情|${batches.name}</title>
 <style type="text/css">
-.quest {
-	font-size: medium;
-	margin-top: 50px
-}
 
-.questArea {
-	margin-top: 10px;
-	padding-left: 50px
-}
-
-.nav-left {
-	position: fixed;
-	width: 60px;
-	height: 60px
-}
 </style>
 </head>
 
@@ -32,111 +18,68 @@
 			</div>
 			<div class="col-sm-10">
 				<div style="text-align: center;margin-top: 100px">
-					<h2>${evalTable.title }</h2>
+					<h2>${batches.name}</h2>
 				</div>
 				<div class="row">
-					<!--左侧的导航条 -->
-					<div class="col-xs-1">
-						<ul class="nav nav-pills nav-stacked nav-left" role="tablist"
-							id="nav">
-							<li role="presentation" class="pre active"><a href="#part1">评教须知</a></li>
-							<li role="presentation" class="pre"><a href="#part2">表单</a></li>
-							<li role="presentation" class="pre"><a href="#part3">表项</a></li>
-						</ul>
-					</div>
-					<!--左侧的导航条 -->
-					<div class="col-xs-11">
-
-						<form
-							action="${pageContext.request.contextPath}/admin/paper/answer"
-							method="post">
-							<input type="hidden" name="id" value="${evalTable.id}">
-							<!--单选题 -->
 							<div class="panel panel-primary" id="part1">
 								<div class="panel-heading">
-									<h3 class="panel-title">评教须知:</h3>
+									<h3 class="panel-title">详细信息</h3>
+								</div>
+								<div class="panel-body">
+									<input type="hidden" value="${batches.id}" id="id"/>
+									<table class="table table-striped table-hover table-bordered">
+										<tr>
+											<td>评教批次名</td>
+											<td>学期</td>
+											<td>评教开始日期</td>
+											<td>评教截止日期</td>
+											<td>评价评估表</td>
+											<td>操作</td>
+										</tr>
+										<tr>
+											
+											<td>${batches.name}</td>
+											<td>${batches.season}</td>
+											
+											<td class="new"><fm:formatDate value="${batches.beginDate}" pattern="yyyy-MM-dd"/></td>
+											<td class="new"><fm:formatDate value="${batches.endDate}" pattern="yyyy-MM-dd"/></td>
+											
+											<td class="old"><input type="date" class="form-control" value="<fm:formatDate value="${batches.beginDate}" pattern="yyyy-MM-dd"/>" id="beginDate" onClick="WdatePicker()"></td>
+											
+											<td class="old"><input type="date" class="form-control" value="<fm:formatDate value="${batches.endDate}" pattern="yyyy-MM-dd"/>" id="endDate" onClick="WdatePicker()"></td>
+											<td class="new"><a href="${pageContext.request.contextPath}/admin/evalTable/show/${batches.evalTableId}">${batches.defaultEval.title}</a></td>
+											<td class="old"><a class="btn btn-defaule" href="${pageContext.request.contextPath}/admin/evalTable?action=defaultEval&bid=${batches.id}">点此更换默认评教指标</a></td>
+											<td class="new"><button class="btn btn-warning" id="edit">修改</button></td>
+											<td class="old"><button class="btn btn-warning" id="save">保存</button></td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							
+							<div class="panel panel-primary" id="part1">
+								<div class="panel-heading">
+									<h3 class="panel-title">学生评教</h3>
 								</div>
 								<div class="panel-body">${evalTable.note }</div>
 							</div>
 
 							<div class="panel panel-primary" id="part2">
 								<div class="panel-heading">
-									<h3 class="panel-title">请如实填写表单信息</h3>
+									<h3 class="panel-title">教师评教</h3>
 								</div>
 								<div class="panel-body">
-									<table class="table table-striped table-hover table-bordered">
-
-										<c:forEach items="${evalTable.itemList}" var="item"
-											varStatus="s">
-											<tr>
-												<td style="width: 100px;">${item.context}：</td>
-												<td><input type="text" class="form-control"></td>
-											</tr>
-
-										</c:forEach>
-									</table>
 								</div>
 							</div>
-
-
-							<!-- 问答题 -->
-							<div class="panel panel-primary" id="part3">
+							
+							<div class="panel panel-primary" id="part2">
 								<div class="panel-heading">
-									<h3 class="panel-title">打分表和评价</h3>
+									<h3 class="panel-title">领教评教</h3>
 								</div>
 								<div class="panel-body">
-									<table class="table table-striped table-hover table-bordered">
-										<tr>
-											<td>序号</td>
-											<td>评价项目</td>
-											<td>评价等级及参考分数(A B C D)</td>
-											<td>得分</td>
-										</tr>
-										<c:forEach items="${evalTable.tableItemList}" var="item"
-											varStatus="s">
-											<tr>
-												<td>${s.count}</td>
-												<td>${item.context}</td>
-												<td>${item.level}</td>
-												<td><input type="number" class="form-control score"
-													required="required" value="0"></td>
-											</tr>
-
-										</c:forEach>
-										<tr class="warning">
-											<td>评价级别</td>
-											<td >
-												<div class="progress">
-													<div
-														class="progress-bar progress-bar-danger progress-bar-striped active" 
-														role="progressbar" aria-valuenow="20" aria-valuemin="0"
-														aria-valuemax="100" style="min-width:10%;width: 0%" id="level">
-														0分
-													</div>
-												</div>
-											</td>
-											<td>总分</td>
-											<td id="sum">0分</td>
-										</tr>
-									</table>
-									<c:forEach items="${evalTable.questionList}" var="que"
-										varStatus="s">
-
-										<div class="quest">
-											<code>${s.count}.</code>
-											${que.context }
-										</div>
-										<div class="questArea">
-											<textarea class="form-control"></textarea>
-										</div>
-									</c:forEach>
-
 								</div>
-
 							</div>
 
-						</form>
-					</div>
+
 				</div>
 				<!-- 第一行结束 -->
 			</div>
@@ -144,47 +87,32 @@
 
 	</div>
 	<script type="text/javascript">
-		$(function() {
-			$(".score").bind('change click ready',function() {
-				var sum = 0;
-				$.each($(".score"), function() {
-					sum += parseInt($(this).val());
-				});
-				var lev;
-				if(sum<60){
-					$("#level").removeClass("progress-bar-warning")
-					.removeClass("progress-bar-info")
-					.removeClass("progress-bar-success")
-					.addClass("progress-bar-danger");
-					lev = '差';
-				}else if(sum<75){
-					$("#level").removeClass("progress-bar-danger")
-					.removeClass("progress-bar-info")
-					.removeClass("progress-bar-success")
-					.addClass("progress-bar-warning");
-					lev = '一般';
-					
-				}else if(sum<90){
-					$("#level").removeClass("progress-bar-danger")
-					.removeClass("progress-bar-warning")
-					.removeClass("progress-bar-success")
-					.addClass("progress-bar-info");
-					lev = '良好';
-					
-				}else{
-					$("#level").removeClass("progress-bar-warning")
-					.removeClass("progress-bar-info")
-					.removeClass("progress-bar-danger")
-					.addClass("progress-bar-success");
-					lev = '优秀';
-					
+		$(function(){
+			$(".old").css("display","none");
+			
+			$("#edit").click(function(){
+				$(".new").css("display","none");
+				$(".old").css("display","");
+			});
+			$("#save").click(function(){
+				$(".new").css("display","");
+				$(".old").css("display","none");
+				var beginDate = $("#beginDate").val();
+				var endDate = $("#endDate").val();
+				if(new Date(beginDate)>=new Date(endDate)){
+					alert("起始日期必须大于截止日期");
+					return false;
 				}
-				$("#level").css("width",sum+"%");
-				$("#level").html(sum+"分   "+lev);
-				$("#sum").html(sum+"分   "+lev);
+				var id = $("#id").val();
+				location.reload();
+				$.post("../update",{beginDate:beginDate,endDate:endDate,id:id},function(){
+					alert("ok");
+				});
+				
 			});
 		});
 	</script>
 	<%@ include file="../buttom.jsp"%>
+	<script  type="text/javascript" src="${pageContext.request.contextPath}/js/My97DatePicker/WdatePicker.js"></script>
 </body>
 </html>

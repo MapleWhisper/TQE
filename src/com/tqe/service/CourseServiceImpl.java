@@ -11,7 +11,7 @@ import com.tqe.po.Course;
 import com.tqe.po.Course;
 
 @Service
-public class CourseServiceImpl implements BaseService<Course>{
+public class CourseServiceImpl extends BaseService<Course>{
 		@Resource
 		private CourseDao courseDao;
 		@Override

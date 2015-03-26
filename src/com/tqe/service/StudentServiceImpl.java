@@ -10,7 +10,7 @@ import com.tqe.dao.StudentDao;
 import com.tqe.po.Student;
 
 @Service
-public class StudentServiceImpl implements BaseService<Student>{
+public class StudentServiceImpl extends BaseService<Student>{
 		@Resource
 		private StudentDao StudentDao;
 		@Override

@@ -16,7 +16,7 @@ import com.tqe.po.User;
 import com.tqe.utils.MD5Utils;
 
 @Service
-public class EvalTableServiceImpl implements BaseService<EvalTable>{
+public class EvalTableServiceImpl extends BaseService<EvalTable>{
 	@Autowired
 	private EvalTableDao evalTableDao;
 	@Override

@@ -35,8 +35,8 @@
 							
 							<thead>
 								<tr class="info">
-									<td>name</td>
-									<td>id</td>
+									<td>姓名</td>
+									<td>教师号</td>
 									<td>教师邮箱</td>
 									<td>证件号码</td>
 									<td>性别</td>
@@ -46,7 +46,6 @@
 									<td>操作</td>
 								</tr>
 							</thead>
-							<!-- 
 							<tbody>
 								
 								<c:forEach items="${teacherList}" var="tea">
@@ -71,7 +70,6 @@
 								</c:forEach>
 								
 							</tbody>
-							 -->
 
 						</table>
 						<div class="row">
@@ -95,8 +93,9 @@
 	<script
 		src="${pageContext.request.contextPath}/js/datatables/js/jquery.dataTables.min.js"></script>
 	<script
-		src="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.server.js"></script>
+		src="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.js"></script>
 	<script type="text/javascript">
+	/*
 		$(function() {
 			$('table').has("thead").dataTable({
 				"language" : {
@@ -114,11 +113,18 @@
 		        "serverSide": true,
 		        "ajax": "teacher/json",
 		        "columns": [
+							{ "data": "name" },
 		                    { "data": "id" },
-		                    { "data": "name" },
+		                    { "data": "id" },
+		                    { "data": "id" },
+		                    { "data": "id" },
+		                    { "data": "id" },
+		                    { "data": "id" },
+		                    
 		                ]
 			});
 		});
+	*/
 	</script>
 </body>
 </html>

@@ -13,7 +13,7 @@ import com.tqe.po.User;
 import com.tqe.utils.MD5Utils;
 
 @Service
-public class AdminServiceImpl implements BaseService<Admin>{
+public class AdminServiceImpl extends BaseService<Admin>{
 	@Autowired
 	private AdminDao adminDao;
 	@Override

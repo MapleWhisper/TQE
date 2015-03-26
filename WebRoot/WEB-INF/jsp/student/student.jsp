@@ -26,7 +26,7 @@
 				<!-- 面板开始 -->
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<h1 class="panel-title" style="font-size: 25px">教师列表 Teacher
+						<h1 class="panel-title" style="font-size: 25px">学生列表 Student
 							List</h1>
 					</div>
 					<div class="panel-body">
