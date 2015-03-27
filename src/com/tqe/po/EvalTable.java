@@ -17,6 +17,8 @@ public class EvalTable {
 	private Date createDate;	//创建时间
 	private String jsonString;
 	
+	private String score;
+	private String level;
 	
 	public static class EvalItem {
 		private String context;
@@ -144,7 +146,6 @@ public class EvalTable {
 		this.setTableItemList(tem.getTableItemList());
 		return this;
 	}
-	
 	public void setAns(EvalTable src,EvalTable ans){
 		for(int i=0;i<src.getItemList().size();i++){
 			src.getItemList().get(i).setAns(ans.getItemList().get(i).getAns());
@@ -155,6 +156,29 @@ public class EvalTable {
 		for(int i=0;i<src.getQuestionList().size();i++){
 			src.getQuestionList().get(i).setAns(ans.getQuestionList().get(i).getAns());
 		}
+	}
+
+
+
+
+
+	public String getScore() {
+		return score;
+	}
+
+
+	public void setScore(String score) {
+		this.score = score;
+	}
+
+
+	public String getLevel() {
+		return level;
+	}
+
+
+	public void setLevel(String level) {
+		this.level = level;
 	}
 	
 }

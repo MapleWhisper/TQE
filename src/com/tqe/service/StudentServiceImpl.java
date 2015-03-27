@@ -19,8 +19,7 @@ public class StudentServiceImpl extends BaseService<Student>{
 			return StudentDao.findAll();
 		}
 		
-		@Override
-		public Student getById(Integer sid) {
+		public Student getById(String sid) {
 			return StudentDao.getById(sid);
 		}
 		

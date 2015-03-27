@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.alibaba.fastjson.JSON;
 import com.tqe.po.Admin;
 import com.tqe.po.Course;
+import com.tqe.po.StuTable;
 
 
 
@@ -36,6 +38,21 @@ public class CourseController extends BaseController{
 		model.addAttribute("courseList",list);
 		return "course/course";				//直接返回  前缀加 字符串+jsp的页面
 	}
+	
+	/**
+	 * 显示课程评教详情
+	 * @return
+	 */
+	@RequestMapping("/course/show/{cid}/{cno}")
+	public String showCourse(Model model,@PathVariable String cid,@PathVariable Integer cno){
+		Course course = courseService.getById(cid,cno);
+		List<StuTable> stuTableList = evalService.findAllStuTableByCourse(cid, cno, 1);
+		System.out.println(JSON.toJSONString(stuTableList,true));
+		model.addAttribute("course",course);
+		model.addAttribute("stuTableList", stuTableList);
+		return "course/showCourse";	//转到添加页面
+	}
+	
 	
 	/**
 	 * 增加课程页面

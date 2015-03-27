@@ -1,8 +1,12 @@
 package com.tqe.controller;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
 
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.ServletContextAware;
 
 import com.tqe.service.AdminServiceImpl;
 import com.tqe.service.BatchesServiceImpl;
@@ -14,7 +18,12 @@ import com.tqe.service.StuEvalServiceImpl;
 import com.tqe.service.StudentServiceImpl;
 import com.tqe.service.TeacherServiceImpl;
 
-public class BaseController {
+@Component
+public class BaseController implements ServletContextAware,InitializingBean{
+	
+	protected static ServletContext application;
+	
+	public static String season;
 	
 	@Resource(name="adminServiceImpl")
 	protected AdminServiceImpl adminService;
@@ -42,4 +51,16 @@ public class BaseController {
 	
 	@Autowired
 	protected EvalServiceImpl evalService;
+	
+	@Override
+	public void setServletContext(ServletContext application) {
+		BaseController.application = application;
+	}
+	
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		
+	}
+	
+	
 }

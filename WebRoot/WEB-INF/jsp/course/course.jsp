@@ -56,9 +56,9 @@
 										<td><a href="admin/edit/${admin.id }"
 											class="btn btn-info"><span
 												class=" glyphicon glyphicon-edit"></span>&nbsp;&nbsp;修改</a></td>
-										<td><a href="admin/delete/${admin.id}"
-											class="btn btn-danger" onclick="return confirm('确认要删除吗？')"><span
-												class=" glyphicon  glyphicon-trash"></span>&nbsp;&nbsp;删除</a></td>
+										<td><a href="${pageContext.request.contextPath}/admin/course/show/${c.cid}/${c.cno}"
+											class="btn btn-danger" ><span
+												class=" glyphicon glyphicon-zoom-in"></span>查看评教详情</a></td>
 									</tr>
 								</c:forEach>
 

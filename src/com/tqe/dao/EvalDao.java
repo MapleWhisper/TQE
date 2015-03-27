@@ -4,6 +4,7 @@ package com.tqe.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
@@ -17,5 +18,11 @@ public interface EvalDao extends BaseDao<EvalTable>{
 	
 	@Select("select cid from stutable where sid = #{sid}")
 	public List<String> getAllStuTablecids(Integer sid);
+
+	@Select("select * from stutable where cid =#{cid} and cno=#{cno} and bid =#{bid} ")
+	public List<StuTable> findAllStuTableByCourse(@Param("cid")String cid, @Param("cno")Integer cno, @Param("bid")Integer bid);
+
+	@Select("select * from stutable where id = #{stuTableId}")
+	public StuTable getStuTableById(Integer stuTableId);
 	
 }

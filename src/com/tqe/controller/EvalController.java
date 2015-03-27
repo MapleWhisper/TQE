@@ -25,7 +25,6 @@ public class EvalController extends BaseController{
 		EvalTable e = evalTableService.getById(stuTable.getEid()).json2Object();
 		e.setAns(e, evalTable);
 		stuTable.setJsonString(JSON.toJSONString(e));
-		System.out.println(JSON.toJSONString(stuTable,true));
 		try {
 			evalService.saveStuTable(stuTable);
 		} catch (Exception e1) {
@@ -35,5 +34,17 @@ public class EvalController extends BaseController{
 			return "error";
 		}
 		return "redirect:/admin/stuEval";
+	}
+	
+	
+	@RequestMapping("/eval/show/student/{id}")
+	public String showEvalTable( @PathVariable int id ,Model model){
+		StuTable stuTable = evalService.getStuTableById(id);
+		EvalTable evalTable = JSON.parseObject(stuTable.getJsonString(),EvalTable.class);
+		
+		model.addAttribute("evalTable", evalTable);
+		model.addAttribute("stuTable", stuTable);
+
+		return "eval/showEval";
 	}
 }

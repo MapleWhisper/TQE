@@ -18,10 +18,7 @@ public class CourseServiceImpl extends BaseService<Course>{
 		}
 		
 		public Course getById(String cid,Integer cno) {
-			Course tem = new Course();
-			tem.setCid(cid);
-			tem.setCno(cno);
-			Course c = courseDao.getById(tem);
+			Course c = courseDao.getById(cid,cno);
 			c.setTeacher(teacherDao.getById(c.getTeacherId()));
 			return c;
 		}

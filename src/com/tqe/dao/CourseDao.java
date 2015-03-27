@@ -13,7 +13,7 @@ import com.tqe.po.Course;
 @Repository
 public interface CourseDao {
 	@Select("select * from `course` where cid=#{cid} and cno=#{cno}")
-	public Course getById(Course course);
+	public Course getById(@Param("cid") String  cid,@Param("cno") int cno);
 	
 	@Insert("INSERT INTO `tqe`.`course` (`cid`, `cno`, `name`, `stuNumber`, `peroid`, `credit`, `attr`, `examMode`, `nature`, `teacherId`, `department`, `campus`,`season`,`combine`) VALUES (#{cid}, #{cno}, #{name}, #{stuNumber}, #{peroid}, #{credit}, #{attr}, #{examMode}, #{nature}, #{teacherId}, #{department}, #{campus},#{season},#{combine});")
 	public void save(Course	course);

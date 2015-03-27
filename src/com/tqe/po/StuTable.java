@@ -12,6 +12,11 @@ public class StuTable {
 	private String level;		//等级
 	private String jsonString;	//存储的评价信息
 	
+	private Student student;
+	private Batches batches;
+	private Course course;
+	
+	
 	
 	
 	public Integer getId() {
@@ -68,6 +73,24 @@ public class StuTable {
 	}
 	public void setCid(String cid) {
 		this.cid = cid;
+	}
+	public Student getStudent() {
+		return student;
+	}
+	public void setStudent(Student student) {
+		this.student = student;
+	}
+	public Batches getBatches() {
+		return batches;
+	}
+	public void setBatches(Batches batches) {
+		this.batches = batches;
+	}
+	public Course getCourse() {
+		return course;
+	}
+	public void setCourse(Course course) {
+		this.course = course;
 	}
 	
 	

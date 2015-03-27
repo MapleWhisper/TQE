@@ -13,7 +13,7 @@ import com.tqe.po.User;
 @Repository
 public interface StudentDao extends BaseDao<Student>{
 	@Select("select * from student where sid = #{sid}")
-	public Student getById(int sid);
+	public Student getById(String sid);
 	
 	@Insert("INSERT INTO `tqe`.`student` (`sid`, `name`, `password`,`sex`, `brithday`, `idNumber`, `nation`, `politicalStatus`, `language`, `department`, `major`, `clazz`, `field`, `educationBackground`, `grade`, `hasRoll`, `atSchool`, `style`,campus) "
 			+ "VALUES (#{sid}, #{name},#{password}, #{sex}, #{brithday}, #{idNumber}, #{nation}, #{politicalStatus}, #{language}, #{department}, #{major}, #{clazz}, #{field}, #{educationBackground}, #{grade}, #{hasRoll}, #{atSchool}, #{style},#{campus});")
