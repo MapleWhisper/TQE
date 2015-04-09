@@ -22,6 +22,7 @@
 				<div style="text-align: center;margin-top: 100px">
 					<h2>${evalTable.title }</h2>
 					<h3>${stuTable.course.name }</h3>
+					<h3>${table.course.name }</h3>
 				</div>
 				<div class="row">
 					<!--左侧的导航条 -->
@@ -46,11 +47,11 @@
 									<td>截止日期</td>
 								</tr>
 									<tr>
-										<td>${stuTable.course.department }</td>
-										<td>${stuTable.course.season }</td>
-										<td>${stuTable.batches.name }</td>
-										<td><fm:formatDate value="${stuTable.batches.beginDate}" pattern="yyyy-MM-dd"/></td>
-										<td><fm:formatDate value="${stuTable.batches.endDate }" pattern="yyyy-MM-dd"/></td>
+										<td>${table.course.department }</td>
+										<td>${table.course.season }</td>
+										<td>${table.batches.name }</td>
+										<td><fm:formatDate value="${table.batches.beginDate}" pattern="yyyy-MM-dd"/></td>
+										<td><fm:formatDate value="${table.batches.endDate }" pattern="yyyy-MM-dd"/></td>
 									</tr>
 						</table>
 						<hr>

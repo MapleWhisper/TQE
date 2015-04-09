@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.alibaba.fastjson.JSON;
 import com.tqe.model.CourseModel;
 import com.tqe.po.Admin;
 import com.tqe.po.Batches;
 import com.tqe.po.Course;
 import com.tqe.po.StuTable;
+import com.tqe.po.TeaTable;
 import com.tqe.utils.SystemUtils;
 
 
@@ -54,8 +54,10 @@ public class CourseController extends BaseController{
 		
 		for(Batches b : batchesList){	//遍历所有得到的批次列表
 			List<StuTable> stuTableList = evalService.findAllStuTableByCourse(cid, cno, b.getId());
+			List<TeaTable> teaTableList = evalService.findAllTeaTableByCourse(cid, cno, b.getId());
 			CourseModel.Batches batches = new CourseModel.Batches();
 			batches.setStuTableList(stuTableList);
+			batches.setTeaTableList(teaTableList);
 			batches.setBatches(b);
 			courseModel.getBatchesList().add(batches);
 		}

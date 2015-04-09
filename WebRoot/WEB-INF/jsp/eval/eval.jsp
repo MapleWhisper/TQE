@@ -63,6 +63,7 @@
 							<input type="hidden" name="cno" value="${ course.cno}">
 							<input type="hidden" name="bid" value="${ batches.id}">
 							<input type="hidden" name="sid" value="${sessionScope.student.sid}">
+							<input type="hidden" name="tid" value="${sessionScope.teacher.id}">
 							<input type="hidden" name="score" id="sum1" value="">
 							<input type="hidden" name="level" id="level1" value="">
 							<!--评教须知: -->

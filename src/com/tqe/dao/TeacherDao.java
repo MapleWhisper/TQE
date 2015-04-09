@@ -14,7 +14,7 @@ import com.tqe.po.User;
 @Repository
 public interface TeacherDao extends BaseDao<Teacher>{
 	@Select("select * from teacher where id = #{id}")
-	public Teacher getById(@Param("id")int id);
+	public Teacher getById(@Param("id")Integer id);
 	
 	@Insert("INSERT INTO `tqe`.`teacher` (`id`, `name`,`password`, `sex`, `brithday`, `phone`, `email`, `addr`, `postId`, `nation`, `idType`, `idNumber`, `politicalStatus`, `department`, `title`, `folk`, `workDate`) VALUES (#{id}, #{name},#{password}, #{sex}, #{brithday}, #{phone}, #{email}, #{addr}, #{postId}, #{nation}, #{idType}, #{idNumber}, #{politicalStatus}, #{department}, #{title}, #{folk}, #{workDate})")
 	public void save(Teacher teacher);
