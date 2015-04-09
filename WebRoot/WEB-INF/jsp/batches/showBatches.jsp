@@ -33,7 +33,6 @@
 											<td>学期</td>
 											<td>评教开始日期</td>
 											<td>评教截止日期</td>
-											<td>评价评估表</td>
 											<td>操作</td>
 										</tr>
 										<tr>
@@ -47,10 +46,27 @@
 											<td class="old"><input type="date" class="form-control" value="<fm:formatDate value="${batches.beginDate}" pattern="yyyy-MM-dd"/>" id="beginDate" onClick="WdatePicker()"></td>
 											
 											<td class="old"><input type="date" class="form-control" value="<fm:formatDate value="${batches.endDate}" pattern="yyyy-MM-dd"/>" id="endDate" onClick="WdatePicker()"></td>
-											<td class="new"><a href="${pageContext.request.contextPath}/admin/evalTable/show/${batches.evalTableId}">${batches.defaultEval.title}</a></td>
-											<td class="old"><a class="btn btn-defaule" href="${pageContext.request.contextPath}/admin/evalTable?action=defaultEval&bid=${batches.id}">点此更换默认评教指标</a></td>
+											
 											<td class="new"><button class="btn btn-warning" id="edit">修改</button></td>
 											<td class="old"><button class="btn btn-warning" id="save">保存</button></td>
+										</tr>
+									</table>
+									<table class="table table-striped table-hover table-bordered">
+										<tr>
+											<td>默认学生评估表</td>
+											<td>默认教师评估表</td>
+											<td>默认领导评估表</td>
+										</tr>
+										<tr>
+											
+											<td class="new"><a href="${pageContext.request.contextPath}/admin/evalTable/show/${batches.stuEvalId}">${batches.stuEval.title}</a></td>
+											<td class="old"><a class="btn btn-info" href="${pageContext.request.contextPath}/admin/evalTable?action=stuEval&bid=${batches.id}">点此更换默认<Strong>学生</Strong>评教指标表</a></td>
+											
+											<td class="new"><a href="${pageContext.request.contextPath}/admin/evalTable/show/${batches.teaEvalId}">${batches.teaEval.title}</a></td>
+											<td class="old"><a class="btn btn-info" href="${pageContext.request.contextPath}/admin/evalTable?action=teaEval&bid=${batches.id}">点此更换默认<Strong>教师</Strong>评教指标表</a></td>
+											
+											<td class="new"><a href="${pageContext.request.contextPath}/admin/evalTable/show/${batches.leadEvalId}">${batches.leadEval.title}</a></td>
+											<td class="old"><a class="btn btn-info" href="${pageContext.request.contextPath}/admin/evalTable?action=leadEval&bid=${batches.id}">点此更换默认<Strong>领导</Strong>评教指标表</a></td>
 										</tr>
 									</table>
 								</div>
@@ -104,9 +120,9 @@
 					return false;
 				}
 				var id = $("#id").val();
-				location.reload();
-				$.post("../update",{beginDate:beginDate,endDate:endDate,id:id},function(){
-					alert("ok");
+				$.post("../update",{beginDate:beginDate,endDate:endDate,id:id},function(data){
+						alert(data);
+						window.location.reload();
 				});
 				
 			});

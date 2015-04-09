@@ -56,11 +56,27 @@
 												pattern="yyyy-MM-dd" /></td>
 										<td><a id="${e.id}" class="btn btn-sm btn-warning delete">删除</a></td>
 										
-										<c:if test="${param.action == 'defaultEval'}">
+										<c:if test="${param.action == 'stuEval'}">
 											<td>
 											<a
-												href="${pageContext.request.contextPath}/admin/batches/defaultEval/${param.bid}/${e.id}"
-												class="btn btn-lg btn-danger">点此选为默认评教指标</a>
+												href="${pageContext.request.contextPath}/admin/batches/setEval/student/${param.bid}/${e.id}"
+												class="btn btn-lg btn-danger">点此选为默认学生评教指标表</a>
+												</td>
+										</c:if>
+										
+										<c:if test="${param.action == 'teaEval'}">
+											<td>
+											<a
+												href="${pageContext.request.contextPath}/admin/batches/setEval/teacher/${param.bid}/${e.id}"
+												class="btn btn-lg btn-danger">点此选为默认教师评教指标表</a>
+												</td>
+										</c:if>
+										
+										<c:if test="${param.action == 'leadEval'}">
+											<td>
+											<a
+												href="${pageContext.request.contextPath}/admin/batches/setEval/lead/${param.bid}/${e.id}"
+												class="btn btn-lg btn-danger">点此选为默认领导评教指标表</a>
 												</td>
 										</c:if>
 									</tr>

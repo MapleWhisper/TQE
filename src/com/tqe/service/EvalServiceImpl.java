@@ -26,15 +26,15 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 		return stuTable;
 	}
 	
-	public List<String> getAllStuTablecids(Integer sid){
-		return evalDao.getAllStuTablecids(sid);
+	public List<String> getAllStuTablecids(Integer sid,Integer bid){
+		return evalDao.findAllStuTablecids(sid,bid);
 	}
 	
 	/**
-	 * 得到 cid 和cno 对应的课程的所有 学生评教信息
-	 * @param cid
-	 * @param cno
-	 * @param bid
+	 * 得到 cid 和cno bid 对应的课程的所有 学生评教信息
+	 * @param cid 课程号
+	 * @param cno 课序号
+	 * @param bid 批次号
 	 * @return
 	 */
 	public List<StuTable> findAllStuTableByCourse(String cid,Integer cno,Integer bid){

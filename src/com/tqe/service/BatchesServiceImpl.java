@@ -18,8 +18,10 @@ public class BatchesServiceImpl extends BaseService<Batches>{
 	@Override
 	public Batches getById(Integer id) {
 		Batches b = batchesDao.getById(id);
-		b.setDefaultEval(evalTableDao.getById(b.getEvalTableId()));
-				
+		
+		b.setStuEval(evalTableDao.getById(b.getStuEvalId()));
+		b.setTeaEval(evalTableDao.getById(b.getTeaEvalId()));
+		b.setLeadTval(evalTableDao.getById(b.getLeadEvalId()));
 		return b;
 	}
 	
@@ -43,5 +45,18 @@ public class BatchesServiceImpl extends BaseService<Batches>{
 	
 	public Batches getAvailiableBatches(String season){
 		return batchesDao.getAvailiableBatches(season);
+	}
+
+	public Date getLatestDate(Integer id) {
+		return batchesDao.getLatestDate(id);
+	}
+	
+	/**
+	 * 根据学期 season 得到所有的批次Bathces 列表
+	 * @param season
+	 * @return
+	 */
+	public List<Batches> findAllBySeason(String season) {
+		return batchesDao.findAllBySeason(season);
 	}
 }

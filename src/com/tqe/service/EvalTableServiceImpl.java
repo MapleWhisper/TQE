@@ -16,8 +16,12 @@ public class EvalTableServiceImpl extends BaseService<EvalTable>{
 	@Autowired
 	private EvalTableDao evalTableDao;
 	@Override
-	public EvalTable getById(Integer id) {
-		return evalTableDao.getById(id).json2Object();
+	public EvalTable getById(Integer id){
+		EvalTable evalTable = evalTableDao.getById(id);
+		if(evalTable==null){
+			return null;
+		}
+		return evalTable.json2Object();
 	}
 	
 	@Override

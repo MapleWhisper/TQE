@@ -23,7 +23,7 @@
 			<div class="col-sm-10 ">
 
 				<div class="panel panel-primary">
-					<div class="panel-heading">我的课程</div>
+					<div class="panel-heading">我的课程|${batches.name}</div>
 
 					<div class="panel-body">
 						<table class="table table-hover table-striped table-bordered table-condensed">
@@ -62,18 +62,9 @@
 
 							</tbody>
 						</table>
-						<div class="row">
-							<div class="col-xs-6 col-xs-offset-5">
-								<div class="no1">
-									<!-- 
-									<a class="btn btn-primary " href="admin/add"></a>
-									 -->
-								</div>
-
-							</div>
-
+						<div style="text-align: center">
+							<h1 class="well text-danger">${msg}</h1>
 						</div>
-
 
 					</div>
 

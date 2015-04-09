@@ -13,7 +13,7 @@ import com.tqe.po.EvalTable;
 @Repository
 public interface EvalTableDao extends BaseDao<EvalTable>{
 	@Select("select * from EvalTable where id = #{id}")
-	public EvalTable getById(@Param("id")int id);
+	public EvalTable getById(@Param("id")Integer id);
 	
 	@Insert("insert into evalTable values(null,#{title},#{note},#{createDate},#{jsonString}) ")
 	public void save(EvalTable	EvalTable);
@@ -23,6 +23,6 @@ public interface EvalTableDao extends BaseDao<EvalTable>{
 	
 	
 	@Delete("delete from EvalTable where id = #{id}")
-	public void delete(int id);
+	public void delete(Integer id);
 	
 }

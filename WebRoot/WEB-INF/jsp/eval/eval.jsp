@@ -141,12 +141,12 @@
 											${que.context }
 										</div>
 										<div class="questArea">
-											<textarea class="form-control" name="questionList[${s.index}].ans" required="required"></textarea>
+											<textarea class="form-control" name="questionList[${s.index}].ans" required="required" rows="8"></textarea>
 										</div>
 									</c:forEach>
 									
 									<div style="text-align: center;margin-top: 100px;">
-										<c:if test="${type=='student'}">
+										<c:if test="${type=='student' || type=='teacher'}">
 											<input class="btn btn-info btn-lg btn-block" onclick="return confirm('一旦提交，不可修改，确认要提交');"
 												type="submit" value="提交评价" >
 										</c:if>

@@ -18,7 +18,11 @@ import com.tqe.po.EvalTable;
 public class EvalTableController extends BaseController{
 	
 	
-	
+	/**
+	 * 显示评教表列表
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/evalTable")
 	public String evalTable(Model model){
 		List<EvalTable> list = evalTableService.findAll();
@@ -26,20 +30,39 @@ public class EvalTableController extends BaseController{
 		return "evalTable/evalTable";
 	}
 	
+	/**
+	 * 添加评教表页面
+	 * @return
+	 */
 	@RequestMapping("/evalTable/add")
 	public String addEvalTable(){
 		return "evalTable/addEvalTable";
 	}
 	
+	/**
+	 * 显示评教表
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/evalTable/show/{id}")
 	public String showEvalTable(@PathVariable int id,Model model){
-		model.addAttribute("evalTable",evalTableService.getById(id));
+		EvalTable evalTable = evalTableService.getById(id);
+		if(evalTable==null){
+			model.addAttribute("msg", "您访问的评教表不存在");
+			return "error";
+		}
+		model.addAttribute("evalTable",evalTable);
 		return "evalTable/showEvalTable";
 	}
 	
+	/**
+	 * 保存评教表
+	 * @param evalTable
+	 * @return
+	 */
 	@RequestMapping("/evalTable/save")
 	public String saveEvalTable(@ModelAttribute()EvalTable evalTable){
-		//System.out.println(JSON.toJSONString(evalTable, true));
 		evalTableService.save(evalTable);
 		return "redirect:/admin/evalTable";
 	}

@@ -1,5 +1,8 @@
 package com.tqe.controller;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 
@@ -17,11 +20,11 @@ import com.tqe.service.EvalTableServiceImpl;
 import com.tqe.service.StuEvalServiceImpl;
 import com.tqe.service.StudentServiceImpl;
 import com.tqe.service.TeacherServiceImpl;
+import com.tqe.utils.SystemProperties;
 
 @Component
-public class BaseController implements ServletContextAware,InitializingBean{
+public class BaseController {
 	
-	protected static ServletContext application;
 	
 	public static String season;
 	
@@ -52,15 +55,6 @@ public class BaseController implements ServletContextAware,InitializingBean{
 	@Autowired
 	protected EvalServiceImpl evalService;
 	
-	@Override
-	public void setServletContext(ServletContext application) {
-		BaseController.application = application;
-	}
-	
-	@Override
-	public void afterPropertiesSet() throws Exception {
-		
-	}
 	
 	
 }

@@ -13,8 +13,15 @@ public class Batches {
 	
 	private Date beginDate;		//评教开始日期
 	private Date endDate;		//评教结束日期
-	private EvalTable defaultEval;	//默认的评教指标
-	private int evalTableId;
+	
+	private EvalTable stuEval;	//默认的学生评教指标表
+	private Integer stuEvalId;		//默认的学生评教指标表Id
+	
+	private EvalTable teaEval;	//默认的学生评教指标表
+	private Integer teaEvalId;		//默认的学生评教指标表Id
+	
+	private EvalTable leadEval;	//默认的教师评教指标表
+	private Integer leadEvalId;		//默认的学生评教指标表Id
 	
 	public Integer getId() {
 		return id;
@@ -46,12 +53,7 @@ public class Batches {
 	public void setSeason(String season) {
 		this.season = season;
 	}
-	public EvalTable getDefaultEval() {
-		return defaultEval;
-	}
-	public void setDefaultEval(EvalTable defaultEval) {
-		this.defaultEval = defaultEval;
-	}
+	
 	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	public Date getBeginDate() {
@@ -68,12 +70,44 @@ public class Batches {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-	public int getEvalTableId() {
-		return evalTableId;
+	
+	public EvalTable getStuEval() {
+		return stuEval;
 	}
-	public void setEvalTableId(int evalTableId) {
-		this.evalTableId = evalTableId;
+	public void setStuEval(EvalTable stuEval) {
+		this.stuEval = stuEval;
 	}
+	public Integer getStuEvalId() {
+		return stuEvalId;
+	}
+	public void setStuEvalId(Integer stuEvalId) {
+		this.stuEvalId = stuEvalId;
+	}
+	public EvalTable getTeaEval() {
+		return teaEval;
+	}
+	public void setTeaEval(EvalTable teaEval) {
+		this.teaEval = teaEval;
+	}
+	public Integer getTeaEvalId() {
+		return teaEvalId;
+	}
+	public void setTeaEvalId(Integer teaEvalId) {
+		this.teaEvalId = teaEvalId;
+	}
+	public EvalTable getLeadEval() {
+		return leadEval;
+	}
+	public void setLeadTval(EvalTable leadEval) {
+		this.leadEval = leadEval;
+	}
+	public Integer getLeadEvalId() {
+		return leadEvalId;
+	}
+	public void setLeadEvalId(Integer leadEvalId) {
+		this.leadEvalId = leadEvalId;
+	}
+	
 	
 	
 }

@@ -7,12 +7,15 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.SystemPropertyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tqe.po.Batches;
 import com.tqe.po.Course;
 import com.tqe.po.Student;
+import com.tqe.utils.SystemProperties;
+import com.tqe.utils.SystemUtils;
 
 /**
  * 学生评教控制器
@@ -32,15 +35,27 @@ public class StuEvalController extends BaseController{
 	@RequestMapping("/stuEval")
 	public String stuEval(Model model,HttpSession session){
 		Student stu = (Student) session.getAttribute("student");
-		
-		List<Course> courseList = courseService.findAll(stu.getSid());
-		model.addAttribute("courseList", courseList);
+		Batches batches = batchesService.getAvailiableBatches(SystemUtils.getSeason());
+		if(batches!=null){		//如果当前存在 可以评教的批次
+			List<Course> courseList = courseService.findAllBySId(stu.getSid(),batches.getId());	//得到所有的课程列表
+			model.addAttribute("courseList", courseList);
+			model.addAttribute("batches", batches);
+			
+		}else{		//如果当前没有评教批次
+			model.addAttribute("msg", "对不起，当前还没有可以评教的课程");
+		}
 		return "stuEval/stuEval";
 	}
 	
+	/**
+	 * 学生开始评教
+	 * @param model
+	 * @param cid
+	 * @param cno
+	 * @return
+	 */
 	@RequestMapping("/stuEval/eval/{cid}/{cno}")
 	public String EvalstuEval(Model model,@PathVariable("cid") String cid ,@PathVariable("cno") Integer cno){
-		System.out.println(cid+" "+cno);
 		Course c = courseService.getById(cid, cno);
 		if(c!=null){
 			Batches batches = batchesService.getAvailiableBatches(c.getSeason());
@@ -50,7 +65,7 @@ public class StuEvalController extends BaseController{
 			}
 			model.addAttribute("batches", batches);
 			model.addAttribute("course", c);
-			model.addAttribute("evalTable", evalTableService.getById(batches.getEvalTableId()));
+			model.addAttribute("evalTable", evalTableService.getById(batches.getStuEvalId()));
 			model.addAttribute("type", "student");
 			return "eval/eval";
 		}

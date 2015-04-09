@@ -45,7 +45,6 @@
 									<td>学期</td>
 									<td>当前课程总数</td>
 									<td>已评教课程总数</td>
-									<td>操作</td>
 								</tr>
 							</thead>
 							<tbody>
@@ -56,9 +55,6 @@
 										<td>${b.season}</td>
 										<td>${b.courseNumber}</td>
 										<td>${b.curCourseNumber}</td>
-										<td><a id="${e.id}" class="btn btn-sm btn-warning delete">删除</a></td>
-										
-
 
 									</tr>
 								</c:forEach>
