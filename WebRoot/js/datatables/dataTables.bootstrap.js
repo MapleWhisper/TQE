@@ -161,7 +161,8 @@ $(function(){
 	            "searchPlaceholder":"请输入关键字",
 	            "next":"下一页",
 	            "previous":"上一页"
-	        }
+	        },
+			"lengthMenu": [[ 25, 50, 100,-1], [ 25, 50,100, "所有记录"]]
 	});
 });
 

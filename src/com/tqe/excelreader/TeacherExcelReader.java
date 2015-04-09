@@ -26,8 +26,6 @@ public class TeacherExcelReader extends ExcelReader<Teacher> {
 		}
 	}
 	
-	
-	
 	/**
 	 * 检查文件是否是教师文件
 	 */
