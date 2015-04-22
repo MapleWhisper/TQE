@@ -97,9 +97,17 @@
 											<tr>
 												<td>${s.count}</td>
 												<td>${item.context}</td>
-												<td>${item.level}</td>
-												<td><input type="number" class="form-control score"
-													required="required" value="0"></td>
+												<td>
+													${item.level}
+												
+												</td>
+												<td>
+													<select type="number" class="form-control score" required="required">
+														<c:forTokens items="${item.level}" delims=" " var="num">
+															<option value="${num}">${num}</option>
+														</c:forTokens>
+													</select>	
+												</td>
 											</tr>
 
 										</c:forEach>

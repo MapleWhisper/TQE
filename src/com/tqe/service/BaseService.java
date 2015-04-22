@@ -9,9 +9,12 @@ import org.springframework.stereotype.Component;
 
 import com.tqe.dao.AdminDao;
 import com.tqe.dao.BatchesDao;
+import com.tqe.dao.ClazzDao;
 import com.tqe.dao.CourseDao;
+import com.tqe.dao.DepartmentDao;
 import com.tqe.dao.EvalDao;
 import com.tqe.dao.EvalTableDao;
+import com.tqe.dao.MajorDao;
 import com.tqe.dao.StudentDao;
 import com.tqe.dao.TeacherDao;
 
@@ -37,6 +40,15 @@ public abstract class BaseService<E> {
 	
 	@Autowired
 	public EvalDao evalDao;
+	
+	@Autowired
+	public DepartmentDao departmentDao;
+	
+	@Autowired
+	public MajorDao majorDao;
+	
+	@Autowired
+	public ClazzDao clazzDao;
 	
 	public  E getById(Integer id){
 		return null;

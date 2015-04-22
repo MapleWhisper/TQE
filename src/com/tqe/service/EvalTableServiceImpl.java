@@ -26,6 +26,12 @@ public class EvalTableServiceImpl extends BaseService<EvalTable>{
 	
 	@Override
 	public void save(EvalTable e) {
+		for(EvalTable.EvalTableItem item :e.getTableItemList()){
+			String level = item.getLevel();
+			level=level.replaceAll("，", ",");	//把评教的分隔符统一为空格分隔
+			level=level.replaceAll(",", " ");
+			item.setLevel(level);
+		}
 		e.setJsonString(JSON.toJSONString(e));
 		e.setCreateDate(new Date(System.currentTimeMillis()));
 		evalTableDao.save(e);

@@ -52,7 +52,7 @@ public class LoginController extends BaseController{
 				session.setAttribute("teacher", t);
 				session.removeAttribute("student");
 				session.removeAttribute("admin");
-				return "redirect:/admin/admin";
+				return "redirect:/admin/teaEval";
 			}
 		}else{
 			Student stu = studentService.login(user);

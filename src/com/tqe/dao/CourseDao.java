@@ -32,5 +32,5 @@ public interface CourseDao {
 	@Select("select c.*,t.name as  `teacher.name` , t.id as `teacher.id` from course c ,teacher t where c.name in("
 			+"select name from course where teacherid = #{tid}"
 			+") and c.teacherId =t.id and t.id!= #{tid}")
-	public List<Course> findAllByTid(Integer tid);
+	public List<Course> findAllByTid(String tid);
 }

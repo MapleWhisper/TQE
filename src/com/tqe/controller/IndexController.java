@@ -7,7 +7,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tqe.dao.TeacherDao;
 import com.tqe.po.Admin;
@@ -63,7 +65,7 @@ public class IndexController extends BaseController{
 			Admin admin = adminService.getById(id);
 			if(admin.getPassword().equals(Md5oldPwd)){	//如果密码相等
 				User user = new User();
-				user.setId(admin.getId());
+				user.setId(admin.getId()+"");
 				user.setUsername(admin.getUsername());
 				user.setPassword(pwd);
 				user.setType("admin");
@@ -84,7 +86,7 @@ public class IndexController extends BaseController{
 			Student student = studentService.getById(id);
 			if(student.getPassword().endsWith(Md5oldPwd)){	//如果密码相同
 				User user = new User();
-				user.setId(student.getSid());
+				user.setId(student.getSid()+"");
 				user.setPassword(pwd);
 				user.setType("student");
 				commonService.updatePwd(user);
@@ -93,7 +95,18 @@ public class IndexController extends BaseController{
 		}
 			model.addAttribute("error","原密码错误");
 			return "resetPwd";
-
-
 		}
+	
+	@RequestMapping("getMajor/{did}")
+	@ResponseBody
+	public Object getMajor(@PathVariable Integer did){
+		return majorService.findAllByDid(did);
+	}
+	
+	@RequestMapping("getClazz/{did}/{mid}")
+	@ResponseBody
+	public Object getClazz(@PathVariable Integer did,@PathVariable Integer mid){
+		return clazzService.findAllByDidMid(did, mid);
+				
+	}
 }

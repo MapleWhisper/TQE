@@ -1,5 +1,6 @@
 package com.tqe.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -54,5 +55,9 @@ public class TeacherServiceImpl extends BaseService<Teacher>{
 
 	public List<Teacher> findByPage(int start, int length) {
 		return teacherDao.findByPage(start ,length);
+	}
+
+	public List<Teacher> findByCondition(HashMap<String, String> condition) {
+		return teacherDao.findByCondition(condition);
 	}
 }

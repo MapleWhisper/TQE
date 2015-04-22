@@ -1,10 +1,12 @@
 package com.tqe.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
@@ -30,4 +32,7 @@ public interface TeacherDao extends BaseDao<Teacher>{
 	
 	@Select("select * from teacher limit  #{start},#{length}")
 	public List<Teacher> findByPage(@Param("start")int start, @Param("length")int length);
+	
+	@SelectProvider(type=BaseDaoTemplate.class,method="findTeacherByCondition")
+	public List<Teacher> findByCondition(HashMap<String, String> condition);
 }

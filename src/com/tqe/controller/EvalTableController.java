@@ -63,6 +63,7 @@ public class EvalTableController extends BaseController{
 	 */
 	@RequestMapping("/evalTable/save")
 	public String saveEvalTable(@ModelAttribute()EvalTable evalTable){
+		
 		evalTableService.save(evalTable);
 		return "redirect:/admin/evalTable";
 	}

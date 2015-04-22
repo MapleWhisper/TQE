@@ -30,6 +30,38 @@
 							List</h1>
 					</div>
 					<div class="panel-body">
+						<blockquote>
+							<form class="form-inline" method="post" action="${pageContext.request.contextPath}/admin/teacher">
+								<div class="form-group">
+									<label >学院:</label>
+									<select  class="form-control" id="department" name="did" >
+										<c:forEach items="${ departmentList}" var="dep" >
+											<c:if test="${dep.id != condition.did}">
+												<option value="${dep.id}">${dep.name }</option>
+											</c:if>
+											<c:if test="${dep.id == condition.did}">
+												<option value="${dep.id}" selected="selected">${dep.name }</option>
+											</c:if>
+										</c:forEach>
+									</select>
+									
+								</div>
+								<div class="form-group">
+									<label  >教师姓名:</label> <input type="text"
+										class="form-control" id="name" name="tname">
+								</div>
+								<div class="form-group">
+									<label  >教师号:</label> <input type="number"
+										class="form-control" id="sid" name="tid">
+								</div>
+
+								<button type="submit" class="btn btn-primary btn-lg">
+									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>搜索
+								</button>
+							</form>
+
+
+						</blockquote>
 						<table
 							class="table table-hover table-striped table-bordered table-condensed">
 							

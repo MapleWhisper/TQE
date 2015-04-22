@@ -1,5 +1,6 @@
 package com.tqe.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -17,6 +18,10 @@ public class StudentServiceImpl extends BaseService<Student>{
 		@Override
 		public List<Student> findAll() {
 			return StudentDao.findAll();
+		}
+		
+		public List<Student> findByCondition(HashMap<String,String> condition) {
+			return StudentDao.findByCondition(condition);
 		}
 		
 		public Student getById(String sid) {

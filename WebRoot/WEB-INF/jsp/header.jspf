@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fm" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="st" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <!-- 
 	<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
 	 -->
@@ -56,6 +58,12 @@ label.error {
 .foot li a {
 	text-decoration: none;
 	padding: 8px; /* 去掉下划线 */
+}
+blockquote {
+	padding: 10px 20px;
+	margin: 0 0 20px;
+	font-size: 17.5px;
+	border-left: 5px solid #5bc0de;
 }
 </style>
 

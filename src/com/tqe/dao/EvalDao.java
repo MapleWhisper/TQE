@@ -39,7 +39,7 @@ public interface EvalDao extends BaseDao<EvalTable>{
 	
 	
 	@Select("select concat(cid,cno) from teatable where tid = #{tid} and bid = #{bid}")
-	public List<String> findAllTeaTablecids(@Param("tid")Integer tid, @Param("bid")Integer bid);
+	public List<String> findAllTeaTablecids(@Param("tid")String tid, @Param("bid")Integer bid);
 
 	
 

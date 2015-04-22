@@ -5,7 +5,7 @@ import org.springframework.util.StringUtils;
 import com.tqe.utils.MD5Utils;
 
 public class User {
-	private Integer id;
+	private String id;
 	private String username;
 	private String password;
 	private String type;
@@ -33,10 +33,10 @@ public class User {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	

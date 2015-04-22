@@ -12,7 +12,7 @@ import com.tqe.utils.MD5Utils;
 @Component
 public class Teacher implements Serializable{
 	
-	private Integer id;
+	private String id;
 	private String password;
 	private String name;
 	private String sex;
@@ -30,10 +30,12 @@ public class Teacher implements Serializable{
 	private String folk;
 	private Date workDate;
 	
-	public Integer getId() {
+	
+	
+	public String getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getName() {
