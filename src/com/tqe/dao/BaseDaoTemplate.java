@@ -79,4 +79,34 @@ public class BaseDaoTemplate<T> {
 		return  SQL();
 		
 	}
+	
+	public String findCourseByCondition(Map<String, String> parameters){
+		@SuppressWarnings("unused")
+		String did = parameters.get("did");
+		String cname = parameters.get("cname");
+		String cid = parameters.get("cid");
+		String tname = parameters.get("tname");
+		
+		BEGIN();
+		SELECT("*");
+		FROM("course c");
+		FROM("teacher t");
+		WHERE("c.departmentid = #{did}");
+		WHERE("c.teacherid = t.id");
+		if(StringUtils.hasText(cname)){
+			cname = "'%"+cname+"%'";
+			WHERE("c.name like "+cname);
+			
+		}
+		if(StringUtils.hasText(cid)){
+			WHERE("c.cid = #{cid}");
+		}
+		if(StringUtils.hasText(tname)){
+			WHERE("t.tname = #{tname}");
+		}
+		return  SQL();
+		
+	}
+	
+	
 }

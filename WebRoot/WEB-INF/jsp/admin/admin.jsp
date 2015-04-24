@@ -33,7 +33,6 @@
 									<td>管理员姓名</td>
 									<td>管理员职位</td>
 									<td>操作</td>
-									<td>操作</td>
 								</tr>
 							</thead>
 							<tbody>
@@ -46,9 +45,11 @@
 										<td><a href="admin/edit/${admin.id }"
 											class="btn btn-info"><span
 												class=" glyphicon glyphicon-edit"></span>&nbsp;&nbsp;修改</a></td>
+										<!-- 
 										<td><a href="admin/delete/${admin.id}"
 											class="btn btn-danger" onclick="return confirm('确认要删除吗？')"><span
 												class=" glyphicon  glyphicon-trash"></span>&nbsp;&nbsp;删除</a></td>
+										 -->
 									</tr>
 								</c:forEach>
 

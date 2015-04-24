@@ -46,9 +46,16 @@
 										id="username">
 								</div>
 							</div>
-
+							
 							<div class="form-group">
-								<label class="col-xs-2 control-label">输入表单项</label>
+								<label class="col-xs-2 control-label">评教须知</label>
+								<div class="col-xs-10">
+									<textarea rows="5" cols="100%" name="note" required="required"></textarea>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-xs-2 control-label">输入表头项</label>
 								<div class="col-xs-10" id="item">
 									<div class="col-xs-4 item" style="margin-top: 5px;">
 										<input type="text" class="form-control inputxt" required="required"
@@ -57,7 +64,7 @@
 									<div class="col-xs-4">
 										<button class="btn btn-primary" id="addItem">
 											<span class="glyphicon glyphicon-plus-sign"
-												aria-hidden="true">添加新表单项</span>
+												aria-hidden="true">添加新表头项</span>
 										</button>
 									</div>
 
@@ -65,22 +72,18 @@
 
 							</div>
 
-							<div class="form-group">
-								<label class="col-xs-2 control-label">评教须知</label>
-								<div class="col-xs-10">
-									<textarea rows="5" cols="100%" name="note" required="required"></textarea>
-								</div>
-							</div>
+							
 
 							<div class="form-group">
-								<label class="col-xs-2 control-label">评教表格条目</label>
+								<label class="col-xs-2 control-label">评教表单项</label>
 								<div class="col-xs-10" id="tableItem">
 									<div class="col-xs-6">
-										<div class="alert alert-info" role="alert">在这里输入评教表格的信息：</div>
+										<div class="alert alert-info" role="alert">请在下面 ↓ ↓ ↓ 输入评教表格的信息</div>
 									</div>
 									<div class="col-xs-6">
 										<div class="alert alert-success" role="alert">
-											输入评教等级或评分：<code>不同等级评分之间使用 空格 逗号 隔开</code>
+											请在下面  ↓ ↓ ↓ 输入评教等级或评分<br>
+											<code>不同等级评分之间使用 空格 逗号 隔开</code>
 											<br>例如：<code>10 8 5 2</code> 或者 <code>10,8,5,2</code>
 										</div>
 
@@ -100,7 +103,7 @@
 									<div class="col-xs-3">
 										<button class="btn btn-primary" id="addTableItem">
 											<span class="glyphicon glyphicon-plus-sign"
-												aria-hidden="true">添加表格新条目</span>
+												aria-hidden="true">添加表单新项</span>
 										</button>
 									</div>
 
@@ -108,7 +111,7 @@
 							</div>
 
 							<div class="form-group">
-								<label class="col-xs-2 control-label">表单问题项</label>
+								<label class="col-xs-2 control-label">问题和建议</label>
 								<div class="col-xs-10" id="question">
 									<div class="col-xs-12 question" style="margin-top: 5px;">
 										<input type="text" class="form-control inputxt" required="required"
@@ -117,7 +120,7 @@
 									<div class="col-xs-3">
 										<button class="btn btn-primary" id="addQuestion">
 											<span class="glyphicon glyphicon-plus-sign"
-												aria-hidden="true"> 添加问题</span>
+												aria-hidden="true"> 添加问题和建议项</span>
 
 										</button>
 									</div>

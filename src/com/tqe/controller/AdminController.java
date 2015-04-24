@@ -71,11 +71,13 @@ public class AdminController {
 		return "redirect:/admin/admin";	//保存完成后  跳转到管理员列表页面
 	}
 	
+	
 	/**
 	 * 删除管理员
 	 * @param id 需要删除的管理员id
 	 * @return	返回到管理员列表页面
 	 */
+	/*
 	@RequestMapping("admin/delete/{id}")
 	public String delete(@PathVariable int id){
 		
@@ -83,4 +85,5 @@ public class AdminController {
 		
 		return "redirect:/admin/admin";	//跳到管理员列表页面
 	}
+	*/
 }

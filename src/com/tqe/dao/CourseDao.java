@@ -1,10 +1,12 @@
 package com.tqe.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 import org.springframework.stereotype.Repository;
 
 import com.tqe.po.Course;
@@ -33,4 +35,7 @@ public interface CourseDao {
 			+"select name from course where teacherid = #{tid}"
 			+") and c.teacherId =t.id and t.id!= #{tid}")
 	public List<Course> findAllByTid(String tid);
+
+	@SelectProvider(type=BaseDaoTemplate.class,method="findCourseByCondition")
+	public List<Course> findByCondition(HashMap<String, String> condition);
 }

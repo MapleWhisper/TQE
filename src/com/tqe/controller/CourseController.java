@@ -2,6 +2,7 @@ package com.tqe.controller;
 
 
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tqe.model.CourseModel;
 import com.tqe.po.Admin;
@@ -17,9 +19,6 @@ import com.tqe.po.Course;
 import com.tqe.po.StuTable;
 import com.tqe.po.TeaTable;
 import com.tqe.utils.SystemUtils;
-
-
-
 /**
  * 课程类
  * 
@@ -35,9 +34,28 @@ public class CourseController extends BaseController{
 	 * 显示课程列表页面
 	 * @return
 	 */
-	@RequestMapping("/course")
+	@RequestMapping(value="/course",method=RequestMethod.GET)
 	public String course(Model model){
-		List<Course> list = courseService.findAll();
+		//List<Course> list = courseService.findAll();
+		//model.addAttribute("courseList",list);
+		addSercherResource(model);
+		return "course/course";				//直接返回  前缀加 字符串+jsp的页面
+	}
+	
+	/**
+	 * 根据条件查询 课程列表
+	 * @return
+	 */
+	@RequestMapping(value="/course",method=RequestMethod.POST)
+	public String course1(Model model,String did,String cname ,String  cid,String tname){
+		HashMap<String,String> condition = new HashMap<String,String>();
+		condition.put("did", did);
+		condition.put("cname", cname);
+		condition.put("cid", cid);
+		condition.put("tname", tname);
+		model.addAttribute("condition", condition);
+		addSercherResource(model);
+		List<Course> list = courseService.findByCondition(condition);
 		model.addAttribute("courseList",list);
 		return "course/course";				//直接返回  前缀加 字符串+jsp的页面
 	}

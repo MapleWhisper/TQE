@@ -82,6 +82,10 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 		return list; 
 	}
 
+	public void update(EvalTable eTable) {
+		evalTableDao.update(eTable);
+	}
+
 
 
 	

@@ -1,5 +1,6 @@
 package com.tqe.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -82,5 +83,9 @@ public class CourseServiceImpl extends BaseService<Course>{
 				}
 			}
 			return list;
+		}
+
+		public List<Course> findByCondition(HashMap<String, String> condition) {
+			return courseDao.findByCondition(condition);
 		}
 }

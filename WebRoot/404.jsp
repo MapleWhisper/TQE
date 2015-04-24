@@ -14,7 +14,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
     <div id="error">
       <a href="<%=path%>">
-        <img src="<%=path%>/image/404.png" alt="404 page not found" id="error404-image" />
+        <img src="${pageContext.request.contextPath}/image/404.png" alt="404 page not found"  />
       </a>
     </div>
 </body>

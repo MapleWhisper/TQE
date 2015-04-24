@@ -38,9 +38,9 @@
 					</div>
 					<div class="panel-body">
 						
-						<table class="table table-hover table-striped table-bordered">
+						<table class="table table-hover table-striped table-bordered table-condensed">
 							<thead>
-								<tr>
+								<tr class="info">
 									<td>批次名</td>
 									<td>学期</td>
 									<td>当前课程总数</td>

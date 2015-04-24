@@ -39,9 +39,9 @@
 					<div class="panel-body">
 
 
-						<table class="table table-hover table-striped table-bordered">
+						<table class="table table-hover table-striped table-bordered table-condensed">
 							<thead>
-								<tr>
+								<tr class="info">
 									<td>评教指标标题</td>
 									<td>生成时间</td>
 									<td>操作</td>
@@ -54,7 +54,10 @@
 											href="${pageContext.request.contextPath}/admin/evalTable/show/${e.id}">${e.title }</a></td>
 										<td><fm:formatDate value="${e.createDate}"
 												pattern="yyyy-MM-dd" /></td>
+										<td><a href="${pageContext.request.contextPath}/admin/evalTable/edit/${e.id}" class="btn btn-sm btn-warning update">修改</a></td>
+										<!--	评教指标暂时不能删除 
 										<td><a id="${e.id}" class="btn btn-sm btn-warning delete">删除</a></td>
+										 -->
 										
 										<c:if test="${param.action == 'stuEval'}">
 											<td>

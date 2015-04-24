@@ -2,15 +2,13 @@ package com.tqe.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import com.alibaba.fastjson.JSON;
 import com.tqe.po.EvalTable;
 
 @Controller
@@ -46,7 +44,7 @@ public class EvalTableController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping("/evalTable/show/{id}")
-	public String showEvalTable(@PathVariable int id,Model model){
+	public String showEvalTable(@PathVariable Integer id,Model model){
 		EvalTable evalTable = evalTableService.getById(id);
 		if(evalTable==null){
 			model.addAttribute("msg", "您访问的评教表不存在");
@@ -65,6 +63,44 @@ public class EvalTableController extends BaseController{
 	public String saveEvalTable(@ModelAttribute()EvalTable evalTable){
 		
 		evalTableService.save(evalTable);
+		return "redirect:/admin/evalTable";
+	}
+	
+	/**
+	 * 修改评教表页面
+	 * @param evalTable
+	 * @return
+	 */
+	@RequestMapping("/evalTable/edit/{eid}")
+	public String editEvalTable(@PathVariable Integer eid,Model model){
+		
+		EvalTable eTable = evalTableService.getById(eid);
+		if(eTable==null){
+			model.addAttribute("msg", "您访问的评教表不存在");
+			return "error";
+		}
+		model.addAttribute("evalTable",eTable);
+		return "evalTable/editEvalTable";
+	}
+	
+	/**
+	 * 修改评教表
+	 * @param evalTable
+	 * @return
+	 */
+	@RequestMapping("/evalTable/update")
+	public String updateEvalTable(Integer eid,Model model,@ModelAttribute()EvalTable evalTable){
+		
+		EvalTable eTable = evalTableService.getById(eid);
+		if(eTable==null){
+			model.addAttribute("msg", "您访问的评教表不存在");
+			return "error";
+		}
+		eTable.setJsonString(JSON.toJSONString(evalTable));
+		eTable.setTitle(evalTable.getTitle());
+		eTable.setNote(evalTable.getNote());
+		evalService.update(eTable);
+		model.addAttribute("evalTable",eTable);
 		return "redirect:/admin/evalTable";
 	}
 }
