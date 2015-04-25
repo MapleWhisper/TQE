@@ -38,6 +38,7 @@ public class StudentController extends BaseController{
 		condition.put("cid", cid);
 		condition.put("sname", sname);
 		condition.put("sid", sid);
+		model.addAttribute("condition", condition);
 		model.addAttribute("studentList", studentService.findByCondition(condition));
 		return "student/student";
 	}

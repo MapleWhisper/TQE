@@ -1,5 +1,8 @@
 package com.tqe.controller;
 
+import java.util.HashMap;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tqe.po.Admin;
+import com.tqe.po.Privilege;
 import com.tqe.po.Student;
 import com.tqe.po.Teacher;
 import com.tqe.po.User;
@@ -43,6 +47,8 @@ public class LoginController extends BaseController{
 				session.setAttribute("admin", a);
 				session.removeAttribute("teacher");
 				session.removeAttribute("student");
+				List<Privilege> pList = privilegeService.findAdminAll();
+				addPrivilege(session, pList);
 				return "redirect:/admin/admin";
 			}
 		}else if(type.endsWith("teacher")){
@@ -52,6 +58,8 @@ public class LoginController extends BaseController{
 				session.setAttribute("teacher", t);
 				session.removeAttribute("student");
 				session.removeAttribute("admin");
+				List<Privilege> pList = privilegeService.findTeacherAll();
+				addPrivilege(session, pList);
 				return "redirect:/admin/teaEval";
 			}
 		}else{
@@ -61,6 +69,8 @@ public class LoginController extends BaseController{
 				session.setAttribute("student", stu);
 				session.removeAttribute("teacher");
 				session.removeAttribute("admin");
+				List<Privilege> pList = privilegeService.findStudentAll();
+				addPrivilege(session, pList);
 				return "redirect:/admin/stuEval";
 			}
 			//return "redirect:/admin/admin";
@@ -77,5 +87,15 @@ public class LoginController extends BaseController{
 		session.removeAttribute("admin");
 		
 		return "redirect:/index";
+	}
+	
+	private void addPrivilege(HttpSession session,List<Privilege> pList){
+		session.setAttribute("pList", pList);
+		HashMap<String,Boolean> map = new HashMap<String,Boolean>();
+		for(Privilege p : pList){
+			map.put(p.getUrl().substring(1), true);
+		}
+		session.setAttribute("pMap", map);
+		
 	}
 }

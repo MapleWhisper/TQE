@@ -63,7 +63,7 @@
 							</tbody>
 						</table>
 						<div style="text-align: center">
-							<h1 class="well text-danger">${msg}</h1>
+							<h1 class="well text-danger">${message}</h1>
 						</div>
 
 					</div>

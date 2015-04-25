@@ -16,6 +16,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <a href="<%=path%>">
         <img src="${pageContext.request.contextPath}/image/404.png" alt="404 page not found"  />
       </a>
+      <script type="text/javascript">
+      function goback(){
+    	  window.history.go(-1);
+      }
+      setTimeout("goback()", 3000);
+      		
+      </script>
     </div>
 </body>
 </html>

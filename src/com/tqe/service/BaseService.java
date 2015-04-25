@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.tqe.dao.AdminDao;
 import com.tqe.dao.BatchesDao;
@@ -15,10 +16,12 @@ import com.tqe.dao.DepartmentDao;
 import com.tqe.dao.EvalDao;
 import com.tqe.dao.EvalTableDao;
 import com.tqe.dao.MajorDao;
+import com.tqe.dao.PrivilegeDao;
 import com.tqe.dao.StudentDao;
 import com.tqe.dao.TeacherDao;
 
 @Component
+@Transactional
 public abstract class BaseService<E> {
 	@Resource(name="adminDao")
 	public AdminDao adminDao;
@@ -49,6 +52,9 @@ public abstract class BaseService<E> {
 	
 	@Autowired
 	public ClazzDao clazzDao;
+	
+	@Autowired
+	public PrivilegeDao privilegeDao;
 	
 	public  E getById(Integer id){
 		return null;

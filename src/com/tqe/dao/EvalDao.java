@@ -14,7 +14,7 @@ import com.tqe.po.TeaTable;
 
 @Repository
 public interface EvalDao extends BaseDao<EvalTable>{
-	@Insert("INSERT INTO `tqe`.`stutable` (`id`, `sid`, `eid`, `cid`, `cno`, `bid`, `score`, `level`, `jsonString`) VALUES (null, #{sid}, #{eid}, #{cid}, #{cno}, #{bid}, #{score}, #{level}, #{jsonString});")
+	@Insert("INSERT INTO `tqe`.`stutable` (`id`, `sid`, `eid`, `cid`, `cno`, `bid`, `score`, `level`, `jsonString`,`tid`,`sname`,`tname`,`question1`,`question2`,`question3`,`question4`,`question5`,`departmentid`) VALUES (null, #{sid}, #{eid}, #{cid}, #{cno}, #{bid}, #{score}, #{level}, #{jsonString},#{tid},#{sname},#{tname},#{question1},#{question2},#{question3},#{question4},#{question5},#{departmentId});")
 	public void saveStuTable(StuTable stuTable);
 	
 	@Insert("INSERT INTO `tqe`.`teatable` (`id`, `tid`, `eid`, `cid`, `cno`, `bid`, `score`, `level`, `jsonString`) VALUES (null, #{tid}, #{eid}, #{cid}, #{cno}, #{bid}, #{score}, #{level}, #{jsonString});")

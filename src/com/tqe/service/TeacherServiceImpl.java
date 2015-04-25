@@ -15,8 +15,8 @@ import com.tqe.po.User;
 public class TeacherServiceImpl extends BaseService<Teacher>{
 	@Resource(name="teacherDao")
 	private TeacherDao teacherDao;
-	@Override
-	public Teacher getById(Integer id) {
+	
+	public Teacher getById(String id) {
 		return  teacherDao.getById(id);
 	}
 	

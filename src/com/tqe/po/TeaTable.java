@@ -2,7 +2,7 @@ package com.tqe.po;
 
 public class TeaTable {
 	private Integer id;	
-	private Integer  tid;	//教师号
+	private String  tid;	//教师号
 	private Integer eid;	//评教表
 	private String  cid;	//课程号
 	private Integer cno;	//课程序号
@@ -63,10 +63,10 @@ public class TeaTable {
 		this.cno = cno;
 	}
 
-	public Integer getTid() {
+	public String getTid() {
 		return tid;
 	}
-	public void setTid(Integer tid) {
+	public void setTid(String tid) {
 		this.tid = tid;
 	}
 	public String getCid() {

@@ -25,7 +25,16 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:spring-mvc.xml</param-value>
 	</context-param>
-
+	
+	<filter>
+  		<filter-name>LoginFilter</filter-name>
+  		<filter-class>com.tqe.utils.LoginFilter</filter-class>
+  	</filter>
+  	<filter-mapping>
+  		<filter-name>LoginFilter</filter-name>
+  		<url-pattern>/*</url-pattern>
+  	</filter-mapping>
+  	
 	<filter>
 		<filter-name>CharacterEncodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>

@@ -10,11 +10,13 @@ public class Course {
 	private String attr;	//课程属性
 	private String  examMode;	//考试方式	
 	private String nature;		//课程性质
-	private Integer teacherId;	//教师Id
+	private String teacherId;	//教师Id
 	private String department;	//开课院系
 	private String campus;	//校区
 	private String season;	//学年春/秋
 	private String combine;	//合班
+	
+	private Integer departmentId;
 	
 	private Teacher teacher;	//主讲教师
 	private boolean isEvaled ;	//是否已经评价过
@@ -96,11 +98,11 @@ public class Course {
 		this.nature = nature;
 	}
 
-	public Integer getTeacherId() {
+	public String getTeacherId() {
 		return teacherId;
 	}
 
-	public void setTeacherId(Integer teacherId) {
+	public void setTeacherId(String teacherId) {
 		this.teacherId = teacherId;
 	}
 
@@ -150,6 +152,14 @@ public class Course {
 
 	public void setEvaled(boolean isEvaled) {
 		this.isEvaled = isEvaled;
+	}
+
+	public Integer getDepartmentId() {
+		return departmentId;
+	}
+
+	public void setDepartmentId(Integer departmentId) {
+		this.departmentId = departmentId;
 	}
 
 

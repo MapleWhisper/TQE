@@ -88,7 +88,7 @@ public class BaseDaoTemplate<T> {
 		String tname = parameters.get("tname");
 		
 		BEGIN();
-		SELECT("*");
+		SELECT("c.* , t.name as `teacher.name`");
 		FROM("course c");
 		FROM("teacher t");
 		WHERE("c.departmentid = #{did}");
@@ -102,7 +102,7 @@ public class BaseDaoTemplate<T> {
 			WHERE("c.cid = #{cid}");
 		}
 		if(StringUtils.hasText(tname)){
-			WHERE("t.tname = #{tname}");
+			WHERE("t.name = #{tname}");
 		}
 		return  SQL();
 		

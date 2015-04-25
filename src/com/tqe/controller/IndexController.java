@@ -1,24 +1,18 @@
 package com.tqe.controller;
 
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.tqe.dao.TeacherDao;
 import com.tqe.po.Admin;
 import com.tqe.po.Student;
 import com.tqe.po.Teacher;
 import com.tqe.po.User;
-import com.tqe.service.AdminServiceImpl;
-import com.tqe.service.CommonServiceImpl;
-import com.tqe.service.TeacherServiceImpl;
 import com.tqe.utils.MD5Utils;
 
 @Controller
@@ -58,7 +52,7 @@ public class IndexController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping("/admin/resetPwd")
-	public String resetPwd( int id ,String pwd,String oldPwd,
+	public String resetPwd( Integer id ,String pwd,String oldPwd,
 			Model model,HttpSession session){
 		String Md5oldPwd = MD5Utils.string2MD5(oldPwd);
 		if(session.getAttribute("admin")!=null){
@@ -82,8 +76,10 @@ public class IndexController extends BaseController{
 				commonService.updatePwd(user);
 				return "redirect:/logout";
 			}
-		}else{
-			Student student = studentService.getById(id);
+		}else if(session.getAttribute("student")!=null){
+			Student student = studentService.getById(id+"");
+			System.out.println(id);
+			System.out.println(student);
 			if(student.getPassword().endsWith(Md5oldPwd)){	//如果密码相同
 				User user = new User();
 				user.setId(student.getSid()+"");
@@ -93,9 +89,9 @@ public class IndexController extends BaseController{
 				return "redirect:/logout";
 			}
 		}
-			model.addAttribute("error","原密码错误");
-			return "resetPwd";
-		}
+		model.addAttribute("error","原密码错误");
+		return "resetPwd";
+	}
 	
 	@RequestMapping("getMajor/{did}")
 	@ResponseBody
@@ -108,5 +104,11 @@ public class IndexController extends BaseController{
 	public Object getClazz(@PathVariable Integer did,@PathVariable Integer mid){
 		return clazzService.findAllByDidMid(did, mid);
 				
+	}
+	
+	@RequestMapping("error")
+	public String error(Model model,HttpSession session){
+		model.addAttribute("msg",session.getAttribute("msg"));
+		return "error";
 	}
 }

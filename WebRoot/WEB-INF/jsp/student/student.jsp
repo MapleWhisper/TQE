@@ -38,7 +38,7 @@
 									<label >学院:</label>
 									<select  class="form-control" id="department" name="did" >
 										<c:forEach items="${ departmentList}" var="dep" >
-											<option value="${ dep.id}">${dep.name }</option>
+												<option value="${dep.id}">${dep.name }</option>
 										</c:forEach>
 									</select>
 									

@@ -12,7 +12,7 @@
     				<div class="jumbotron">
 					  <h2>${msg}</h2>
 					  <br>
-					  <center ><p id="cnt" style="color: red">3秒后返回主页...</p> <p><a class="btn btn-primary" href="${pageContext.request.contextPath}/">点我立即返回</a></p></center>
+					  <center ><p id="cnt" style="color: red">3秒后返回主页...</p> <p><a class="btn btn-primary" onclick="history.go(-1);">点我立即返回</a></p></center>
 					 
 					</div>
     		</div>
@@ -23,9 +23,9 @@
 	    	function count(){
 				cnt--;
 				if(cnt>0){
-					$("#cnt").html(cnt+"秒后返回主页...");
+					$("#cnt").html(cnt+"秒后返回");
 				}else{
-					location.href='/TQE/';
+					window.history.go(-1);
 				}
 			
 				

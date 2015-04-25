@@ -51,7 +51,7 @@
 										class="form-control" id="cid" name="cid">
 								</div>
 								<div class="form-group">
-									<label  >教师名:</label> <input type="number"
+									<label  >教师名:</label> <input type="text"
 										class="form-control" id="tname" name="tname">
 								</div>
 

@@ -15,6 +15,7 @@ import com.tqe.service.DepartmentServiceImpl;
 import com.tqe.service.EvalServiceImpl;
 import com.tqe.service.EvalTableServiceImpl;
 import com.tqe.service.MajorServiceImpl;
+import com.tqe.service.PrivilegeService;
 import com.tqe.service.StuEvalServiceImpl;
 import com.tqe.service.StudentServiceImpl;
 import com.tqe.service.TeacherServiceImpl;
@@ -58,6 +59,9 @@ public class BaseController {
 	
 	@Autowired
 	protected ClazzServiceImpl clazzService;
+	
+	@Autowired
+	protected PrivilegeService privilegeService;
 	
 	protected void addSercherResource(Model model){
 		

@@ -42,7 +42,7 @@ public class StuEvalController extends BaseController{
 			model.addAttribute("batches", batches);
 			
 		}else{		//如果当前没有评教批次
-			model.addAttribute("msg", "对不起，当前还没有可以评教的课程");
+			model.addAttribute("message", "对不起，当前还没有可以评教的课程");
 		}
 		return "stuEval/stuEval";
 	}
@@ -60,7 +60,7 @@ public class StuEvalController extends BaseController{
 		if(c!=null){
 			Batches batches = batchesService.getAvailiableBatches(c.getSeason());
 			if(batches==null){
-				model.addAttribute("msg", "对不起，当前评教还未开始");
+				model.addAttribute("message", "对不起，当前评教还未开始");
 				return "stuEval/stuEval";
 			}
 			model.addAttribute("batches", batches);
@@ -79,7 +79,6 @@ public class StuEvalController extends BaseController{
 	
 	@RequestMapping("/stuEval/save")
 	public String savestuEval(){
-		//System.out.println(JSON.toJSONString(stuEval, true));
 		return "redirect:/admin/stuEval";
 	}
 }
