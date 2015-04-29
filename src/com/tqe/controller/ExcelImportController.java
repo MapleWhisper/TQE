@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +45,6 @@ public class ExcelImportController extends BaseController{
 			List<Teacher> teacherList = teacherReader.getAll("d:/教师信息表.xls",true);
 			teacherService.saveAll(teacherList);
 
-
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -52,8 +52,12 @@ public class ExcelImportController extends BaseController{
 		return "reditect:/admin/admin";
 	}
 	@RequestMapping("/excelImport/course/{season}")
-	public String excelImportCourse(@PathVariable("season")String season){
+	public String excelImportCourse(@PathVariable("season")String season,Model model){
 		System.out.println("ok");
+		if(!StringUtils.hasText(season)){	//如果sesson为空，那么不能继续
+			model.addAttribute("msg", "season不能为空！");
+			return "error";
+		}
 		if(StringUtils.hasText(season)){
 			try {
 				List<Course> courseList =  courseReader.getAll("d:/课程班信息：课程-老师对应关系.xls");

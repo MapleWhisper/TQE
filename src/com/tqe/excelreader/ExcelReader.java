@@ -124,6 +124,11 @@ public abstract class ExcelReader<E> {
 		return list;
 	}
 	
+	/**
+	 * 根据成员属性获取Setter方法
+	 * @param fieldName
+	 * @return
+	 */
 	private String fieldNameToSetter(String fieldName){
 		if(fieldName!=null){
 			fieldName = fieldName.substring(0, 1).toUpperCase()+fieldName.substring(1);
@@ -140,16 +145,16 @@ public abstract class ExcelReader<E> {
 		String defaultPwd;
 		//首先获取证件号码
 		String idNumber = row.get("证件号码");
-		if(idNumber!=null && idNumber.length()==18){	//如果有证件号码
-			defaultPwd = idNumber.substring(10);
+		if(idNumber!=null && idNumber.length()==18){	//如果有证件号码 并且证件号码为18位
+			defaultPwd = idNumber.substring(10);		//那么就取证件号码后8位作为登陆密码
 		}else{
 			if(clazz == Teacher.class){
-				defaultPwd = row.get("教师号");
+				defaultPwd = row.get("教师号");		//教师号作为默认的密码
 			}
-			else if(clazz == Student.class){
+			else if(clazz == Student.class){		//学生学号作为默认的密码
 				defaultPwd = row.get("学号");
 			}else{
-				defaultPwd = "88888888";
+				defaultPwd = "88888888";		//如果没有教师号 和 学生好，那么默认密码就是88888888
 			}
 		}
 		
@@ -161,8 +166,7 @@ public abstract class ExcelReader<E> {
 			e.printStackTrace();
 		}
 		
-		if(m!=null){
-			//截取证件号码后6位，作为密码，然后执行setPassword方法
+		if(m!=null){	//注入密码
 			convertAdnInvoke(m, obj, defaultPwd, String.class);
 		}
 		

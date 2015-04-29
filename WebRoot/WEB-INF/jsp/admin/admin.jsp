@@ -26,7 +26,7 @@
 					<div class="panel-heading">管理员列表</div>
 
 					<div class="panel-body">
-						<table class="table table-hover table-striped table-bordered">
+						<table class="table table-hover table-striped table-bordered table-condensed">
 							<thead>
 								<tr class="info">
 									<td>管理员账号</td>

@@ -17,7 +17,8 @@ public interface CourseDao {
 	@Select("select * from `course` where cid=#{cid} and cno=#{cno}")
 	public Course getById(@Param("cid") String  cid,@Param("cno") int cno);
 	
-	@Insert("INSERT INTO `tqe`.`course` (`cid`, `cno`, `name`, `stuNumber`, `peroid`, `credit`, `attr`, `examMode`, `nature`, `teacherId`, `department`, `campus`,`season`,`combine`) VALUES (#{cid}, #{cno}, #{name}, #{stuNumber}, #{peroid}, #{credit}, #{attr}, #{examMode}, #{nature}, #{teacherId}, #{department}, #{campus},#{season},#{combine});")
+	@Insert("INSERT INTO `tqe`.`course` (`cid`, `cno`, `name`, `stuNumber`, `peroid`, `credit`, `attr`, `examMode`, `nature`, `teacherId`, `department`, `campus`,`season`,`combine`,`departmentid`) "
+			+ "VALUES (#{cid}, #{cno}, #{name}, #{stuNumber}, #{peroid}, #{credit}, #{attr}, #{examMode}, #{nature}, #{teacherId}, #{department}, #{campus},#{season},#{combine},#{departmentId});")
 	public void save(Course	course);
 	
 	@Select("select c.*,t.name as `teacher.name` ,t.id as `teacher.id` from course c ,teacher t where  c.teacherId = t.id")
@@ -38,4 +39,5 @@ public interface CourseDao {
 
 	@SelectProvider(type=BaseDaoTemplate.class,method="findCourseByCondition")
 	public List<Course> findByCondition(HashMap<String, String> condition);
+
 }

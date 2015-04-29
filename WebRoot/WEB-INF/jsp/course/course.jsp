@@ -73,7 +73,9 @@
 									<td>学期</td>
 									<td>学生数</td>
 									<td>学分</td>
+									<!-- 
 									<td>操作</td>
+									 -->
 									<td>操作</td>
 								</tr>
 							</thead>
@@ -81,7 +83,7 @@
 								<c:forEach items="${courseList}" var="c">
 									<tr>
 
-										<td><a href="">${c.name }</a></td>
+										<td><a href="${pageContext.request.contextPath}/admin/course/show/${c.cid}/${c.cno}">${c.name }</a></td>
 										<td>${c.cid }</td>
 										<td>${c.cno }</td>
 										<td>${c.teacher.name }</td>
@@ -89,9 +91,11 @@
 										<td>${c.season }</td>
 										<td>${c.stuNumber }</td>
 										<td>${c.credit }</td>
+										<!-- 
 										<td><a href="admin/edit/${admin.id }"
 											class="btn btn-info"><span
 												class=" glyphicon glyphicon-edit"></span>&nbsp;&nbsp;修改</a></td>
+										 -->
 										<td><a href="${pageContext.request.contextPath}/admin/course/show/${c.cid}/${c.cno}"
 											class="btn btn-danger" ><span
 												class=" glyphicon glyphicon-zoom-in"></span>查看评教详情</a></td>

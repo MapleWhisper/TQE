@@ -1,6 +1,8 @@
 package com.tqe.po;
 
-public class Privilege {
+import java.io.Serializable;
+
+public class Privilege implements  Serializable{
 	private Integer id;
 	private String url;
 	private String name;

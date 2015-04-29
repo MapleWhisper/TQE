@@ -30,6 +30,8 @@ public class Teacher implements Serializable{
 	private String folk;
 	private Date workDate;
 	
+	private Integer departmentId;
+	
 	
 	
 	public String getId() {
@@ -138,6 +140,12 @@ public class Teacher implements Serializable{
 			this.password = MD5Utils.string2MD5(password);
 		}
 		
+	}
+	public Integer getDepartmentId() {
+		return departmentId;
+	}
+	public void setDepartmentId(Integer departmentId) {
+		this.departmentId = departmentId;
 	}
 	
 	

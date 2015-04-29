@@ -10,6 +10,7 @@ import com.tqe.po.Student;
 
 @Component
 public class StudentExcelReader extends ExcelReader<Student> {
+	
 	public static void main(String[] args) throws FileNotFoundException {
 		List<Student> list = new StudentExcelReader().getAll("d:/学生信息表.xls");
 		//System.out.println(list.size());

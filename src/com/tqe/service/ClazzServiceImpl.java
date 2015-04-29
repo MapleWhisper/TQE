@@ -2,6 +2,7 @@ package com.tqe.service;
 
 import java.util.List;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.tqe.dao.ClazzDao;
@@ -21,6 +22,7 @@ public class ClazzServiceImpl extends BaseService<Clazz>{
 	 * @param mid majorid 专业id
 	 * @return
 	 */
+	@Cacheable(value="mCache",key="#did + #mid + 'findAllByDidMid'")
 	public List<Clazz> findAllByDidMid(Integer did,Integer mid) {
 		
 		return clazzDao.findAllByDidMid(did,mid);

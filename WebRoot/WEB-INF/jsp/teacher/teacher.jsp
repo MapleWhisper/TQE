@@ -74,7 +74,9 @@
 									<td>性别</td>
 									<td>院系</td>
 									<td>职称</td>
+									<!-- 
 									<td>操作</td>
+									 -->
 									<td>操作</td>
 								</tr>
 							</thead>
@@ -83,21 +85,24 @@
 								<c:forEach items="${teacherList}" var="tea">
 									<tr>
 										<td><a
-											href="${pageContext.request.contextPath}/admin/teacher/teacherAction!show?id=${tea.id}">${tea.name}</a></td>
+											href="${pageContext.request.contextPath}/admin/teacher/show/${tea.id}">${tea.name}</a></td>
 										<td>${tea.id}</td>
 										<td>${tea.email }</td>
 										<td>${tea.idNumber }</td>
 										<td>${tea.sex }</td>
 										<td>${tea.department }</td>
 										<td>${tea.title }</td>
-
-
+										<td><a href="${pageContext.request.contextPath}/admin/teacher/show/${tea.id}"
+											class="btn btn-danger" ><span
+												class=" glyphicon glyphicon-zoom-in"></span>查看评教详情</a></td>
+										<!-- 
 										<td><a href="teacherAction!edit?id=${tea.id }"
 											class="btn btn-info"><span
 												class=" glyphicon glyphicon-edit"></span>&nbsp;&nbsp;修改</a></td>
 										<td><a href="teacherAction!delete?id=${tea.id}"
 											class="btn btn-danger" onclick="return confirm('确认要删除吗？')"><span
 												class=" glyphicon  glyphicon-trash"></span>&nbsp;&nbsp;删除</a></td>
+										 -->
 									</tr>
 								</c:forEach>
 								

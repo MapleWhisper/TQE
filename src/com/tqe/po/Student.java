@@ -27,6 +27,10 @@ public class Student {
 	private String style;
 	private String campus;
 	
+	private Integer departmentId;
+	private Integer classId;
+	private Integer majorId;
+	
 	
 	public Integer getSid() {
 		return sid;
@@ -145,6 +149,24 @@ public class Student {
 	}
 	public void setCampus(String campus) {
 		this.campus = campus;
+	}
+	public Integer getDepartmentId() {
+		return departmentId;
+	}
+	public void setDepartmentId(Integer departmentId) {
+		this.departmentId = departmentId;
+	}
+	public Integer getClassId() {
+		return classId;
+	}
+	public void setClassId(Integer classId) {
+		this.classId = classId;
+	}
+	public Integer getMajorId() {
+		return majorId;
+	}
+	public void setMajorId(Integer majorId) {
+		this.majorId = majorId;
 	}
 	
 	

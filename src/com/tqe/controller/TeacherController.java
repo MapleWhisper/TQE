@@ -1,28 +1,19 @@
 package com.tqe.controller;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.alibaba.fastjson.JSON;
-import com.tqe.po.Data;
-import com.tqe.po.Teacher;
-import com.tqe.service.TeacherServiceImpl;
+import com.tqe.po.Course;
 
 @Controller()
 @RequestMapping("/admin")
 public class TeacherController extends BaseController{
 
-	@Resource(name="teacherServiceImpl")
-	private  TeacherServiceImpl teacherService;
 	
 	@RequestMapping("/tea")
 	public String tea(Model model){
@@ -30,6 +21,11 @@ public class TeacherController extends BaseController{
 		return "teacher/teacher";
 	}
 	
+	/**
+	 * 显示教师列表主页面
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/teacher",method={RequestMethod.GET})
 	public String teacher(Model model){
 		System.out.println("hello");
@@ -38,6 +34,14 @@ public class TeacherController extends BaseController{
 		return "teacher/teacher";
 	}
 	
+	/**
+	 * 关键字 查询教师列表
+	 * @param model
+	 * @param did
+	 * @param tname
+	 * @param tid
+	 * @return
+	 */
 	@RequestMapping(value="/teacher",method={RequestMethod.POST})
 	public String teacher1(Model model,String did,String tname,String tid){
 		addSercherResource(model);
@@ -50,20 +54,16 @@ public class TeacherController extends BaseController{
 		return "teacher/teacher";
 	}
 	
-	@RequestMapping("/teacher/json")
-	public void teacher(@RequestParam int start ,@RequestParam int length,HttpServletResponse response){
-		System.out.println(start+"-"+length);
-		List<Teacher> list = teacherService.findByPage(start, length);
-		response.setCharacterEncoding("utf-8");
-		response.setContentType("application/json");
-		Data<Teacher> data = new  Data<Teacher>(list);
-		System.out.println(JSON.toJSONString(data,true));
-		try {
-			response.getWriter().println(JSON.toJSONString(data));
-		} catch (IOException e) {
-			
-			e.printStackTrace();
-		}
+	/**
+	 * 显示教师详情
+	 * @param model
+	 * @param tid
+	 * @return
+	 */
+	@RequestMapping("/teacher/show/{tid}")
+	public String show(Model model,@PathVariable String tid){
+		//List<Course> courseList = courseService.findAllByTId(tid);
+		return "teacher/showTeacher";
 	}
 	
 	

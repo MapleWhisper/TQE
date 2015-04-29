@@ -2,6 +2,7 @@ package com.tqe.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.tqe.dao.CourseDao;
 import com.tqe.po.Course;
+import com.tqe.po.Teacher;
 
 @Service
 public class CourseServiceImpl extends BaseService<Course>{
@@ -28,14 +30,22 @@ public class CourseServiceImpl extends BaseService<Course>{
 			courseDao.save(e);
 		}
 		
+		/**
+		 * 保存所有课程到数据库
+		 * @param list
+		 * @param season	课程季度
+		 * @return
+		 */
 		public boolean saveAll(List<Course> list,String season){
 			boolean f = false;
+			Map<String,Integer> dMap = convertDepListToMap(departmentDao.findAll());
 			try {
 				if(list!=null){
 					for(Course c:list){
 						if(c.getCid()!=null && c.getCno()!=null){
 							try {
 								c.setSeason(season);
+								processCouData(dMap, c);
 								save(c);
 							} catch (Exception e) {
 								continue;
@@ -88,4 +98,16 @@ public class CourseServiceImpl extends BaseService<Course>{
 		public List<Course> findByCondition(HashMap<String, String> condition) {
 			return courseDao.findByCondition(condition);
 		}
+		
+		/**
+		 * 处理课程数据
+		 * @param dMap 
+		 * @param mMap
+		 * @param cMap
+		 * @param s
+		 */
+		private void processCouData(Map<String, Integer> dMap, Course cou) {
+			cou.setDepartmentId(dMap.get(cou.getDepartment()));
+		}
+
 }
