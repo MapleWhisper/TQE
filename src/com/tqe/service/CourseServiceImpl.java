@@ -68,7 +68,7 @@ public class CourseServiceImpl extends BaseService<Course>{
 		 * @param sid
 		 * @return
 		 */
-		public List<Course> findAllBySId(Integer sid,Integer bid) {
+		public List<Course> findAllBySId(String sid,Integer bid) {
 			List<Course> list = courseDao.findAllBySid(sid);
 			List<String> cids = evalDao.findAllStuTablecids(sid,bid);
 			for(Course c: list){

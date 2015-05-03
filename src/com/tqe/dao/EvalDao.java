@@ -54,7 +54,7 @@ public interface EvalDao extends BaseDao<EvalTable>{
 	public LeaTable getLeaTableById(Integer leaTableId );
 	
 	@Select("select cid from stutable where sid = #{sid} and bid = #{bid}")
-	public List<String> findAllStuTablecids(@Param("sid")Integer sid,@Param("bid")Integer bid);
+	public List<String> findAllStuTablecids(@Param("sid")String sid,@Param("bid")Integer bid);
 	
 	
 	

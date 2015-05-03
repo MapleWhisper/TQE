@@ -112,7 +112,7 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 	 * @param bid
 	 * @return
 	 */
-	public List<String> getAllStuTablecids(Integer sid,Integer bid){
+	public List<String> getAllStuTablecids(String sid,Integer bid){
 		return evalDao.findAllStuTablecids(sid,bid);
 	}
 	
