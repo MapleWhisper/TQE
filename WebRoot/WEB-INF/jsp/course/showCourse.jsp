@@ -50,12 +50,13 @@
 							aria-controls="student" role="tab" data-toggle="tab">学生评教信息</a></li>
 						<li role="presentation"><a href="#teacher"
 							aria-controls="profile" role="tab" data-toggle="tab">教师评教信息</a></li>
-						<li role="presentation"><a href="#messages"
+						<li role="presentation"><a href="#leader"
 							aria-controls="messages" role="tab" data-toggle="tab">领导评教信息</a></li>
 					</ul>
 
 					<!-- Tab panes -->
 					<div class="tab-content">
+						<!-- 学生评教信息表 -->
 						<div role="tabpanel" class="tab-pane active" id="student">
 							<%@ include file="showCourseStu.jsp"%>
 						</div>
@@ -64,8 +65,11 @@
 						<div role="tabpanel" class="tab-pane" id="teacher">
 							<%@ include file="showCourseTea.jsp"%>
 						</div>
-						<div role="tabpanel" class="tab-pane" id="messages">...</div>
-						<div role="tabpanel" class="tab-pane" id="settings">...</div>
+						
+						<!-- 教师评教信息表 -->
+						<div role="tabpanel" class="tab-pane" id="leader">
+							<%@ include file="showCourseLea.jsp"%>
+						</div>
 					</div>
 
 				</div>

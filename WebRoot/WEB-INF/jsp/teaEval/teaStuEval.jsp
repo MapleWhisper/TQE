@@ -10,7 +10,7 @@
 </style>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.css"></link>
-<title>我的课程组</title>
+<title>我的学生</title>
 </head>
 
 <body>
@@ -23,10 +23,11 @@
 			<div class="col-sm-10 ">
 
 				<div class="panel panel-primary">
-					<div class="panel-heading">我的课程组|${batches.name}</div>
+					<div class="panel-heading">我的学生|${batches.name}</div>
 
 					<div class="panel-body">
-						<table class="table table-hover table-striped table-bordered table-condensed">
+						<table
+							class="table table-hover table-striped table-bordered table-condensed">
 							<thead>
 								<tr class="info">
 									<td>课程名</td>
@@ -48,20 +49,21 @@
 										<td>${c.season }</td>
 										<td>${c.stuNumber }</td>
 										<td>${c.combine }</td>
-										<c:if test="${c.isEvaled=='false'}">
-											<td><a href="${pageContext.request.contextPath}/admin/teaEval/eval/${c.cid}/${c.cno}"
+										<td><a
+											href="${pageContext.request.contextPath}/admin/${c.cid}/${c.cno}/teaStuEval"
 											class="btn btn-danger"><span
-												class=" glyphicon glyphicon-edit"></span>&nbsp;&nbsp;评价</a></td>
-										</c:if>
-										<c:if test="${c.isEvaled=='true'}">
-											<td><button  class="btn btn-default" disabled="disabled"><span
-												class=" glyphicon glyphicon-ok"></span>已评价</button></td>
-										</c:if>
+												class=" glyphicon glyphicon-edit"></span>&nbsp;&nbsp;查看学生</a></td>
 									</tr>
 								</c:forEach>
 
 							</tbody>
 						</table>
+
+						<!-- 如果选择了课程 -->
+						<c:if test="${course != null }">
+							<%@include file="teaStuEval_showStudents.jsp" %>
+						</c:if>
+
 						<div style="text-align: center">
 							<h1 class="well text-danger">${requestScope.msg}</h1>
 						</div>

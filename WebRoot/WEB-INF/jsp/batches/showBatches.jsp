@@ -56,6 +56,7 @@
 											<td>默认学生评估表</td>
 											<td>默认教师评估表</td>
 											<td>默认领导评估表</td>
+											<td>默认教师评价学生表</td>
 										</tr>
 										<tr>
 											
@@ -67,6 +68,9 @@
 											
 											<td class="new"><a href="${pageContext.request.contextPath}/admin/evalTable/show/${batches.leadEvalId}">${batches.leadEval.title}</a></td>
 											<td class="old"><a class="btn btn-info" href="${pageContext.request.contextPath}/admin/evalTable?action=leadEval&bid=${batches.id}">点此更换默认<Strong>领导</Strong>评教指标表</a></td>
+											
+											<td class="new"><a href="${pageContext.request.contextPath}/admin/evalTable/show/${batches.teaStuEvalId}">${batches.teaStuEval.title}</a></td>
+											<td class="old"><a class="btn btn-info" href="${pageContext.request.contextPath}/admin/evalTable?action=teaStuEval&bid=${batches.id}">点此更换默认<Strong>教师评学生</Strong>指标表</a></td>
 										</tr>
 									</table>
 								</div>

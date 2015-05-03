@@ -110,13 +110,8 @@
 										<td>${s.campus }</td>
 
 
-										<td><a href="teacherAction!edit?id=${s.sid }"
-											class="btn btn-info btn-sm"><span
-												class=" glyphicon glyphicon-edit"></span>&nbsp;&nbsp;修改</a></td>
-										<td><a href="teacherAction!delete?id=${s.sid}"
-											class="btn btn-danger btn-sm"
-											onclick="return confirm('确认要删除吗？')"><span
-												class=" glyphicon  glyphicon-trash"></span>&nbsp;&nbsp;删除</a></td>
+										<td><a href="${pageContext.request.contextPath}/admin/student/show"
+											class="btn btn-danger">查看学生</a></td>
 									</tr>
 								</c:forEach>
 							</tbody>

@@ -77,6 +77,11 @@
 												id="" value="admin"><span>管理员登录</span>
 											</label>
 										</div>
+										<div class="radio">
+											<label> <input type="radio" name="type"
+												id="" value="other"><span>其他</span>
+											</label>
+										</div>
 										
 									</div>
 									<div class="col-sm-6">

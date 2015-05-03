@@ -2,19 +2,15 @@ package com.tqe.controller;
 
 
 import java.util.List;
-
 import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.SystemPropertyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tqe.po.Batches;
 import com.tqe.po.Course;
 import com.tqe.po.Student;
-import com.tqe.utils.SystemProperties;
 import com.tqe.utils.SystemUtils;
 
 /**
@@ -57,11 +53,11 @@ public class StuEvalController extends BaseController{
 	@RequestMapping("/stuEval/eval/{cid}/{cno}")
 	public String EvalstuEval(Model model,@PathVariable("cid") String cid ,@PathVariable("cno") Integer cno){
 		Course c = courseService.getById(cid, cno);
-		if(c!=null){
+		if(c!=null){	//如果要评教的课程不为空
 			Batches batches = batchesService.getAvailiableBatches(c.getSeason());
 			if(batches==null){
 				model.addAttribute("message", "对不起，当前评教还未开始");
-				return "stuEval/stuEval";
+				return "error";
 			}
 			model.addAttribute("batches", batches);
 			model.addAttribute("course", c);
@@ -69,7 +65,7 @@ public class StuEvalController extends BaseController{
 			model.addAttribute("type", "student");
 			return "eval/eval";
 		}
-		return "redirect:/stuEval/stuEval";
+		return "redirect:/admin/stuEval";
 	}
 	
 	@RequestMapping("/stuEval/show/{id}")

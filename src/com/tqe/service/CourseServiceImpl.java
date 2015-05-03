@@ -80,18 +80,38 @@ public class CourseServiceImpl extends BaseService<Course>{
 		}
 		
 		/**
-		 * 返回所有教师可以评价的课程，如果教师已经评价了课程，那么设置课程已评价
+		 * 返回所有教师可以评价的课程组
+		 * 如果教师已经评价了课程，那么设置课程已评价
 		 * @param sid
 		 * @return
 		 */
 		public List<Course> findAllByTId(String tid, Integer bid) {
-			List<Course> list = courseDao.findAllByTid(tid);
+			List<Course> list = courseDao.findAllByTId(tid);
 			List<String> cids = evalDao.findAllTeaTablecids(tid,bid);
 			for(Course c: list){
 				if(cids.contains(c.getCid()+c.getCno())){
 					c.setEvaled(true);
 				}
 			}
+			return list;
+		}
+		
+		/**
+		 * 返回所有教师教的所有课程
+		 * 如果教师已经评价了课程，那么设置课程已评价
+		 * @param sid
+		 * @return
+		 */
+		public List<Course> findAllByTid(String tid, Integer bid) {
+			List<Course> list = courseDao.findAllByTid(tid);
+			/*
+			List<String> cids = evalDao.findAllTeaTablecids(tid,bid);
+			for(Course c: list){
+				if(cids.contains(c.getCid()+c.getCno())){
+					c.setEvaled(true);
+				}
+			}
+			*/
 			return list;
 		}
 

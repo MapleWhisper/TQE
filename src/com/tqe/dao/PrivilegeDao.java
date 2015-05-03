@@ -24,9 +24,14 @@ public interface PrivilegeDao extends BaseDao<Privilege>{
 	@Select("select * from privilege p where p.tea = 1")
 	public List<Privilege> findTeacherAll();
 	
+	@Select("select * from privilege p where p.lea = 1")
+	public List<Privilege> findLeaderAll();
+	
 	@Select("select * from privilege where id = #{id}")
 	public Privilege getById(Integer id);
 	
 	@Update("update privilege set stu = #{stu} , tea = #{tea} , adm = #{adm} where id = #{id}")
 	public void update(Privilege p);
+
+	
 }

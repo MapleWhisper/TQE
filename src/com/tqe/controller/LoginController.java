@@ -1,5 +1,6 @@
 package com.tqe.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tqe.po.Admin;
+import com.tqe.po.Leader;
 import com.tqe.po.Privilege;
 import com.tqe.po.Student;
 import com.tqe.po.Teacher;
@@ -24,8 +26,13 @@ import com.tqe.po.User;
  */
 @Controller
 public class LoginController extends BaseController{
-	
-	
+	private static List<String> users = new ArrayList<String>();
+	static{
+		users.add("student");
+		users.add("teacher");
+		users.add("leader");
+		users.add("admin");
+	}
 	
 	/**
 	 * 用户登陆
@@ -40,52 +47,58 @@ public class LoginController extends BaseController{
 			return "index";
 		}
 		String type = user.getType();
-		if(type.endsWith("admin")){
+		if(type.equals("admin")){
 			Admin a =adminService.login(user);
 			if(a!=null){
 				System.out.println("管理员登陆");
 				session.setAttribute("admin", a);
-				session.removeAttribute("teacher");
-				session.removeAttribute("student");
+				removeOtherUser(session,"admin");
 				List<Privilege> pList = privilegeService.findAdminAll();
 				addPrivilege(session, pList);
 				return "redirect:/admin/admin";
 			}
-		}else if(type.endsWith("teacher")){
+		}else if(type.equals("teacher")){
 			Teacher t = teacherService.login(user);
 			if(t!=null){
 				System.out.println("教师登陆");
 				session.setAttribute("teacher", t);
-				session.removeAttribute("student");
-				session.removeAttribute("admin");
+				removeOtherUser(session,"teacher");
 				List<Privilege> pList = privilegeService.findTeacherAll();
 				addPrivilege(session, pList);
 				return "redirect:/admin/teaEval";
 			}
-		}else{
+		}else if(type.equals("student")){
 			Student stu = studentService.login(user);
 			if(stu!=null){
 				System.out.println("学生登陆");
 				session.setAttribute("student", stu);
-				session.removeAttribute("teacher");
-				session.removeAttribute("admin");
+				removeOtherUser(session,"student");
 				List<Privilege> pList = privilegeService.findStudentAll();
 				addPrivilege(session, pList);
 				return "redirect:/admin/stuEval";
 			}
 			//return "redirect:/admin/admin";
+		}else{										//领导登陆
+			Leader leader = leaderService.login(user);
+			if(leader!=null){
+				System.out.println("领导登陆");
+				session.setAttribute("leader", leader);
+				removeOtherUser(session,"leader"); 
+				List<Privilege> pList = privilegeService.findLeaderAll();
+				addPrivilege(session, pList);
+				return "redirect:/admin/leaEval";
+			}
 		}
 		model.addAttribute("error","用户名或密码错误");
 		return "index";
 		
 	}
+
+	
 	
 	@RequestMapping("/logout")
 	public String logout(HttpSession session){
-		session.removeAttribute("student");
-		session.removeAttribute("teacher");
-		session.removeAttribute("admin");
-		
+		removeOtherUser(session, "");
 		return "redirect:/index";
 	}
 	
@@ -96,6 +109,19 @@ public class LoginController extends BaseController{
 			map.put(p.getUrl().substring(1), true);
 		}
 		session.setAttribute("pMap", map);
+	}
+	
+	/**
+	 * 用户登陆时，移除其他无关的角色，保证系统同一时刻只有一个角色能登陆
+	 * @param session
+	 * @param userTyle
+	 */
+	private void removeOtherUser(HttpSession session , String userTyle) {		
+		for(String s : users){
+			if(!s.equals(userTyle)){
+				session.removeAttribute(s);
+			}
+		}
 		
 	}
 }

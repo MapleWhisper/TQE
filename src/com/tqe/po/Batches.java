@@ -17,11 +17,15 @@ public class Batches {
 	private EvalTable stuEval;	//默认的学生评教指标表
 	private Integer stuEvalId;		//默认的学生评教指标表Id
 	
-	private EvalTable teaEval;	//默认的学生评教指标表
-	private Integer teaEvalId;		//默认的学生评教指标表Id
+	private EvalTable teaEval;	//默认的教师评教指标表
+	private Integer teaEvalId;		//默认的教师评教指标表Id
 	
-	private EvalTable leadEval;	//默认的教师评教指标表
-	private Integer leadEvalId;		//默认的学生评教指标表Id
+	private EvalTable leadEval;	//默认的领导评教指标表
+	private Integer leadEvalId;		//默认的领导评教指标表Id
+	
+	private EvalTable teaStuEval;	//默认的教师评价学生表
+	private Integer teaStuEvalId;	//默认的教师评价学生表Id
+	
 	
 	public Integer getId() {
 		return id;
@@ -106,6 +110,21 @@ public class Batches {
 	}
 	public void setLeadEvalId(Integer leadEvalId) {
 		this.leadEvalId = leadEvalId;
+	}
+	public EvalTable getTeaStuEval() {
+		return teaStuEval;
+	}
+	public void setTeaStuEval(EvalTable teaStuEval) {
+		this.teaStuEval = teaStuEval;
+	}
+	public Integer getTeaStuEvalId() {
+		return teaStuEvalId;
+	}
+	public void setTeaStuEvalId(Integer teaStuEvalId) {
+		this.teaStuEvalId = teaStuEvalId;
+	}
+	public void setLeadEval(EvalTable leadEval) {
+		this.leadEval = leadEval;
 	}
 	
 	

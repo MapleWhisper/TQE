@@ -1,13 +1,14 @@
 package com.tqe.po;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import org.springframework.util.StringUtils;
 
 import com.tqe.utils.MD5Utils;
 
-public class Student {
-	private Integer sid;
+public class Student implements Serializable{
+	private String sid;
 	private String name;
 	private String password;
 	private String sex;
@@ -31,11 +32,13 @@ public class Student {
 	private Integer classId;
 	private Integer majorId;
 	
+	private boolean isEvaled;	//判断学生是否已经评价
 	
-	public Integer getSid() {
+	
+	public String getSid() {
 		return sid;
 	}
-	public void setSid(Integer sid) {
+	public void setSid(String sid) {
 		this.sid = sid;
 	}
 	public String getName() {
@@ -167,6 +170,12 @@ public class Student {
 	}
 	public void setMajorId(Integer majorId) {
 		this.majorId = majorId;
+	}
+	public boolean getIsEvaled() {
+		return isEvaled;
+	}
+	public void setEvaled(boolean isEvaled) {
+		this.isEvaled = isEvaled;
 	}
 	
 	

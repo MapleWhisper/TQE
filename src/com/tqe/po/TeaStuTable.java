@@ -2,19 +2,19 @@ package com.tqe.po;
 
 import java.io.Serializable;
 
-public class StuTable extends Table implements Serializable{
-	private String  sid;	//学生号
-
+public class TeaStuTable extends Table implements Serializable{
 	
-	private Integer departmentId;
+	private String  tid;		//教师号
+	private String sid;	//学生号 
+	
+	private Integer departmentId;	//教师所在的学院
 	private String tname;
 	private String sname;
-	private String tid;
-	public String getSid() {
-		return sid;
+	public String getTid() {
+		return tid;
 	}
-	public void setSid(String sid) {
-		this.sid = sid;
+	public void setTid(String tid) {
+		this.tid = tid;
 	}
 	public Integer getDepartmentId() {
 		return departmentId;
@@ -34,11 +34,11 @@ public class StuTable extends Table implements Serializable{
 	public void setSname(String sname) {
 		this.sname = sname;
 	}
-	public String getTid() {
-		return tid;
+	public String getSid() {
+		return sid;
 	}
-	public void setTid(String tid) {
-		this.tid = tid;
+	public void setSid(String sid) {
+		this.sid = sid;
 	}
 	
 	

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Component;
 
 import com.tqe.po.Admin;
+import com.tqe.po.Leader;
 import com.tqe.po.Privilege;
 import com.tqe.po.Student;
 import com.tqe.po.Teacher;
@@ -49,13 +50,14 @@ public class LoginFilter implements  Filter{
 		Student stu = (Student) session.getAttribute("student");
 		Teacher tea = (Teacher) session.getAttribute("teacher");
 		Admin admin = (Admin) session.getAttribute("admin");
+		Leader leader = (Leader) session.getAttribute("leader");
 		
 		if(path.indexOf("/admin")==-1){	//如果访问的不是后台数据，那么跳过
 			chain.doFilter(req, resp);
 			return;
 		}
 		
-		if( stu==null && tea==null && admin==null){		//如果都没有登陆，就返回登录页
+		if( stu==null && tea==null && admin==null && leader==null){		//如果都没有登陆，就返回登录页
 			resp.sendRedirect(ctxPath+"/index");
 			return;
 		}

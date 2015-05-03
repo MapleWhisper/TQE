@@ -34,4 +34,7 @@ public class PrivilegeService extends BaseService<Privilege>{
 	public void update(Privilege p) {
 		privilegeDao.update(p);
 	}
+	public List<Privilege> findLeaderAll() {
+		return privilegeDao.findLeaderAll();
+	}
 }	

@@ -21,14 +21,12 @@ public class HandlerInterceptorAdaptor implements HandlerInterceptor {
 	@Override
 	public void postHandle(HttpServletRequest req, HttpServletResponse resp,
 			Object arg2, ModelAndView arg3) throws Exception {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse resp,
 			Object arg2) throws Exception {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	

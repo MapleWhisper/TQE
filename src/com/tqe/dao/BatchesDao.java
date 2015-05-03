@@ -29,7 +29,8 @@ public interface BatchesDao extends BaseDao<Batches>{
 	@Delete("delete from Batches where id = #{id}")
 	public void delete(int id);
 	
-	@Insert("update  Batches set beginDate = #{beginDate}, endDate = #{endDate} , stuEvalId = #{stuEvalId} , teaEvalId = #{teaEvalId}, leadEvalId = #{leadEvalId} where id = #{id}")
+	@Insert("update  Batches set beginDate = #{beginDate}, endDate = #{endDate} , teaStuEvalId = #{teaStuEvalId},"
+			+ "stuEvalId = #{stuEvalId} , teaEvalId = #{teaEvalId}, leadEvalId = #{leadEvalId} where id = #{id}")
 	public void update(Batches b);
 	
 	@Select("select * from batches b where now() between b.beginDate and b.endDate and b.season = #{season}")

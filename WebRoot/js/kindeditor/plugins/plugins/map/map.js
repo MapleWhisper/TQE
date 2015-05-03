@@ -111,7 +111,6 @@ KindEditor.plugin('map', function(K) {
 			'<body onload="initialize();">',
 			'<div id="map_canvas" style="width:100%; height:100%"></div>',
 			'</body></html>'].join('\n');
-		// TODO：用doc.write(iframeHtml)方式加载时，在IE6上第一次加载报错，暂时使用src方式
 		var iframe = K('<iframe class="ke-textarea" frameborder="0" src="' + self.pluginsPath + 'map/map.html" style="width:558px;height:360px;"></iframe>');
 		function ready() {
 			win = iframe[0].contentWindow;

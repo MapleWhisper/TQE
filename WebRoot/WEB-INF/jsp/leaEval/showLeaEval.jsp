@@ -3,7 +3,7 @@
 <html>
 <head>
 <%@ include file="../header.jspf"%>
-<title>开始评教|${evalTable.title}</title>
+<title>评教指标显示|${evalTable.title}</title>
 <style type="text/css">
 		.quest {font-size: medium;margin-top: 20px}
 		.questArea {margin-top: 10px;padding-left: 50px}
@@ -19,7 +19,7 @@
 				<%@ include file="../left.jsp"%>
 			</div>
 			<div class="col-sm-10">
-				<div style="text-align: center">
+				<div style="text-align: center;margin-top: 100px">
 					<h2>${evalTable.title }</h2>
 					<h3>${course.name }</h3>
 					<h3>${course.teacher.name }</h3>
@@ -30,7 +30,7 @@
 						<ul class="nav nav-pills nav-stacked nav-left" role="tablist"
 							id="nav">
 							<li role="presentation" class="pre active"><a href="#part1">评教须知</a></li>
-							<li role="presentation" class="pre"><a href="#part2">表头</a></li>
+							<li role="presentation" class="pre"><a href="#part2">表单</a></li>
 							<li role="presentation" class="pre"><a href="#part3">表项</a></li>
 						</ul>
 					</div>
@@ -57,15 +57,12 @@
 						<hr>
 						<form
 							action="${pageContext.request.contextPath}/admin/eval/save/${type}"
-							method="post" id="form">
+							method="post">
 							<input type="hidden" name="eid" value="${evalTable.id}">
 							<input type="hidden" name="cid" value="${ course.cid}">
 							<input type="hidden" name="cno" value="${ course.cno}">
-							<input type="hidden" name="bid" value="${ batches.id}">
-							<input type="hidden" name="sid" value="${sessionScope.student.sid}${requestScope.sid}">
-							<input type="hidden" name="tid" value="${sessionScope.teacher.id}">
-							<input type="hidden" name="lid" value="${sessionScope.leader.id}">
-							<input type="hidden" name="score" id="sum1" value="">
+							<input type="hidden" name="sid" value="${sessionScope.student.sid}">
+							<input type="hidden" name="sum" id="sum1" value="">
 							<input type="hidden" name="level" id="level1" value="">
 							<!--评教须知: -->
 							<div class="panel panel-primary" id="part1">
@@ -86,7 +83,7 @@
 											varStatus="s" >
 											<tr>
 												<td style="width: 100px;">${item.context}：</td>
-												<td><input type="text" class="form-control" name="itemList[${s.index}].ans" required="required"></td>
+												<td><input type="text" class="form-control" name="itemList[${s.index}].ans"></td>
 											</tr>
 
 										</c:forEach>
@@ -114,13 +111,8 @@
 												<td>${s.count}</td>
 												<td>${item.context}</td>
 												<td>${item.level}</td>
-												<td>
-													<select type="number" class="form-control score" required="required" name="tableItemList[${s.index}].ans" min="0" max="100">
-														<c:forTokens items="${item.level}" delims=" " var="num">
-															<option value="${num}">${num}</option>
-														</c:forTokens>
-													</select>	
-												</td>
+												<td><input type="number" class="form-control score"
+													required="required" value="0" name="tableItemList[${s.index}].ans"></td>
 											</tr>
 
 										</c:forEach>
@@ -148,12 +140,12 @@
 											${que.context }
 										</div>
 										<div class="questArea">
-											<textarea class="form-control" name="questionList[${s.index}].ans" required="required" rows="8"></textarea>
+											<textarea class="form-control"></textarea>
 										</div>
 									</c:forEach>
 									
 									<div style="text-align: center;margin-top: 100px;">
-										<c:if test="${type=='student' || type=='teacher' || type=='leader' || type=='teaStu'}">
+										<c:if test="${type=='student'}">
 											<input class="btn btn-info btn-lg btn-block" onclick="return confirm('一旦提交，不可修改，确认要提交');"
 												type="submit" value="提交评价" >
 										</c:if>
@@ -171,10 +163,6 @@
 		</div>
 
 	</div>
-	<script
-	src="${pageContext.request.contextPath}/js/jquery.validate.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/js/messages_zh.min.js"></script>
 	<script type="text/javascript">
 		$(function() {
 			$(".score").bind('change click ready',function() {
@@ -217,10 +205,6 @@
 				$("#sum1").val(sum);
 				$("#level1").val(lev);
 			});
-		});
-		
-		$(function() {
-			$("#form").validate();
 		});
 	</script>
 	<%@ include file="../buttom.jsp"%>

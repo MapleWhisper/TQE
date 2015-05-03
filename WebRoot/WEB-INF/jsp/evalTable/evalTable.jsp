@@ -82,6 +82,14 @@
 												class="btn btn-lg btn-danger">点此选为默认领导评教指标表</a>
 												</td>
 										</c:if>
+										
+										<c:if test="${param.action == 'teaStuEval'}">
+											<td>
+											<a
+												href="${pageContext.request.contextPath}/admin/batches/setEval/teaStu/${param.bid}/${e.id}"
+												class="btn btn-lg btn-danger">点此选为默认教师评价学生表</a>
+												</td>
+										</c:if>
 									</tr>
 								</c:forEach>
 							</tbody>

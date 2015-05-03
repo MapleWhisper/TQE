@@ -22,6 +22,7 @@ public class BatchesServiceImpl extends BaseService<Batches>{
 		b.setStuEval(evalTableDao.getById(b.getStuEvalId()));
 		b.setTeaEval(evalTableDao.getById(b.getTeaEvalId()));
 		b.setLeadTval(evalTableDao.getById(b.getLeadEvalId()));
+		b.setTeaStuEval(evalTableDao.getById(b.getTeaStuEvalId()));
 		return b;
 	}
 	

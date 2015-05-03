@@ -108,6 +108,11 @@ public class BatchesController extends BaseController {
 				batchesService.update(b);
 				return "redirect:/admin/batches/show/"+bid;
 			}
+			if(type.equals("teaStu")){
+				b.setTeaStuEvalId(eid);
+				batchesService.update(b);
+				return "redirect:/admin/batches/show/"+bid;
+			}
 			
 		}
 		model.addAttribute("msg", "路径参数不正确:/batches/setEval/{type}/{bid}/{eid}\n");

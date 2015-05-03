@@ -39,9 +39,12 @@ public class ImageController {
 		StringBuffer sb = new StringBuffer();
 		
 		//图片显示的内容
-		int x,y,ans;
-		x= rd.nextInt(10);
-		y = rd.nextInt(10);
+		int x=0,y=0,ans=0;
+		while(x-y<0){
+			x = rd.nextInt(10);
+			y = rd.nextInt(10);
+		}
+		
 		// 0 +
 		// 1 -
 		// 2 *

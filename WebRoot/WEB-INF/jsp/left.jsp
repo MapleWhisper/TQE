@@ -31,9 +31,14 @@
 								href="${pageContext.request.contextPath}/admin/teaEval">教师评教</a></span>
 						</li>
 						<li
-							style="display: ${sessionScope.pMap.leaderEval==true ? '' : 'none'}">
+							style="display: ${sessionScope.pMap.teaStuEval==true ? '' : 'none'}">
 							<span><i class="glyphicon glyphicon-leaf"></i> <a
-								href="${pageContext.request.contextPath}/admin/leaderEval">领导评教</a></span>
+								href="${pageContext.request.contextPath}/admin/teaStuEval">评教学生</a></span>
+						</li>
+						<li
+							style="display: ${sessionScope.pMap.leaEval==true ? '' : 'none'}">
+							<span><i class="glyphicon glyphicon-leaf"></i> <a
+								href="${pageContext.request.contextPath}/admin/leaEval">领导评教</a></span>
 						</li>
 					</ul></li>
 				<!-- 				

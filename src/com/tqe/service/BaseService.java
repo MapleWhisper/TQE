@@ -17,6 +17,7 @@ import com.tqe.dao.CourseDao;
 import com.tqe.dao.DepartmentDao;
 import com.tqe.dao.EvalDao;
 import com.tqe.dao.EvalTableDao;
+import com.tqe.dao.LeaderDao;
 import com.tqe.dao.MajorDao;
 import com.tqe.dao.PrivilegeDao;
 import com.tqe.dao.StudentDao;
@@ -60,6 +61,9 @@ public abstract class BaseService<E> {
 	
 	@Autowired
 	public PrivilegeDao privilegeDao;
+	
+	@Autowired
+	public LeaderDao leaderDao;
 	
 	public  E getById(Integer id){
 		return null;
