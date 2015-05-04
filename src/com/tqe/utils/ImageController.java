@@ -40,7 +40,7 @@ public class ImageController {
 		
 		//图片显示的内容
 		int x=0,y=0,ans=0;
-		while(x-y<0){
+		while(x-y<=0){
 			x = rd.nextInt(10);
 			y = rd.nextInt(10);
 		}

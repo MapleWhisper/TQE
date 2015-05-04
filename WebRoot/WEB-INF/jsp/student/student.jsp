@@ -89,7 +89,6 @@
 									<td>年级</td>
 									<td>校区</td>
 									<td>操作</td>
-									<td>操作</td>
 								</tr>
 							</thead>
 							<tbody>
@@ -110,7 +109,7 @@
 										<td>${s.campus }</td>
 
 
-										<td><a href="${pageContext.request.contextPath}/admin/student/show"
+										<td><a href="${pageContext.request.contextPath}/admin/student/show/${s.sid}"
 											class="btn btn-danger">查看学生</a></td>
 									</tr>
 								</c:forEach>

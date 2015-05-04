@@ -5,8 +5,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.tqe.po.Student;
 
 @Controller()
 @RequestMapping("/admin")
@@ -41,6 +44,13 @@ public class StudentController extends BaseController{
 		model.addAttribute("condition", condition);
 		model.addAttribute("studentList", studentService.findByCondition(condition));
 		return "student/student";
+	}
+	
+	@RequestMapping("/student/show/${sid}")
+	public String showStudent(@PathVariable String sid,Model model){
+		Student stu = studentService.getById(sid);
+		model.addAttribute("student", stu);
+		return "student/addStudent";
 	}
 	
 	@RequestMapping("/student/add")
