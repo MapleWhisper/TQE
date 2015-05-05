@@ -32,6 +32,7 @@
 									<td>权限名称</td>
 									<td>学生</td>
 									<td>教师</td>
+									<td>领导</td>
 									<td>管理员</td>
 									<td>操作</td>
 								</tr>
@@ -43,9 +44,10 @@
 
 										<td>${p.url}</td>
 										<td>${p.name}</td>
-										<td><input class="${p.id} form-control stu" disabled="disabled" value="${p.stu}"></td>
-										<td><input class="${p.id} form-control tea" disabled="disabled" value="${p.tea}"></td>
-										<td><input class="${p.id} form-control adm" disabled="disabled" value="${p.adm}"></td>
+										<td><input class="${p.id} form-control input-sm stu" disabled="disabled" value="${p.stu}"></td>
+										<td><input class="${p.id} form-control input-sm tea" disabled="disabled" value="${p.tea}"></td>
+										<td><input class="${p.id} form-control input-sm adm" disabled="disabled" value="${p.adm}"></td>
+										<td><input class="${p.id} form-control input-sm lea" disabled="disabled" value="${p.lea}"></td>
 										<td>
 											<button value="${p.id}"  class="btn btn-info edit">修改</button>
 											<button value="${p.id}"  style="display: none" class="btn btn-warning update" >保存修改</button>
@@ -95,7 +97,8 @@
 				var stu = $("input."+id+".stu").val();
 				var tea = $("input."+id+".tea").val();
 				var adm = $("input."+id+".adm").val();
-				$.post("privilege/update",{"id":id,"stu":stu,"tea":tea,"adm":adm},function(data){
+				var lea = $("input."+id+".lea").val();
+				$.post("privilege/update",{"id":id,"stu":stu,"tea":tea,"lea":lea,"adm":adm},function(data){
 					if(data=="success"){
 						alert("修改成功");
 					}else{

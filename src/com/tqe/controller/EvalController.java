@@ -158,10 +158,10 @@ public class EvalController extends BaseController{
 				model.addAttribute("table", leaTable);
 				
 			}else if(type.equals("teaStu")){
-				LeaTable leaTable = evalService.getLeaTableById(id);
-				EvalTable evalTable = JSON.parseObject(leaTable.getJsonString(),EvalTable.class);
+				TeaStuTable teaStuTable = evalService.getTeaStuTableById(id);
+				EvalTable evalTable = JSON.parseObject(teaStuTable.getJsonString(),EvalTable.class);
 				model.addAttribute("evalTable", evalTable);
-				model.addAttribute("table", leaTable);
+				model.addAttribute("table", teaStuTable);
 			}
 			
 

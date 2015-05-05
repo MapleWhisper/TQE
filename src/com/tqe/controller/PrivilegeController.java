@@ -42,6 +42,7 @@ public class PrivilegeController extends BaseController{
 		p.setStu(privilege.getStu());
 		p.setTea(privilege.getTea());
 		p.setAdm(privilege.getAdm());
+		p.setLea(privilege.getLea());
 		privilegeService.update(p);
 		return "success";	//保存完成后  跳转到管理员列表页面
 	}

@@ -101,7 +101,7 @@
 									<h3 class="panel-title">打分表和评价</h3>
 								</div>
 								<div class="panel-body">
-									<table class="table table-striped table-hover table-bordered">
+									<table class="table table-striped table-hover table-bordered table-condensed">
 										<tr>
 											<td>序号</td>
 											<td>评价项目</td>

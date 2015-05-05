@@ -43,6 +43,9 @@ public interface EvalDao extends BaseDao<EvalTable>{
 	
 	@Select("select `id`,  `lid`,  `eid`,  `cid`,  `cno`,  `bid`,  `score`,  `level` from leatable where cid =#{cid} and cno=#{cno} and bid =#{bid} ")
 	public List<LeaTable> findAllLeaTableByCourse(@Param("cid")String cid, @Param("cno")Integer cno, @Param("bid")Integer bid);
+	
+	@Select("select `id`,  `tid`,`sid`,  `eid`,  `cid`,  `cno`,  `bid`,  `score`,  `level`,`tname` from teaStutable where sid =#{sid}  and bid =#{bid} ")
+	public List<TeaStuTable> findAllTeaStuTableBySid(@Param("sid") String sid, @Param("bid")Integer bid);
 
 	@Select("select * from stutable where id = #{stuTableId}")
 	public StuTable getStuTableById(Integer stuTableId);
@@ -52,6 +55,9 @@ public interface EvalDao extends BaseDao<EvalTable>{
 	
 	@Select("select * from leatable where id = #{leaTableId}")
 	public LeaTable getLeaTableById(Integer leaTableId );
+	
+	@Select("select * from teaStuTable where id = #{teaStuTableId}")
+	public TeaStuTable getTeaStuTableById(Integer teaStuTableId);
 	
 	@Select("select cid from stutable where sid = #{sid} and bid = #{bid}")
 	public List<String> findAllStuTablecids(@Param("sid")String sid,@Param("bid")Integer bid);
@@ -63,6 +69,11 @@ public interface EvalDao extends BaseDao<EvalTable>{
 
 	@Select("select sid from teastutable where tid = #{tid} and cid = #{cid} and cno = #{cno} and bid = #{bid}")
 	public List<String> findAllSidsByCidTid(@Param("cid")String cid, @Param("cno")Integer cno,@Param("tid")String tid, @Param("bid")Integer bid);
+
+	
+
+
+	
 
 	
 

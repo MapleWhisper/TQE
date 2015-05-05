@@ -17,6 +17,7 @@ public class CourseModel {
 		private  List<StuTable> stuTableList;	//学生评教表
 		private  List<TeaTable> teaTableList;	//教师评教表
 		private  List<LeaTable> leaTableList;	//领导评教表
+		private List<TeaStuTable> teaStuTableList;	//教师评价学生表
 
 		public  List<StuTable> getStuTableList() {
 			return stuTableList;
@@ -49,6 +50,14 @@ public class CourseModel {
 		public void setLeaTableList(List<LeaTable> leaTableList) {
 			this.leaTableList = leaTableList;
 		}
+
+		public List<TeaStuTable> getTeaStuTableList() {
+			return teaStuTableList;
+		}
+
+		public void setTeaStuTableList(List<TeaStuTable> teaStuTableList) {
+			this.teaStuTableList = teaStuTableList;
+		}
 		
 		
 	}
@@ -61,7 +70,7 @@ public class CourseModel {
 		this.batchesList = batchesList;
 	}
 	
-
+	
 
 	
 	

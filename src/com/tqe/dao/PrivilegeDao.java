@@ -30,7 +30,7 @@ public interface PrivilegeDao extends BaseDao<Privilege>{
 	@Select("select * from privilege where id = #{id}")
 	public Privilege getById(Integer id);
 	
-	@Update("update privilege set stu = #{stu} , tea = #{tea} , adm = #{adm} where id = #{id}")
+	@Update("update privilege set stu = #{stu} , tea = #{tea} , adm = #{adm} , lea = #{lea} where id = #{id}")
 	public void update(Privilege p);
 
 	

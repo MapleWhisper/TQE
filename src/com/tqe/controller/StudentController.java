@@ -1,5 +1,6 @@
 package com.tqe.controller;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,7 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.tqe.model.CourseModel;
+import com.tqe.po.Batches;
 import com.tqe.po.Student;
+import com.tqe.po.TeaStuTable;
+import com.tqe.utils.SystemUtils;
 
 @Controller()
 @RequestMapping("/admin")
@@ -46,11 +51,23 @@ public class StudentController extends BaseController{
 		return "student/student";
 	}
 	
-	@RequestMapping("/student/show/${sid}")
+	@RequestMapping("/student/show/{sid}")
 	public String showStudent(@PathVariable String sid,Model model){
-		Student stu = studentService.getById(sid);
+		Student stu = studentService.getById(sid);	//获取学生信息
+		
+		CourseModel courseModel = new CourseModel();
+		List<Batches> batchesList = batchesService.findAllBySeason(SystemUtils.getSeason());	//默认得到当前学期的所有批次
+		
+		for(Batches b : batchesList){	//遍历所有得到的批次列表
+			List<TeaStuTable> teaStuTableList = evalService.findAllTeaStuTableBySid(sid, b.getId());
+			CourseModel.Batches batches = new CourseModel.Batches();
+			batches.setTeaStuTableList(teaStuTableList);
+			batches.setBatches(b);
+			courseModel.getBatchesList().add(batches);
+		}
 		model.addAttribute("student", stu);
-		return "student/addStudent";
+		model.addAttribute("courseModel", courseModel);
+		return "student/showStudent";
 	}
 	
 	@RequestMapping("/student/add")

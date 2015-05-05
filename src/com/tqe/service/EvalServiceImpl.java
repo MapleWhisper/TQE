@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.tqe.po.EvalTable;
 import com.tqe.po.LeaTable;
-import com.tqe.po.TeaStuTable;
 import com.tqe.po.StuTable;
+import com.tqe.po.TeaStuTable;
 import com.tqe.po.TeaTable;
 
 @Service
@@ -104,6 +104,14 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 		leaTable.setCourse(courseDao.getById(leaTable.getCid(), leaTable.getCno()));
 		return leaTable;
 	}
+	
+	public TeaStuTable getTeaStuTableById(Integer id) {
+		TeaStuTable table = evalDao.getTeaStuTableById(id);
+		table.setBatches(batchesDao.getById(table.getBid()));
+		table.setCourse(courseDao.getById(table.getCid(), table.getCno()));
+		return table;
+	}
+
 
 	
 	/**
@@ -129,6 +137,21 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 		for(StuTable stuTable : list){
 			stuTable.setStudent(studentDao.getById(stuTable.getSid()));
 			stuTable.setBatches(batchesDao.getById(stuTable.getBid()));
+		}
+		return list; 
+	}
+	
+	/**
+	 * 根据 sid 和 bid 获取对应 教师评价学生 所有结果
+	 * @param cid 课程号
+	 * @param cno 课序号
+	 * @param bid 批次号
+	 * @return
+	 */
+	public List<TeaStuTable> findAllTeaStuTableBySid(String sid,Integer bid){
+		List<TeaStuTable> list = evalDao.findAllTeaStuTableBySid(sid,bid);
+		for(TeaStuTable t:list){
+			t.setCourse(courseDao.getById(t.getCid(), t.getCno()));
 		}
 		return list; 
 	}
@@ -173,6 +196,7 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 		evalTableDao.update(eTable);
 	}
 
+	
 
 	
 	

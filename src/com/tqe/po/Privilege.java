@@ -9,6 +9,7 @@ public class Privilege implements  Serializable{
 	private Integer stu;
 	private Integer tea;
 	private Integer adm;
+	private Integer lea;
 	
 	public Integer getId() {
 		return id;
@@ -45,6 +46,12 @@ public class Privilege implements  Serializable{
 	}
 	public void setAdm(Integer adm) {
 		this.adm = adm;
+	}
+	public Integer getLea() {
+		return lea;
+	}
+	public void setLea(Integer lea) {
+		this.lea = lea;
 	}
 	
 }

@@ -76,7 +76,6 @@
 							<thead>
 								<tr class="info">
 									<td>学生姓名</td>
-
 									<td>学号</td>
 									<td>证件号</td>
 									<td>性别</td>

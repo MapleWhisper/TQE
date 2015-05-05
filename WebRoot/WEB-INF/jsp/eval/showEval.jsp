@@ -68,7 +68,7 @@
 									<h3 class="panel-title">请如实填写表单信息</h3>
 								</div>
 								<div class="panel-body">
-									<table class="table table-striped table-hover table-bordered">
+									<table class="table table-striped table-hover table-bordered table-condensed">
 
 										<c:forEach items="${evalTable.itemList}" var="item"
 											varStatus="s" >

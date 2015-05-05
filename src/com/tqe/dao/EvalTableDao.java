@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import com.tqe.po.EvalTable;
+import com.tqe.po.LeaTable;
 import com.tqe.po.TeaStuTable;
 
 @Repository
@@ -23,12 +24,12 @@ public interface EvalTableDao extends BaseDao<EvalTable>{
 	@Select("select * from evalTable")
 	public List<EvalTable> findAll();
 	
-	
 	@Delete("delete from EvalTable where id = #{id}")
 	public void delete(Integer id);
 	
 	@Update("update evaltable set title = #{title} , note = #{note} ,jsonString = #{jsonString} where id = #{id}")
 	public void update(EvalTable eTable);
+
 
 	
 }
