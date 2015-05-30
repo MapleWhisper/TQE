@@ -31,7 +31,7 @@
 							id="nav">
 							<li role="presentation" class="pre active"><a href="#part1">评教须知</a></li>
 							<li role="presentation" class="pre"><a href="#part2">表头</a></li>
-							<li role="presentation" class="pre"><a href="#part3">表项</a></li>
+							<li role="presentation" class="pre"><a href="#part3">表单项</a></li>
 						</ul>
 					</div>
 					<!--左侧的导航条 -->

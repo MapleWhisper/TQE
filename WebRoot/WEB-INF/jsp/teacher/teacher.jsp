@@ -76,25 +76,31 @@
 									<td>职称</td>
 									<!-- 
 									<td>操作</td>
-									 -->
+									 
 									<td>操作</td>
+									-->
 								</tr>
 							</thead>
 							<tbody>
 								
 								<c:forEach items="${teacherList}" var="tea">
 									<tr>
+										<!-- 
 										<td><a
 											href="${pageContext.request.contextPath}/admin/teacher/show/${tea.id}">${tea.name}</a></td>
+										 -->
+										 <td>${tea.name}</td>
 										<td>${tea.id}</td>
 										<td>${tea.email }</td>
 										<td>${tea.idNumber }</td>
 										<td>${tea.sex }</td>
 										<td>${tea.department }</td>
 										<td>${tea.title }</td>
+										<!-- 
 										<td><a href="${pageContext.request.contextPath}/admin/teacher/show/${tea.id}"
 											class="btn btn-danger" ><span
 												class=" glyphicon glyphicon-zoom-in"></span>查看评教详情</a></td>
+										 -->
 										<!-- 
 										<td><a href="teacherAction!edit?id=${tea.id }"
 											class="btn btn-info"><span
@@ -132,36 +138,7 @@
 	<script
 		src="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.js"></script>
 	<script type="text/javascript">
-	/*
-		$(function() {
-			$('table').has("thead").dataTable({
-				"language" : {
-					"lengthMenu" : "每页显示 _MENU_ 条纪录 ",
-					"zeroRecords" : "抱歉,没有找到数据",
-					"info" : "当前第  _PAGE_/_PAGES_ 页",
-					"infoEmpty" : "",
-					"infoFiltered" : "(过滤自  _MAX_ 条纪录)",
-					"search" : "搜索:",
-					"searchPlaceholder" : "请输入关键字",
-					"next" : "下一页",
-					"previous" : "上一页"
-				},
-				"processing": true,
-		        "serverSide": true,
-		        "ajax": "teacher/json",
-		        "columns": [
-							{ "data": "name" },
-		                    { "data": "id" },
-		                    { "data": "id" },
-		                    { "data": "id" },
-		                    { "data": "id" },
-		                    { "data": "id" },
-		                    { "data": "id" },
-		                    
-		                ]
-			});
-		});
-	*/
+	
 	</script>
 </body>
 </html>

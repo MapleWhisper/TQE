@@ -38,7 +38,7 @@
 						<form
 							action="${pageContext.request.contextPath }/admin/evalTable/update"
 							class="form-horizontal" role="form" id="form" method="post">
-							<input value="${evalTable.id }" type="hidden"  name="eid">
+							<input value="${evalTable.id }" type="hidden" name="eid">
 							<div class="form-group">
 
 								<label class="col-xs-2 control-label">评教指标标题</label>
@@ -51,7 +51,8 @@
 							<div class="form-group">
 								<label class="col-xs-2 control-label">评教须知</label>
 								<div class="col-xs-10">
-									<textarea rows="5" cols="100%" name="note" class="form-control" required="required">${evalTable.note}</textarea>
+									<textarea rows="5" cols="100%" name="note" class="form-control"
+										required="required">${evalTable.note}</textarea>
 								</div>
 							</div>
 
@@ -73,6 +74,13 @@
 											<span class="glyphicon glyphicon-plus-sign"
 												aria-hidden="true">添加新表头项</span>
 										</button>
+									</div>
+									<div class="col-xs-4">
+										<button class="btn btn-warning" id="removeItem">
+											<span class="glyphicon glyphicon-remove-sign"
+												aria-hidden="true">删除最后一个</span>
+										</button>
+
 									</div>
 
 								</div>
@@ -124,7 +132,16 @@
 											<span class="glyphicon glyphicon-plus-sign"
 												aria-hidden="true">添加表单新项</span>
 										</button>
+
 									</div>
+									<div class="col-xs-3">
+										<button class="btn btn-warning" id="removeTableItem">
+											<span class="glyphicon glyphicon-remove-sign"
+												aria-hidden="true">删除最后一个</span>
+										</button>
+
+									</div>
+
 
 								</div>
 							</div>
@@ -148,6 +165,14 @@
 												aria-hidden="true"> 添加问题和建议项</span>
 
 										</button>
+										
+									</div>
+									<div class="col-xs-3">
+										<button class="btn btn-warning" id="removeQuestion">
+											<span class="glyphicon glyphicon-remove-sign"
+												aria-hidden="true">删除最后一个</span>
+										</button>
+
 									</div>
 
 								</div>
@@ -185,12 +210,20 @@
 				$("#item .item:last").after(item);
 				return false;
 			});
+			$("#removeItem").click(function() {
+				$("#item .item:last").remove();
+				return false;
+			});
 			$("#addQuestion").click(function() {
 				var cnt = $("#question .question").size();
 				var contextName = "questionList[" + cnt + "].context";
 				var item = $("#question .question:last").clone();
 				$(item).children("input").attr("name", contextName);
 				$("#question .question:last").after(item);
+				return false;
+			});
+			$("#removeQuestion").click(function() {
+				$("#question .question:last").remove();
 				return false;
 			});
 			$("#addTableItem").click(
@@ -206,6 +239,10 @@
 						$("#tableItem .tableItem:last").after(item);
 						return false;
 					});
+			$("#removeTableItem").click(function() {
+				$("#tableItem .tableItem:last").remove();
+				return false;
+			});
 
 		});
 	</script>

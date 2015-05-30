@@ -82,7 +82,7 @@
 	<script
 		src="${pageContext.request.contextPath}/js/datatables/js/jquery.dataTables.min.js"></script>
 	<script
-		src="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.js"></script>
+		src="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.nodefault.js"></script>
 		
 	<script type="text/javascript">
 		$(function(){
@@ -109,6 +109,22 @@
 				
 				$(this).prev().show();
 				$("input."+id).attr("disabled","disabled");
+			});
+		});
+		$(function(){
+			$('table').has("thead").dataTable({
+				 "language": {
+			            "lengthMenu": "每页显示 _MENU_ 条纪录 ",
+			            "zeroRecords": "抱歉,没有找到数据",
+			            "info": "当前第  _PAGE_/_PAGES_ 页",
+			            "infoEmpty": "",
+			            "infoFiltered": "(过滤自  _MAX_ 条纪录)",
+			            "search":"搜索:",
+			            "searchPlaceholder":"请输入关键字",
+			            "next":"下一页",
+			            "previous":"上一页"
+			        },
+					"lengthMenu": [[-1], [  "所有记录"]]
 			});
 		});
 	</script>

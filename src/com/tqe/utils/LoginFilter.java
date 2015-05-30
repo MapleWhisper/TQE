@@ -26,17 +26,7 @@ import com.tqe.po.Teacher;
 public class LoginFilter implements  Filter{
 	
 	
-	private static List<String> list;
-	@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
-		list = new ArrayList<>();
-		list.add("/personalCenter");
-		list.add("/resume");
-		list.add("/apply");
-		list.add("/paper");
-	   
-		
-	}
+	
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
@@ -67,6 +57,7 @@ public class LoginFilter implements  Filter{
 		}
 		//如果登陆了 那么就检查权限
 		@SuppressWarnings("unchecked")
+		//获取登录用户的权限列表
 		List<Privilege> plist = (List<Privilege>) session.getAttribute("pList");
 		boolean f = checkPrivilege(path, plist);
 		if(f){
@@ -80,6 +71,12 @@ public class LoginFilter implements  Filter{
 		
 	}
 	
+	/**
+	 * 根据用户访问路径 判断用户是否有权限访问
+	 * @param path
+	 * @param pList
+	 * @return
+	 */
 	public boolean checkPrivilege(String path,List<Privilege> pList){
 		for(Privilege p : pList){
 			if(path.endsWith(p.getUrl())){		//如果是例如（/privilege）的页面，直接默认为继续
@@ -95,6 +92,10 @@ public class LoginFilter implements  Filter{
 			}
 		}
 		return false; 
+	}
+	
+	@Override
+	public void init(FilterConfig filterConfig) throws ServletException {
 	}
 	
 	@Override

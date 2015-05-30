@@ -22,7 +22,7 @@
 			</div>
 			<div class="col-sm-10 ">
 				<div class="panel panel-primary">
-					<div class="panel-heading">课程列表</div>
+					<div class="panel-heading">请选择要评价的课程</div>
 
 					<div class="panel-body">
 						<blockquote>
