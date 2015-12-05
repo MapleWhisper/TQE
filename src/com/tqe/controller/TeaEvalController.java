@@ -68,7 +68,7 @@ public class TeaEvalController extends BaseController{
 				studentList = studentService.findAllByCId(cid,cno,tea.getId(),batches.getId());		
 				if(studentList.size()%2!=0){
 					Student s = new Student();
-					s.setEvaled(true);
+					s.setIsEvaled(true);
 					studentList.add(s);
 				}
 				

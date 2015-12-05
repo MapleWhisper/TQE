@@ -2,6 +2,7 @@ package com.tqe.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
@@ -13,4 +14,8 @@ public interface DepartmentDao extends BaseDao<Department>{
 	@Override
 	@Select("select * from department")
 	public List<Department> findAll();
+
+	@Override
+	@Insert("insert into department values(null,#{name})")
+	void save(Department department);
 }

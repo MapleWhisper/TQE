@@ -8,7 +8,15 @@ import org.springframework.stereotype.Component;
 public class Department implements Serializable{
 	private Integer id;
 	private String name;
-	
+
+	public Department(){
+
+	}
+	public Department(String name) {
+		this.name = name;
+
+	}
+
 	public Integer getId() {
 		return id;
 	}

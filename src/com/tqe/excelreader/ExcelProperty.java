@@ -1,14 +1,9 @@
 package com.tqe.excelreader;
 
+import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.util.Properties;
-
-import javax.ws.rs.GET;
-
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
 @Component
 public  class ExcelProperty {

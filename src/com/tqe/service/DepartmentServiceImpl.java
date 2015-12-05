@@ -15,4 +15,8 @@ public class DepartmentServiceImpl extends BaseService<Department>{
 		
 		return departmentDao.findAll();
 	}
+
+	public void saveOne(Department department){
+		departmentDao.save(department);
+	}
 }

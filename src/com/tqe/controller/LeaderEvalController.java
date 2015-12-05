@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import com.tqe.base.vo.PageVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.tqe.po.Batches;
 import com.tqe.po.Course;
 import com.tqe.po.Leader;
-import com.tqe.po.Teacher;
 import com.tqe.utils.SystemUtils;
 
 /**
@@ -68,9 +68,11 @@ public class LeaderEvalController extends BaseController{
 			condition.put("cname", cname);
 			condition.put("cid", cid);
 			condition.put("tname", tname);
+			PageVO pageVO = new PageVO();
+			pageVO.setFilters(condition);
 			model.addAttribute("condition", condition);
 			addSercherResource(model);
-			List<Course> list = courseService.findByCondition(condition);
+			List<Course> list = courseService.findByCondition(pageVO);
 			model.addAttribute("courseList",list);
 			
 			model.addAttribute("batches", batches);

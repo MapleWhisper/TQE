@@ -31,6 +31,7 @@
 								<div class="form-group">
 									<label >学院:</label>
 									<select  class="form-control" id="department" name="did" >
+										<option value="">不限</option>
 										<c:forEach items="${ departmentList}" var="dep" >
 											<c:if test="${dep.id != condition.did}">
 												<option value="${dep.id}">${dep.name }</option>

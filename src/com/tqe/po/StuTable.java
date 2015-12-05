@@ -6,21 +6,15 @@ public class StuTable extends Table implements Serializable{
 	private String  sid;	//学生号
 
 	
-	private Integer departmentId;
 	private String tname;
 	private String sname;
 	private String tid;
+
 	public String getSid() {
 		return sid;
 	}
 	public void setSid(String sid) {
 		this.sid = sid;
-	}
-	public Integer getDepartmentId() {
-		return departmentId;
-	}
-	public void setDepartmentId(Integer departmentId) {
-		this.departmentId = departmentId;
 	}
 	public String getTname() {
 		return tname;

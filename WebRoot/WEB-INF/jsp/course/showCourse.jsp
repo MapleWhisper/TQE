@@ -17,7 +17,7 @@
 			</div>
 			<div class="col-sm-10 ">
 				<table
-					class="table table-hover table-striped table-bordered table-condensed">
+					class="table table-hover table-striped table-bordered" style="text-align: center">
 					<tr class="warning">
 						<td>课程名</td>
 						<td>教师</td>

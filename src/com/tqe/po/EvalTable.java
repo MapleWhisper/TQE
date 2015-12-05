@@ -180,5 +180,20 @@ public class EvalTable {
 	public void setLevel(String level) {
 		this.level = level;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "EvalTable{" +
+				"id=" + id +
+				", title='" + title + '\'' +
+				", note='" + note + '\'' +
+				", itemList=" + itemList +
+				", tableItemList=" + tableItemList +
+				", questionList=" + questionList +
+				", createDate=" + createDate +
+				", jsonString='" + jsonString + '\'' +
+				", score='" + score + '\'' +
+				", level='" + level + '\'' +
+				'}';
+	}
 }

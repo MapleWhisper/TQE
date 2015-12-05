@@ -3,6 +3,7 @@ package com.tqe.po;
 import java.io.Serializable;
 
 public class Privilege implements  Serializable{
+
 	private Integer id;
 	private String url;
 	private String name;

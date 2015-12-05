@@ -34,7 +34,9 @@ public class HandlerInterceptorAdaptor implements HandlerInterceptor {
 		request.setAttribute("msg", msg);
 		try {
 			request.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
-		} catch (ServletException | IOException e) {
+		} catch (ServletException e) {
+			e.printStackTrace();
+		} catch(IOException e){
 			e.printStackTrace();
 		}
 	}

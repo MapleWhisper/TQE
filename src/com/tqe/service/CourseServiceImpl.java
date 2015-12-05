@@ -4,13 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
+import com.tqe.base.vo.PageVO;
 import org.springframework.stereotype.Service;
 
-import com.tqe.dao.CourseDao;
 import com.tqe.po.Course;
-import com.tqe.po.Teacher;
 
 @Service
 public class CourseServiceImpl extends BaseService<Course>{
@@ -73,7 +70,7 @@ public class CourseServiceImpl extends BaseService<Course>{
 			List<String> cids = evalDao.findAllStuTablecids(sid,bid);
 			for(Course c: list){
 				if(cids.contains(c.getCid())){
-					c.setEvaled(true);
+					c.setIsEvaled(true);
 				}
 			}
 			return list;
@@ -90,7 +87,7 @@ public class CourseServiceImpl extends BaseService<Course>{
 			List<String> cids = evalDao.findAllTeaTablecids(tid,bid);
 			for(Course c: list){
 				if(cids.contains(c.getCid()+c.getCno())){
-					c.setEvaled(true);
+					c.setIsEvaled(true);
 				}
 			}
 			return list;
@@ -108,23 +105,20 @@ public class CourseServiceImpl extends BaseService<Course>{
 			List<String> cids = evalDao.findAllTeaTablecids(tid,bid);
 			for(Course c: list){
 				if(cids.contains(c.getCid()+c.getCno())){
-					c.setEvaled(true);
+					c.setIsEvaled(true);
 				}
 			}
 			*/
 			return list;
 		}
 
-		public List<Course> findByCondition(HashMap<String, String> condition) {
-			return courseDao.findByCondition(condition);
+		public List<Course> findByCondition(PageVO pageVO) {
+			return courseDao.findByCondition(pageVO);
 		}
 		
 		/**
 		 * 处理课程数据
-		 * @param dMap 
-		 * @param mMap
-		 * @param cMap
-		 * @param s
+		 * @param dMap 部门信息
 		 */
 		private void processCouData(Map<String, Integer> dMap, Course cou) {
 			cou.setDepartmentId(dMap.get(cou.getDepartment()));

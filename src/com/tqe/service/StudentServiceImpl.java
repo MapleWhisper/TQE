@@ -4,20 +4,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
+import com.tqe.po.*;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tqe.dao.StudentDao;
-import com.tqe.po.Clazz;
-import com.tqe.po.Department;
-import com.tqe.po.Major;
-import com.tqe.po.Student;
-import com.tqe.po.User;
-
 @Service
 public class StudentServiceImpl extends BaseService<Student>{
+
+		@Autowired
+		private DepartmentServiceImpl departmentService;
 		
 		/**
 		 * 得到所有的学生列表
@@ -74,13 +70,18 @@ public class StudentServiceImpl extends BaseService<Student>{
 			
 			Map<String,Integer> dMap = convertDepListToMap(departmentDao.findAll());	
 			Map<String,Integer> mMap = convertMajListToMap(majorDao.findAll());
-			Map<String,Integer> cMap = convertClaListToMap( clazzDao.findAll());
+			Map<String,Integer> cMap = convertClaListToMap(classDao.findAll());
 			boolean f = false;
 			try {
 				if(list!=null){
 					for(Student s:list){
 						if(s.getSid()!=null){
-							processStuData(dMap, mMap, cMap, s);
+							boolean reload  = processStuData(dMap, mMap, cMap, s);
+							if(reload){		//如果插入学生数据的同时插入了 学院 专业 班级等信息 那么重新加载Map
+								dMap = convertDepListToMap(departmentDao.findAll());
+								mMap = convertMajListToMap(majorDao.findAll());
+								cMap = convertClaListToMap(classDao.findAll());
+							}
 							save(s);
 						}
 					}
@@ -97,21 +98,49 @@ public class StudentServiceImpl extends BaseService<Student>{
 		
 		/**
 		 * 处理学生数据 外键关系
-		 * @param dMap 
-		 * @param mMap
-		 * @param cMap
-		 * @param s
+		 * @param dMap 学院信息
+		 * @param mMap 专业信息
+		 * @param cMap 班级信息
+		 * @param s 学生
 		 */
-		private void processStuData(Map<String, Integer> dMap,
+		private boolean processStuData(Map<String, Integer> dMap,
 				Map<String, Integer> mMap, Map<String, Integer> cMap, Student s) {
 			String m = s.getMajor();
+			boolean reload =false;
 			if(m.endsWith(".")){		//如果专业是以 "." 结束的 那么就把 "." 去掉
-				
 				s.setMajor(m.substring(0, m.length()-1));
 			}
+			//如果该学生的部门不存在 那么插入该部门
+			if(StringUtils.isNoneBlank(s.getDepartment()) && !dMap.containsKey(s.getDepartment()) ) {
+				departmentDao.save(new Department(s.getDepartment()));
+				dMap = convertDepListToMap(departmentDao.findAll());	//重新加载
+				reload = true;
+			}
 			s.setDepartmentId(dMap.get(s.getDepartment()));
+
+			//如果学生的专业不存在 那么插入该专业
+			if(StringUtils.isNotBlank(s.getMajor()) && !mMap.containsKey(s.getMajor())){
+				Major major = new Major();
+				major.setName(s.getMajor());
+				major.setDepartmentId(dMap.get(s.getDepartment()));
+				majorDao.save(major);
+				mMap = convertMajListToMap(majorDao.findAll());	//重新加载
+				reload = true;
+			}
 			s.setMajorId(mMap.get(s.getMajor()));
+
+			//如果学生的班级信息不存在 那么插入该班级
+			if(StringUtils.isNotBlank(s.getClazz()) && !cMap.containsKey(s.getClazz())){
+				Clazz clazz = new Clazz();
+				clazz.setName(s.getClazz());
+				clazz.setMajorId(mMap.get(s.getMajor()));
+				clazz.setDepartmentId(dMap.get(s.getDepartment()));
+				classDao.save(clazz);
+				cMap = convertClaListToMap(classDao.findAll());
+				reload = true;
+			}
 			s.setClassId(cMap.get(s.getClazz()));
+			return reload;
 		}
 
 		/**
@@ -137,7 +166,7 @@ public class StudentServiceImpl extends BaseService<Student>{
 			List<String> sidList = evalDao.findAllSidsByCidTid(cid,cno,tid,bid);	//选出对应课程 教师号 和 批次 已经评价过得学生Ids
 			for(Student stu : studentList){		//状态为不可评价
 				if(sidList.contains(stu.getSid())){
-					stu.setEvaled(true);
+					stu.setIsEvaled(true);
 				}
 			}
 			return studentList;

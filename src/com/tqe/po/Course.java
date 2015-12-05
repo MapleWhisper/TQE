@@ -150,7 +150,7 @@ public class Course {
 		return isEvaled;
 	}
 
-	public void setEvaled(boolean isEvaled) {
+	public void setIsEvaled(boolean isEvaled) {
 		this.isEvaled = isEvaled;
 	}
 

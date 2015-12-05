@@ -31,6 +31,9 @@
 	src="${pageContext.request.contextPath}/js/tree.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/style.css" />
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/global.js">
+	</script>
 <!-- 
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/non-responsive.css" />

@@ -62,7 +62,7 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 		try {
 			evalDao.saveLeaTable(leaTable);
 		} catch (Exception e) {
-			throw e;
+			e.printStackTrace();
 		}
 	}
 	

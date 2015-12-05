@@ -38,7 +38,7 @@ public class StudentController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value={"/student"},method={RequestMethod.POST})
-	public String serchStudent(Model model,String did,String mid,String cid,String sname,String sid,HttpSession session){
+	public String serchStudent(Model model,String did,String mid,String cid,String sname,String sid){
 		addSercherResource(model);
 		HashMap<String,String> condition = new HashMap<String,String>();
 		condition.put("did", did);

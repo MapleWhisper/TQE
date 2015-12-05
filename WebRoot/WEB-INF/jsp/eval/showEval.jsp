@@ -137,8 +137,8 @@
 									</c:forEach>
 									
 									<div style="text-align: center;margin-top: 100px;">
-											<a class="btn btn-info btn-lg btn-block" onclick="history.go(-1);"
-												type="submit" value="提交评价" > 《《返回</a>
+											<a class="btn btn-warning btn-lg btn-block" onclick="closeWindow();"
+												 >关闭窗口</a>
 										
 									</div>
 									

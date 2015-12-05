@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tqe.dao.AdminDao;
 import com.tqe.dao.BatchesDao;
-import com.tqe.dao.ClazzDao;
+import com.tqe.dao.ClassDao;
 import com.tqe.dao.CourseDao;
 import com.tqe.dao.DepartmentDao;
 import com.tqe.dao.EvalDao;
@@ -57,7 +57,7 @@ public abstract class BaseService<E> {
 	public MajorDao majorDao;
 	
 	@Autowired
-	public ClazzDao clazzDao;
+	public ClassDao classDao;
 	
 	@Autowired
 	public PrivilegeDao privilegeDao;

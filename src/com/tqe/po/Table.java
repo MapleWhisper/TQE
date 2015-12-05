@@ -1,6 +1,7 @@
 package com.tqe.po;
 
 public class Table {
+
 	protected Integer id;	
 	protected Integer score;	  //得分
 	protected String level;		//等级
@@ -12,6 +13,7 @@ public class Table {
 	protected Integer bid;	//批次号
 	protected String tid;	//教师号
 	protected Integer departmentId;
+	protected String tname;
 	
 	
 	protected String question1;	//回答1
@@ -26,7 +28,7 @@ public class Table {
 	protected Teacher teacher;
 	protected Leader leader;
 	
-	protected String tname;
+
 	
 	public Integer getId() {
 		return id;

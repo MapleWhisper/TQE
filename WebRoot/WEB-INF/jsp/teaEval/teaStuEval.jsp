@@ -65,7 +65,7 @@
 						</c:if>
 
 						<div style="text-align: center">
-							<h1 class="well text-danger">${requestScope.msg}</h1>
+							<h1 class="well text-danger error-message">${requestScope.msg}</h1>
 						</div>
 
 					</div>
@@ -81,6 +81,11 @@
 		src="${pageContext.request.contextPath}/js/datatables/js/jquery.dataTables.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.js"></script>
+	<script>
+		$(function(){
+			removeEmptyErrorMessage();
+		});
+	</script>
 </body>
 </html>
 

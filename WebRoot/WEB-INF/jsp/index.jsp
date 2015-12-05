@@ -35,21 +35,21 @@
 								class="form-horizontal" role="form" id="form1" name="form1"
 								style="margin-top: 20px" method="post">
 								<div class="form-group" align="center">
-									<label for="inputEmail3" class="col-sm-3 control-label">用户名:</label>
+									<label for="username" class="col-sm-3 control-label">用户名:</label>
 									<div class="col-sm-9">
 										<input type="text" class="form-control" id="username" required="required"
-											name="username" placeholder="请输入学号/教师号/Id">
+											name="username"  placeholder="请输入学号/教师号/Id">
 									</div>
 								</div>
 								<div class="form-group" align="center">
-									<label for="inputPassword3" class="col-sm-3 control-label">密码:</label>
+									<label for="password" class="col-sm-3 control-label">密码:</label>
 									<div class="col-sm-9">
 										<input type="password" class="form-control" name="password" required="required"
 											id="password">
 									</div>
 								</div>
 								<div class="form-group" align="center">
-									<label for="" class="col-sm-3 control-label">验证码</label>
+									<label for="valifCode" class="col-sm-3 control-label">验证码</label>
 									<div class="col-sm-5">
 										<input type="text" class="form-control" name="valifCode"
 											id="valifCode" required="required">
@@ -64,22 +64,22 @@
 									<div class="col-sm-4 col-sm-offset-2">
 										<div class="radio">
 											<label> <input type="radio" name="type" required="required"
-												id="" value="student" checked="checked"><span>学生登录</span>
+												 value="student" checked="checked"><span>学生登录</span>
 											</label>
 										</div>
 										<div class="radio">
 											<label> <input type="radio" name="type"
-												id="" value="teacher" ><span>教师登录</span>
+												 value="teacher" ><span>教师登录</span>
 											</label>
 										</div>
 										<div class="radio">
 											<label> <input type="radio" name="type"
-												id="" value="admin"><span>管理员登录</span>
+												 value="admin"><span>管理员登录</span>
 											</label>
 										</div>
 										<div class="radio">
 											<label> <input type="radio" name="type"
-												id="" value="other"><span>其他</span>
+												 value="other"><span>其他</span>
 											</label>
 										</div>
 										
@@ -89,13 +89,13 @@
 									</div>
 								</div>
 
-								<div class="form-group" id="e2">
+								<div class="form-group error-message-container">
 									<div class="col-sm-8 col-sm-offset-2">
 										<div class="alert alert-danger alert-dismissible" role="alert">
 											<button type="button" class="close" data-dismiss="alert">
 												<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 											</button>
-											<span id="e1">${error}</span>
+											<span class="error-message">${error}</span>
 										</div>
 									</div>
 								</div>
@@ -132,17 +132,25 @@
 				}
 			});
 		});
+
 		$(function() {
-			var p = $("#e1").text();
-			if (p.length == 0) {
-				$("#e2").remove();
-			}
-		});
-		$(function() {
+			//移除空的错误提示框
+			removeEmptyErrorMessage();
+
+			//根据登录方式显示不同的按钮文字
 			$("input:radio").click(function(){
 				$("#login-btn").html($("input:radio:checked").next().text());
-			})
+			});
+
+			//从cookie中获取用户的登录方式
+			var loginType = $.cookie("loginType");
+			if(loginType){
+				$("input[value='"+loginType+"']").checked();
+			}
+
+
 		});
+
 	</script>
 
 </body>

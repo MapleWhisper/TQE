@@ -6,7 +6,7 @@
 	<div class="panel-body">
 		<div class="row">
 			<c:forEach items="${courseModel.batchesList}" var="b">
-				<div role="tabpanel" class="tab-pane">
+				<div role="tabpanel" class="tab-pane" style="padding: 10px">
 					<div class="panel panel-warning">
 						<div class="panel-heading">
 							<a
@@ -35,7 +35,7 @@
 										<td>${st.score}</td>
 										<td>${st.level}</td>
 										<td><a
-											href="${pageContext.request.contextPath}/admin/eval/show/student/${st.id}"
+											href="${pageContext.request.contextPath}/admin/eval/show/student/${st.id}" target="_blank"
 											class="btn btn-warning">查看该评价</a></td>
 									</tr>
 								</c:forEach>

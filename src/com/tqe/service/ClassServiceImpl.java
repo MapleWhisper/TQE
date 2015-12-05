@@ -5,15 +5,14 @@ import java.util.List;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import com.tqe.dao.ClazzDao;
 import com.tqe.po.Clazz;
 
 @Service
-public class ClazzServiceImpl extends BaseService<Clazz>{
+public class ClassServiceImpl extends BaseService<Clazz>{
 	@Override
 	public List<Clazz> findAll() {
 		
-		return clazzDao.findAll();
+		return classDao.findAll();
 	}
 	
 	/**
@@ -25,6 +24,6 @@ public class ClazzServiceImpl extends BaseService<Clazz>{
 	@Cacheable(value="mCache",key="#did + #mid + 'findAllByDidMid'")
 	public List<Clazz> findAllByDidMid(Integer did,Integer mid) {
 		
-		return clazzDao.findAllByDidMid(did,mid);
+		return classDao.findAllByDidMid(did,mid);
 	}
 }

@@ -2,35 +2,29 @@ package com.tqe.controller;
 
 import javax.servlet.http.HttpSession;
 
+import com.tqe.po.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import com.alibaba.fastjson.JSON;
-import com.tqe.po.Course;
-import com.tqe.po.EvalTable;
-import com.tqe.po.LeaTable;
-import com.tqe.po.StuTable;
-import com.tqe.po.Student;
-import com.tqe.po.Table;
-import com.tqe.po.TeaStuTable;
-import com.tqe.po.TeaTable;
 
 @Controller
 @RequestMapping("/admin")
+@SessionAttributes(value = {"leader","teacher"})
 public class EvalController extends BaseController{
+
+	Log logger = LogFactory.getLog(EvalController.class);
 	
 	/**
 	 * 
 	 * 保存学生评教结果
 	 * @param evalTable	评教表
 	 * @param stuTable	学生表
-	 * @param type		类型
-	 * @return
 	 */
 	@RequestMapping(value={"/eval/save/student"},method={RequestMethod.POST})
 	public String evalTable( @ModelAttribute EvalTable evalTable, @ModelAttribute StuTable stuTable ,Model model,HttpSession session){
@@ -40,12 +34,15 @@ public class EvalController extends BaseController{
 		try {
 			preSaveTable(evalTable, stuTable);
 			Student stu = (Student) session.getAttribute("student");
+			if(stu==null){
+				logger.error("对不起！当前登录用户不是学生\\n或者登录超时，请重新登录!");
+				return sendError(model,"对不起！当前登录用户不是学生\\n或者登录超时，请重新登录!");
+			}
 			stuTable.setSname(stu.getName());
 			evalService.saveStuTable(stuTable);
 		} catch (Exception e1) {
-			model.addAttribute("msg","该课程已经评价！不能重复评价！或者您没有选这门课程！");
-			e1.printStackTrace();
-			return "error";
+			logger.error("该课程已经评价！不能重复评价！或者您没有选这门课程!",e1);
+			return sendError(model,"该课程已经评价！不能重复评价！或者您没有选这门课程!");
 		}
 		return "redirect:/admin/stuEval";
 	}
@@ -56,14 +53,20 @@ public class EvalController extends BaseController{
 	 * 保存领导评教结果
 	 * @param evalTable	评教表
 	 * @param leaTable	教师表
-	 * @param type		类型
 	 * @return
 	 */
 	@RequestMapping(value={"/eval/save/leader"},method={RequestMethod.POST})
-	public String evalTable( @ModelAttribute EvalTable evalTable, @ModelAttribute LeaTable leaTable ,Model model){
+	public String evalTable( @ModelAttribute EvalTable evalTable,
+							 @ModelAttribute LeaTable leaTable ,
+							 @ModelAttribute Leader leader,
+							 Model model){
 		
 		
 		try {
+			if(leader==null){
+				logger.error("当前评教表只有领导角色才能保存，请确认登录用户或者请重新登录");
+				return sendError(model,"当前评教表只有领导角色才能保存，请确认登录用户或者请重新登录");
+			}
 			preSaveTable(evalTable, leaTable);
 			evalService.saveLeaTable(leaTable);
 		} catch (Exception e1) {
@@ -79,20 +82,27 @@ public class EvalController extends BaseController{
 	 * 保存教师评教结果
 	 * @param evalTable	评教表
 	 * @param teaTable	教师表
-	 * @param type		类型
 	 * @return
 	 */
 	@RequestMapping(value={"/eval/save/teacher"},method={RequestMethod.POST})
-	public String evalTable( @ModelAttribute EvalTable evalTable, @ModelAttribute TeaTable teaTable ,Model model){
+	public String evalTable(
+			@ModelAttribute EvalTable evalTable,
+			@ModelAttribute TeaTable teaTable ,
+			@ModelAttribute Teacher teacher,
+			Model model){
 		
 		try {
-			
+			if(teacher == null){
+				String msg = "当前评教表只有教师角色才能保存，请确认登录用户或者请重新登录";
+				logger.error(msg);
+				return sendError(model,msg);
+
+			}
 			preSaveTable(evalTable, teaTable);
 			evalService.saveTeaTable(teaTable);
 		} catch (Exception e1) {
-			model.addAttribute("msg","该课程已经评价！不能重复评价！");
-			e1.printStackTrace();
-			return "error";
+			logger.error("该课程已经评价！不能重复评价！", e1);
+			return sendError(model,"该课程已经评价！不能重复评价！");
 		}
 		return "redirect:/admin/teaEval";
 	}
@@ -101,8 +111,6 @@ public class EvalController extends BaseController{
 	 * 
 	 * 保存教师评价学生评教结果
 	 * @param evalTable	评教表
-	 * @param teaTable	教师表
-	 * @param type		类型
 	 * @return
 	 */
 	@RequestMapping(value={"/eval/save/teaStu"},method={RequestMethod.POST})
@@ -171,19 +179,7 @@ public class EvalController extends BaseController{
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	private void preSaveTable(EvalTable evalTable, Table table) {
 		EvalTable e = evalTableService.getById(table.getEid()).json2Object();
@@ -202,7 +198,7 @@ public class EvalController extends BaseController{
 			table.setQuestion4(evalTable.getQuestionList().get(3)==null?null:evalTable.getQuestionList().get(0).getAns());
 			table.setQuestion5(evalTable.getQuestionList().get(4)==null?null:evalTable.getQuestionList().get(0).getAns());
 		} catch (Exception e2) {
-			
+			logger.error("保存评教结果失败"+evalTable,e2);
 		}
 	}
 }

@@ -18,8 +18,6 @@ public class EvalTableController extends BaseController{
 	
 	/**
 	 * 显示评教表列表
-	 * @param model
-	 * @return
 	 */
 	@RequestMapping("/evalTable")
 	public String evalTable(Model model){
@@ -30,7 +28,6 @@ public class EvalTableController extends BaseController{
 	
 	/**
 	 * 添加评教表页面
-	 * @return
 	 */
 	@RequestMapping("/evalTable/add")
 	public String addEvalTable(){
@@ -39,16 +36,13 @@ public class EvalTableController extends BaseController{
 	
 	/**
 	 * 显示评教表
-	 * @param id
-	 * @param model
-	 * @return
+	 * @param id 评教表的ID
 	 */
 	@RequestMapping("/evalTable/show/{id}")
 	public String showEvalTable(@PathVariable Integer id,Model model){
 		EvalTable evalTable = evalTableService.getById(id);
 		if(evalTable==null){
-			model.addAttribute("msg", "您访问的评教表不存在");
-			return "error";
+			return sendError(model,"您访问的评教表不存在");
 		}
 		model.addAttribute("evalTable",evalTable);
 		return "evalTable/showEvalTable";
@@ -56,8 +50,7 @@ public class EvalTableController extends BaseController{
 	
 	/**
 	 * 保存评教表
-	 * @param evalTable
-	 * @return
+	 * @param evalTable 需要被保存的评教表
 	 */
 	@RequestMapping("/evalTable/save")
 	public String saveEvalTable(@ModelAttribute()EvalTable evalTable){
@@ -68,16 +61,14 @@ public class EvalTableController extends BaseController{
 	
 	/**
 	 * 修改评教表页面
-	 * @param evalTable
-	 * @return
+	 * @param eid	需要被修改的平角表
 	 */
 	@RequestMapping("/evalTable/edit/{eid}")
 	public String editEvalTable(@PathVariable Integer eid,Model model){
 		
 		EvalTable eTable = evalTableService.getById(eid);
 		if(eTable==null){
-			model.addAttribute("msg", "您访问的评教表不存在");
-			return "error";
+			return sendError(model,"您访问的评教表不存在");
 		}
 		model.addAttribute("evalTable",eTable);
 		return "evalTable/editEvalTable";
@@ -85,16 +76,14 @@ public class EvalTableController extends BaseController{
 	
 	/**
 	 * 修改评教表
-	 * @param evalTable
-	 * @return
+	 * @param evalTable 修改需要保存的评教表
 	 */
 	@RequestMapping("/evalTable/update")
 	public String updateEvalTable(Integer eid,Model model,@ModelAttribute()EvalTable evalTable){
 		
 		EvalTable eTable = evalTableService.getById(eid);
 		if(eTable==null){
-			model.addAttribute("msg", "您访问的评教表不存在");
-			return "error";
+			return sendError(model,"您访问的评教表不存在");
 		}
 		eTable.setJsonString(JSON.toJSONString(evalTable));
 		eTable.setTitle(evalTable.getTitle());

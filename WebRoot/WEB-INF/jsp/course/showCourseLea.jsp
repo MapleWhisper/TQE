@@ -32,7 +32,7 @@
 										<td>${leaTable.score}</td>
 										<td>${leaTable.level}</td>
 										<td><a
-											href="${pageContext.request.contextPath}/admin/eval/show/leader/${leaTable.id}"
+											href="${pageContext.request.contextPath}/admin/eval/show/leader/${leaTable.id}" target="_blank"
 											class="btn btn-warning">查看该评价</a></td>
 									</tr>
 								</c:forEach>

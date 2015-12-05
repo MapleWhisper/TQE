@@ -5,6 +5,7 @@ package com.tqe.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import com.tqe.base.vo.PageVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -48,7 +49,7 @@ public class CourseController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value="/course",method=RequestMethod.POST)
-	public String course1(Model model,String did,String cname ,String  cid,String tname){
+	public String course1(Model model,String did,String cname ,String  cid,String tname,PageVO pageVO){
 		HashMap<String,String> condition = new HashMap<String,String>();
 		condition.put("did", did);
 		condition.put("cname", cname);
@@ -56,7 +57,7 @@ public class CourseController extends BaseController{
 		condition.put("tname", tname);
 		model.addAttribute("condition", condition);
 		addSercherResource(model);
-		List<Course> list = courseService.findByCondition(condition);
+		List<Course> list = courseService.findByCondition(pageVO);
 		model.addAttribute("courseList",list);
 		return "course/course";				//直接返回  前缀加 字符串+jsp的页面
 	}

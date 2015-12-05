@@ -3,6 +3,7 @@ package com.tqe.po;
 public class Major {
 	private Integer id;
 	private String name;
+	private Integer departmentId;
 	private Department department;
 	
 	public Integer getId() {
@@ -23,5 +24,12 @@ public class Major {
 	public void setDepartment(Department department) {
 		this.department = department;
 	}
-	
+
+	public Integer getDepartmentId() {
+		return departmentId;
+	}
+
+	public void setDepartmentId(Integer departmentId) {
+		this.departmentId = departmentId;
+	}
 }

@@ -3,6 +3,7 @@ package com.tqe.dao;
 import java.util.HashMap;
 import java.util.List;
 
+import com.tqe.base.vo.PageVO;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -49,6 +50,6 @@ public interface CourseDao {
 	public List<Course> findAllByTid(String tid);
 
 	@SelectProvider(type=BaseDaoTemplate.class,method="findCourseByCondition")
-	public List<Course> findByCondition(HashMap<String, String> condition);
+	List<Course> findByCondition(PageVO pageVO);
 
 }

@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,6 +30,9 @@ import com.tqe.po.User;
  */
 @Controller
 public class LoginController extends BaseController{
+
+	Log logger = LogFactory.getLog(LoginController.class);
+
 	private static List<String> users = new ArrayList<String>();
 	static{
 		users.add("student");
@@ -39,15 +46,25 @@ public class LoginController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping("/login")
-	public String login(@ModelAttribute User user,HttpSession session, 
-				@RequestParam String valifCode,Model model){
+	public String login(@ModelAttribute User user,
+						HttpSession session,
+						@RequestParam String valifCode,
+						HttpServletResponse response,
+						Model model){
 		//如果输入的验证码不正确
 		if( !valifCode.equals(session.getAttribute("valifCode") ))  {
 			model.addAttribute("error","验证码错误");
 			return "index";
 		}
+
 		String type = user.getType();
-		if(type.equals("admin")){
+
+		//记住用户最后的登录方式
+		Cookie cookie = new Cookie("loginType",type);
+		cookie.setMaxAge(365*24*60*60);
+		response.addCookie(cookie);
+
+		if(type.equals("admin")) {
 			Admin a =adminService.login(user);
 			if(a!=null){
 				System.out.println("管理员登陆");
@@ -78,7 +95,7 @@ public class LoginController extends BaseController{
 				return "redirect:/admin/stuEval";
 			}
 			//return "redirect:/admin/admin";
-		}else{										//领导登陆
+		}else if(type.equals("leader")){										//领导登陆
 			Leader leader = leaderService.login(user);
 			if(leader!=null){
 				System.out.println("领导登陆");
@@ -88,6 +105,11 @@ public class LoginController extends BaseController{
 				addPrivilege(session, pList);
 				return "redirect:/admin/leaEval";
 			}
+		}else{
+			logger.error("未知的登录角色！ " + type);
+			model.addAttribute("error","为止的登录用户的角色！");
+			return "index";
+
 		}
 		model.addAttribute("error","用户名或密码错误");
 		return "index";
@@ -101,7 +123,12 @@ public class LoginController extends BaseController{
 		removeOtherUser(session, "");
 		return "redirect:/index";
 	}
-	
+
+	/**
+	 * 添加权限信息到session中 用于前台进行权限的显示的判断
+	 * @param session
+	 * @param pList
+	 */
 	private void addPrivilege(HttpSession session,List<Privilege> pList){
 		session.setAttribute("pList", pList);
 		HashMap<String,Boolean> map = new HashMap<String,Boolean>();

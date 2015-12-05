@@ -4,7 +4,9 @@ public class Clazz {
 	
 	private Integer id;
 	private String name;
-	
+	private Integer majorId;
+	private Integer departmentId;
+
 	private Department department;
 	private Major major;
 	
@@ -34,6 +36,21 @@ public class Clazz {
 	public void setMajor(Major major) {
 		this.major = major;
 	}
-	
-	
+
+
+	public Integer getMajorId() {
+		return majorId;
+	}
+
+	public void setMajorId(Integer majorId) {
+		this.majorId = majorId;
+	}
+
+	public Integer getDepartmentId() {
+		return departmentId;
+	}
+
+	public void setDepartmentId(Integer departmentId) {
+		this.departmentId = departmentId;
+	}
 }

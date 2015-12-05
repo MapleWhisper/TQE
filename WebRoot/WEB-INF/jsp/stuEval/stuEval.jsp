@@ -8,8 +8,7 @@
 	margin-top: 30px;
 }
 </style>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.css"></link>
+<link rel="stylesheet"  href="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.css"/>
 <title>我的课程</title>
 </head>
 
@@ -63,7 +62,7 @@
 							</tbody>
 						</table>
 						<div style="text-align: center">
-							<h1 class="well text-danger">${message}</h1>
+							<h1 class="well text-danger error-message">${message}</h1>
 						</div>
 
 					</div>
@@ -79,6 +78,11 @@
 		src="${pageContext.request.contextPath}/js/datatables/js/jquery.dataTables.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.js"></script>
+	<script>
+		$(function(){
+			removeEmptyErrorMessage();
+		});
+	</script>
 </body>
 </html>
 

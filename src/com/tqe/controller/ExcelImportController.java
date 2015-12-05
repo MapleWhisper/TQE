@@ -40,7 +40,6 @@ public class ExcelImportController extends BaseController{
 
 	@RequestMapping("/excelImport/teacher")
 	public String excelImportTeacher(){
-		System.out.println("ok");
 		try {
 			List<Teacher> teacherList = teacherReader.getAll("d:/教师信息表.xls",true);
 			teacherService.saveAll(teacherList);
@@ -53,7 +52,6 @@ public class ExcelImportController extends BaseController{
 	}
 	@RequestMapping("/excelImport/course/{season}")
 	public String excelImportCourse(@PathVariable("season")String season,Model model){
-		System.out.println("ok");
 		if(!StringUtils.hasText(season)){	//如果sesson为空，那么不能继续
 			model.addAttribute("msg", "season不能为空！");
 			return "error";
@@ -74,7 +72,6 @@ public class ExcelImportController extends BaseController{
 	
 	@RequestMapping("/excelImport/student")
 	public String excelImportStudent(){
-		System.out.println("ok");
 			try {
 				List<Student> courseList =  studentReader.getAll("d:/学生信息表.xls",true);
 				studentService.saveAll(courseList);

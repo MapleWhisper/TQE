@@ -38,7 +38,7 @@
 					
 					<div class="col-xs-11">
 					<hr>
-						<table class="table table-hover table-striped table-bordered table-condensed">
+						<table class="table table-hover table-striped table-bordered " style="text-align: center;">
 								<tr class="warning">
 									<td>学院</td>
 									<td>学期</td>
@@ -101,9 +101,9 @@
 									<h3 class="panel-title">打分表和评价</h3>
 								</div>
 								<div class="panel-body">
-									<table class="table table-striped table-hover table-bordered table-condensed">
+									<table class="table table-striped table-hover table-bordered table-condensed" style="text-align: center">
 										<tr>
-											<td>序号</td>
+											<td width="8%">序号</td>
 											<td>评价项目</td>
 											<td>评价等级及参考分数(A B C D)</td>
 											<td>得分</td>
@@ -154,7 +154,7 @@
 									
 									<div style="text-align: center;margin-top: 100px;">
 										<c:if test="${type=='student' || type=='teacher' || type=='leader' || type=='teaStu'}">
-											<input class="btn btn-info btn-lg btn-block" onclick="return confirm('一旦提交，不可修改，确认要提交');"
+											<input class="btn btn-info btn-lg btn-block" onclick="return confirm('一旦提交，不可修改，确认要提交吗？');"
 												type="submit" value="提交评价" >
 										</c:if>
 										

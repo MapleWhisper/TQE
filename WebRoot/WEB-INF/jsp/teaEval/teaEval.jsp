@@ -23,7 +23,7 @@
 			<div class="col-sm-10 ">
 
 				<div class="panel panel-primary">
-					<div class="panel-heading">我的课程组|${batches.name}</div>
+					<div class="panel-heading">我的课程组 | ${batches.name}</div>
 
 					<div class="panel-body">
 						<table class="table table-hover table-striped table-bordered table-condensed">
@@ -63,7 +63,7 @@
 							</tbody>
 						</table>
 						<div style="text-align: center">
-							<h1 class="well text-danger">${requestScope.msg}</h1>
+							<h1 class="well text-danger error-message">${requestScope.msg}</h1>
 						</div>
 
 					</div>
@@ -79,6 +79,12 @@
 		src="${pageContext.request.contextPath}/js/datatables/js/jquery.dataTables.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.js"></script>
+
+	<script>
+		$(function(){
+			removeEmptyErrorMessage();
+		});
+	</script>
 </body>
 </html>
 

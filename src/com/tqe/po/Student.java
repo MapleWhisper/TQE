@@ -31,7 +31,7 @@ public class Student implements Serializable{
 	private Integer departmentId;
 	private Integer classId;
 	private Integer majorId;
-	
+
 	private boolean isEvaled;	//判断学生是否已经评价
 	
 	
@@ -174,12 +174,37 @@ public class Student implements Serializable{
 	public boolean getIsEvaled() {
 		return isEvaled;
 	}
-	public void setEvaled(boolean isEvaled) {
+	public void setIsEvaled(boolean isEvaled) {
 		this.isEvaled = isEvaled;
 	}
-	
-	
-	
-	
-	
+
+
+	@Override
+	public String toString() {
+		return "Student{" +
+				"sid='" + sid + '\'' +
+				", name='" + name + '\'' +
+				", password='" + password + '\'' +
+				", sex='" + sex + '\'' +
+				", brithday=" + brithday +
+				", idNumber='" + idNumber + '\'' +
+				", nation='" + nation + '\'' +
+				", politicalStatus='" + politicalStatus + '\'' +
+				", language='" + language + '\'' +
+				", department='" + department + '\'' +
+				", major='" + major + '\'' +
+				", clazz='" + clazz + '\'' +
+				", field='" + field + '\'' +
+				", educationBackground='" + educationBackground + '\'' +
+				", grade='" + grade + '\'' +
+				", hasRoll='" + hasRoll + '\'' +
+				", atSchool='" + atSchool + '\'' +
+				", style='" + style + '\'' +
+				", campus='" + campus + '\'' +
+				", departmentId=" + departmentId +
+				", classId=" + classId +
+				", majorId=" + majorId +
+				", isEvaled=" + isEvaled +
+				'}';
+	}
 }

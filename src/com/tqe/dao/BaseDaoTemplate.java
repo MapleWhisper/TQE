@@ -1,27 +1,11 @@
 package com.tqe.dao;
 
-import static org.apache.ibatis.jdbc.SqlBuilder.BEGIN;
-import static org.apache.ibatis.jdbc.SqlBuilder.FROM;
-import static org.apache.ibatis.jdbc.SqlBuilder.SELECT;
-import static org.apache.ibatis.jdbc.SqlBuilder.SQL;
-import static org.apache.ibatis.jdbc.SqlBuilder.WHERE;
-import static org.apache.ibatis.jdbc.SqlBuilder.AND;
-import static org.apache.ibatis.jdbc.SqlBuilder.OR;
-import static org.apache.ibatis.jdbc.SqlBuilder.DELETE_FROM;
-import static org.apache.ibatis.jdbc.SqlBuilder.INSERT_INTO;
-import static org.apache.ibatis.jdbc.SqlBuilder.SET;
-import static org.apache.ibatis.jdbc.SqlBuilder.UPDATE;
-import static org.apache.ibatis.jdbc.SqlBuilder.VALUES;
-
-
-
-
-
+import com.tqe.base.vo.PageVO;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Map;
 
-import org.aspectj.weaver.ast.And;
-import org.springframework.util.StringUtils;
+import static org.apache.ibatis.jdbc.SqlBuilder.*;
 
 
 public class BaseDaoTemplate<T> {
@@ -51,13 +35,13 @@ public class BaseDaoTemplate<T> {
 		if(!mid.equals("0")){
 			WHERE("majorid = #{mid}");
 		}
-		if(StringUtils.hasText(sname)){
+		if(StringUtils.isNotBlank(sname)){
 			WHERE("name = #{sname}");
 		}
-		if(StringUtils.hasText(sid)){
+		if(StringUtils.isNotBlank(sid)){
 			WHERE("sid = #{sid}");
 		}
-		return  SQL();
+		return  SQL()+ LIMIT(300);
 		
 	}
 	
@@ -70,42 +54,58 @@ public class BaseDaoTemplate<T> {
 		SELECT("*");
 		FROM("teacher");
 		WHERE("departmentid = #{did}");
-		if(StringUtils.hasText(tname)){
+		if(StringUtils.isNotBlank(tname)){
 			WHERE("name = #{tname}");
 		}
-		if(StringUtils.hasText(tid)){
+		if(StringUtils.isNotBlank(tid)){
 			WHERE("id = #{tid}");
 		}
-		return  SQL();
+		return  SQL() + LIMIT(300);
 		
 	}
 	
-	public String findCourseByCondition(Map<String, String> parameters){
-		@SuppressWarnings("unused")
-		String did = parameters.get("did");
-		String cname = parameters.get("cname");
-		String cid = parameters.get("cid");
-		String tname = parameters.get("tname");
-		
+	public String findCourseByCondition(PageVO pageVO){
+
+		Map<String,String> filters = pageVO.getFilters();
 		BEGIN();
 		SELECT("c.* , t.name as `teacher.name`");
 		FROM("course c");
 		FROM("teacher t");
-		WHERE("c.departmentid = #{did}");
+		if(StringUtils.isNotBlank(filters.get("did"))){
+			WHERE("c.departmentid = #{filters.did}");
+		}
+
 		WHERE("c.teacherid = t.id");
-		if(StringUtils.hasText(cname)){
-			cname = "'%"+cname+"%'";
-			WHERE("c.name like "+cname);
-			
+		if(StringUtils.isNotBlank(filters.get("cname"))){
+			WHERE("c.name like "+convertContains(filters.get("cname")));
 		}
-		if(StringUtils.hasText(cid)){
-			WHERE("c.cid = #{cid}");
+		if(StringUtils.isNotBlank(filters.get("cid"))){
+			WHERE("c.cid = #{filters.cid}");
 		}
-		if(StringUtils.hasText(tname)){
-			WHERE("t.name = #{tname}");
+		if(StringUtils.isNotBlank(filters.get("tname"))){
+			WHERE("t.name = #{filters.tname}");
 		}
-		return  SQL();
+
+		return  SQL()+LIMIT(300);
 		
+	}
+
+	public static String convertContains(String s){
+
+		return " '%"+s+"%' ";
+	}
+
+	public static String convertStartWith(String s ){
+		return " '%"+s+"' ";
+
+	}
+
+	public static String LIMIT(Integer take){
+		return " limit "+ take;
+	}
+
+	public static String LIMIT(Integer offset,Integer take){
+		return " limit "+ offset +" , "+take ;
 	}
 	
 	

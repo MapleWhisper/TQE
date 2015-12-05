@@ -25,21 +25,22 @@
 								<label class="col-xs-2 control-label">原密码</label>
 								<div class="col-xs-6">
 									<input type="password" name="oldPwd" id="oldPwd"
-										class="form-control"> <input type="hidden" name="id"
-										value="${sessionScope.admin.id}${sessionScope.teacher.id}${sessionScope.student.sid}">
+										class="form-control"/>
+									<input type="hidden" name="id"
+										value="${sessionScope.admin.id}${sessionScope.teacher.id}${sessionScope.student.sid}"/>
 
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-xs-2 control-label">新密码</label>
 								<div class="col-xs-6">
-									<input type="text" name="pwd" id="pwd" class="form-control">
+									<input type="text" name="pwd" id="pwd" class="form-control"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-xs-2 control-label">确认新密码</label>
 								<div class="col-xs-6">
-									<input type="text" name="pwd2" id="pwd2" class="form-control">
+									<input type="text" name="pwd2" id="pwd2" class="form-control"/>
 								</div>
 							</div>
 

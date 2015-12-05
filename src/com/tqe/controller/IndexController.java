@@ -54,43 +54,41 @@ public class IndexController extends BaseController{
 	@RequestMapping("/admin/resetPwd")
 	public String resetPwd( Integer id ,String pwd,String oldPwd,
 			Model model,HttpSession session){
+		User user = new User();
 		String Md5oldPwd = MD5Utils.string2MD5(oldPwd);
 		if(session.getAttribute("admin")!=null){
 			Admin admin = adminService.getById(id);
-			if(admin.getPassword().equals(Md5oldPwd)){	//如果密码相等
-				User user = new User();
-				user.setId(admin.getId()+"");
+			if(admin.getPassword().equalsIgnoreCase(Md5oldPwd)){	//如果密码相等
+
+				user.setId(admin.getId() + "");
 				user.setUsername(admin.getUsername());
 				user.setPassword(pwd);
 				user.setType("admin");
-				commonService.updatePwd(user);
-				return "redirect:/logout";
+
 			}
 		}else if(session.getAttribute("teacher")!=null){
 			Teacher teacher = teacherService.getById(id);
-			if(teacher.getPassword().endsWith(Md5oldPwd)){	//如果密码相同
-				User user = new User();
+			if(teacher.getPassword().equalsIgnoreCase(Md5oldPwd)){	//如果密码相同
 				user.setId(teacher.getId());
 				user.setPassword(pwd);
 				user.setType("teacher");
-				commonService.updatePwd(user);
-				return "redirect:/logout";
 			}
 		}else if(session.getAttribute("student")!=null){
 			Student student = studentService.getById(id+"");
 			System.out.println(id);
 			System.out.println(student);
-			if(student.getPassword().endsWith(Md5oldPwd)){	//如果密码相同
-				User user = new User();
+			if(student.getPassword().equalsIgnoreCase(Md5oldPwd)){	//如果密码相同
 				user.setId(student.getSid()+"");
 				user.setPassword(pwd);
 				user.setType("student");
-				commonService.updatePwd(user);
-				return "redirect:/logout";
 			}
+		}else{
+			model.addAttribute("error","原密码错误");
+			return "resetPwd";
 		}
-		model.addAttribute("error","原密码错误");
-		return "resetPwd";
+		commonService.updatePwd(user);
+		return "redirect:/logout";
+
 	}
 	
 	@RequestMapping("getMajor/{did}")

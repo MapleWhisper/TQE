@@ -20,16 +20,16 @@ public interface BatchesDao extends BaseDao<Batches>{
 	@Select("select * from Batches where id = #{id}")
 	public Batches getById(@Param("id")Integer id);
 	
-	@Insert("insert into Batches( id,name,courseNumber, curCourseNumber , season) values(null,#{name},#{courseNumber},#{curCourseNumber},#{season}) ")
+	@Insert("insert into batches( id,name,courseNumber, curCourseNumber , season) values(null,#{name},#{courseNumber},#{curCourseNumber},#{season}) ")
 	public void save(Batches batches);
 	
-	@Select("select * from Batches")
+	@Select("select * from batches")
 	public List<Batches> findAll();
 	
-	@Delete("delete from Batches where id = #{id}")
+	@Delete("delete from batches where id = #{id}")
 	public void delete(int id);
 	
-	@Insert("update  Batches set beginDate = #{beginDate}, endDate = #{endDate} , teaStuEvalId = #{teaStuEvalId},"
+	@Insert("update  batches set beginDate = #{beginDate}, endDate = #{endDate} , teaStuEvalId = #{teaStuEvalId},"
 			+ "stuEvalId = #{stuEvalId} , teaEvalId = #{teaEvalId}, leadEvalId = #{leadEvalId} where id = #{id}")
 	public void update(Batches b);
 	

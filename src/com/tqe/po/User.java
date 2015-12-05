@@ -1,10 +1,11 @@
 package com.tqe.po;
 
-import org.springframework.util.StringUtils;
 
 import com.tqe.utils.MD5Utils;
+import org.apache.commons.lang3.StringUtils;
 
 public class User {
+
 	private String id;
 	private String username;
 	private String password;
@@ -22,7 +23,7 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
-		if(StringUtils.hasText(password) && password.length()!=32){
+		if(StringUtils.isNotBlank(password) && password.length()!=32){
 			this.password = MD5Utils.string2MD5(password);
 		}
 		

@@ -86,7 +86,9 @@ public abstract class ExcelReader<E> {
 				Object obj  = null;
 				try {
 					obj = clazz.newInstance();
-				} catch (InstantiationException | IllegalAccessException ex) {
+				} catch (InstantiationException ex) {
+					ex.printStackTrace();
+				} catch (IllegalAccessException ex){
 					ex.printStackTrace();
 				}
 				Field[] fields = clazz.getDeclaredFields();		//获取成员的全部Filed
@@ -162,10 +164,12 @@ public abstract class ExcelReader<E> {
 		Method m = null ;
 		try {
 			m = clazz.getDeclaredMethod("setPassword", String.class);
-		} catch (NoSuchMethodException | SecurityException e) {
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
 			e.printStackTrace();
 		}
-		
+
 		if(m!=null){	//注入密码
 			convertAdnInvoke(m, obj, defaultPwd, String.class);
 		}
@@ -184,6 +188,9 @@ public abstract class ExcelReader<E> {
 			throw new IllegalArgumentException("传入方法不能为空");
 		}
 		try {
+			if(value==null){
+				return ;
+			}
 			if(type == Integer.class){
 				if(StringUtils.hasText(value)){
 					method.invoke(obj, (int)Double.parseDouble(value));

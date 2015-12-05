@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.deser.Deserializers;
+import com.tqe.base.BaseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tqe.po.Batches;
 import com.tqe.service.BatchesServiceImpl;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
@@ -54,23 +57,24 @@ public class BatchesController extends BaseController {
 	}
 	
 	@RequestMapping("/batches/update")
-	public void updatebatches(@ModelAttribute()Batches batches,Model model,HttpServletResponse response) throws IOException{
-		response.setCharacterEncoding("utf-8");
+	public @ResponseBody
+	BaseResult
+	updateBatches(@ModelAttribute() Batches batches) throws IOException{
 		if(batches.getBeginDate()==null || batches.getEndDate()==null || batches.getBeginDate().getTime()>=batches.getEndDate().getTime()){
-			return;
+			return BaseResult.createFailure("起始时间不能为空 截止时间不能为空 起始时间必须要要小于截止时间");
 		}
 		Date latest = batchesService.getLatestDate(batches.getId());
-		if(batches.getBeginDate().getTime() <= latest.getTime()){
-			response.getWriter().println("设定日期失败! 您设置的评教批次的起始日期必须大于最新批次的截止日期:"+new SimpleDateFormat("yyyy-MM-dd").format(latest)+" 请重新设置开始日期或者截止日期");
-			return;
+		if(latest!=null && batches.getBeginDate().getTime() <= latest.getTime()){
+			return BaseResult.createFailure("设定日期失败! 您设置的评教批次的起始日期必须大于最新批次的截止日期:"+new SimpleDateFormat("yyyy-MM-dd").format(latest)+" 请重新设置开始日期或者截止日期");
 		}
 		Batches b = batchesService.getById(batches.getId());
 		if(b!=null){
 			b.setBeginDate(batches.getBeginDate());
 			b.setEndDate(batches.getEndDate());
 		}
-		response.getWriter().println("修改日期成功！");
+
 		batchesService.update(b);
+		return BaseResult.createSuccess("修改日期成功！");
 	}
 	
 	
