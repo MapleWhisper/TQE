@@ -83,7 +83,7 @@
 		src="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.js"></script>
 	<script>
 		$(function(){
-			removeEmptyErrorMessage();
+			showErrorMessage();
 		});
 	</script>
 </body>

@@ -7,11 +7,13 @@
 	src="${pageContext.request.contextPath}/js/jquery.validate.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/js/messages_zh.min.js"></script>
+	<script
+			src="${pageContext.request.contextPath}/js/jquery.cookie.js"></script>
 <title>教师质量评估系统</title>
 </head>
 
 <body
-	style="background: url('${pageContext.request.contextPath}/image/adm-login-bg.jpg');">
+	style="background: url('${pageContext.request.contextPath}/image/adm-login-bg.jpg'); background-size: cover">
 	<div class="container">
 		<div>
 			<h1 class="" style="color: white;font-weight: bold;">
@@ -23,7 +25,7 @@
 		<!--登陆表单 -->
 		<div class="row" style="margin-top: 180px; ">
 			<div class="row">
-				<div class="col-sm-4 col-sm-offset-4">
+				<div class="col-sm-5 col-sm-offset-4">
 					<div class="panel panel-primary" style="background:white"
 						data-toggle="tooltip" data-placement="top">
 						<div class="panel-heading">
@@ -36,16 +38,21 @@
 								style="margin-top: 20px" method="post">
 								<div class="form-group" align="center">
 									<label for="username" class="col-sm-3 control-label">用户名:</label>
-									<div class="col-sm-9">
+									<div class="col-sm-7">
 										<input type="text" class="form-control" id="username" required="required"
 											name="username"  placeholder="请输入学号/教师号/Id">
 									</div>
 								</div>
 								<div class="form-group" align="center">
 									<label for="password" class="col-sm-3 control-label">密码:</label>
-									<div class="col-sm-9">
+									<div class="col-sm-7">
 										<input type="password" class="form-control" name="password" required="required"
 											id="password">
+									</div>
+									<div class="col-sm-2">
+											<span style="top: 7px" class="glyphicon glyphicon-question-sign"
+												  aria-hidden="true" data-toggle="tooltip" data-placement="top"
+												  title="初始密码默认为身份证后8位" ></span>
 									</div>
 								</div>
 								<div class="form-group" align="center">
@@ -135,7 +142,7 @@
 
 		$(function() {
 			//移除空的错误提示框
-			removeEmptyErrorMessage();
+			showErrorMessage();
 
 			//根据登录方式显示不同的按钮文字
 			$("input:radio").click(function(){
@@ -145,11 +152,17 @@
 			//从cookie中获取用户的登录方式
 			var loginType = $.cookie("loginType");
 			if(loginType){
-				$("input[value='"+loginType+"']").checked();
+				$("input[value='"+loginType+"']").attr("checked","checked");
+				$("#login-btn").html($("input:radio:checked").next().text());
 			}
 
 
 		});
+
+		$(function () {
+			$('[data-toggle="tooltip"]').tooltip();
+			$('[data-toggle="popover"]').popover();
+		})
 
 	</script>
 

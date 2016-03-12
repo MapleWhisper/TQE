@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<div class="panel panel-primary">
+<div class="panel panel-primary" style="margin-top: 5px;">
 	<div class="panel-heading">${course.season}</div>
 	<div class="panel-body">
 		<div class="row">

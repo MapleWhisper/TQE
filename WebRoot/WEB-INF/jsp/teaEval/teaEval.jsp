@@ -9,7 +9,7 @@
 }
 </style>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.css"></link>
+	href="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.css"/>
 <title>我的课程组</title>
 </head>
 
@@ -82,7 +82,7 @@
 
 	<script>
 		$(function(){
-			removeEmptyErrorMessage();
+			showErrorMessage();
 		});
 	</script>
 </body>

@@ -6,7 +6,7 @@
 	<div style="margin-left: 15px">
 		今天是:<br>
 		<p>
-			<code><%=DateFormat.getDateInstance(DateFormat.FULL).format(
+			<code><%=DateFormat.getDateInstance(DateFormat.FULL,Locale.SIMPLIFIED_CHINESE).format(
 					new Date())%><br>
 			</code>
 		</p>
@@ -17,7 +17,7 @@
 		<li><span class="glyphicon glyphicon-folder-open">主菜单</span>
 			<ul>
 				<li class="root"><span><i
-						class="glyphicon glyphicon-minus-sign"></i>评教中心</span>
+						 ></i>评教中心</span>
 					<ul>
 						<li
 							style="display: ${sessionScope.pMap.stuEval==true ? '' : 'none'}">
@@ -44,7 +44,7 @@
 				<!-- 				
 							
 							<c:if test="${p.name == '申请管理' }">
-								<li><span><i class="glyphicon glyphicon-minus-sign"></i>申请管理</span>
+								<li><span><i  ></i>申请管理</span>
 									<ul>
 										<li><span><i class="glyphicon glyphicon-leaf"></i>
 										<a href="${pageContext.request.contextPath}/admin/apply">申请审核</a></span>
@@ -54,7 +54,7 @@
 							</c:if>
 							
 						
-				<li><span><i class="glyphicon glyphicon-minus-sign"></i>试卷试题</span>
+				<li><span><i  ></i>试卷试题</span>
 					<ul>
 							
 								<li><span><i class="glyphicon glyphicon-leaf"></i><a href="${pageContext.request.contextPath}/admin/paper">试卷管理</a></span></li>
@@ -71,7 +71,7 @@
 				<!-- 如果是系统管理员，才显示页面 -->
 
 				<li class="root"><span><i
-						class="glyphicon glyphicon-minus-sign"></i>数据查询</span>
+						 ></i>数据查询</span>
 					<ul>
 						<li
 							style="display: ${sessionScope.pMap.course==true ? '' : 'none'}"><span><i
@@ -91,7 +91,7 @@
 								href="${pageContext.request.contextPath}/admin/student">学生列表</a></span>
 						</li>
 					</ul></li>
-				<li><span><i class="glyphicon glyphicon-minus-sign"></i>评教管理</span>
+				<li class="root"><span><i  ></i>评教管理</span>
 					<ul>
 						<li
 							style="display: ${sessionScope.pMap.evalTable==true ? '' : 'none'}"><span><i
@@ -106,7 +106,7 @@
 					</ul></li>
 				<!-- 				系统管理 -->
 				<li class="root"><span><i
-						class="glyphicon glyphicon-minus-sign"></i>系统管理</span>
+						 ></i>系统管理</span>
 					<ul>
 						<li
 							style="display: ${sessionScope.pMap.admin==true ? '' : 'none'}"><span><i
@@ -117,6 +117,11 @@
 								class="glyphicon glyphicon-leaf"></i> <a
 								href="${pageContext.request.contextPath}/admin/privilege">权限管理</a></span>
 						</li>
+						<li
+								style="display: ${sessionScope.pMap.dataImport==true ? '' : 'none'}"><span><i
+								class="glyphicon glyphicon-leaf"></i> <a
+								href="${pageContext.request.contextPath}/admin/dataImport">数据导入</a></span>
+						</li>
 					</ul></li>
 
 			</ul></li>
@@ -124,4 +129,13 @@
 	<!-- 主菜单 -->
 
 </div>
+<script>
+	//如果二级目录没有子目录的话 那么就隐藏该级目录
+	$(".tree li.root").map(function(){
+		var $this = $(this);
 
+		if($this.find("li:visible").length<1){
+			$this.hide();
+		}
+	});
+</script>

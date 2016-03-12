@@ -22,8 +22,8 @@
 			</div>
 			<div class="col-sm-10 ">
 				<div class="panel panel-primary">
-					<div class="panel-heading">权限查看 与管理</div>
-
+					<div class="panel-heading">权限查看 与 管理</div>
+                    <div class="alert alert-warning">如果您对该页面内容不了解 请谨慎修改！</div>
 					<div class="panel-body">
 						<table class="table table-hover table-striped table-bordered table-condensed">
 							<thead>
@@ -34,7 +34,7 @@
 									<td>教师</td>
 									<td>领导</td>
 									<td>管理员</td>
-									<td>操作</td>
+									<td style="width: 15%">操作</td>
 								</tr>
 							</thead>
 							<tbody>
@@ -48,10 +48,16 @@
 										<td><input class="${p.id} form-control input-sm tea" disabled="disabled" value="${p.tea}"></td>
 										<td><input class="${p.id} form-control input-sm adm" disabled="disabled" value="${p.adm}"></td>
 										<td><input class="${p.id} form-control input-sm lea" disabled="disabled" value="${p.lea}"></td>
-										<td>
-											<button value="${p.id}"  class="btn btn-info edit">修改</button>
-											<button value="${p.id}"  style="display: none" class="btn btn-warning update" >保存修改</button>
-										</td>
+                                        <c:if test="${p.editable == 0}">
+                                            <td>不可修改</td>
+                                        </c:if>
+                                        <c:if test="${p.editable == 1}">
+                                            <td>
+                                                <button value="${p.id}"  class="btn btn-info edit">修改</button>
+                                                <button value="${p.id}"  style="display: none" class="btn btn-info cancel" >取消修改</button>
+                                                <button value="${p.id}"  style="display: none" class="btn btn-warning update" >保存修改</button>
+                                            </td>
+                                        </c:if>
 									</tr>
 								</c:forEach>
 								
@@ -72,6 +78,11 @@
 
 					</div>
 
+                    <div class="well">
+                        权限说明:<br>
+                        权限Url 代表角色是否有权限访问该Url，如果角色没有权限访问该Url，那么值为0，否则值为1;
+                    </div>
+
 				</div>
 			</div>
 
@@ -90,7 +101,7 @@
 				var id = $(this).val();
 				$("input."+id).removeAttr("disabled");
 				$(this).hide();
-				$(this).next().show();
+				$(this).siblings().show();
 			});
 			$(".update").click(function(){
 				var id = $(this).val();
@@ -102,14 +113,19 @@
 					if(data=="success"){
 						alert("修改成功");
 					}else{
-						alert("修改失败！您没有修改权限！");
+						alert("修改失败！"+data);
 					}
 				});
 				$(this).hide();
-				
-				$(this).prev().show();
+				$(this).siblings().toggle();
 				$("input."+id).attr("disabled","disabled");
 			});
+            $(".cancel").click(function(){
+                var id = $(this).val();
+                $(this).hide();
+                $(this).siblings().toggle();
+                $("input."+id).attr("disabled","disabled");
+            });
 		});
 		$(function(){
 			$('table').has("thead").dataTable({

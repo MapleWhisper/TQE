@@ -33,8 +33,9 @@
 						<blockquote>
 							<form class="form-inline" method="post" action="${pageContext.request.contextPath}/admin/teacher">
 								<div class="form-group">
-									<label >学院:</label>
+									<label for="department">学院:</label>
 									<select  class="form-control" id="department" name="did" >
+										<option value="">不限</option>
 										<c:forEach items="${ departmentList}" var="dep" >
 											<c:if test="${dep.id != condition.did}">
 												<option value="${dep.id}">${dep.name }</option>
@@ -70,7 +71,7 @@
 									<td>姓名</td>
 									<td>教师号</td>
 									<td>教师邮箱</td>
-									<td>证件号码</td>
+									<%--<td>证件号码</td>--%>
 									<td>性别</td>
 									<td>院系</td>
 									<td>职称</td>
@@ -92,7 +93,7 @@
 										 <td>${tea.name}</td>
 										<td>${tea.id}</td>
 										<td>${tea.email }</td>
-										<td>${tea.idNumber }</td>
+										<%--<td>${tea.idNumber }</td>--%>
 										<td>${tea.sex }</td>
 										<td>${tea.department }</td>
 										<td>${tea.title }</td>

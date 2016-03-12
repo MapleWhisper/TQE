@@ -6,19 +6,22 @@ import java.util.List;
 
 import com.alibaba.fastjson.JSON;
 
+/**
+ * 评教表
+ */
 public class EvalTable {
 	
 	private Integer id;
-	private String title;
-	private String note;
-	private List<EvalItem> itemList = new ArrayList<EvalItem>(); 
-	private List<EvalTableItem> tableItemList =new ArrayList<EvalTableItem>();
-	private List<EvalItem> questionList =new ArrayList<EvalItem>();
+	private String title;	//评教表的标题
+	private String note;	//评教须知
+	private List<EvalItem> itemList = new ArrayList<EvalItem>();	//表单信息
+	private List<EvalTableItem> tableItemList =new ArrayList<EvalTableItem>();	//打分表
+	private List<EvalItem> questionList =new ArrayList<EvalItem>();	//问题表
 	private Date createDate;	//创建时间
-	private String jsonString;
+	private String jsonString;	//序列化表
 	
-	private String score;
-	private String level;
+	private String score;	//得分
+	private String level;	//评价结果等级
 	
 	public static class EvalItem {
 		private String context;
@@ -42,6 +45,9 @@ public class EvalTable {
 			return ans;
 		}
 		public void setAns(String ans) {
+			if(ans!=null && ans.length()>255){	//截取 数据库不能存放字数大于 255 的 答案
+				ans = ans.substring(255);
+			}
 			this.ans = ans;
 		}
 		

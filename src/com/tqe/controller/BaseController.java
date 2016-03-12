@@ -2,6 +2,7 @@ package com.tqe.controller;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
@@ -67,14 +68,22 @@ public class BaseController {
 	@Autowired
 	protected LeaderServiceImpl leaderService;
 	
-	protected void addSercherResource(Model model){
+	protected void addSearcherResource(Model model){
 		
 		model.addAttribute("departmentList", departmentService.findAll());
 	}
 
+    /**
+     * 返回失败的页面并显示错误的信息
+     */
 	protected String sendError(Model model ,String msg){
 		model.addAttribute("msg",msg);
 		return "error";
+	}
+
+	protected String sendError(Model model ,String msg,Log log){
+		log.error(msg);
+		return this.sendError(model,msg);
 	}
 	
 }

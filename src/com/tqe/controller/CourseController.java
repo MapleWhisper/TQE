@@ -5,7 +5,10 @@ package com.tqe.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import com.tqe.base.enums.DepartmentType;
 import com.tqe.base.vo.PageVO;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,9 +20,9 @@ import com.tqe.model.CourseModel;
 import com.tqe.po.Admin;
 import com.tqe.po.Batches;
 import com.tqe.po.Course;
-import com.tqe.po.LeaTable;
-import com.tqe.po.StuTable;
-import com.tqe.po.TeaTable;
+import com.tqe.po.LeaResultTable;
+import com.tqe.po.StuResultTable;
+import com.tqe.po.TeaResultTable;
 import com.tqe.utils.SystemUtils;
 /**
  * 课程类
@@ -31,16 +34,15 @@ import com.tqe.utils.SystemUtils;
 @RequestMapping("/admin")
 public class CourseController extends BaseController{
 	
-	
+	Log logger = LogFactory.getLog(CourseController.class);
+
 	/**
 	 * 显示课程列表页面
 	 * @return
 	 */
 	@RequestMapping(value="/course",method=RequestMethod.GET)
 	public String course(Model model){
-		//List<Course> list = courseService.findAll();
-		//model.addAttribute("courseList",list);
-		addSercherResource(model);
+		model.addAttribute("departmentList", departmentService.findAvailableDepartmentList(DepartmentType.COURSE));
 		return "course/course";				//直接返回  前缀加 字符串+jsp的页面
 	}
 	
@@ -56,7 +58,7 @@ public class CourseController extends BaseController{
 		condition.put("cid", cid);
 		condition.put("tname", tname);
 		model.addAttribute("condition", condition);
-		addSercherResource(model);
+		model.addAttribute("departmentList", departmentService.findAvailableDepartmentList(DepartmentType.COURSE));
 		List<Course> list = courseService.findByCondition(pageVO);
 		model.addAttribute("courseList",list);
 		return "course/course";				//直接返回  前缀加 字符串+jsp的页面
@@ -69,13 +71,16 @@ public class CourseController extends BaseController{
 	@RequestMapping("/course/show/{cid}/{cno}")
 	public String showCourse(Model model,@PathVariable String cid,@PathVariable Integer cno){
 		Course course = courseService.getById(cid,cno);
+		if(course == null){
+			return sendError(model,"没有找到指定的课程！ cid:"+cid+"  cno:"+cno,logger);
+		}
 		CourseModel courseModel = new CourseModel();
-		List<Batches> batchesList = batchesService.findAllBySeason(SystemUtils.getSeason());	//默认得到当前学期的所有批次
+		List<Batches> batchesList = batchesService.findAllBySeason(course.getSeason());	//默认得到课程所在学期的所有批次
 		
 		for(Batches b : batchesList){	//遍历所有得到的批次列表
-			List<StuTable> stuTableList = evalService.findAllStuTableByCourse(cid, cno, b.getId());
-			List<TeaTable> teaTableList = evalService.findAllTeaTableByCourse(cid, cno, b.getId());
-			List<LeaTable> leaTableList = evalService.findAllTeaLableByCourse(cid, cno, b.getId());
+			List<StuResultTable> stuTableList = evalService.findAllStuTableByCourse(cid, cno, b.getId());
+			List<TeaResultTable> teaTableList = evalService.findAllTeaTableByCourse(cid, cno, b.getId());
+			List<LeaResultTable> leaTableList = evalService.findAllTeaLableByCourse(cid, cno, b.getId());
 			CourseModel.Batches batches = new CourseModel.Batches();
 			batches.setStuTableList(stuTableList);
 			batches.setTeaTableList(teaTableList);

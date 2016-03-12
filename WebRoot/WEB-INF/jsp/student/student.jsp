@@ -37,30 +37,36 @@
 								<div class="form-group">
 									<label >学院:</label>
 									<select  class="form-control" id="department" name="did" >
-										<c:forEach items="${ departmentList}" var="dep" >
-												<option value="${dep.id}">${dep.name }</option>
-										</c:forEach>
+										<option value="" selected="selected">不限</option>
+											<c:forEach items="${ departmentList}" var="dep" >
+												<c:if test="${dep.id != condition.did}">
+													<option value="${dep.id}">${dep.name }</option>
+												</c:if>
+												<c:if test="${dep.id == condition.did}">
+													<option value="${dep.id}" selected="selected">${dep.name }</option>
+												</c:if>
+											</c:forEach>
 									</select>
 									
 								</div>
 								<div class="form-group">
-									<label  >专业:</label> 
+									<label for="major" >专业:</label>
 									  <select  class="form-control" id="major" name="mid">
-									  <option value="0" selected="selected">不限</option>
+									  <option value="" selected="selected">不限</option>
 									</select>
 								</div>
 								<div class="form-group">
-									<label  >班级:</label>
+									<label for="clazz" >班级:</label>
 										<select  class="form-control" id="clazz" name="cid">
-									  <option value="0" selected="selected">不限</option>
+									  <option value="" selected="selected">不限</option>
 									  </select>
 								</div>
 								<div class="form-group">
-									<label  >姓名:</label> <input type="text"
-										class="form-control" id="name" name="sname">
+									<label for="sname" >姓名:</label> <input type="text"
+										class="form-control" id="sname" name="sname">
 								</div>
 								<div class="form-group">
-									<label  >学号:</label> <input type="number"
+									<label for="sid" >学号:</label> <input type="number"
 										class="form-control" id="sid" name="sid">
 								</div>
 
@@ -77,7 +83,6 @@
 								<tr class="info">
 									<td>学生姓名</td>
 									<td>学号</td>
-									<td>证件号</td>
 									<td>性别</td>
 									<td>院系</td>
 									<td>专业</td>
@@ -96,7 +101,6 @@
 										<td><a
 											href="${pageContext.request.contextPath}/admin/studnet/show/${s.sid}">${s.name}</a></td>
 										<td>${s.sid}</td>
-										<td>${s.idNumber }</td>
 										<td>${s.sex }</td>
 										<td>${s.department }</td>
 										<td>${s.major }</td>
@@ -115,14 +119,7 @@
 							</tbody>
 
 						</table>
-						<div class="row">
-							<div class="col-xs-6 col-xs-offset-5">
-								<div class="no1">
-									<a class="btn btn-primary " href="teacherAction!add">添加教师</a>
-								</div>
 
-							</div>
-						</div>
 					</div>
 					<!-- panel-body -->
 				</div>
@@ -143,47 +140,62 @@
 			
 			//点击部门 动态加载专业列表
 			$("#department").change(function(){
-				var did = $("#department option:selected").val();
+				fetchMajorList();
+			});
+			//点击专业，动态加载班级信息列表
+			$("#major").change(function(){
+				fetchClassList();
+			});
+
+			fetchMajorList();
+			fetchClassList();
+		});
+
+		function fetchMajorList(){
+			var did = $("#department option:selected").val();
+			if(did){
 				$.post("../getMajor/"+did,function(data){
 					//alert(data);
 					if(data!=null){
-						$("#major").html("<option value='0' selected='selected'>不限</option>");
+						$("#major").html("<option value='' selected='selected'>不限</option>");
 						$(data).each(function(){
 							//alert(this.id);
 							//alert(this.name);
 							var opt = $("<option value="+this.id+">"+this.name+"</option>")
-							
+
 							$("#major").append(opt);
 						});
 					}
-					
+
 				});
-				$("#major option[value=0]:selected");
-				$("#clazz option[value=0]:selected");
-			});
-			
-			//点击专业，动态加载班级信息列表
-			$("#major").change(function(){
-				var did = $("#department option:selected").val();
-				var mid = $("#major option:selected").val();
+				$("#major option[value='']:selected");
+				$("#clazz option[value='']:selected");
+			}
+		}
+
+		function fetchClassList(departmentId ,majorId){
+			var did = $("#department").find("option:selected").val();
+			var mid = $("#major").find("option:selected").val();
+			if(did && mid){
 				$.post("../getClazz/"+did+"/"+mid,function(data){
 					//alert(data);
 					if(data!=null){
-						$("#clazz").html("<option value='0' selected='selected'>不限</option>");
+						$("#clazz").html("<option value='' selected='selected'>不限</option>");
 						$(data).each(function(){
 							//alert(this.id);
 							//alert(this.name);
 							var opt = $("<option value="+this.id+">"+this.name+"</option>")
-							
+
 							$("#clazz").append(opt);
 						});
 					}
-					
+
 				});
-				$("#major option[value=0]:selected");
-				$("#clazz option[value=0]:selected");
-			});
-		});
+				$("#major option[value='']:selected");
+				$("#clazz option[value='']:selected");
+			}
+
+		}
 	</script>
 </body>
 </html>

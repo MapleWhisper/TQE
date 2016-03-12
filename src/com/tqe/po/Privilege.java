@@ -11,6 +11,7 @@ public class Privilege implements  Serializable{
 	private Integer tea;
 	private Integer adm;
 	private Integer lea;
+	private Integer editable;
 	
 	public Integer getId() {
 		return id;
@@ -54,5 +55,12 @@ public class Privilege implements  Serializable{
 	public void setLea(Integer lea) {
 		this.lea = lea;
 	}
-	
+
+	public Integer getEditable() {
+		return editable;
+	}
+
+	public void setEditable(Integer editable) {
+		this.editable = editable;
+	}
 }

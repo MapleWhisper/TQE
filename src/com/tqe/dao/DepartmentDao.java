@@ -18,4 +18,13 @@ public interface DepartmentDao extends BaseDao<Department>{
 	@Override
 	@Insert("insert into department values(null,#{name})")
 	void save(Department department);
+
+	/**
+	 * 找到包含专业的学院列表
+	 */
+	@Select("select * from department d where d.id in (select  departmentid from major)")
+	List<Department> findDepListContainMajors();
+
+	@Select("select * from department d where exists (select  departmentid from course c where c.departmentid = d.id)")
+	List<Department> findDepListContainCourse();
 }

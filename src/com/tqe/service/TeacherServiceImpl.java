@@ -1,17 +1,16 @@
 package com.tqe.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.tqe.base.vo.PageVO;
 import com.tqe.po.Department;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.tqe.dao.TeacherDao;
-import com.tqe.po.Student;
 import com.tqe.po.Teacher;
 import com.tqe.po.User;
 
@@ -69,8 +68,12 @@ public class TeacherServiceImpl extends BaseService<Teacher>{
 		return teacherDao.findByPage(start ,length);
 	}
 
-	public List<Teacher> findByCondition(HashMap<String, String> condition) {
-		return teacherDao.findByCondition(condition);
+	public List<Teacher> findByPageVO(PageVO pageVO) {
+		List<Teacher> teacherList = teacherDao.findByPageVO(pageVO);
+		for(Teacher t : teacherList){
+			t.setIdNumber(null);
+		}
+		return teacherList;
 	}
 	
 	/**

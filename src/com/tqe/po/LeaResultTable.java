@@ -2,7 +2,7 @@ package com.tqe.po;
 
 import java.io.Serializable;
 
-public class LeaTable extends Table implements Serializable{
+public class LeaResultTable extends ResultTable implements Serializable{
 	private Integer id;	
 	private Integer  lid;	//领导号
 	

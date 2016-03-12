@@ -7,7 +7,11 @@
 
 <title>课程评教详情|${course.name}</title>
 </head>
-
+<style>
+	.tab-pane{
+		padding-top: 5px;
+	}
+</style>
 <body>
 	<div class="container-fluid">
 		<%@ include file="../head.jsp"%>
@@ -45,7 +49,7 @@
 				<div role="tabpanel">
 
 					<!-- Nav tabs -->
-					<ul class="nav nav-pills" role="tablist">
+					<ul class="nav nav-tabs" role="tablist">
 						<li role="presentation" class="active"><a href="#student"
 							aria-controls="student" role="tab" data-toggle="tab">学生评教信息</a></li>
 						<li role="presentation"><a href="#teacher"
@@ -57,7 +61,7 @@
 					<!-- Tab panes -->
 					<div class="tab-content">
 						<!-- 学生评教信息表 -->
-						<div role="tabpanel" class="tab-pane active" id="student">
+						<div role="tabpanel" class="tab-pane active" style="padding-top: 10px;" id="student">
 							<%@ include file="showCourseStu.jsp"%>
 						</div>
 

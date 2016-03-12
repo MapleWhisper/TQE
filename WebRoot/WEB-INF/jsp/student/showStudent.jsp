@@ -33,14 +33,14 @@
 			<!--右侧的内容 -->
 			<!-- 学生详情 -->
 			<div class="col-xs-10">
-				<div class="panel panel-info">
+				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<h1 class="panel-title" style="font-size: 25px">学生受评价表</h1>
 					</div>
 					<div class="panel-body ">
 						<table
-							class="table table-hover table-striped table-bordered table-condensed">
-							<tr class="warning">
+							class="table table-hover table-striped table-bordered">
+							<tr class="info">
 								<td>学生名</td>
 								<td>学生号</td>
 								<td>性别</td>
@@ -86,7 +86,7 @@
 														target="_blank">点此查看该课程评教指标表</a></td>
 													<td>${ts.score}</td>
 													<td>${ts.level}</td>
-													<td><a
+													<td><a target="_blank"
 														href="${pageContext.request.contextPath}/admin/eval/show/teaStu/${ts.id}"
 														class="btn btn-warning">查看该评价</a></td>
 												</tr>

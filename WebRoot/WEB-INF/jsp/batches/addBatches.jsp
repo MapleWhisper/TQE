@@ -32,15 +32,14 @@
 			</div>
 			<div class="col-sm-10">
 				<div class="panel panel-primary">
-					<div class="panel-heading">管理员信息填写</div>
+					<div class="panel-heading">添加评教批次</div>
 
 					<div class="panel-body">
 						<form
 							action="${pageContext.request.contextPath }/admin/batches/save"
 							class="form-horizontal" role="form" id="form" method="post">
 							<div class="form-group">
-
-								<label class="col-sm-2 control-label">学期</label>
+								<label class="col-sm-1 control-label">学期</label>
 								<div class="col-sm-2">
 								<select name="season" class="form-control" id="season">
 									<c:forEach begin="2015" end="2050" step="1" var="s">
@@ -52,20 +51,17 @@
 							</div>
 
 							<div class="form-group">
-								<label class="col-sm-2 control-label">批次名</label>
-								<div class="col-sm-10" id="item">
-									<input type="text" class="form-control inputxt"
-											name="name" id="name">
-
+								<label class="col-sm-1 control-label">批次名</label>
+								<div class="col-sm-6" id="item">
+									<input type="text" class="form-control inputxt" name="name" id="name">
 								</div>
-
 							</div>
 
 							
 							<div>
 
 								<div class="form-group">
-									<div class="col-sm-6 col-sm-offset-4">
+									<div class="col-sm-4 col-sm-offset-2">
 										<button type="submit" class="btn btn-primary  btn-lg ">提交新批次</button>
 									</div>
 								</div>
@@ -88,7 +84,6 @@
 		$("#season").change(function(){
 			$("#name").val($("option:selected").val());
 		});
-		
 	});
 		
 	</script>

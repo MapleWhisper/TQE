@@ -3,6 +3,7 @@ package com.tqe.dao;
 import java.util.HashMap;
 import java.util.List;
 
+import com.tqe.base.vo.PageVO;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -35,5 +36,5 @@ public interface TeacherDao extends BaseDao<Teacher>{
 	public List<Teacher> findByPage(@Param("start")int start, @Param("length")int length);
 	
 	@SelectProvider(type=BaseDaoTemplate.class,method="findTeacherByCondition")
-	public List<Teacher> findByCondition(HashMap<String, String> condition);
+	public List<Teacher> findByPageVO(PageVO pageVO);
 }

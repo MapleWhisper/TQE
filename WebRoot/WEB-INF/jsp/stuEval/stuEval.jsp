@@ -22,7 +22,7 @@
 			<div class="col-sm-10 ">
 
 				<div class="panel panel-primary">
-					<div class="panel-heading">我的课程|${batches.name}</div>
+					<div class="panel-heading">我的课程 | ${batches.name}</div>
 
 					<div class="panel-body">
 						<table class="table table-hover table-striped table-bordered table-condensed">
@@ -80,7 +80,7 @@
 		src="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.js"></script>
 	<script>
 		$(function(){
-			removeEmptyErrorMessage();
+			showErrorMessage();
 		});
 	</script>
 </body>

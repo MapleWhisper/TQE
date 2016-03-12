@@ -39,6 +39,9 @@ public class PrivilegeController extends BaseController{
 	@ResponseBody
 	public String update(@ModelAttribute Privilege privilege){
 		Privilege p = privilegeService.getById(privilege.getId());
+		if(p.getEditable()==0){
+			return "该权限不能被修改!";
+		}
 		p.setStu(privilege.getStu());
 		p.setTea(privilege.getTea());
 		p.setAdm(privilege.getAdm());

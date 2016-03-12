@@ -2,7 +2,7 @@ package com.tqe.po;
 
 import java.io.Serializable;
 
-public class TeaStuTable extends Table implements Serializable{
+public class TeaStuResultTable extends ResultTable implements Serializable{
 	
 	private String sid;	//学生号
 	

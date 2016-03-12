@@ -10,8 +10,6 @@ import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import com.tqe.po.EvalTable;
-import com.tqe.po.LeaTable;
-import com.tqe.po.TeaStuTable;
 
 @Repository
 public interface EvalTableDao extends BaseDao<EvalTable>{

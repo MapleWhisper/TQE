@@ -1,9 +1,9 @@
 package com.tqe.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.tqe.base.vo.PageVO;
 import com.tqe.po.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +27,18 @@ public class StudentServiceImpl extends BaseService<Student>{
 		
 		/**
 		 * 根据查询条件得到所有的学生列表
-		 * @param condition
 		 * @return
 		 */
-		public List<Student> findByCondition(HashMap<String,String> condition) {
-			return studentDao.findByCondition(condition);
+		public List<Student> findByPageVO(PageVO pageVO) {
+			List<Student> stuList  = studentDao.findByPageVO(pageVO);
+			if(stuList!=null){
+				//不能被发现...
+				for(Student stu : stuList){
+					stu.setIdNumber(null);
+					stu.setPassword(null);
+				}
+			}
+			return stuList;
 		}
 		
 		/**

@@ -3,6 +3,7 @@ package com.tqe.dao;
 import java.util.HashMap;
 import java.util.List;
 
+import com.tqe.base.vo.PageVO;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
@@ -37,7 +38,7 @@ public interface StudentDao extends BaseDao<Student>{
 	
 	//@Select("select * from student where departmentid = #{did} and majorid = #{mid} and classid = #{cid}")
 	@SelectProvider(type=BaseDaoTemplate.class,method="findStudentByCondition")
-	public List<Student> findByCondition(HashMap<String, String> condition);
+	public List<Student> findByPageVO(PageVO pageVO);
 	
 	@Select("select count(*) from sc where sc.sid = #{sid} and sc.cid = #{cid} and sc.cno = #{cno} limit 1")
 	public Integer isCoursePermitted(@Param("sid")String sid, @Param("cid")String cid, @Param("cno")Integer cno);

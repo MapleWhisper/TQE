@@ -40,7 +40,7 @@ public class LeaderEvalController extends BaseController{
 		Batches batches = batchesService.getAvailiableBatches(SystemUtils.getSeason());	//得到当前可用的评教批次
 		
 		if(batches!=null){		//如果当前存在 可以评教的批次
-			addSercherResource(model);
+			addSearcherResource(model);
 			model.addAttribute("batches", batches);
 			
 		}else{		//如果当前没有评教批次
@@ -61,7 +61,7 @@ public class LeaderEvalController extends BaseController{
 		Batches batches = batchesService.getAvailiableBatches(SystemUtils.getSeason());	//得到当前可用的评教批次
 		
 		if(batches!=null){		//如果当前存在 可以评教的批次
-			addSercherResource(model);
+			addSearcherResource(model);
 			//查询并加载课程数据信息
 			HashMap<String,String> condition = new HashMap<String,String>();
 			condition.put("did", did);
@@ -71,7 +71,7 @@ public class LeaderEvalController extends BaseController{
 			PageVO pageVO = new PageVO();
 			pageVO.setFilters(condition);
 			model.addAttribute("condition", condition);
-			addSercherResource(model);
+			addSearcherResource(model);
 			List<Course> list = courseService.findByCondition(pageVO);
 			model.addAttribute("courseList",list);
 			
@@ -79,7 +79,7 @@ public class LeaderEvalController extends BaseController{
 			
 			
 		}else{		//如果当前没有评教批次
-			model.addAttribute("msg", "对不起，当前还没有可以评教的课程");
+			model.addAttribute("msg", "您好，当前还没有可以评教的课程");
 		}
 		return "leaEval/leaEval";
 	}

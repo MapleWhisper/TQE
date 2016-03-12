@@ -33,12 +33,12 @@ public class StuEvalController extends BaseController{
 		Student stu = (Student) session.getAttribute("student");
 		Batches batches = batchesService.getAvailiableBatches(SystemUtils.getSeason());
 		if(batches!=null){		//如果当前存在 可以评教的批次
-			List<Course> courseList = courseService.findAllBySId(stu.getSid(),batches.getId());	//得到所有的课程列表
+			List<Course> courseList = courseService.findAllBySId(stu.getSid(),batches);	//得到所有的课程列表
 			model.addAttribute("courseList", courseList);
 			model.addAttribute("batches", batches);
 			
 		}else{		//如果当前没有评教批次
-			model.addAttribute("message", "对不起，当前还没有可以评教的课程");
+			model.addAttribute("message", "您好，当前还没有可以评教的课程~");
 		}
 		return "stuEval/stuEval";
 	}
@@ -56,7 +56,7 @@ public class StuEvalController extends BaseController{
 		if(c!=null){	//如果要评教的课程不为空
 			Batches batches = batchesService.getAvailiableBatches(c.getSeason());
 			if(batches==null){
-				model.addAttribute("message", "对不起，当前评教还未开始");
+				model.addAttribute("message", "您好，当前评教还未开始~");
 				return "error";
 			}
 			model.addAttribute("batches", batches);

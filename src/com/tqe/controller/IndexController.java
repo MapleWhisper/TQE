@@ -75,8 +75,6 @@ public class IndexController extends BaseController{
 			}
 		}else if(session.getAttribute("student")!=null){
 			Student student = studentService.getById(id+"");
-			System.out.println(id);
-			System.out.println(student);
 			if(student.getPassword().equalsIgnoreCase(Md5oldPwd)){	//如果密码相同
 				user.setId(student.getSid()+"");
 				user.setPassword(pwd);

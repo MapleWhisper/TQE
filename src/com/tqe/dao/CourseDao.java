@@ -25,8 +25,8 @@ public interface CourseDao {
 	@Select("select c.*,t.name as `teacher.name` ,t.id as `teacher.id` from course c ,teacher t where  c.teacherId = t.id")
 	public List<Course> findAll();
 
-	@Select("select c.*,t.name as `teacher.name` ,t.id as `teacher.id` from course c ,sc,teacher t  where c.cid = sc.cid and c.cno = sc.cno and  t.id = c.teacherId and sc.sid = #{sid}")
-	public List<Course> findAllBySid(@Param("sid")String sid);
+	@Select("select c.*,t.name as `teacher.name` ,t.id as `teacher.id` from course c ,sc,teacher t  where c.cid = sc.cid and c.cno = sc.cno and  t.id = c.teacherId and sc.sid = #{sid} and c.season = #{season}")
+	public List<Course> findAllBySid(@Param("sid") String sid, @Param("season")String season);
 
 	/**
 	 * 选出一个教师所教课程的所有任课组的课程

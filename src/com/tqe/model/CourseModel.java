@@ -3,10 +3,10 @@ package com.tqe.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tqe.po.LeaTable;
-import com.tqe.po.StuTable;
-import com.tqe.po.TeaStuTable;
-import com.tqe.po.TeaTable;
+import com.tqe.po.LeaResultTable;
+import com.tqe.po.StuResultTable;
+import com.tqe.po.TeaStuResultTable;
+import com.tqe.po.TeaResultTable;
 
 public class CourseModel {
 	private List<Batches> batchesList = new ArrayList<Batches>();
@@ -14,16 +14,16 @@ public class CourseModel {
 	public static class Batches {
 		
 		private com.tqe.po.Batches batches;		//季度
-		private  List<StuTable> stuTableList;	//学生评教表
-		private  List<TeaTable> teaTableList;	//教师评教表
-		private  List<LeaTable> leaTableList;	//领导评教表
-		private List<TeaStuTable> teaStuTableList;	//教师评价学生表
+		private  List<StuResultTable> stuTableList;	//学生评教表
+		private  List<TeaResultTable> teaTableList;	//教师评教表
+		private  List<LeaResultTable> leaTableList;	//领导评教表
+		private List<TeaStuResultTable> teaStuTableList;	//教师评价学生表
 
-		public  List<StuTable> getStuTableList() {
+		public  List<StuResultTable> getStuTableList() {
 			return stuTableList;
 		}
 
-		public  void setStuTableList(List<StuTable> stuTableList) {
+		public  void setStuTableList(List<StuResultTable> stuTableList) {
 			this.stuTableList = stuTableList;
 		}
 
@@ -35,27 +35,27 @@ public class CourseModel {
 			this.batches = batches;
 		}
 
-		public List<TeaTable> getTeaTableList() {
+		public List<TeaResultTable> getTeaTableList() {
 			return teaTableList;
 		}
 
-		public void setTeaTableList(List<TeaTable> teaTableList) {
+		public void setTeaTableList(List<TeaResultTable> teaTableList) {
 			this.teaTableList = teaTableList;
 		}
 
-		public List<LeaTable> getLeaTableList() {
+		public List<LeaResultTable> getLeaTableList() {
 			return leaTableList;
 		}
 
-		public void setLeaTableList(List<LeaTable> leaTableList) {
+		public void setLeaTableList(List<LeaResultTable> leaTableList) {
 			this.leaTableList = leaTableList;
 		}
 
-		public List<TeaStuTable> getTeaStuTableList() {
+		public List<TeaStuResultTable> getTeaStuTableList() {
 			return teaStuTableList;
 		}
 
-		public void setTeaStuTableList(List<TeaStuTable> teaStuTableList) {
+		public void setTeaStuTableList(List<TeaStuResultTable> teaStuTableList) {
 			this.teaStuTableList = teaStuTableList;
 		}
 		

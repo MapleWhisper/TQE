@@ -39,6 +39,6 @@ public class CourseExcelReader extends ExcelReader<Course> {
 		
 		return list.contains("课程号")&&list.contains("课程名称");
 	}
-	
-	
+
+
 }

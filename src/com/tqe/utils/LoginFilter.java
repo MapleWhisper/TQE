@@ -35,14 +35,13 @@ public class LoginFilter implements  Filter{
 		String path = req.getRequestURI();	//得到请求Url
 		HttpSession session = req.getSession();
 		String ctxPath = req.getContextPath();
-		System.out.println(path);
-		
+
 		Student stu = (Student) session.getAttribute("student");
 		Teacher tea = (Teacher) session.getAttribute("teacher");
 		Admin admin = (Admin) session.getAttribute("admin");
 		Leader leader = (Leader) session.getAttribute("leader");
 		
-		if(path.indexOf("/admin")==-1){	//如果访问的不是后台数据，那么跳过
+		if(!path.contains("/admin")){	//如果访问的不是后台数据，那么跳过
 			chain.doFilter(req, resp);
 			return;
 		}

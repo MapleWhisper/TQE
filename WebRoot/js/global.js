@@ -10,17 +10,19 @@ function closeWindow(){
     window.close();
 }
 
-function removeEmptyErrorMessage(className){
+function showErrorMessage(className){
     $(".error-message").map(function(){
-       if($(this).text().trim().length==0){
-           $(this).parents(".error-message-container").remove();
+       if($(this).text().trim().length>=1){
+           $(this).parents(".error-message-container").show();
+           //$(this).remove();
        }
     });
     if(className){
         className = className.trim();
         $("."+className).map(function(){
-            if($(this).text().trim().length==0){
-                $(this).remove();
+            if($(this).text().trim().length>=1){
+                $(this).parents(".error-message-container").show();
+                $(this).show();
             }
         });
     }

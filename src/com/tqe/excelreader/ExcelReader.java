@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.util.StringUtils;
 
 import com.tqe.po.Course;
@@ -17,7 +19,9 @@ import com.tqe.po.Student;
 import com.tqe.po.Teacher;
 
 public abstract class ExcelReader<E> {
-	
+
+	Log logger = LogFactory.getLog(ExcelReader.class);;
+
 	/**
 	 * 检查文件是否符合
 	 * @param excelDir
@@ -63,6 +67,7 @@ public abstract class ExcelReader<E> {
 			list = excelStringValueToPojoList(excelDir, list,isSetPassword ,titleIndex) ;
 			
 		}else{
+			logger.error("file not fount! excelDir:"+excelDir);
 			throw new FileNotFoundException("文件没有找到");
 		}
 		return list;
@@ -82,7 +87,7 @@ public abstract class ExcelReader<E> {
 		if(data!=null && !data.isEmpty()){
 			for(Map<String,String> row :data){	//遍历每行数据
 				E e  = null;
-				
+		        boolean isSkip = false;     //改行是否需要过滤掉
 				Object obj  = null;
 				try {
 					obj = clazz.newInstance();
@@ -95,20 +100,24 @@ public abstract class ExcelReader<E> {
 				for(Field f : fields){
 					String fieldName = f.getName();		//获取成员变量名
 					String fn = new String(fieldName);
-					if(clazz == Course.class){
-						fn="course."+fn;
-					}else if(clazz == Student.class){
-						fn="student."+fn;
-					}
+
+                    fn = clazz.getSimpleName()+"."+fn;  //获取Property文件中的key
+
 					String columnName = ExcelProperty.getProperty(fn);	//获得excel中文列名
-					
-					
 					String methodName = fieldNameToSetter(fieldName);
+
 					Method m;
 					try {
 						m = clazz.getMethod(methodName,f.getType());
-						String value = row.get(columnName);		
-						convertAdnInvoke(m, obj,value,f.getType());
+						String value = row.get(columnName);
+
+                        String filterFieldName = "filter."+fn;
+                        String filterFieldValue = ExcelProperty.getProperty(filterFieldName).trim();
+                        if(value.equalsIgnoreCase(filterFieldValue)){   //如果该字段的值符合过滤条件 那么该行数据就跳过
+                            isSkip = true;
+                            break;
+                        }
+						convertAndInvoke(m, obj, value, f.getType());
 					} catch (Exception ex) {
 						ex.printStackTrace();
 					}
@@ -118,9 +127,11 @@ public abstract class ExcelReader<E> {
 				if(isSetPassword){
 					setPassword(obj, row);
 				}
-				
-				e = (E)obj;
-				list.add(e);
+                if(!isSkip){    //只添加
+                    e = (E)obj;
+                    list.add(e);
+                }
+
 			}
 		}
 		return list;
@@ -140,7 +151,10 @@ public abstract class ExcelReader<E> {
 	
 	/**
 	 * 根据Id生成密码,并注入到对象当中
-	 * @param idNumber
+	 * 密码生成策略：
+	 * 如果有证件号 并且证件号为18位 那么默认密码为证件号的后8位
+	 * 没有的话 学生为学生学号 教师为教师学号
+	 * 如果学号和教师号都没有，那么默认密码为 8个8 88888888
 	 */
 	private void setPassword(Object obj,Map<String,String> row){
 		
@@ -171,19 +185,15 @@ public abstract class ExcelReader<E> {
 		}
 
 		if(m!=null){	//注入密码
-			convertAdnInvoke(m, obj, defaultPwd, String.class);
+			convertAndInvoke(m, obj, defaultPwd, String.class);
 		}
 		
 	}
 	
 	/**
-	 *  将excel中String类型的数据转换成bean中的成员变量类型
-	 * @param method
-	 * @param obj
-	 * @param value
-	 * @param type
+	 *  将excel中String类型的数据转换成bean中的成员变量类型，并注入到对象中去
 	 */
-	protected void convertAdnInvoke(Method method,Object obj ,String value ,Class<?> type){
+	protected void convertAndInvoke(Method method, Object obj, String value, Class<?> type){
 		if(method==null){
 			throw new IllegalArgumentException("传入方法不能为空");
 		}
@@ -200,9 +210,7 @@ public abstract class ExcelReader<E> {
 			}else if(type == Date.class){
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				Date date = null;
-				if(value!=null){
-					date = sdf.parse(value);
-				}
+				date = sdf.parse(value);
 				method.invoke(obj, date);
 				
 			}else{
@@ -213,5 +221,6 @@ public abstract class ExcelReader<E> {
 		}
 		
 	}
+
 	
 }

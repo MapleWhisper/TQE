@@ -1,6 +1,9 @@
 package com.tqe.po;
 
-public class Table {
+/**
+ * 用于保存 评教的结果表
+ */
+public class ResultTable {
 
 	protected Integer id;	
 	protected Integer score;	  //得分

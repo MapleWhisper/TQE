@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.tqe.po.EvalTable;
-import com.tqe.po.LeaTable;
-import com.tqe.po.StuTable;
-import com.tqe.po.TeaStuTable;
-import com.tqe.po.TeaTable;
+import com.tqe.po.LeaResultTable;
+import com.tqe.po.StuResultTable;
+import com.tqe.po.TeaStuResultTable;
+import com.tqe.po.TeaResultTable;
 
 @Service
 public class EvalServiceImpl extends BaseService<EvalTable>{
@@ -18,7 +18,7 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 	 * @param stuTable
 	 * @throws Exception
 	 */
-	public void saveStuTable(StuTable stuTable) throws Exception{
+	public void saveStuTable(StuResultTable stuTable) throws Exception{
 			Integer isCoursePermited = studentDao.isCoursePermitted(stuTable.getSid(),stuTable.getCid(),stuTable.getCno());
 			if(isCoursePermited>=1){		//判断学生是否可以评价该课程
 				evalDao.saveStuTable(stuTable);
@@ -32,7 +32,7 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 	 * @param teaTable
 	 * @throws Exception
 	 */
-	public void saveTeaTable(TeaTable teaTable) throws Exception{
+	public void saveTeaTable(TeaResultTable teaTable) throws Exception{
 		try {
 			evalDao.saveTeaTable(teaTable);
 		} catch (Exception e) {
@@ -45,7 +45,7 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 	 * @param teaTable
 	 * @throws Exception
 	 */
-	public void saveTeaStuTable(TeaStuTable teaStuTable) throws Exception{
+	public void saveTeaStuTable(TeaStuResultTable teaStuTable) throws Exception{
 		try {
 			evalDao.saveTeaStuTable(teaStuTable);
 		} catch (Exception e) {
@@ -58,7 +58,7 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 	 * @param leaTable	领导评教表
 	 * @throws Exception
 	 */
-	public void saveLeaTable(LeaTable leaTable) {
+	public void saveLeaTable(LeaResultTable leaTable) {
 		try {
 			evalDao.saveLeaTable(leaTable);
 		} catch (Exception e) {
@@ -71,8 +71,8 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 	 * @param stuTableId
 	 * @return
 	 */
-	public StuTable getStuTableById(Integer stuTableId) {
-		StuTable stuTable = evalDao.getStuTableById(stuTableId);
+	public StuResultTable getStuTableById(Integer stuTableId) {
+		StuResultTable stuTable = evalDao.getStuTableById(stuTableId);
 		stuTable.setStudent(studentDao.getById(stuTable.getSid()));
 		stuTable.setBatches(batchesDao.getById(stuTable.getBid()));
 		stuTable.setCourse(courseDao.getById(stuTable.getCid(),stuTable.getCno()));
@@ -84,8 +84,8 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 	 * @param teaTableid
 	 * @return
 	 */
-	public TeaTable getTeaTableById(Integer teaTableid) {
-		TeaTable teaTable = evalDao.getTeaTableById(teaTableid);
+	public TeaResultTable getTeaTableById(Integer teaTableid) {
+		TeaResultTable teaTable = evalDao.getTeaTableById(teaTableid);
 		teaTable.setTeacher(teacherDao.getById(teaTable.getTid()));
 		teaTable.setBatches(batchesDao.getById(teaTable.getBid()));
 		teaTable.setCourse(courseDao.getById(teaTable.getCid(),teaTable.getCno()));
@@ -97,16 +97,16 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 	 * @param teaTableid
 	 * @return
 	 */
-	public LeaTable getLeaTableById(Integer leaTableId) {
-		LeaTable leaTable = evalDao.getLeaTableById(leaTableId);
+	public LeaResultTable getLeaTableById(Integer leaTableId) {
+		LeaResultTable leaTable = evalDao.getLeaTableById(leaTableId);
 		leaTable.setLeader(leaderDao.getById(leaTable.getLid()));
 		leaTable.setBatches(batchesDao.getById(leaTable.getBid()));
 		leaTable.setCourse(courseDao.getById(leaTable.getCid(), leaTable.getCno()));
 		return leaTable;
 	}
 	
-	public TeaStuTable getTeaStuTableById(Integer id) {
-		TeaStuTable table = evalDao.getTeaStuTableById(id);
+	public TeaStuResultTable getTeaStuTableById(Integer id) {
+		TeaStuResultTable table = evalDao.getTeaStuTableById(id);
 		table.setBatches(batchesDao.getById(table.getBid()));
 		table.setCourse(courseDao.getById(table.getCid(), table.getCno()));
 		return table;
@@ -131,10 +131,9 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 	 * @param bid 批次号
 	 * @return
 	 */
-	public List<StuTable> findAllStuTableByCourse(String cid,Integer cno,Integer bid){
-		System.out.println(cid+"-"+cno);
-		List<StuTable> list = evalDao.findAllStuTableByCourse(cid,cno,bid);
-		for(StuTable stuTable : list){
+	public List<StuResultTable> findAllStuTableByCourse(String cid,Integer cno,Integer bid){
+		List<StuResultTable> list = evalDao.findAllStuTableByCourse(cid,cno,bid);
+		for(StuResultTable stuTable : list){
 			stuTable.setStudent(studentDao.getById(stuTable.getSid()));
 			stuTable.setBatches(batchesDao.getById(stuTable.getBid()));
 		}
@@ -148,9 +147,9 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 	 * @param bid 批次号
 	 * @return
 	 */
-	public List<TeaStuTable> findAllTeaStuTableBySid(String sid,Integer bid){
-		List<TeaStuTable> list = evalDao.findAllTeaStuTableBySid(sid,bid);
-		for(TeaStuTable t:list){
+	public List<TeaStuResultTable> findAllTeaStuTableBySid(String sid,Integer bid){
+		List<TeaStuResultTable> list = evalDao.findAllTeaStuTableBySid(sid,bid);
+		for(TeaStuResultTable t:list){
 			t.setCourse(courseDao.getById(t.getCid(), t.getCno()));
 		}
 		return list; 
@@ -163,11 +162,11 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 	 * @param bid 批次号
 	 * @return
 	 */
-	public List<TeaTable> findAllTeaTableByCourse(String cid, Integer cno,
+	public List<TeaResultTable> findAllTeaTableByCourse(String cid, Integer cno,
 			Integer bid) {
 		
-		List<TeaTable> list = evalDao.findAllTeaTableByCourse(cid,cno,bid);
-		for(TeaTable teaTable : list){
+		List<TeaResultTable> list = evalDao.findAllTeaTableByCourse(cid,cno,bid);
+		for(TeaResultTable teaTable : list){
 			teaTable.setTeacher(teacherDao.getById(teaTable.getTid()));
 			teaTable.setBatches(batchesDao.getById(teaTable.getBid()));
 		}
@@ -182,10 +181,10 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 	 * @param bid 批次号
 	 * @return
 	 */
-	public List<LeaTable> findAllTeaLableByCourse(String cid, Integer cno,
+	public List<LeaResultTable> findAllTeaLableByCourse(String cid, Integer cno,
 			Integer bid) {
-		List<LeaTable> list = evalDao.findAllLeaTableByCourse(cid,cno,bid);
-		for(LeaTable leaTable : list){
+		List<LeaResultTable> list = evalDao.findAllLeaTableByCourse(cid,cno,bid);
+		for(LeaResultTable leaTable : list){
 			leaTable.setLeader(leaderDao.getById(leaTable.getLid()));
 			leaTable.setBatches(batchesDao.getById(leaTable.getBid()));
 		}

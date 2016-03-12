@@ -9,10 +9,10 @@
     	<div class="container">
     		<%@ include file="head.jsp" %>
     		<div class="row" style="margin-top: 70px">
-    			<div class="col-sm-3">
+    			<div class="col-sm-2">
 					<%@ include file="left.jsp" %>
     			</div>
-    			<div class="col-sm-9">
+    			<div class="col-sm-10">
     					我的代码区域
     			</div>
     		</div>

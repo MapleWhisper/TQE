@@ -1,9 +1,8 @@
 package com.tqe.controller;
-import java.util.HashMap;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
+import com.tqe.base.enums.DepartmentType;
+import com.tqe.base.vo.PageVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.tqe.model.CourseModel;
 import com.tqe.po.Batches;
 import com.tqe.po.Student;
-import com.tqe.po.TeaStuTable;
+import com.tqe.po.TeaStuResultTable;
 import com.tqe.utils.SystemUtils;
 
 @Controller()
@@ -27,8 +26,9 @@ public class StudentController extends BaseController{
 	 */
 	@RequestMapping(value={"/student"},method={RequestMethod.GET})
 	public String student(Model model){
-		addSercherResource(model);
-		//model.addAttribute("studentList", studentService.findAll());
+
+		model.addAttribute("departmentList", departmentService.findAvailableDepartmentList(DepartmentType.STUDENT));
+
 		return "student/student";
 	}
 	
@@ -38,16 +38,13 @@ public class StudentController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value={"/student"},method={RequestMethod.POST})
-	public String serchStudent(Model model,String did,String mid,String cid,String sname,String sid){
-		addSercherResource(model);
-		HashMap<String,String> condition = new HashMap<String,String>();
-		condition.put("did", did);
-		condition.put("mid", mid);
-		condition.put("cid", cid);
-		condition.put("sname", sname);
-		condition.put("sid", sid);
-		model.addAttribute("condition", condition);
-		model.addAttribute("studentList", studentService.findByCondition(condition));
+	public String searchStudent(
+			Model model,
+			PageVO pageVO){
+		model.addAttribute("departmentList", departmentService.findAvailableDepartmentList(DepartmentType.STUDENT));
+
+		model.addAttribute("condition", pageVO.getFilters());
+		model.addAttribute("studentList", studentService.findByPageVO(pageVO));
 		return "student/student";
 	}
 	
@@ -59,7 +56,7 @@ public class StudentController extends BaseController{
 		List<Batches> batchesList = batchesService.findAllBySeason(SystemUtils.getSeason());	//默认得到当前学期的所有批次
 		
 		for(Batches b : batchesList){	//遍历所有得到的批次列表
-			List<TeaStuTable> teaStuTableList = evalService.findAllTeaStuTableBySid(sid, b.getId());
+			List<TeaStuResultTable> teaStuTableList = evalService.findAllTeaStuTableBySid(sid, b.getId());
 			CourseModel.Batches batches = new CourseModel.Batches();
 			batches.setTeaStuTableList(teaStuTableList);
 			batches.setBatches(b);

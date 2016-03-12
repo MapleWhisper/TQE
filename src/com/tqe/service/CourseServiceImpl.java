@@ -1,17 +1,20 @@
 package com.tqe.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.tqe.base.vo.PageVO;
+import com.tqe.po.Batches;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
 import com.tqe.po.Course;
 
 @Service
 public class CourseServiceImpl extends BaseService<Course>{
-	
+
+    Log logger = LogFactory.getLog(CourseServiceImpl.class);
 		@Override
 		public List<Course> findAll() {
 			return courseDao.findAll();
@@ -45,7 +48,7 @@ public class CourseServiceImpl extends BaseService<Course>{
 								processCouData(dMap, c);
 								save(c);
 							} catch (Exception e) {
-								continue;
+                                logger.warn(e.getMessage(),e);
 							}
 						}
 					}
@@ -61,14 +64,17 @@ public class CourseServiceImpl extends BaseService<Course>{
 		}
 		
 		/**
-		 * 返回所有学生已经选课的列表，如果学生已经评价了课程，那么设置课程已评价
-		 * @param sid
+		 * 返回所有学生已经选课的列表，
+		 * 只返回当前学期可以评教的课程 之前学期的课程不再显示
+		 * 如果学生已经评价了课程，那么设置课程已评价
+		 * @param sid 学生Id
+		 * @param batches   当前可以评教的批次
 		 * @return
 		 */
-		public List<Course> findAllBySId(String sid,Integer bid) {
-			List<Course> list = courseDao.findAllBySid(sid);
-			List<String> cids = evalDao.findAllStuTablecids(sid,bid);
-			for(Course c: list){
+		public List<Course> findAllBySId(String sid,Batches batches) {
+			List<Course> list = courseDao.findAllBySid(sid, batches.getSeason());
+			List<String> cids = evalDao.findAllStuTablecids(sid, batches.getId());
+			for(Course c: list){	//如果课程已经评价 那么设置课程已评价
 				if(cids.contains(c.getCid())){
 					c.setIsEvaled(true);
 				}
@@ -79,7 +85,6 @@ public class CourseServiceImpl extends BaseService<Course>{
 		/**
 		 * 返回所有教师可以评价的课程组
 		 * 如果教师已经评价了课程，那么设置课程已评价
-		 * @param sid
 		 * @return
 		 */
 		public List<Course> findAllByTId(String tid, Integer bid) {
@@ -96,7 +101,6 @@ public class CourseServiceImpl extends BaseService<Course>{
 		/**
 		 * 返回所有教师教的所有课程
 		 * 如果教师已经评价了课程，那么设置课程已评价
-		 * @param sid
 		 * @return
 		 */
 		public List<Course> findAllByTid(String tid, Integer bid) {
