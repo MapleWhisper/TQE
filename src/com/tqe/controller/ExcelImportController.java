@@ -21,8 +21,8 @@ import com.tqe.service.StudentServiceImpl;
 import com.tqe.service.TeacherServiceImpl;
 
 /**
- * ç”¨æ¥æ§åˆ¶ å°†excelæ–‡ä»¶å¯¼å…¥æ•°æ®åº“çš„æ§åˆ¶å™¨
- * @author å¹¿è·¯
+ * ÓÃÀ´¿ØÖÆ ½«excelÎÄ¼şµ¼ÈëÊı¾İ¿âµÄ¿ØÖÆÆ÷
+ * @author ¹ãÂ·
  *
  */
 @Controller
@@ -41,7 +41,7 @@ public class ExcelImportController extends BaseController{
 	@RequestMapping("/excelImport/teacher")
 	public String excelImportTeacher(){
 		try {
-			List<Teacher> teacherList = teacherReader.getAll("d:/æ•™å¸ˆä¿¡æ¯è¡¨.xls",true);
+			List<Teacher> teacherList = teacherReader.getAll("d:/½ÌÊ¦ĞÅÏ¢±í.xls",true);
 			teacherService.saveAll(teacherList);
 
 		} catch (FileNotFoundException e) {
@@ -52,13 +52,13 @@ public class ExcelImportController extends BaseController{
 	}
 	@RequestMapping("/excelImport/course/{season}")
 	public String excelImportCourse(@PathVariable("season")String season,Model model){
-		if(!StringUtils.hasText(season)){	//å¦‚æœsessonä¸ºç©ºï¼Œé‚£ä¹ˆä¸èƒ½ç»§ç»­
-			model.addAttribute("msg", "seasonä¸èƒ½ä¸ºç©ºï¼");
+		if(!StringUtils.hasText(season)){	//Èç¹ûsessonÎª¿Õ£¬ÄÇÃ´²»ÄÜ¼ÌĞø
+			model.addAttribute("msg", "season²»ÄÜÎª¿Õ£¡");
 			return "error";
 		}
 		if(StringUtils.hasText(season)){
 			try {
-				List<Course> courseList =  courseReader.getAll("d:/è¯¾ç¨‹ç­ä¿¡æ¯ï¼šè¯¾ç¨‹-è€å¸ˆå¯¹åº”å…³ç³».xls");
+				List<Course> courseList =  courseReader.getAll("d:/¿Î³Ì°àĞÅÏ¢£º¿Î³Ì-ÀÏÊ¦¶ÔÓ¦¹ØÏµ.xls");
 				courseService.saveAll(courseList,season);
 
 			} catch (FileNotFoundException e) {
@@ -73,7 +73,7 @@ public class ExcelImportController extends BaseController{
 	@RequestMapping("/excelImport/student")
 	public String excelImportStudent(){
 			try {
-				List<Student> courseList =  studentReader.getAll("d:/å­¦ç”Ÿä¿¡æ¯è¡¨.xls",true);
+				List<Student> courseList =  studentReader.getAll("d:/Ñ§ÉúĞÅÏ¢±í.xls",true);
 				studentService.saveAll(courseList);
 
 			} catch (FileNotFoundException e) {

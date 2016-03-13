@@ -2,10 +2,7 @@ package com.tqe.excelreader;
 
 
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -16,17 +13,21 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 /*
- * æ“ä½œExcelå·¥å…·ç±»ï¼Œå»ºè®®é¦–å…ˆå°†excelå•å…ƒæ ¼è®¾ç½®æˆæ–‡æœ¬ï¼ˆè®¾ç½®å•å…ƒæ ¼æ ¼å¼â€”â€”æ•°å­—â€”â€”æ–‡æœ¬ï¼‰ï¼Œ
- * å¦åˆ™å–å‡ºçš„æ•°æ®å¯èƒ½ä¼šå‘ç”Ÿæ ¼å¼çš„è½¬å˜ã€‚
- * ç›®å‰ä»…æ”¯æŒxlsæ–‡ä»¶ï¼Œä¸æ”¯æŒxlsxã€‚
- * ç›®å‰å¯¹äºç©ºå­—ç¬¦ä¸²çš„çº¦å®šï¼šå½“ä»excelå–å‡ºæ¥çš„å€¼æ˜¯""æ—¶ï¼Œæ‰§è¡Œå¾€æ•°æ®åº“æ’å…¥æ•°æ®æ—¶ï¼Œéœ€è¦åŠ ä¸ªåˆ¤æ–­ï¼Œå¦‚æœ=="",åˆ™æ‹¼æ¥sqlå¯ä»¥å¤„ç†æˆå­—æ®µ=''
+ * ²Ù×÷Excel¹¤¾ßÀà£¬½¨ÒéÊ×ÏÈ½«excelµ¥Ôª¸ñÉèÖÃ³ÉÎÄ±¾£¨ÉèÖÃµ¥Ôª¸ñ¸ñÊ½¡ª¡ªÊı×Ö¡ª¡ªÎÄ±¾£©£¬
+ * ·ñÔòÈ¡³öµÄÊı¾İ¿ÉÄÜ»á·¢Éú¸ñÊ½µÄ×ª±ä¡£
+ * Ä¿Ç°½öÖ§³ÖxlsÎÄ¼ş£¬²»Ö§³Öxlsx¡£
+ * Ä¿Ç°¶ÔÓÚ¿Õ×Ö·û´®µÄÔ¼¶¨£ºµ±´ÓexcelÈ¡³öÀ´µÄÖµÊÇ""Ê±£¬Ö´ĞĞÍùÊı¾İ¿â²åÈëÊı¾İÊ±£¬ĞèÒª¼Ó¸öÅĞ¶Ï£¬Èç¹û=="",ÔòÆ´½Ósql¿ÉÒÔ´¦Àí³É×Ö¶Î=''
  */
 public class ExcelUtils {
 	/*
-	 * è·å–excel File
+	 * »ñÈ¡excel File
 	 * return java.io.file
 	 */
 	public static File getExcelFile(String excelDir){
@@ -34,35 +35,35 @@ public class ExcelUtils {
 		File excelFile = new File(excelDir);
 
 		if(!excelFile.exists()){
-			throw new RuntimeException(excelDir+" æ–‡ä»¶ä¸å­˜åœ¨ï¼");
+			throw new RuntimeException(excelDir+" ÎÄ¼ş²»´æÔÚ£¡");
 		}
 		if(!excelFile.getName().endsWith(".xls")){
-			throw new RuntimeException(excelDir+" æ–‡ä»¶ç±»å‹ä¸æ­£ç¡®ï¼Œåªå…è®¸.xlsç»“å°¾çš„æ–‡ä»¶ï¼");
+			throw new RuntimeException(excelDir+" ÎÄ¼şÀàĞÍ²»ÕıÈ·£¬Ö»ÔÊĞí.xls½áÎ²µÄÎÄ¼ş£¡");
 		}
 		return excelFile;
 	}
 
 	/*
-	 * è·å–æŒ‡å®šæ ‡ç­¾é¡µåç§°çš„æ•°æ®
+	 * »ñÈ¡Ö¸¶¨±êÇ©Ò³Ãû³ÆµÄÊı¾İ
 	 */
 	public static List<Map<String,String>> getExcelRecords(String excelDir,String sheetName){
 		if(sheetName==null){
-			throw new RuntimeException("æ ‡ç­¾é¡µåç§°ä¸èƒ½ä¸ºç©ºï¼");
+			throw new RuntimeException("±êÇ©Ò³Ãû³Æ²»ÄÜÎª¿Õ£¡");
 		}
 		return getExcelRecords(excelDir, sheetName, -1,0);
 	}
 	/*
-	 * è·å–æŒ‡å®šæ ‡ç­¾é¡µç´¢å¼•çš„æ•°æ®
+	 * »ñÈ¡Ö¸¶¨±êÇ©Ò³Ë÷ÒıµÄÊı¾İ
 	 */
 	public static List<Map<String,String>> getExcelRecords(String excelDir,int sheetIndex,int titleIndex){
 		if(sheetIndex<0){
-			throw new RuntimeException("æŒ‡å®šæ ‡ç­¾é¡µç´¢å¼•ä¸åˆæ³•ï¼Œè¯·è¾“å…¥éè´Ÿæ•°ï¼");
+			throw new RuntimeException("Ö¸¶¨±êÇ©Ò³Ë÷Òı²»ºÏ·¨£¬ÇëÊäÈë·Ç¸ºÊı£¡");
 		}
 		return getExcelRecords(excelDir, null, sheetIndex,titleIndex);
 	}
 	/*
-	 * è·å–æŒ‡å®šexcelæ–‡ä»¶ã€æŒ‡å®šæ ‡ç­¾é¡µï¼ˆæ ‡ç­¾é¡µåç§°ã€æ ‡ç­¾é¡µç´¢å¼•ï¼‰çš„å†…å®¹ï¼Œè¿”å›å€¼æ ¼å¼ï¼šList<List<Object>>
-	 * å…¥å‚excel_fileæ ¼å¼ï¼šbpm\\test1.xls,bsp\\test2.xls
+	 * »ñÈ¡Ö¸¶¨excelÎÄ¼ş¡¢Ö¸¶¨±êÇ©Ò³£¨±êÇ©Ò³Ãû³Æ¡¢±êÇ©Ò³Ë÷Òı£©µÄÄÚÈİ£¬·µ»ØÖµ¸ñÊ½£ºList<List<Object>>
+	 * Èë²Îexcel_file¸ñÊ½£ºbpm\\test1.xls,bsp\\test2.xls
 	 */
 	private static List<Map<String,String>> getExcelRecords(String excelDir,String sheetName,int sheetIndex,int titleIndex){
 
@@ -78,44 +79,49 @@ public class ExcelUtils {
 			e.printStackTrace();
 		} finally{
 			try {
-				workbook.close();
-			} catch (IOException e) {
+                if (workbook != null) {
+                    workbook.close();
+                }
+            } catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 
+        if(workbook == null){
+            throw  new IllegalArgumentException("Î´ÄÜÕı³£´ò¿ªExcelÎÄ¼ş£¡");
+        }
 
-		//è·å–æŒ‡å®šæ ‡ç­¾é¡µ   
+		//»ñÈ¡Ö¸¶¨±êÇ©Ò³   
 		HSSFSheet sheet = null;
 		if(sheetName==null){
 			sheet = workbook.getSheetAt(sheetIndex);
 			if(sheet==null){
-				throw new RuntimeException(sheetIndex+" æ ‡ç­¾é¡µä¸å­˜åœ¨ï¼");
+				throw new RuntimeException(sheetIndex+" ±êÇ©Ò³²»´æÔÚ£¡");
 			}
 		}else{		
 			sheet = workbook.getSheet(sheetName);
 			if(sheet==null){
-				throw new RuntimeException(sheetName+" æ ‡ç­¾é¡µä¸å­˜åœ¨ï¼");
+				throw new RuntimeException(sheetName+" ±êÇ©Ò³²»´æÔÚ£¡");
 			}
 		}
 
 
-		//æ€»è¡Œæ•°
+		//×ÜĞĞÊı
 		int rows = sheet.getPhysicalNumberOfRows();
 		if (rows < 2) {
-			throw new RuntimeException(excelFile.getName()+" å†…å®¹ä¸ºç©ºï¼Œè¯·é‡æ–°ç¼–è¾‘ï¼");
+			throw new RuntimeException(excelFile.getName()+" ÄÚÈİÎª¿Õ£¬ÇëÖØĞÂ±à¼­£¡");
 		}
 
-		//ä¸ä¸ºç©ºçš„å•å…ƒæ ¼æ•°  ï¼Œç¬¬ä¸€è¡Œæ˜¯æ ‡é¢˜åˆ—
+		//²»Îª¿ÕµÄµ¥Ôª¸ñÊı  £¬µÚÒ»ĞĞÊÇ±êÌâÁĞ
 		HSSFRow keyRow = sheet.getRow(titleIndex);
 		int cellNumber = keyRow.getPhysicalNumberOfCells();
 
-		//å¾ªç¯éå†ï¼Œç¬¬ä¸€è¡Œæ˜¯æ ‡é¢˜ï¼Œæ‰€ä»¥ä» 1 å¼€å§‹éå†ï¼ˆ0è¡¨ç¤ºç¬¬ä¸€è¡Œï¼Œ1è¡¨ç¤ºç¬¬äºŒè¡Œï¼‰
+		//Ñ­»·±éÀú£¬µÚÒ»ĞĞÊÇ±êÌâ£¬ËùÒÔ´Ó 1 ¿ªÊ¼±éÀú£¨0±íÊ¾µÚÒ»ĞĞ£¬1±íÊ¾µÚ¶şĞĞ£©
 		for (int r = titleIndex+1; r < rows; r++) {
-			Map<String,String> record = new LinkedHashMap<String,String>();//ä½¿ç”¨HashMapçš„è¯ï¼Œå­˜è¿›å»çš„é¡ºåºä¸å–å‡ºæ¥çš„é¡ºåºæ˜¯ä¸ä¸€è‡´çš„ï¼Œæ­¤å¤„éœ€è¦ä½¿ç”¨LinkedHashMap
+			Map<String,String> record = new LinkedHashMap<String,String>();//Ê¹ÓÃHashMapµÄ»°£¬´æ½øÈ¥µÄË³ĞòÓëÈ¡³öÀ´µÄË³ĞòÊÇ²»Ò»ÖÂµÄ£¬´Ë´¦ĞèÒªÊ¹ÓÃLinkedHashMap
 			HSSFRow row = sheet.getRow(r);
-			String value = null;
-			for (int c = 0; c < cellNumber; c++) //å…±cellNumberåˆ—
+			String value = "";
+			for (int c = 0; c < cellNumber; c++) //¹²cellNumberÁĞ
 			{
 				value = null;
 				HSSFCell cell = row.getCell(c);
@@ -136,7 +142,7 @@ public class ExcelUtils {
 		return recordList;
 	}
 	/*
-	 * è·å–excelçš„sheetä¸ªæ•°
+	 * »ñÈ¡excelµÄsheet¸öÊı
 	 */
 	public static int getNumberOfSheets(String excelDir){
 		File excelFile = getExcelFile(excelDir);
@@ -160,7 +166,7 @@ public class ExcelUtils {
 	}
 
 	/*
-	 * æ ¹æ®sheetIndexè·å–sheetName
+	 * ¸ù¾İsheetIndex»ñÈ¡sheetName
 	 */
 	public static String getSheetNameBySheetIndex(String excelDir,int sheetIndex){
 		File excelFile = getExcelFile(excelDir);
@@ -184,7 +190,7 @@ public class ExcelUtils {
 	}
 
 	/*
-	 * è·å–æŒ‡å®šé€‰é¡¹å¡ï¼ˆç´¢å¼•ï¼‰çš„è¡Œæ•°
+	 * »ñÈ¡Ö¸¶¨Ñ¡Ïî¿¨£¨Ë÷Òı£©µÄĞĞÊı
 	 */
 	public static int getRowsOfSheet(String excelDir,int sheetIndex){
 		File excelFile = getExcelFile(excelDir);
@@ -207,7 +213,7 @@ public class ExcelUtils {
 		return rowsOfSheet;
 	}
 	/*
-	 * è·å–æŒ‡å®šé€‰é¡¹å¡ï¼ˆåç§°ï¼‰çš„è¡Œæ•°
+	 * »ñÈ¡Ö¸¶¨Ñ¡Ïî¿¨£¨Ãû³Æ£©µÄĞĞÊı
 	 */
 	public static int getRowsOfSheet(String excelDir,String sheetName){
 		File excelFile = getExcelFile(excelDir);
@@ -230,9 +236,9 @@ public class ExcelUtils {
 		return rowsOfSheet;
 	}
 	/*
-	 * è·å–æŒ‡å®šsheetã€æŒ‡å®šrowã€æŒ‡å®šcolumå¯¹åº”çš„cellçš„value
-	 * return:List[title,value],ç¬¬ä¸€ä¸ªå…ƒç´ æ˜¯titleï¼Œç¬¬äºŒä¸ªå…ƒç´ æ˜¯value
-	 * row/celléƒ½æ˜¯ä»0å¼€å§‹è®¡ç®—
+	 * »ñÈ¡Ö¸¶¨sheet¡¢Ö¸¶¨row¡¢Ö¸¶¨colum¶ÔÓ¦µÄcellµÄvalue
+	 * return:List[title,value],µÚÒ»¸öÔªËØÊÇtitle£¬µÚ¶ş¸öÔªËØÊÇvalue
+	 * row/cell¶¼ÊÇ´Ó0¿ªÊ¼¼ÆËã
 	 */
 	public static List<String> getCell(String excelDir,int sheetIndex,int rowIndex,int cellIndex){
 
@@ -243,18 +249,18 @@ public class ExcelUtils {
 		String value = null;
 		try {
 			workbook = new HSSFWorkbook(new FileInputStream(excelFile));
-			key = workbook.getSheetAt(sheetIndex).getRow(0).getCell(cellIndex).getStringCellValue();//ç¬¬ä¸€è¡Œï¼ˆrow 0ï¼‰æ˜¯æ ‡é¢˜åˆ—
+			key = workbook.getSheetAt(sheetIndex).getRow(0).getCell(cellIndex).getStringCellValue();//µÚÒ»ĞĞ£¨row 0£©ÊÇ±êÌâÁĞ
 			HSSFCell cell = workbook.getSheetAt(sheetIndex).getRow(rowIndex).getCell(cellIndex);
 			if(cell==null){
 				value = null;
 			}else{
-				if(cell.getCellType()==HSSFCell.CELL_TYPE_NUMERIC){//å¦‚æœæ˜¯æ•°å­—ç±»å‹
+				if(cell.getCellType()==HSSFCell.CELL_TYPE_NUMERIC){//Èç¹ûÊÇÊı×ÖÀàĞÍ
 					NumberFormat nf = NumberFormat.getInstance(); 
 					nf.setGroupingUsed(false); 
 					value = nf.format( new Double(cell.getNumericCellValue()));
-				}else if(cell.getCellType()==HSSFCell.CELL_TYPE_STRING){	//å¦‚æœæ˜¯æ–‡æœ¬ç±»å‹	
+				}else if(cell.getCellType()==HSSFCell.CELL_TYPE_STRING){	//Èç¹ûÊÇÎÄ±¾ÀàĞÍ	
 					value = cell.getStringCellValue();
-				}else{//å¦åˆ™å…¨éƒ¨è§†ä¸ºnull
+				}else{//·ñÔòÈ«²¿ÊÓÎªnull
 					value=null;
 				}
 			}
@@ -275,18 +281,20 @@ public class ExcelUtils {
 	}
 	
 	/*
-	 * è·å–æŒ‡å®šsheetã€æŒ‡å®šrowã€å¯¹åº”çš„row æ•°æ®
-	 * return:List[title,value],ç¬¬ä¸€ä¸ªå…ƒç´ æ˜¯titleï¼Œç¬¬äºŒä¸ªå…ƒç´ æ˜¯value
-	 * row/celléƒ½æ˜¯ä»0å¼€å§‹è®¡ç®—
+	 * »ñÈ¡Ö¸¶¨sheet¡¢Ö¸¶¨row¡¢¶ÔÓ¦µÄrow Êı¾İ
+	 * return:List[title,value],µÚÒ»¸öÔªËØÊÇtitle£¬µÚ¶ş¸öÔªËØÊÇvalue
+	 * row/cell¶¼ÊÇ´Ó0¿ªÊ¼¼ÆËã
 	 */
 	public static List<String> getRow(String excelDir,int sheetIndex,int rowIndex){
 
 		File excelFile = getExcelFile(excelDir);
 		List<String> rowList = new ArrayList<String>();
-		HSSFWorkbook workbook=null;
+		Workbook workbook=null;
 		try {
-			workbook = new HSSFWorkbook(new FileInputStream(excelFile));
-			HSSFRow row = workbook.getSheetAt(sheetIndex).getRow(rowIndex);//ç¬¬ä¸€è¡Œï¼ˆrow 0ï¼‰æ˜¯æ ‡é¢˜åˆ—
+			InputStream is = new FileInputStream(new File(excelDir));
+			workbook = WorkbookFactory.create(is);
+
+			Row row = workbook.getSheetAt(sheetIndex).getRow(rowIndex);//µÚÒ»ĞĞ£¨row 0£©ÊÇ±êÌâÁĞ
 			
 			if(row != null){
 				for( int i= 0;i<row.getPhysicalNumberOfCells();i++){
@@ -299,9 +307,13 @@ public class ExcelUtils {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}finally{
+		} catch (InvalidFormatException e) {
+			e.printStackTrace();
+		} finally{
 			try {
-				workbook.close();
+                if(workbook!=null){
+                    workbook.close();
+                }
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

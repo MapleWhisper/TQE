@@ -24,8 +24,8 @@ import com.tqe.po.Teacher;
 import com.tqe.po.User;
 
 /**
- * ç™»é™†æ§åˆ¶å™¨
- * @author å¹¿è·¯
+ * µÇÂ½¿ØÖÆÆ÷
+ * @author ¹ãÂ·
  *
  */
 @Controller
@@ -42,7 +42,7 @@ public class LoginController extends BaseController{
 	}
 	
 	/**
-	 * ç”¨æˆ·ç™»é™†
+	 * ÓÃ»§µÇÂ½
 	 * @return
 	 */
 	@RequestMapping("/login")
@@ -51,15 +51,15 @@ public class LoginController extends BaseController{
 						@RequestParam String valifCode,
 						HttpServletResponse response,
 						Model model){
-		//å¦‚æœè¾“å…¥çš„éªŒè¯ç ä¸æ­£ç¡®
+		//Èç¹ûÊäÈëµÄÑéÖ¤Âë²»ÕıÈ·
 		if( !valifCode.equals(session.getAttribute("valifCode") ))  {
-			model.addAttribute("error","éªŒè¯ç é”™è¯¯");
+			model.addAttribute("error","ÑéÖ¤Âë´íÎó");
 			return "index";
 		}
 
 		String type = user.getType();
 
-		//è®°ä½ç”¨æˆ·æœ€åçš„ç™»å½•æ–¹å¼
+		//¼Ç×¡ÓÃ»§×îºóµÄµÇÂ¼·½Ê½
 		Cookie cookie = new Cookie("loginType",type);
 		cookie.setMaxAge(365*24*60*60);
 		response.addCookie(cookie);
@@ -67,7 +67,7 @@ public class LoginController extends BaseController{
 		if(type.equals("admin")) {
 			Admin a =adminService.login(user);
 			if(a!=null){
-				System.out.println("ç®¡ç†å‘˜ç™»é™†");
+				System.out.println("¹ÜÀíÔ±µÇÂ½");
 				session.setAttribute("admin", a);
 				removeOtherUser(session,"admin");
 				List<Privilege> pList = privilegeService.findAdminAll();
@@ -77,7 +77,7 @@ public class LoginController extends BaseController{
 		}else if(type.equals("teacher")){
 			Teacher t = teacherService.login(user);
 			if(t!=null){
-				System.out.println("æ•™å¸ˆç™»é™†");
+				System.out.println("½ÌÊ¦µÇÂ½");
 				session.setAttribute("teacher", t);
 				removeOtherUser(session,"teacher");
 				List<Privilege> pList = privilegeService.findTeacherAll();
@@ -87,7 +87,7 @@ public class LoginController extends BaseController{
 		}else if(type.equals("student")){
 			Student stu = studentService.login(user);
 			if(stu!=null){
-				System.out.println("å­¦ç”Ÿç™»é™†");
+				System.out.println("Ñ§ÉúµÇÂ½");
 				session.setAttribute("student", stu);
 				removeOtherUser(session,"student");
 				List<Privilege> pList = privilegeService.findStudentAll();
@@ -95,10 +95,10 @@ public class LoginController extends BaseController{
 				return "redirect:/admin/stuEval";
 			}
 			//return "redirect:/admin/admin";
-		}else if(type.equals("leader")){										//é¢†å¯¼ç™»é™†
+		}else if(type.equals("leader")){										//Áìµ¼µÇÂ½
 			Leader leader = leaderService.login(user);
 			if(leader!=null){
-				System.out.println("é¢†å¯¼ç™»é™†");
+				System.out.println("Áìµ¼µÇÂ½");
 				session.setAttribute("leader", leader);
 				removeOtherUser(session,"leader"); 
 				List<Privilege> pList = privilegeService.findLeaderAll();
@@ -106,12 +106,12 @@ public class LoginController extends BaseController{
 				return "redirect:/admin/leaEval";
 			}
 		}else{
-			logger.error("æœªçŸ¥çš„ç™»å½•è§’è‰²ï¼ " + type);
-			model.addAttribute("error","ä¸ºæ­¢çš„ç™»å½•ç”¨æˆ·çš„è§’è‰²ï¼");
+			logger.error("Î´ÖªµÄµÇÂ¼½ÇÉ«£¡ " + type);
+			model.addAttribute("error","ÎªÖ¹µÄµÇÂ¼ÓÃ»§µÄ½ÇÉ«£¡");
 			return "index";
 
 		}
-		model.addAttribute("error","ç”¨æˆ·åæˆ–å¯†ç é”™è¯¯");
+		model.addAttribute("error","ÓÃ»§Ãû»òÃÜÂë´íÎó");
 		return "index";
 		
 	}
@@ -125,7 +125,7 @@ public class LoginController extends BaseController{
 	}
 
 	/**
-	 * æ·»åŠ æƒé™ä¿¡æ¯åˆ°sessionä¸­ ç”¨äºå‰å°è¿›è¡Œæƒé™çš„æ˜¾ç¤ºçš„åˆ¤æ–­
+	 * Ìí¼ÓÈ¨ÏŞĞÅÏ¢µ½sessionÖĞ ÓÃÓÚÇ°Ì¨½øĞĞÈ¨ÏŞµÄÏÔÊ¾µÄÅĞ¶Ï
 	 * @param session
 	 * @param pList
 	 */
@@ -139,7 +139,7 @@ public class LoginController extends BaseController{
 	}
 	
 	/**
-	 * ç”¨æˆ·ç™»é™†æ—¶ï¼Œç§»é™¤å…¶ä»–æ— å…³çš„è§’è‰²ï¼Œä¿è¯ç³»ç»ŸåŒä¸€æ—¶åˆ»åªæœ‰ä¸€ä¸ªè§’è‰²èƒ½ç™»é™†
+	 * ÓÃ»§µÇÂ½Ê±£¬ÒÆ³ıÆäËûÎŞ¹ØµÄ½ÇÉ«£¬±£Ö¤ÏµÍ³Í¬Ò»Ê±¿ÌÖ»ÓĞÒ»¸ö½ÇÉ«ÄÜµÇÂ½
 	 * @param session
 	 * @param userTyle
 	 */

@@ -13,11 +13,11 @@ public class CourseModel {
 	
 	public static class Batches {
 		
-		private com.tqe.po.Batches batches;		//å­£åº¦
-		private  List<StuResultTable> stuTableList;	//å­¦ç”Ÿè¯„æ•™è¡¨
-		private  List<TeaResultTable> teaTableList;	//æ•™å¸ˆè¯„æ•™è¡¨
-		private  List<LeaResultTable> leaTableList;	//é¢†å¯¼è¯„æ•™è¡¨
-		private List<TeaStuResultTable> teaStuTableList;	//æ•™å¸ˆè¯„ä»·å­¦ç”Ÿè¡¨
+		private com.tqe.po.Batches batches;		//¼¾¶È
+		private  List<StuResultTable> stuTableList;	//Ñ§ÉúÆÀ½Ì±í
+		private  List<TeaResultTable> teaTableList;	//½ÌÊ¦ÆÀ½Ì±í
+		private  List<LeaResultTable> leaTableList;	//Áìµ¼ÆÀ½Ì±í
+		private List<TeaStuResultTable> teaStuTableList;	//½ÌÊ¦ÆÀ¼ÛÑ§Éú±í
 
 		public  List<StuResultTable> getStuTableList() {
 			return stuTableList;

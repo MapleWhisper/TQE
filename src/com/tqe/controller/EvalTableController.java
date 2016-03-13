@@ -17,7 +17,7 @@ public class EvalTableController extends BaseController{
 	
 	
 	/**
-	 * æ˜¾ç¤ºè¯„æ•™è¡¨åˆ—è¡¨
+	 * ÏÔÊ¾ÆÀ½Ì±íÁĞ±í
 	 */
 	@RequestMapping("/evalTable")
 	public String evalTable(Model model){
@@ -27,7 +27,7 @@ public class EvalTableController extends BaseController{
 	}
 	
 	/**
-	 * æ·»åŠ è¯„æ•™è¡¨é¡µé¢
+	 * Ìí¼ÓÆÀ½Ì±íÒ³Ãæ
 	 */
 	@RequestMapping("/evalTable/add")
 	public String addEvalTable(){
@@ -35,22 +35,22 @@ public class EvalTableController extends BaseController{
 	}
 	
 	/**
-	 * æ˜¾ç¤ºè¯„æ•™è¡¨
-	 * @param id è¯„æ•™è¡¨çš„ID
+	 * ÏÔÊ¾ÆÀ½Ì±í
+	 * @param id ÆÀ½Ì±íµÄID
 	 */
 	@RequestMapping("/evalTable/show/{id}")
 	public String showEvalTable(@PathVariable Integer id,Model model){
 		EvalTable evalTable = evalTableService.getById(id);
 		if(evalTable==null){
-			return sendError(model,"æ‚¨è®¿é—®çš„è¯„æ•™è¡¨ä¸å­˜åœ¨");
+			return sendError(model,"Äú·ÃÎÊµÄÆÀ½Ì±í²»´æÔÚ");
 		}
 		model.addAttribute("evalTable",evalTable);
 		return "evalTable/showEvalTable";
 	}
 	
 	/**
-	 * ä¿å­˜è¯„æ•™è¡¨
-	 * @param evalTable éœ€è¦è¢«ä¿å­˜çš„è¯„æ•™è¡¨
+	 * ±£´æÆÀ½Ì±í
+	 * @param evalTable ĞèÒª±»±£´æµÄÆÀ½Ì±í
 	 */
 	@RequestMapping("/evalTable/save")
 	public String saveEvalTable(@ModelAttribute()EvalTable evalTable){
@@ -60,30 +60,30 @@ public class EvalTableController extends BaseController{
 	}
 	
 	/**
-	 * ä¿®æ”¹è¯„æ•™è¡¨é¡µé¢
-	 * @param eid	éœ€è¦è¢«ä¿®æ”¹çš„å¹³è§’è¡¨
+	 * ĞŞ¸ÄÆÀ½Ì±íÒ³Ãæ
+	 * @param eid	ĞèÒª±»ĞŞ¸ÄµÄÆ½½Ç±í
 	 */
 	@RequestMapping("/evalTable/edit/{eid}")
 	public String editEvalTable(@PathVariable Integer eid,Model model){
 		
 		EvalTable eTable = evalTableService.getById(eid);
 		if(eTable==null){
-			return sendError(model,"æ‚¨è®¿é—®çš„è¯„æ•™è¡¨ä¸å­˜åœ¨");
+			return sendError(model,"Äú·ÃÎÊµÄÆÀ½Ì±í²»´æÔÚ");
 		}
 		model.addAttribute("evalTable",eTable);
 		return "evalTable/editEvalTable";
 	}
 	
 	/**
-	 * ä¿®æ”¹è¯„æ•™è¡¨
-	 * @param evalTable ä¿®æ”¹éœ€è¦ä¿å­˜çš„è¯„æ•™è¡¨
+	 * ĞŞ¸ÄÆÀ½Ì±í
+	 * @param evalTable ĞŞ¸ÄĞèÒª±£´æµÄÆÀ½Ì±í
 	 */
 	@RequestMapping("/evalTable/update")
 	public String updateEvalTable(Integer eid,Model model,@ModelAttribute()EvalTable evalTable){
 		
 		EvalTable eTable = evalTableService.getById(eid);
 		if(eTable==null){
-			return sendError(model,"æ‚¨è®¿é—®çš„è¯„æ•™è¡¨ä¸å­˜åœ¨");
+			return sendError(model,"Äú·ÃÎÊµÄÆÀ½Ì±í²»´æÔÚ");
 		}
 		eTable.setJsonString(JSON.toJSONString(evalTable));
 		eTable.setTitle(evalTable.getTitle());

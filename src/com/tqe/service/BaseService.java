@@ -6,22 +6,11 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.tqe.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tqe.dao.AdminDao;
-import com.tqe.dao.BatchesDao;
-import com.tqe.dao.ClassDao;
-import com.tqe.dao.CourseDao;
-import com.tqe.dao.DepartmentDao;
-import com.tqe.dao.EvalDao;
-import com.tqe.dao.EvalTableDao;
-import com.tqe.dao.LeaderDao;
-import com.tqe.dao.MajorDao;
-import com.tqe.dao.PrivilegeDao;
-import com.tqe.dao.StudentDao;
-import com.tqe.dao.TeacherDao;
 import com.tqe.po.Clazz;
 import com.tqe.po.Department;
 import com.tqe.po.Major;
@@ -64,6 +53,9 @@ public abstract class BaseService<E> {
 	
 	@Autowired
 	public LeaderDao leaderDao;
+
+	@Autowired
+	public ScDao scDao;
 	
 	public  E getById(Integer id){
 		return null;

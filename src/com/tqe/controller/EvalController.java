@@ -21,27 +21,27 @@ public class EvalController extends BaseController{
 	
 	/**
 	 * 
-	 * ä¿å­˜å­¦ç”Ÿè¯„æ•™ç»“æœ
-	 * @param evalTable	è¯„æ•™è¡¨
-	 * @param stuTable	å­¦ç”Ÿè¡¨
+	 * ±£´æÑ§ÉúÆÀ½Ì½á¹û
+	 * @param evalTable	ÆÀ½Ì±í
+	 * @param stuTable	Ñ§Éú±í
 	 */
 	@RequestMapping(value={"/eval/save/student"},method={RequestMethod.POST})
 	public String evalTable( @ModelAttribute EvalTable evalTable, @ModelAttribute StuResultTable stuTable ,Model model,HttpSession session){
-		//åˆ¤æ–­å­¦ç”Ÿæ˜¯å¦
-		//å¤„ç†è¯„æ•™ç»“æœæ•°æ®
+		//ÅĞ¶ÏÑ§ÉúÊÇ·ñ
+		//´¦ÀíÆÀ½Ì½á¹ûÊı¾İ
 		
 		try {
 			preSaveTable(evalTable, stuTable);
 			Student stu = (Student) session.getAttribute("student");
 			if(stu==null){
-				logger.error("å¯¹ä¸èµ·ï¼å½“å‰ç™»å½•ç”¨æˆ·ä¸æ˜¯å­¦ç”Ÿ\\næˆ–è€…ç™»å½•è¶…æ—¶ï¼Œè¯·é‡æ–°ç™»å½•!");
-				return sendError(model,"å¯¹ä¸èµ·ï¼å½“å‰ç™»å½•ç”¨æˆ·ä¸æ˜¯å­¦ç”Ÿ\\næˆ–è€…ç™»å½•è¶…æ—¶ï¼Œè¯·é‡æ–°ç™»å½•!");
+				logger.error("¶Ô²»Æğ£¡µ±Ç°µÇÂ¼ÓÃ»§²»ÊÇÑ§Éú\\n»òÕßµÇÂ¼³¬Ê±£¬ÇëÖØĞÂµÇÂ¼!");
+				return sendError(model,"¶Ô²»Æğ£¡µ±Ç°µÇÂ¼ÓÃ»§²»ÊÇÑ§Éú\\n»òÕßµÇÂ¼³¬Ê±£¬ÇëÖØĞÂµÇÂ¼!");
 			}
 			stuTable.setSname(stu.getName());
 			evalService.saveStuTable(stuTable);
 		} catch (Exception e1) {
-			logger.error("è¯¥è¯¾ç¨‹å·²ç»è¯„ä»·ï¼ä¸èƒ½é‡å¤è¯„ä»·ï¼æˆ–è€…æ‚¨æ²¡æœ‰é€‰è¿™é—¨è¯¾ç¨‹!",e1);
-			return sendError(model,"è¯¥è¯¾ç¨‹å·²ç»è¯„ä»·ï¼ä¸èƒ½é‡å¤è¯„ä»·ï¼æˆ–è€…æ‚¨æ²¡æœ‰é€‰è¿™é—¨è¯¾ç¨‹!");
+			logger.error("¸Ã¿Î³ÌÒÑ¾­ÆÀ¼Û£¡²»ÄÜÖØ¸´ÆÀ¼Û£¡»òÕßÄúÃ»ÓĞÑ¡ÕâÃÅ¿Î³Ì!",e1);
+			return sendError(model,"¸Ã¿Î³ÌÒÑ¾­ÆÀ¼Û£¡²»ÄÜÖØ¸´ÆÀ¼Û£¡»òÕßÄúÃ»ÓĞÑ¡ÕâÃÅ¿Î³Ì!");
 		}
 		return "redirect:/admin/stuEval";
 	}
@@ -49,9 +49,9 @@ public class EvalController extends BaseController{
 	
 	/**
 	 * 
-	 * ä¿å­˜é¢†å¯¼è¯„æ•™ç»“æœ
-	 * @param evalTable	è¯„æ•™è¡¨
-	 * @param leaTable	æ•™å¸ˆè¡¨
+	 * ±£´æÁìµ¼ÆÀ½Ì½á¹û
+	 * @param evalTable	ÆÀ½Ì±í
+	 * @param leaTable	½ÌÊ¦±í
 	 * @return
 	 */
 	@RequestMapping(value={"/eval/save/leader"},method={RequestMethod.POST})
@@ -63,13 +63,13 @@ public class EvalController extends BaseController{
 		
 		try {
 			if(leader==null){
-				logger.error("å½“å‰è¯„æ•™è¡¨åªæœ‰é¢†å¯¼è§’è‰²æ‰èƒ½ä¿å­˜ï¼Œè¯·ç¡®è®¤ç™»å½•ç”¨æˆ·æˆ–è€…è¯·é‡æ–°ç™»å½•");
-				return sendError(model,"å½“å‰è¯„æ•™è¡¨åªæœ‰é¢†å¯¼è§’è‰²æ‰èƒ½ä¿å­˜ï¼Œè¯·ç¡®è®¤ç™»å½•ç”¨æˆ·æˆ–è€…è¯·é‡æ–°ç™»å½•");
+				logger.error("µ±Ç°ÆÀ½Ì±íÖ»ÓĞÁìµ¼½ÇÉ«²ÅÄÜ±£´æ£¬ÇëÈ·ÈÏµÇÂ¼ÓÃ»§»òÕßÇëÖØĞÂµÇÂ¼");
+				return sendError(model,"µ±Ç°ÆÀ½Ì±íÖ»ÓĞÁìµ¼½ÇÉ«²ÅÄÜ±£´æ£¬ÇëÈ·ÈÏµÇÂ¼ÓÃ»§»òÕßÇëÖØĞÂµÇÂ¼");
 			}
 			preSaveTable(evalTable, leaTable);
 			evalService.saveLeaTable(leaTable);
 		} catch (Exception e1) {
-			model.addAttribute("msg","è¯¥è¯¾ç¨‹å·²ç»è¯„ä»·ï¼ä¸èƒ½é‡å¤è¯„ä»·ï¼");
+			model.addAttribute("msg","¸Ã¿Î³ÌÒÑ¾­ÆÀ¼Û£¡²»ÄÜÖØ¸´ÆÀ¼Û£¡");
 			e1.printStackTrace();
 			return "error";
 		}
@@ -78,9 +78,9 @@ public class EvalController extends BaseController{
 	
 	/**
 	 * 
-	 * ä¿å­˜æ•™å¸ˆè¯„æ•™ç»“æœ
-	 * @param evalTable	è¯„æ•™è¡¨
-	 * @param teaTable	æ•™å¸ˆè¡¨
+	 * ±£´æ½ÌÊ¦ÆÀ½Ì½á¹û
+	 * @param evalTable	ÆÀ½Ì±í
+	 * @param teaTable	½ÌÊ¦±í
 	 * @return
 	 */
 	@RequestMapping(value={"/eval/save/teacher"},method={RequestMethod.POST})
@@ -92,7 +92,7 @@ public class EvalController extends BaseController{
 		
 		try {
 			if(teacher == null){
-				String msg = "å½“å‰è¯„æ•™è¡¨åªæœ‰æ•™å¸ˆè§’è‰²æ‰èƒ½ä¿å­˜ï¼Œè¯·ç¡®è®¤ç™»å½•ç”¨æˆ·æˆ–è€…è¯·é‡æ–°ç™»å½•";
+				String msg = "µ±Ç°ÆÀ½Ì±íÖ»ÓĞ½ÌÊ¦½ÇÉ«²ÅÄÜ±£´æ£¬ÇëÈ·ÈÏµÇÂ¼ÓÃ»§»òÕßÇëÖØĞÂµÇÂ¼";
 				logger.error(msg);
 				return sendError(model,msg);
 
@@ -100,16 +100,16 @@ public class EvalController extends BaseController{
 			preSaveTable(evalTable, teaTable);
 			evalService.saveTeaTable(teaTable);
 		} catch (Exception e1) {
-			logger.error("è¯¥è¯¾ç¨‹å·²ç»è¯„ä»·ï¼ä¸èƒ½é‡å¤è¯„ä»·ï¼", e1);
-			return sendError(model,"è¯¥è¯¾ç¨‹å·²ç»è¯„ä»·ï¼ä¸èƒ½é‡å¤è¯„ä»·ï¼");
+			logger.error("¸Ã¿Î³ÌÒÑ¾­ÆÀ¼Û£¡²»ÄÜÖØ¸´ÆÀ¼Û£¡", e1);
+			return sendError(model,"¸Ã¿Î³ÌÒÑ¾­ÆÀ¼Û£¡²»ÄÜÖØ¸´ÆÀ¼Û£¡");
 		}
 		return "redirect:/admin/teaEval";
 	}
 	
 	/**
 	 * 
-	 * ä¿å­˜æ•™å¸ˆè¯„ä»·å­¦ç”Ÿè¯„æ•™ç»“æœ
-	 * @param evalTable	è¯„æ•™è¡¨
+	 * ±£´æ½ÌÊ¦ÆÀ¼ÛÑ§ÉúÆÀ½Ì½á¹û
+	 * @param evalTable	ÆÀ½Ì±í
 	 * @return
 	 */
 	@RequestMapping(value={"/eval/save/teaStu"},method={RequestMethod.POST})
@@ -121,7 +121,7 @@ public class EvalController extends BaseController{
 		
 		try {
 			if(teacher==null){
-				String msg = "å½“å‰è¯„æ•™è¡¨åªæœ‰æ•™å¸ˆè§’è‰²æ‰èƒ½ä¿å­˜ï¼Œè¯·ç¡®è®¤ç™»å½•ç”¨æˆ·æˆ–è€…è¯·é‡æ–°ç™»å½•";
+				String msg = "µ±Ç°ÆÀ½Ì±íÖ»ÓĞ½ÌÊ¦½ÇÉ«²ÅÄÜ±£´æ£¬ÇëÈ·ÈÏµÇÂ¼ÓÃ»§»òÕßÇëÖØĞÂµÇÂ¼";
 				logger.error(msg);
 				return sendError(model,msg);
 			}
@@ -130,7 +130,7 @@ public class EvalController extends BaseController{
 			preSaveTable(evalTable, teaStuTable);
 			evalService.saveTeaStuTable(teaStuTable);
 		} catch (Exception e1) {
-			model.addAttribute("msg","è¯¥è¯¾ç¨‹å·²ç»è¯„ä»·ï¼ä¸èƒ½é‡å¤è¯„ä»·ï¼");
+			model.addAttribute("msg","¸Ã¿Î³ÌÒÑ¾­ÆÀ¼Û£¡²»ÄÜÖØ¸´ÆÀ¼Û£¡");
 			e1.printStackTrace();
 			return "error";
 		}
@@ -145,8 +145,8 @@ public class EvalController extends BaseController{
 	
 	
 	/**
-	 * æ˜¾ç¤ºè¯„æ•™ç»“æœ
-	 * @param id è¯„æ•™ç»“æœId
+	 * ÏÔÊ¾ÆÀ½Ì½á¹û
+	 * @param id ÆÀ½Ì½á¹ûId
 	 * @param model
 	 * @param type [student|teacher|lead]
 	 * @return
@@ -190,9 +190,9 @@ public class EvalController extends BaseController{
 
 
 	/**
-	 * å¯¹è¦ä¿å­˜çš„è¯„æ•™ç»“æœè¿›è¡Œé¢„å¤„ç†
-	 * @param evalTable	è¯„æ•™è¡¨
-	 * @param resultTable è¯„æ•™ç»“æœè¡¨
+	 * ¶ÔÒª±£´æµÄÆÀ½Ì½á¹û½øĞĞÔ¤´¦Àí
+	 * @param evalTable	ÆÀ½Ì±í
+	 * @param resultTable ÆÀ½Ì½á¹û±í
 	 */
 	private void preSaveTable(EvalTable evalTable, ResultTable resultTable) {
 		EvalTable e = evalTableService.getById(resultTable.getEid()).json2Object();
@@ -211,9 +211,9 @@ public class EvalController extends BaseController{
 			resultTable.setQuestion4(evalTable.getQuestionList().get(3)==null?null:evalTable.getQuestionList().get(0).getAns());
 			resultTable.setQuestion5(evalTable.getQuestionList().get(4)==null?null:evalTable.getQuestionList().get(0).getAns());
 		} catch (Exception e2) {
-			//è¿™é‡Œå‘ç”Ÿå¼‚å¸¸ è¡¨æ˜è¯„æ•™è¡¨çš„é—®é¢˜æ²¡æœ‰è¾¾åˆ°5ä¸ª å¯¼è‡´Listè®¿é—®æ•°ç»„è¶Šç•Œ å‘ç”Ÿå¼‚å¸¸
-			//æ— è§†å¼‚å¸¸ é€€å‡ºä¿å­˜å³å¯
-			//logger.error("ä¿å­˜è¯„æ•™ç»“æœå¤±è´¥"+evalTable,e2);
+			//ÕâÀï·¢ÉúÒì³£ ±íÃ÷ÆÀ½Ì±íµÄÎÊÌâÃ»ÓĞ´ïµ½5¸ö µ¼ÖÂList·ÃÎÊÊı×éÔ½½ç ·¢ÉúÒì³£
+			//ÎŞÊÓÒì³£ ÍË³ö±£´æ¼´¿É
+			//logger.error("±£´æÆÀ½Ì½á¹ûÊ§°Ü"+evalTable,e2);
 		}
 	}
 }

@@ -20,7 +20,7 @@ import com.tqe.po.Teacher;
 @Component
 public class CourseExcelReader extends ExcelReader<Course> {
 	public static void main(String[] args) throws FileNotFoundException {
-		List<Course> list = new CourseExcelReader().getAll("d:/è¯¾ç¨‹ç­ä¿¡æ¯ï¼šè¯¾ç¨‹-è€å¸ˆå¯¹åº”å…³ç³».xls");
+		List<Course> list = new CourseExcelReader().getAll("d:/¿Î³Ì°àĞÅÏ¢£º¿Î³Ì-ÀÏÊ¦¶ÔÓ¦¹ØÏµ.xls");
 		//System.out.println(list.size());
 		
 		for(Course c: list){
@@ -31,13 +31,13 @@ public class CourseExcelReader extends ExcelReader<Course> {
 	
 	
 	/**
-	 * æ£€æŸ¥æ–‡ä»¶æ˜¯å¦æ˜¯æ•™å¸ˆæ–‡ä»¶
+	 * ¼ì²éÎÄ¼şÊÇ·ñÊÇ½ÌÊ¦ÎÄ¼ş
 	 */
 	@Override
 	public boolean checkFile(String excelDir) {
 		List<String> list = ExcelUtils.getRow(excelDir, 0, 2);
 		
-		return list.contains("è¯¾ç¨‹å·")&&list.contains("è¯¾ç¨‹åç§°");
+		return list.contains("¿Î³ÌºÅ")&&list.contains("¿Î³ÌÃû³Æ");
 	}
 
 

@@ -6,9 +6,9 @@ import java.util.Properties;
 public class SystemUtils extends Properties{
 	
 	/**
-	 * å¾—åˆ°å½“å‰çš„å­¦æœŸ
-	 * å¦‚æžœå½“å‰æœˆä»½å¤§äºŽ2æœˆï¼Œå°äºŽ8æœˆï¼Œé‚£ä¹ˆé»˜è®¤ä¸ºæ˜¥å­£å­¦æœŸ
-	 * å¦‚æžœæœˆä»½å¤§äºŽ8æœˆï¼Œå°äºŽç¬¬äºŒå¹´2æœˆ
+	 * µÃµ½µ±Ç°µÄÑ§ÆÚ
+	 * Èç¹ûµ±Ç°ÔÂ·Ý´óÓÚ2ÔÂ£¬Ð¡ÓÚ8ÔÂ£¬ÄÇÃ´Ä¬ÈÏÎª´º¼¾Ñ§ÆÚ
+	 * Èç¹ûÔÂ·Ý´óÓÚ8ÔÂ£¬Ð¡ÓÚµÚ¶þÄê2ÔÂ
 	 */
 	public static String getSeason()  {
 		Calendar now = Calendar.getInstance();
@@ -16,9 +16,9 @@ public class SystemUtils extends Properties{
 		int month = now.get(Calendar.MONTH)+1;
 		String season = "";
 		if(month>=2 && month <8){
-			season = year+"æ˜¥";
+			season = year+"´º";
 		}else{
-			season = year+"ç§‹";
+			season = year+"Çï";
 		}
 		return season;
 	}

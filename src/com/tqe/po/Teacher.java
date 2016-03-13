@@ -3,7 +3,6 @@ package com.tqe.po;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.apache.poi.util.StringUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -16,7 +15,7 @@ public class Teacher implements Serializable{
 	private String password;
 	private String name;
 	private String sex;
-	private Date brithday;
+	private Date birthday;
 	private String phone;
 	private String email;
 	private String addr;
@@ -52,11 +51,11 @@ public class Teacher implements Serializable{
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
-	public Date getBrithday() {
-		return brithday;
+	public Date getBirthday() {
+		return birthday;
 	}
-	public void setBrithday(Date brithday) {
-		this.brithday = brithday;
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
 	}
 	public String getPhone() {
 		return phone;

@@ -32,7 +32,7 @@ public class LoginFilter implements  Filter{
 			FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req =  (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;
-		String path = req.getRequestURI();	//å¾—åˆ°è¯·æ±‚Url
+		String path = req.getRequestURI();	//µÃµ½ÇëÇóUrl
 		HttpSession session = req.getSession();
 		String ctxPath = req.getContextPath();
 
@@ -41,28 +41,28 @@ public class LoginFilter implements  Filter{
 		Admin admin = (Admin) session.getAttribute("admin");
 		Leader leader = (Leader) session.getAttribute("leader");
 		
-		if(!path.contains("/admin")){	//å¦‚æœè®¿é—®çš„ä¸æ˜¯åå°æ•°æ®ï¼Œé‚£ä¹ˆè·³è¿‡
+		if(!path.contains("/admin")){	//Èç¹û·ÃÎÊµÄ²»ÊÇºóÌ¨Êı¾İ£¬ÄÇÃ´Ìø¹ı
 			chain.doFilter(req, resp);
 			return;
 		}
 		
-		if( stu==null && tea==null && admin==null && leader==null){		//å¦‚æœéƒ½æ²¡æœ‰ç™»é™†ï¼Œå°±è¿”å›ç™»å½•é¡µ
+		if( stu==null && tea==null && admin==null && leader==null){		//Èç¹û¶¼Ã»ÓĞµÇÂ½£¬¾Í·µ»ØµÇÂ¼Ò³
 			resp.sendRedirect(ctxPath+"/index");
 			return;
 		}
-		if(admin!=null && admin.getUsername().equals("admin")){		//å¦‚æœæ˜¯è¶…çº§ç®¡ç†å‘˜ï¼Œé‚£ä¹ˆä¸è¿›è¡Œæƒé™æ£€æŸ¥
+		if(admin!=null && admin.getUsername().equals("admin")){		//Èç¹ûÊÇ³¬¼¶¹ÜÀíÔ±£¬ÄÇÃ´²»½øĞĞÈ¨ÏŞ¼ì²é
 			chain.doFilter(req, resp);
 			return;
 		}
-		//å¦‚æœç™»é™†äº† é‚£ä¹ˆå°±æ£€æŸ¥æƒé™
+		//Èç¹ûµÇÂ½ÁË ÄÇÃ´¾Í¼ì²éÈ¨ÏŞ
 		@SuppressWarnings("unchecked")
-		//è·å–ç™»å½•ç”¨æˆ·çš„æƒé™åˆ—è¡¨
+		//»ñÈ¡µÇÂ¼ÓÃ»§µÄÈ¨ÏŞÁĞ±í
 		List<Privilege> plist = (List<Privilege>) session.getAttribute("pList");
 		boolean f = checkPrivilege(path, plist);
 		if(f){
 			chain.doFilter(req, resp);
 		}else{
-			session.setAttribute("msg", "å¯¹ä¸èµ·ï¼Œæ‚¨æ²¡æœ‰è®¿é—®æƒé™");
+			session.setAttribute("msg", "¶Ô²»Æğ£¬ÄúÃ»ÓĞ·ÃÎÊÈ¨ÏŞ");
 			resp.sendRedirect(ctxPath+"/error");
 			return;
 		}
@@ -71,21 +71,21 @@ public class LoginFilter implements  Filter{
 	}
 	
 	/**
-	 * æ ¹æ®ç”¨æˆ·è®¿é—®è·¯å¾„ åˆ¤æ–­ç”¨æˆ·æ˜¯å¦æœ‰æƒé™è®¿é—®
+	 * ¸ù¾İÓÃ»§·ÃÎÊÂ·¾¶ ÅĞ¶ÏÓÃ»§ÊÇ·ñÓĞÈ¨ÏŞ·ÃÎÊ
 	 * @param path
 	 * @param pList
 	 * @return
 	 */
 	public boolean checkPrivilege(String path,List<Privilege> pList){
 		for(Privilege p : pList){
-			if(path.endsWith(p.getUrl())){		//å¦‚æœæ˜¯ä¾‹å¦‚ï¼ˆ/privilegeï¼‰çš„é¡µé¢ï¼Œç›´æ¥é»˜è®¤ä¸ºç»§ç»­
+			if(path.endsWith(p.getUrl())){		//Èç¹ûÊÇÀıÈç£¨/privilege£©µÄÒ³Ãæ£¬Ö±½ÓÄ¬ÈÏÎª¼ÌĞø
 				return true;
 			}
 		}
-		//å¦‚æœæ˜¯äºŒçº§æƒé™
+		//Èç¹ûÊÇ¶ş¼¶È¨ÏŞ
 		for(Privilege p : pList){
-			if(p.getUrl().lastIndexOf("/")!=0){	//æ˜¯äºŒçº§æƒé™
-				if(path.indexOf(p.getUrl())!=-1){	//å¦‚æœå’ŒäºŒçº§æˆ–å¤šçº§æƒé™åŒ¹é…ï¼Œé‚£ä¹ˆç»§ç»­
+			if(p.getUrl().lastIndexOf("/")!=0){	//ÊÇ¶ş¼¶È¨ÏŞ
+				if(path.indexOf(p.getUrl())!=-1){	//Èç¹ûºÍ¶ş¼¶»ò¶à¼¶È¨ÏŞÆ¥Åä£¬ÄÇÃ´¼ÌĞø
 					return true;
 				}
 			}

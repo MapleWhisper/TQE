@@ -11,10 +11,10 @@ import com.tqe.utils.MD5Utils;
 public class Admin implements Serializable{
 	
 	private Integer id;
-	private String name;					//å§“å
-	private String username;				//ç”¨æˆ·å	é•¿åº¦ä¸èƒ½è¶…è¿‡20
-	private String password;				//å¯†ç 	é•¿åº¦ä¸èƒ½è¶…è¿‡20
-	private String position;				//èŒä½	é•¿åº¦ä¸èƒ½è¶…è¿‡30
+	private String name;					//ĞÕÃû
+	private String username;				//ÓÃ»§Ãû	³¤¶È²»ÄÜ³¬¹ı20
+	private String password;				//ÃÜÂë	³¤¶È²»ÄÜ³¬¹ı20
+	private String position;				//Ö°Î»	³¤¶È²»ÄÜ³¬¹ı30
 	
 	public Integer getId() {
 		return id;
@@ -53,8 +53,8 @@ public class Admin implements Serializable{
 	
 	
 	/*
-	private Set<Privilege> privileges;		//ç®¡ç†å‘˜æ‹¥æœ‰çš„æƒé™
+	private Set<Privilege> privileges;		//¹ÜÀíÔ±ÓµÓĞµÄÈ¨ÏŞ
 	
-	private Integer[] privilegeIds;			//ç®¡ç†å‘˜çš„æƒé™ids
+	private Integer[] privilegeIds;			//¹ÜÀíÔ±µÄÈ¨ÏŞids
 	*/
 }

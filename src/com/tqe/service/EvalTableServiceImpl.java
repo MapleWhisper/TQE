@@ -28,7 +28,7 @@ public class EvalTableServiceImpl extends BaseService<EvalTable>{
 	public void save(EvalTable e) {
 		for(EvalTable.EvalTableItem item :e.getTableItemList()){
 			String level = item.getLevel();
-			level=level.replaceAll("ï¼Œ", ",");	//æŠŠè¯„æ•™çš„åˆ†éš”ç¬¦ç»Ÿä¸€ä¸ºç©ºæ ¼åˆ†éš”
+			level=level.replaceAll("£¬", ",");	//°ÑÆÀ½ÌµÄ·Ö¸ô·ûÍ³Ò»Îª¿Õ¸ñ·Ö¸ô
 			level=level.replaceAll(",", " ");
 			item.setLevel(level);
 		}

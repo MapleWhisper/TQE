@@ -12,7 +12,7 @@ public class Student implements Serializable{
 	private String name;
 	private String password;
 	private String sex;
-	private Date brithday;
+	private Date birthday;
 	private String idNumber;
 	private String nation;
 	private String politicalStatus;
@@ -32,7 +32,7 @@ public class Student implements Serializable{
 	private Integer classId;
 	private Integer majorId;
 
-	private boolean isEvaled;	//鍒ゆ柇瀛︾敓鏄惁宸茬粡璇勪环
+	private boolean isEvaled;	//判断学生是否已经评价
 	
 	
 	public String getSid() {
@@ -53,11 +53,11 @@ public class Student implements Serializable{
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
-	public Date getBrithday() {
-		return brithday;
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
 	}
-	public void setBrithday(Date brithday) {
-		this.brithday = brithday;
+	public Date getBirthday(){
+		return this.birthday;
 	}
 	public String getIdNumber() {
 		return idNumber;
@@ -186,7 +186,7 @@ public class Student implements Serializable{
 				", name='" + name + '\'' +
 				", password='" + password + '\'' +
 				", sex='" + sex + '\'' +
-				", brithday=" + brithday +
+				", birthday=" + birthday +
 				", idNumber='" + idNumber + '\'' +
 				", nation='" + nation + '\'' +
 				", politicalStatus='" + politicalStatus + '\'' +
@@ -207,4 +207,6 @@ public class Student implements Serializable{
 				", isEvaled=" + isEvaled +
 				'}';
 	}
+
+
 }

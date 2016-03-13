@@ -2,6 +2,7 @@ package com.tqe.controller;
 
 import com.tqe.excelreader.ExcelReader;
 import com.tqe.po.Course;
+import com.tqe.po.SC;
 import com.tqe.po.Student;
 import com.tqe.po.Teacher;
 import org.apache.commons.io.FileUtils;
@@ -22,9 +23,9 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * ç”¨æ¥æ§åˆ¶ å°†excelæ–‡ä»¶å¯¼å…¥æ•°æ®åº“çš„æ§åˆ¶å™¨
+ * ÓÃÀ´¿ØÖÆ ½«excelÎÄ¼şµ¼ÈëÊı¾İ¿âµÄ¿ØÖÆÆ÷
  *
- * @author å¹¿è·¯
+ * @author ¹ãÂ·
  */
 @Controller
 @RequestMapping("/admin")
@@ -41,13 +42,16 @@ public class DataImportController extends BaseController {
     @Resource(name = "studentExcelReader")
     private ExcelReader<Student> studentReader;
 
+    @Resource(name = "scExcelReader")
+    private ExcelReader<SC> scReader;
+
     @RequestMapping("/dataImport")
     public String dataImport() {
         return "dataImport/dataImport";
     }
 
     /**
-     * æ•™å¸ˆä¿¡æ¯å¯¼å…¥
+     * ½ÌÊ¦ĞÅÏ¢µ¼Èë
      */
     @RequestMapping("/dataImport/teacher")
     public String dataImportTeacher(
@@ -75,7 +79,7 @@ public class DataImportController extends BaseController {
     }
 
     /**
-     * å­¦ç”Ÿä¿¡æ¯å¯¼å…¥
+     * Ñ§ÉúĞÅÏ¢µ¼Èë
      */
     @RequestMapping("/dataImport/student")
     public String dataImportStudent(
@@ -103,7 +107,7 @@ public class DataImportController extends BaseController {
     }
 
     /**
-     *
+     * ¿Î³Ì°àĞÅÏ¢µ¼Èë
      */
     @RequestMapping("/dataImport/course")
     public String dataImportCourse(
@@ -112,13 +116,13 @@ public class DataImportController extends BaseController {
             @RequestParam("season") String season,
             Model model
     ) {
-        if (StringUtils.isBlank(season)) {    //å¦‚æœseasonä¸ºç©ºï¼Œé‚£ä¹ˆä¸èƒ½ç»§ç»­
-            model.addAttribute("error", "seasonä¸èƒ½ä¸ºç©ºï¼");
+        if (StringUtils.isBlank(season)) {    //Èç¹ûseasonÎª¿Õ£¬ÄÇÃ´²»ÄÜ¼ÌĞø
+            model.addAttribute("error", "season²»ÄÜÎª¿Õ£¡");
         }else{
             try {
                 if (checkFileName(courseFile, model)) {
                     String fileDir = storeFileAndReturnFilePath(request, courseFile);
-                    List<Course> courseList = courseReader.getAll(fileDir, true);
+                    List<Course> courseList = courseReader.getAll(fileDir, false);
                     courseService.saveAll(courseList,season);
                 }
             } catch (FileNotFoundException e) {
@@ -130,17 +134,43 @@ public class DataImportController extends BaseController {
             }
         }
         return "dataImport/dataImport";
-
     }
 
     /**
-     * æ£€æŸ¥æ–‡ä»¶åæ˜¯å¦åˆæ³•
-     * åˆæ³•è¿”å›true å¦åˆ™è¿”å›false
+     * Ñ§ÉúÑ¡¿ÎĞÅÏ¢µ¼Èë
+     */
+    @RequestMapping("/dataImport/sc")
+    public String dataImportSc(
+            HttpServletRequest request,
+            @RequestParam("scFile") CommonsMultipartFile scFile,
+            Model model
+    ) {
+        try {
+            if (!checkFileName(scFile, model)) {
+                return "dataImport/dataImport";
+            }
+            String fileDir = storeFileAndReturnFilePath(request, scFile);
+            List<SC> scList = scReader.getAll(fileDir, false);
+            scService.saveAll(scList);
+
+        } catch (FileNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            logger.error(e);
+        } catch (IOException e) {
+            model.addAttribute("error", e.getMessage());
+            logger.error(e);
+        }
+        return "dataImport/dataImport";
+    }
+
+    /**
+     * ¼ì²éÎÄ¼şÃûÊÇ·ñºÏ·¨
+     * ºÏ·¨·µ»Øtrue ·ñÔò·µ»Øfalse
      */
     private boolean checkFileName(CommonsMultipartFile file, Model model) {
         String fileName = file.getOriginalFilename();
-        if (!fileName.trim().endsWith(".xls")) {  //å¦‚æœæ–‡ä»¶ä¸æ˜¯excel  é‚£ä¹ˆæŠ¥é”™
-            model.addAttribute("error", "æ–‡ä»¶å¿…é¡»æ˜¯è¦ä»¥.xlsç»“å°¾çš„Excelæ–‡ä»¶ï¼");
+        if (!fileName.trim().endsWith(".xls")) {  //Èç¹ûÎÄ¼ş²»ÊÇexcel  ÄÇÃ´±¨´í
+            model.addAttribute("error", "ÎÄ¼ş±ØĞëÊÇÒªÒÔ.xls½áÎ²µÄExcelÎÄ¼ş£¡");
             return false;
         }
         return true;

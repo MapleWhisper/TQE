@@ -19,7 +19,7 @@ import com.tqe.utils.MD5Utils;
 public class IndexController extends BaseController{
 
 	/**
-	 * è¿›å…¥é¦–é¡µ ç™»é™†é¡µé¢
+	 * ½øÈëÊ×Ò³ µÇÂ½Ò³Ãæ
 	 * @param model
 	 * @return
 	 */
@@ -35,7 +35,7 @@ public class IndexController extends BaseController{
 
 	/**
 	 * 
-	 * ä¿®æ”¹ç®¡ç†å‘˜å¯†ç  é¡µé¢
+	 * ĞŞ¸Ä¹ÜÀíÔ±ÃÜÂë Ò³Ãæ
 	 * @param id
 	 * @return
 	 */
@@ -47,7 +47,7 @@ public class IndexController extends BaseController{
 
 	/**
 	 * 
-	 * ä¿®æ”¹ç®¡ç†å‘˜å¯†ç 
+	 * ĞŞ¸Ä¹ÜÀíÔ±ÃÜÂë
 	 * @param id
 	 * @return
 	 */
@@ -58,7 +58,7 @@ public class IndexController extends BaseController{
 		String Md5oldPwd = MD5Utils.string2MD5(oldPwd);
 		if(session.getAttribute("admin")!=null){
 			Admin admin = adminService.getById(id);
-			if(admin.getPassword().equalsIgnoreCase(Md5oldPwd)){	//å¦‚æœå¯†ç ç›¸ç­‰
+			if(admin.getPassword().equalsIgnoreCase(Md5oldPwd)){	//Èç¹ûÃÜÂëÏàµÈ
 
 				user.setId(admin.getId() + "");
 				user.setUsername(admin.getUsername());
@@ -68,20 +68,20 @@ public class IndexController extends BaseController{
 			}
 		}else if(session.getAttribute("teacher")!=null){
 			Teacher teacher = teacherService.getById(id);
-			if(teacher.getPassword().equalsIgnoreCase(Md5oldPwd)){	//å¦‚æœå¯†ç ç›¸åŒ
+			if(teacher.getPassword().equalsIgnoreCase(Md5oldPwd)){	//Èç¹ûÃÜÂëÏàÍ¬
 				user.setId(teacher.getId());
 				user.setPassword(pwd);
 				user.setType("teacher");
 			}
 		}else if(session.getAttribute("student")!=null){
 			Student student = studentService.getById(id+"");
-			if(student.getPassword().equalsIgnoreCase(Md5oldPwd)){	//å¦‚æœå¯†ç ç›¸åŒ
+			if(student.getPassword().equalsIgnoreCase(Md5oldPwd)){	//Èç¹ûÃÜÂëÏàÍ¬
 				user.setId(student.getSid()+"");
 				user.setPassword(pwd);
 				user.setType("student");
 			}
 		}else{
-			model.addAttribute("error","åŸå¯†ç é”™è¯¯");
+			model.addAttribute("error","Ô­ÃÜÂë´íÎó");
 			return "resetPwd";
 		}
 		commonService.updatePwd(user);

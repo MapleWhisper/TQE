@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.tqe.po.SC;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.util.StringUtils;
@@ -23,22 +24,22 @@ public abstract class ExcelReader<E> {
 	Log logger = LogFactory.getLog(ExcelReader.class);;
 
 	/**
-	 * æ£€æŸ¥æ–‡ä»¶æ˜¯å¦ç¬¦åˆ
+	 * ¼ì²éÎÄ¼şÊÇ·ñ·ûºÏ
 	 * @param excelDir
 	 * @return
 	 */
 	public abstract boolean checkFile(String excelDir);
 	
 	private Class<?> clazz = null;	
-	public ExcelReader() {	//è·å–æ³›å‹ç±»å‹
+	public ExcelReader() {	//»ñÈ¡·ºĞÍÀàĞÍ
 		ParameterizedType type =   (ParameterizedType) this.getClass().getGenericSuperclass();
 		this.clazz = (Class<?>) type.getActualTypeArguments()[0];
 	}
 	
 	/**
-	 * è·å–excelè¡¨æ ¼å†…å®¹ ï¼Œå¹¶å°è£…æˆList
-	 * é»˜è®¤ä¸è®¾ç½®åˆå§‹å¯†ç 
-	 * @param excelDir	æ–‡ä»¶è·¯å¾„
+	 * »ñÈ¡excel±í¸ñÄÚÈİ £¬²¢·â×°³ÉList
+	 * Ä¬ÈÏ²»ÉèÖÃ³õÊ¼ÃÜÂë
+	 * @param excelDir	ÎÄ¼şÂ·¾¶
 	 * @return	
 	 * @throws FileNotFoundException
 	 */
@@ -47,47 +48,48 @@ public abstract class ExcelReader<E> {
 	}
 	
 	/**
-	 * è·å–excelè¡¨æ ¼å†…å®¹ ï¼Œå¹¶å°è£…æˆList
-	 * @param excelDir	æ–‡ä»¶è·¯å¾„
-	 * @param isSetPassword		æ˜¯å¦è®¾ç½®åˆå§‹å¯†ç 
+	 * »ñÈ¡excel±í¸ñÄÚÈİ £¬²¢·â×°³ÉList
+	 * @param excelDir	ÎÄ¼şÂ·¾¶
+	 * @param needSetPassword		ÊÇ·ñÉèÖÃ³õÊ¼ÃÜÂë
 	 * @return
 	 * @throws FileNotFoundException
 	 */
-	public List<E> getAll(String excelDir,boolean isSetPassword) throws FileNotFoundException {
+	public List<E> getAll(String excelDir,boolean needSetPassword) throws FileNotFoundException {
 		List<E> list = new ArrayList<E>();
-		int titleIndex = 0;
+
+		int titleIndex = 0;		//ÓĞĞ§Êı¾İµÄ´ÓµÚ¼¸ĞĞ¿ªÊ¼µÄ
 		if(clazz==Teacher.class){
 			titleIndex = 0;
-		}else if(clazz == Course.class){
+		}else if(clazz == Course.class || clazz==SC.class){
 			titleIndex = 2;
 		}else{
 			titleIndex = 0;
 		}
 		if(checkFile(excelDir)){
-			list = excelStringValueToPojoList(excelDir, list,isSetPassword ,titleIndex) ;
+			list = excelStringValueToPojoList(excelDir, list, needSetPassword,titleIndex) ;
 			
 		}else{
 			logger.error("file not fount! excelDir:"+excelDir);
-			throw new FileNotFoundException("æ–‡ä»¶æ²¡æœ‰æ‰¾åˆ°");
+			throw new FileNotFoundException("ÎÄ¼şÃ»ÓĞÕÒµ½");
 		}
 		return list;
 	}
 	
 	/**
-	 * æŠŠExcelæ•°æ®è½¬æ¢ä¸º Pojo çš„Listç±»å‹çš„æ•°æ®
+	 * °ÑExcelÊı¾İ×ª»»Îª Pojo µÄListÀàĞÍµÄÊı¾İ
 	 * @param excelDir
 	 * @param list
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	protected List<E> excelStringValueToPojoList(String excelDir, List<E> list,boolean isSetPassword,int titleIndex) {
+	protected List<E> excelStringValueToPojoList(String excelDir, List<E> list,boolean needSetPassword,int titleIndex) {
 		
-		List<Map<String,String>> data = ExcelUtils.getExcelRecords(excelDir, 0 ,titleIndex);	//ä»excelä¸­è·å–æ•°æ®
+		List<Map<String,String>> data = ExcelUtils.getExcelRecords(excelDir, 0 ,titleIndex);	//´ÓexcelÖĞ»ñÈ¡Êı¾İ
 		
 		if(data!=null && !data.isEmpty()){
-			for(Map<String,String> row :data){	//éå†æ¯è¡Œæ•°æ®
+			for(Map<String,String> row :data){	//±éÀúÃ¿ĞĞÊı¾İ
 				E e  = null;
-		        boolean isSkip = false;     //æ”¹è¡Œæ˜¯å¦éœ€è¦è¿‡æ»¤æ‰
+		        boolean isSkip = false;     //¸ÄĞĞÊÇ·ñĞèÒª¹ıÂËµô
 				Object obj  = null;
 				try {
 					obj = clazz.newInstance();
@@ -96,14 +98,14 @@ public abstract class ExcelReader<E> {
 				} catch (IllegalAccessException ex){
 					ex.printStackTrace();
 				}
-				Field[] fields = clazz.getDeclaredFields();		//è·å–æˆå‘˜çš„å…¨éƒ¨Filed
+				Field[] fields = clazz.getDeclaredFields();		//»ñÈ¡³ÉÔ±µÄÈ«²¿Filed
 				for(Field f : fields){
-					String fieldName = f.getName();		//è·å–æˆå‘˜å˜é‡å
+					String fieldName = f.getName();		//»ñÈ¡³ÉÔ±±äÁ¿Ãû
 					String fn = new String(fieldName);
 
-                    fn = clazz.getSimpleName()+"."+fn;  //è·å–Propertyæ–‡ä»¶ä¸­çš„key
+                    fn = clazz.getSimpleName().toLowerCase()+"."+fn;  //»ñÈ¡PropertyÎÄ¼şÖĞµÄkey
 
-					String columnName = ExcelProperty.getProperty(fn);	//è·å¾—excelä¸­æ–‡åˆ—å
+					String columnName = ExcelProperty.getProperty(fn);	//»ñµÃexcelÖĞÎÄÁĞÃû
 					String methodName = fieldNameToSetter(fieldName);
 
 					Method m;
@@ -112,8 +114,8 @@ public abstract class ExcelReader<E> {
 						String value = row.get(columnName);
 
                         String filterFieldName = "filter."+fn;
-                        String filterFieldValue = ExcelProperty.getProperty(filterFieldName).trim();
-                        if(value.equalsIgnoreCase(filterFieldValue)){   //å¦‚æœè¯¥å­—æ®µçš„å€¼ç¬¦åˆè¿‡æ»¤æ¡ä»¶ é‚£ä¹ˆè¯¥è¡Œæ•°æ®å°±è·³è¿‡
+                        String filterFieldValue = ExcelProperty.getProperty(filterFieldName);
+                        if(filterFieldValue!=null && value.equalsIgnoreCase(filterFieldValue.trim())){   //Èç¹û¸Ã×Ö¶ÎµÄÖµ·ûºÏ¹ıÂËÌõ¼ş ÄÇÃ´¸ÃĞĞÊı¾İ¾ÍÌø¹ı
                             isSkip = true;
                             break;
                         }
@@ -123,11 +125,11 @@ public abstract class ExcelReader<E> {
 					}
 				}
 				
-				//å¦‚æœéœ€è¦æ·»åŠ åˆå§‹å¯†ç   é‚£ä¹ˆ,å‘åˆå§‹ æ•°æ®ä¸­æ·»åŠ é»˜è®¤å¯†ç ï¼ˆè¯ä»¶å·ç åå…­ä½ï¼‰
-				if(isSetPassword){
+				//Èç¹ûĞèÒªÌí¼Ó³õÊ¼ÃÜÂë  ÄÇÃ´,Ïò³õÊ¼ Êı¾İÖĞÌí¼ÓÄ¬ÈÏÃÜÂë£¨Ö¤¼şºÅÂëºóÁùÎ»£©
+				if(needSetPassword){
 					setPassword(obj, row);
 				}
-                if(!isSkip){    //åªæ·»åŠ 
+                if(!isSkip){    //Ö»Ìí¼Ó
                     e = (E)obj;
                     list.add(e);
                 }
@@ -138,7 +140,7 @@ public abstract class ExcelReader<E> {
 	}
 	
 	/**
-	 * æ ¹æ®æˆå‘˜å±æ€§è·å–Setteræ–¹æ³•
+	 * ¸ù¾İ³ÉÔ±ÊôĞÔ»ñÈ¡Setter·½·¨
 	 * @param fieldName
 	 * @return
 	 */
@@ -146,56 +148,56 @@ public abstract class ExcelReader<E> {
 		if(fieldName!=null){
 			fieldName = fieldName.substring(0, 1).toUpperCase()+fieldName.substring(1);
 		}
-		return "set"+fieldName;	//æ ¹æ®æˆå‘˜å˜é‡åè½¬æ¢æˆæ–¹æ³•å
+		return "set"+fieldName;	//¸ù¾İ³ÉÔ±±äÁ¿Ãû×ª»»³É·½·¨Ãû
 	}
 	
 	/**
-	 * æ ¹æ®Idç”Ÿæˆå¯†ç ,å¹¶æ³¨å…¥åˆ°å¯¹è±¡å½“ä¸­
-	 * å¯†ç ç”Ÿæˆç­–ç•¥ï¼š
-	 * å¦‚æœæœ‰è¯ä»¶å· å¹¶ä¸”è¯ä»¶å·ä¸º18ä½ é‚£ä¹ˆé»˜è®¤å¯†ç ä¸ºè¯ä»¶å·çš„å8ä½
-	 * æ²¡æœ‰çš„è¯ å­¦ç”Ÿä¸ºå­¦ç”Ÿå­¦å· æ•™å¸ˆä¸ºæ•™å¸ˆå­¦å·
-	 * å¦‚æœå­¦å·å’Œæ•™å¸ˆå·éƒ½æ²¡æœ‰ï¼Œé‚£ä¹ˆé»˜è®¤å¯†ç ä¸º 8ä¸ª8 88888888
+	 * ¸ù¾İIdÉú³ÉÃÜÂë,²¢×¢Èëµ½¶ÔÏóµ±ÖĞ
+	 * ÃÜÂëÉú³É²ßÂÔ£º
+	 * Èç¹ûÓĞÖ¤¼şºÅ ²¢ÇÒÖ¤¼şºÅÎª18Î» ÄÇÃ´Ä¬ÈÏÃÜÂëÎªÖ¤¼şºÅµÄºó8Î»
+	 * Ã»ÓĞµÄ»° Ñ§ÉúÎªÑ§ÉúÑ§ºÅ ½ÌÊ¦Îª½ÌÊ¦Ñ§ºÅ
+	 * Èç¹ûÑ§ºÅºÍ½ÌÊ¦ºÅ¶¼Ã»ÓĞ£¬ÄÇÃ´Ä¬ÈÏÃÜÂëÎª 8¸ö8 88888888
 	 */
 	private void setPassword(Object obj,Map<String,String> row){
 		
 		String defaultPwd;
-		//é¦–å…ˆè·å–è¯ä»¶å·ç 
-		String idNumber = row.get("è¯ä»¶å·ç ");
-		if(idNumber!=null && idNumber.length()==18){	//å¦‚æœæœ‰è¯ä»¶å·ç  å¹¶ä¸”è¯ä»¶å·ç ä¸º18ä½
-			defaultPwd = idNumber.substring(10);		//é‚£ä¹ˆå°±å–è¯ä»¶å·ç å8ä½ä½œä¸ºç™»é™†å¯†ç 
+		//Ê×ÏÈ»ñÈ¡Ö¤¼şºÅÂë
+		String idNumber = row.get("Ö¤¼şºÅÂë");
+		if(idNumber!=null && idNumber.length()==18){	//Èç¹ûÓĞÖ¤¼şºÅÂë ²¢ÇÒÖ¤¼şºÅÂëÎª18Î»
+			defaultPwd = idNumber.substring(10);		//ÄÇÃ´¾ÍÈ¡Ö¤¼şºÅÂëºó8Î»×÷ÎªµÇÂ½ÃÜÂë
 		}else{
 			if(clazz == Teacher.class){
-				defaultPwd = row.get("æ•™å¸ˆå·");		//æ•™å¸ˆå·ä½œä¸ºé»˜è®¤çš„å¯†ç 
+				defaultPwd = row.get("½ÌÊ¦ºÅ");		//½ÌÊ¦ºÅ×÷ÎªÄ¬ÈÏµÄÃÜÂë
 			}
-			else if(clazz == Student.class){		//å­¦ç”Ÿå­¦å·ä½œä¸ºé»˜è®¤çš„å¯†ç 
-				defaultPwd = row.get("å­¦å·");
+			else if(clazz == Student.class){		//Ñ§ÉúÑ§ºÅ×÷ÎªÄ¬ÈÏµÄÃÜÂë
+				defaultPwd = row.get("Ñ§ºÅ");
 			}else{
-				defaultPwd = "88888888";		//å¦‚æœæ²¡æœ‰æ•™å¸ˆå· å’Œ å­¦ç”Ÿå¥½ï¼Œé‚£ä¹ˆé»˜è®¤å¯†ç å°±æ˜¯88888888
+				defaultPwd = "88888888";		//Èç¹ûÃ»ÓĞ½ÌÊ¦ºÅ ºÍ Ñ§ÉúºÃ£¬ÄÇÃ´Ä¬ÈÏÃÜÂë¾ÍÊÇ88888888
 			}
 		}
 		
-		//è·å–SetPasswordæ–¹æ³•
+		//»ñÈ¡SetPassword·½·¨
 		Method m = null ;
 		try {
 			m = clazz.getDeclaredMethod("setPassword", String.class);
 		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+            logger.warn(e.getMessage());
 		} catch (SecurityException e) {
-			e.printStackTrace();
+            logger.warn(e.getMessage());
 		}
 
-		if(m!=null){	//æ³¨å…¥å¯†ç 
+		if(m!=null){	//×¢ÈëÃÜÂë
 			convertAndInvoke(m, obj, defaultPwd, String.class);
 		}
 		
 	}
 	
 	/**
-	 *  å°†excelä¸­Stringç±»å‹çš„æ•°æ®è½¬æ¢æˆbeanä¸­çš„æˆå‘˜å˜é‡ç±»å‹ï¼Œå¹¶æ³¨å…¥åˆ°å¯¹è±¡ä¸­å»
+	 *  ½«excelÖĞStringÀàĞÍµÄÊı¾İ×ª»»³ÉbeanÖĞµÄ³ÉÔ±±äÁ¿ÀàĞÍ£¬²¢×¢Èëµ½¶ÔÏóÖĞÈ¥
 	 */
 	protected void convertAndInvoke(Method method, Object obj, String value, Class<?> type){
 		if(method==null){
-			throw new IllegalArgumentException("ä¼ å…¥æ–¹æ³•ä¸èƒ½ä¸ºç©º");
+			throw new IllegalArgumentException("´«Èë·½·¨²»ÄÜÎª¿Õ");
 		}
 		try {
 			if(value==null){

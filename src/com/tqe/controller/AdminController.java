@@ -15,9 +15,9 @@ import com.tqe.service.AdminServiceImpl;
 
 
 /**
- * åå°çš„ç®¡ç†å‘˜è´¦å·ç®¡ç†ï¼Œå¯ä»¥æŸ¥çœ‹åˆ—è¡¨ï¼Œæ·»åŠ ç®¡ç†å‘˜ï¼Œåˆå§‹åŒ–å¯†ç ï¼Œåˆ é™¤ç®¡ç†å‘˜ï¼Œä¿®æ”¹ç®¡ç†å‘˜ä¿¡æ¯
+ * ºóÌ¨µÄ¹ÜÀíÔ±ÕËºÅ¹ÜÀí£¬¿ÉÒÔ²é¿´ÁĞ±í£¬Ìí¼Ó¹ÜÀíÔ±£¬³õÊ¼»¯ÃÜÂë£¬É¾³ı¹ÜÀíÔ±£¬ĞŞ¸Ä¹ÜÀíÔ±ĞÅÏ¢
  * 
- * @author äºå¹¿è·¯
+ * @author ÓÚ¹ãÂ·
  *
  */
 @Controller("adminControl")
@@ -25,35 +25,35 @@ import com.tqe.service.AdminServiceImpl;
 public class AdminController {
 	
 	@Resource(name="adminServiceImpl")
-	private AdminServiceImpl adminService;	//æ³¨å…¥adminæœåŠ¡	adminServerImpl
+	private AdminServiceImpl adminService;	//×¢Èëadmin·şÎñ	adminServerImpl
 	
 	/*
 	@Resource(name="privilegeServiceImpl")
 	private PrivilegeService privilegeService;
 	*/
 	/**
-	 * æ˜¾ç¤ºç®¡ç†å‘˜åˆ—è¡¨é¡µé¢
+	 * ÏÔÊ¾¹ÜÀíÔ±ÁĞ±íÒ³Ãæ
 	 * @return
 	 */
 	@RequestMapping("/admin")
 	public String admin(Model model){
-		List<Admin> adminList = adminService.findAll();	//æŸ¥è¯¢ç®¡ç†å‘˜åˆ—è¡¨
+		List<Admin> adminList = adminService.findAll();	//²éÑ¯¹ÜÀíÔ±ÁĞ±í
 		model.addAttribute("adminList", adminList);
-		return "admin/admin";				//ç›´æ¥è¿”å›  å‰ç¼€åŠ  å­—ç¬¦ä¸²+jspçš„é¡µé¢
+		return "admin/admin";				//Ö±½Ó·µ»Ø  Ç°×º¼Ó ×Ö·û´®+jspµÄÒ³Ãæ
 	}
 	
 	/**
-	 * å¢åŠ ç®¡ç†å‘˜é¡µé¢
+	 * Ôö¼Ó¹ÜÀíÔ±Ò³Ãæ
 	 * @return
 	 */
 	@RequestMapping("/admin/add")
 	public String addAdmin(Model model){
 		//model.addAttribute("privilegeList", privilegeService.findAll());		
-		return "admin/addAdmin";	//è½¬åˆ°æ·»åŠ é¡µé¢
+		return "admin/addAdmin";	//×ªµ½Ìí¼ÓÒ³Ãæ
 	}
 	
 	/**
-	 * ä¿å­˜ç®¡ç†å‘˜
+	 * ±£´æ¹ÜÀíÔ±
 	 * @return
 	 */
 	@RequestMapping("/admin/save")
@@ -67,14 +67,14 @@ public class AdminController {
 		admin.setPrivileges(set);
 		*/
 		adminService.save(admin);
-		return "redirect:/admin/admin";	//ä¿å­˜å®Œæˆå  è·³è½¬åˆ°ç®¡ç†å‘˜åˆ—è¡¨é¡µé¢
+		return "redirect:/admin/admin";	//±£´æÍê³Éºó  Ìø×ªµ½¹ÜÀíÔ±ÁĞ±íÒ³Ãæ
 	}
 	
 	
 	/**
-	 * åˆ é™¤ç®¡ç†å‘˜
-	 * @param id éœ€è¦åˆ é™¤çš„ç®¡ç†å‘˜id
-	 * @return	è¿”å›åˆ°ç®¡ç†å‘˜åˆ—è¡¨é¡µé¢
+	 * É¾³ı¹ÜÀíÔ±
+	 * @param id ĞèÒªÉ¾³ıµÄ¹ÜÀíÔ±id
+	 * @return	·µ»Øµ½¹ÜÀíÔ±ÁĞ±íÒ³Ãæ
 	 */
 	/*
 	@RequestMapping("admin/delete/{id}")
@@ -82,7 +82,7 @@ public class AdminController {
 		
 		adminService.delete(id);
 		
-		return "redirect:/admin/admin";	//è·³åˆ°ç®¡ç†å‘˜åˆ—è¡¨é¡µé¢
+		return "redirect:/admin/admin";	//Ìøµ½¹ÜÀíÔ±ÁĞ±íÒ³Ãæ
 	}
 	*/
 }

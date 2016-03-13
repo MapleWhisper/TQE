@@ -1,25 +1,25 @@
 package com.tqe.po;
 
 public class Course {
-	private String cid;		//è¯¾ç¨‹å·
-	private Integer cno;	//è¯¾åºå·
-	private String name;		//è¯¾ç¨‹å
-	private Integer stuNumber;	//é€‰è¯¾äººæ•°
-	private Integer peroid;		//å­¦æ—¶
-	private Integer credit;		//å­¦åˆ†
-	private String attr;	//è¯¾ç¨‹å±æ€§
-	private String  examMode;	//è€ƒè¯•æ–¹å¼	
-	private String nature;		//è¯¾ç¨‹æ€§è´¨
-	private String teacherId;	//æ•™å¸ˆId
-	private String department;	//å¼€è¯¾é™¢ç³»
-	private String campus;	//æ ¡åŒº
-	private String season;	//å­¦å¹´æ˜¥/ç§‹
-	private String combine;	//åˆç­
+	private String cid;		//¿Î³ÌºÅ
+	private Integer cno;	//¿ÎĞòºÅ
+	private String name;		//¿Î³ÌÃû
+	private Integer stuNumber;	//Ñ¡¿ÎÈËÊı
+	private Integer peroid;		//Ñ§Ê±
+	private Integer credit;		//Ñ§·Ö
+	private String attr;	//¿Î³ÌÊôĞÔ
+	private String  examMode;	//¿¼ÊÔ·½Ê½	
+	private String nature;		//¿Î³ÌĞÔÖÊ
+	private String teacherId;	//½ÌÊ¦Id
+	private String department;	//¿ª¿ÎÔºÏµ
+	private String campus;	//Ğ£Çø
+	private String season;	//Ñ§Äê´º/Çï
+	private String combine;	//ºÏ°à
 	
 	private Integer departmentId;
 	
-	private Teacher teacher;	//ä¸»è®²æ•™å¸ˆ
-	private boolean isEvaled ;	//æ˜¯å¦å·²ç»è¯„ä»·è¿‡
+	private Teacher teacher;	//Ö÷½²½ÌÊ¦
+	private boolean isEvaled ;	//ÊÇ·ñÒÑ¾­ÆÀ¼Û¹ı
 	
 
 	
