@@ -51,13 +51,11 @@ public class CourseController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value="/course",method=RequestMethod.POST)
-	public String course1(Model model,String did,String cname ,String  cid,String tname,PageVO pageVO){
-		HashMap<String,String> condition = new HashMap<String,String>();
-		condition.put("did", did);
-		condition.put("cname", cname);
-		condition.put("cid", cid);
-		condition.put("tname", tname);
-		model.addAttribute("condition", condition);
+	public String course1(
+            Model model,
+            PageVO pageVO
+    ){
+		model.addAttribute("condition", pageVO.getFilters());
 		model.addAttribute("departmentList", departmentService.findAvailableDepartmentList(DepartmentType.COURSE));
 		List<Course> list = courseService.findByCondition(pageVO);
 		model.addAttribute("courseList",list);

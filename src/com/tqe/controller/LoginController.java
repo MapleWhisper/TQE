@@ -1,6 +1,6 @@
 package com.tqe.controller;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,6 +8,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.tqe.base.enums.UserType;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -33,14 +35,6 @@ public class LoginController extends BaseController{
 
 	Log logger = LogFactory.getLog(LoginController.class);
 
-	private static List<String> users = new ArrayList<String>();
-	static{
-		users.add("student");
-		users.add("teacher");
-		users.add("leader");
-		users.add("admin");
-	}
-	
 	/**
 	 * 用户登陆
 	 * @return
@@ -48,86 +42,101 @@ public class LoginController extends BaseController{
 	@RequestMapping("/login")
 	public String login(@ModelAttribute User user,
 						HttpSession session,
-						@RequestParam String valifCode,
+						@RequestParam(required = false) String verificationCode,
 						HttpServletResponse response,
 						Model model){
-		//如果输入的验证码不正确
-		if( !valifCode.equals(session.getAttribute("valifCode") ))  {
-			model.addAttribute("error","验证码错误");
-			return "index";
+
+        session.setAttribute("lastLoginTime",new Date().getTime());
+
+        Boolean skipVerify = (Boolean) session.getAttribute("skipVerify");
+        if(skipVerify==null){   //如果session已经失效 说明不需要验证码了
+            skipVerify = false;
+        }
+
+
+        //如果需要检查验证码
+		if(!skipVerify)  {
+            //如果输入的验证码不正确
+            if(StringUtils.isBlank(verificationCode) || !verificationCode.equals(session.getAttribute("verificationCode") )){
+                model.addAttribute("error","验证码错误");
+                session.setAttribute("skipVerify",false);   //需要验证码
+                return "index";
+            }
 		}
 
 		String type = user.getType();
+        UserType userType = UserType.toUserType(type);
+
+        boolean loginSuccess = false;
 
 		//记住用户最后的登录方式
 		Cookie cookie = new Cookie("loginType",type);
-		cookie.setMaxAge(365*24*60*60);
+		cookie.setMaxAge(365 * 24 * 60 * 60);
 		response.addCookie(cookie);
+        String viewName = "index";
+        switch (userType){
+            case ADMIN:
+                Admin a =adminService.login(user);
+                if(a!=null){
+                    session.setAttribute("admin", a);
+                    viewName="redirect:/admin/admin";
+                    loginSuccess = true;
+                }
+                break;
+            case TEACHER:
+                Teacher t = teacherService.login(user);
+                if(t!=null){
+                    session.setAttribute("teacher", t);
+                    viewName="redirect:/admin/teaEval";
+                    loginSuccess = true;
+                }
+                break;
+            case STUDENT:
+                Student stu = studentService.login(user);
+                if(stu!=null){
+                    session.setAttribute("student", stu);
+                    viewName= "redirect:/admin/stuEval";
+                    loginSuccess = true;
+                }
+                break;
+            case LEADER:
+                Leader leader = leaderService.login(user);
+                if(leader!=null){
+                    session.setAttribute("leader", leader);
+                    List<Privilege> pList = privilegeService.findLeaderAll();
+                    addPrivilege(session, pList);
+                    viewName =  "redirect:/admin/leaEval";
+                    loginSuccess = true;
+                }
+                break;
+            default:
+                logger.error("未知的登录角色！ " + type);
+                model.addAttribute("error","未知的登录用户的角色！");
+                return "index";
+        }
 
-		if(type.equals("admin")) {
-			Admin a =adminService.login(user);
-			if(a!=null){
-				System.out.println("管理员登陆");
-				session.setAttribute("admin", a);
-				removeOtherUser(session,"admin");
-				List<Privilege> pList = privilegeService.findAdminAll();
-				addPrivilege(session, pList);
-				return "redirect:/admin/admin";
-			}
-		}else if(type.equals("teacher")){
-			Teacher t = teacherService.login(user);
-			if(t!=null){
-				System.out.println("教师登陆");
-				session.setAttribute("teacher", t);
-				removeOtherUser(session,"teacher");
-				List<Privilege> pList = privilegeService.findTeacherAll();
-				addPrivilege(session, pList);
-				return "redirect:/admin/teaEval";
-			}
-		}else if(type.equals("student")){
-			Student stu = studentService.login(user);
-			if(stu!=null){
-				System.out.println("学生登陆");
-				session.setAttribute("student", stu);
-				removeOtherUser(session,"student");
-				List<Privilege> pList = privilegeService.findStudentAll();
-				addPrivilege(session, pList);
-				return "redirect:/admin/stuEval";
-			}
-			//return "redirect:/admin/admin";
-		}else if(type.equals("leader")){										//领导登陆
-			Leader leader = leaderService.login(user);
-			if(leader!=null){
-				System.out.println("领导登陆");
-				session.setAttribute("leader", leader);
-				removeOtherUser(session,"leader"); 
-				List<Privilege> pList = privilegeService.findLeaderAll();
-				addPrivilege(session, pList);
-				return "redirect:/admin/leaEval";
-			}
-		}else{
-			logger.error("未知的登录角色！ " + type);
-			model.addAttribute("error","为止的登录用户的角色！");
-			return "index";
+        if(loginSuccess) {
+            List<Privilege> pList = privilegeService.findAllByUserType(userType);   //权限信息放入session
+            addPrivilege(session, pList);
+            removeOtherUser(session, userType);
+            return viewName;
+        }else {
+            model.addAttribute("error","用户名或密码错误");
+            return "index";
+        }
 
-		}
-		model.addAttribute("error","用户名或密码错误");
-		return "index";
-		
 	}
 
 	
 	
 	@RequestMapping("/logout")
-	public String logout(HttpSession session){
-		removeOtherUser(session, "");
+    public String logout(HttpSession session){
+		removeOtherUser(session, null);
 		return "redirect:/index";
 	}
 
 	/**
 	 * 添加权限信息到session中 用于前台进行权限的显示的判断
-	 * @param session
-	 * @param pList
 	 */
 	private void addPrivilege(HttpSession session,List<Privilege> pList){
 		session.setAttribute("pList", pList);
@@ -140,15 +149,19 @@ public class LoginController extends BaseController{
 	
 	/**
 	 * 用户登陆时，移除其他无关的角色，保证系统同一时刻只有一个角色能登陆
-	 * @param session
-	 * @param userTyle
 	 */
-	private void removeOtherUser(HttpSession session , String userTyle) {		
-		for(String s : users){
-			if(!s.equals(userTyle)){
-				session.removeAttribute(s);
-			}
-		}
-		
+	private void removeOtherUser(HttpSession session , UserType userType) {
+        if(userType==null){ //移除当先回话中的所有用户
+            for(UserType uType : UserType.values() ){
+                    session.removeAttribute(uType.getName());
+            }
+            return ;
+        }
+        //如果指定了角色，那么移除其他角色的session信息
+        for(UserType uType : UserType.values() ){
+            if(!uType.equals(userType)){
+                session.removeAttribute(uType.getName());
+            }
+        }
 	}
 }

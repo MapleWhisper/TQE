@@ -74,5 +74,6 @@ public class BaseController {
 		log.error(msg);
 		return this.sendError(model,msg);
 	}
-	
+
+
 }

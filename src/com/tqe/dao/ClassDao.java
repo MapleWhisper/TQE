@@ -18,6 +18,6 @@ public interface ClassDao extends BaseDao<Clazz>{
 	@Select(value="select * from class where departmentid = #{did} and majorid =#{mid} order by name")
 	List<Clazz> findAllByDidMid(@Param("did")Integer did, @Param("mid")Integer mid);
 
-	@Insert(value = "insert into class values(null,#{name},#{majorId},#{departmentId})")
+	@Insert(value = "insert into class values(null,#{grade},#{name},#{majorId},#{departmentId})")
 	void save(Clazz clazz);
 }

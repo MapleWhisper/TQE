@@ -55,17 +55,19 @@
 												  title="初始密码默认为身份证后8位" ></span>
 									</div>
 								</div>
-								<div class="form-group" align="center">
-									<label for="valifCode" class="col-sm-3 control-label">验证码</label>
-									<div class="col-sm-5">
-										<input type="text" class="form-control" name="valifCode"
-											id="valifCode" required="required">
-									</div>
-									<div class="col-sm-3">
-										<img alt="验证码" class="control-label"
-											src="${pageContext.request.contextPath}/valifImage">
-									</div>
-								</div>
+                                <c:if test="${ not sessionScope.skipVerify }">
+                                    <div class="form-group" align="center">
+                                        <label for="verificationCode" class="col-sm-3 control-label">验证码</label>
+                                        <div class="col-sm-5">
+                                            <input type="text" class="form-control" name="verificationCode"
+                                                id="verificationCode" required="required">
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <img alt="验证码" class="control-label"
+                                                src="${pageContext.request.contextPath}/valifImage">
+                                        </div>
+                                    </div>
+                                </c:if>
 
 								<div class="form-group">
 									<div class="col-sm-4 col-sm-offset-2">

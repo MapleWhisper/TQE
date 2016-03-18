@@ -3,9 +3,10 @@ package com.tqe.po;
 public class Clazz {
 	
 	private Integer id;
-	private String name;
-	private Integer majorId;
-	private Integer departmentId;
+    private String grade;   //年级
+	private String name;    //班级名
+	private Integer majorId;        //专业id
+	private Integer departmentId;      //部门id
 
 	private Department department;
 	private Major major;
@@ -53,4 +54,12 @@ public class Clazz {
 	public void setDepartmentId(Integer departmentId) {
 		this.departmentId = departmentId;
 	}
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
 }

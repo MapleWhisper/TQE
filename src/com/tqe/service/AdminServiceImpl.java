@@ -18,6 +18,8 @@ public class AdminServiceImpl extends BaseService<Admin>{
 	private AdminDao adminDao;
 	@Override
 	public Admin getById(Integer id) {
+        Admin admin = adminDao.getById(id);
+        admin.setPassword("******");
 		return adminDao.getById(id);
 	}
 	
@@ -38,4 +40,19 @@ public class AdminServiceImpl extends BaseService<Admin>{
 		adminDao.delete(id);
 		
 	}
+
+    public void update(Admin admin) {
+        if(admin==null || admin.getId()==null){
+            throw new IllegalArgumentException("id ²»ÄÜÎªnull");
+        }
+
+        adminDao.update(admin);
+
+        if(!admin.getPassword().contains("***")){
+            User user = new User();
+            user.setId(admin.getId()+"");
+            user.setMd5Password(admin.getPassword());
+            adminDao.updatePwd(user);
+        }
+    }
 }

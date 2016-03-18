@@ -31,5 +31,7 @@ public interface AdminDao extends BaseDao<Admin>{
 	
 	@Delete("delete from admin where id = #{id}")
 	public void delete(int id);
-	
+
+    @Update("update admin set name = #{name} , position = #{position} where id = #{id}")
+    void update(Admin admin);
 }

@@ -1,6 +1,8 @@
 package com.tqe.base.handler;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,6 +18,8 @@ import java.util.Map;
 @Component
 public class MyExceptionHandler implements HandlerExceptionResolver {
 
+    Log logger = LogFactory.getLog(MyExceptionHandler.class);
+
     private  static  Map<String,String> messageConvertMap = new HashMap<String,String>();
     static {
         messageConvertMap.put("OLE2","对不起，您上传的EXCEL格式不正确，请转换为正确格式后再试！");
@@ -26,6 +30,7 @@ public class MyExceptionHandler implements HandlerExceptionResolver {
 
         ModelAndView modelAndView = new ModelAndView("error");
         modelAndView.addObject("msg", messageConvert(ex.getMessage()));
+        logger.error("出错了！",ex);
         return modelAndView;
     }
 

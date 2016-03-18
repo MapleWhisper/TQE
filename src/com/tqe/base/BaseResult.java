@@ -9,6 +9,7 @@ public class BaseResult implements Serializable{
 
     private boolean success ;
     private String message;
+    private Object item;
 
     /**
      * 返回正确的结果相应
@@ -16,6 +17,13 @@ public class BaseResult implements Serializable{
      */
     public static BaseResult createSuccess(String message){
         return new BaseResult(true,message);
+    }
+
+    public static BaseResult createSuccess(Object item){
+        BaseResult result = new BaseResult(true,"ok");
+        result.setItem(item);
+        return result;
+
     }
 
     /**
@@ -48,5 +56,13 @@ public class BaseResult implements Serializable{
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Object getItem() {
+        return item;
+    }
+
+    public void setItem(Object item) {
+        this.item = item;
     }
 }

@@ -7,9 +7,10 @@
 .no1 {
 	margin-top: 30px;
 }
+
 </style>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.css"></link>
+	href="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.css"/>
 <title>权限管理</title>
 </head>
 
@@ -38,32 +39,41 @@
 								</tr>
 							</thead>
 							<tbody>
-								
-								<c:forEach items="${privilegeList}" var="p">
-									<tr>
 
-										<td>${p.url}</td>
-										<td>${p.name}</td>
-										<td><input class="${p.id} form-control input-sm stu" disabled="disabled" value="${p.stu}"></td>
-										<td><input class="${p.id} form-control input-sm tea" disabled="disabled" value="${p.tea}"></td>
-										<td><input class="${p.id} form-control input-sm adm" disabled="disabled" value="${p.adm}"></td>
-										<td><input class="${p.id} form-control input-sm lea" disabled="disabled" value="${p.lea}"></td>
-                                        <c:if test="${p.editable == 0}">
+								<c:forEach items="${privilegeList}" var="p">
+                                    <c:if test="${p.editable==0 || sessionScope.admin.name!='admin'}">
+                                        <tr>
+
+                                            <td>${p.url}</td>
+                                            <td>${p.name}</td>
+                                            <td >${p.stu}</td>
+                                            <td >${p.tea}</td>
+                                            <td >${p.adm}</td>
+                                            <td >${p.lea}</td>
                                             <td>不可修改</td>
-                                        </c:if>
-                                        <c:if test="${p.editable == 1}">
+                                        </tr>
+                                    </c:if>
+                                    <c:if test="${p.editable == 1 && sessionScope.admin.name=='admin'}">
+                                        <tr>
+                                            <td>${p.url}</td>
+                                            <td>${p.name}</td>
+                                            <td ><input class="${p.id} form-control input-sm stu" disabled="disabled" value="${p.stu}"></td>
+                                            <td ><input class="${p.id} form-control input-sm tea" disabled="disabled" value="${p.tea}"></td>
+                                            <td ><input class="${p.id} form-control input-sm adm" disabled="disabled" value="${p.adm}"></td>
+                                            <td ><input class="${p.id} form-control input-sm lea" disabled="disabled" value="${p.lea}"></td>
                                             <td>
                                                 <button value="${p.id}"  class="btn btn-info edit">修改</button>
                                                 <button value="${p.id}"  style="display: none" class="btn btn-info cancel" >取消修改</button>
                                                 <button value="${p.id}"  style="display: none" class="btn btn-warning update" >保存修改</button>
                                             </td>
-                                        </c:if>
-									</tr>
+                                        </tr>
+                                    </c:if>
+
 								</c:forEach>
-								
+
 							</tbody>
 						</table>
-						<!-- 
+						<!--
 						<div class="row">
 							<div class="col-xs-6 col-xs-offset-5">
 								<div class="no1">
@@ -94,7 +104,7 @@
 		src="${pageContext.request.contextPath}/js/datatables/js/jquery.dataTables.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.nodefault.js"></script>
-		
+
 	<script type="text/javascript">
 		$(function(){
 			$(".edit").click(function(){
@@ -126,6 +136,8 @@
                 $(this).siblings().toggle();
                 $("input."+id).attr("disabled","disabled");
             });
+
+
 		});
 		$(function(){
 			$('table').has("thead").dataTable({

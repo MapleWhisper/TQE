@@ -84,7 +84,7 @@ public class DataImportController extends BaseController {
     @RequestMapping("/dataImport/student")
     public String dataImportStudent(
             HttpServletRequest request,
-            @RequestParam("teacherFile") CommonsMultipartFile studentFile,
+            @RequestParam("studentFile") CommonsMultipartFile studentFile,
             Model model
     ) {
         try {

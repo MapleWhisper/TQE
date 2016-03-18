@@ -23,9 +23,9 @@ public interface StudentDao extends BaseDao<Student>{
 	@Select("select sid,name from student where sid = #{sid}")
 	public Student getNameById(String sid);
 	
-	@Insert("INSERT INTO `tqe`.`student` (`sid`, `name`, `password`,`sex`, `brithday`, `idNumber`, `nation`, `politicalStatus`, `language`, `department`, `major`, `clazz`, `field`, `educationBackground`, `grade`, `hasRoll`, `atSchool`, `style`,`campus`,`departmentid`,`majorid`,`classid`) "
-			+ "VALUES (#{sid}, #{name},#{password}, #{sex}, #{brithday}, #{idNumber}, #{nation}, #{politicalStatus}, #{language}, #{department}, #{major}, #{clazz}, #{field}, #{educationBackground}, #{grade}, #{hasRoll}, #{atSchool}, #{style},#{campus},#{departmentId},#{majorId},#{classId});")
-	public void save(Student	Student);
+	@Insert("INSERT INTO `tqe`.`student` (`sid`, `name`, `password`,`sex`, `birthday`, `idNumber`, `nation`, `politicalStatus`, `language`, `department`, `major`, `clazz`, `field`, `educationBackground`, `grade`, `hasRoll`, `atSchool`, `style`,`campus`,`departmentid`,`majorid`,`classid`) "
+			+ "VALUES (#{sid}, #{name},#{password}, #{sex}, #{birthday}, #{idNumber}, #{nation}, #{politicalStatus}, #{language}, #{department}, #{major}, #{clazz}, #{field}, #{educationBackground}, #{grade}, #{hasRoll}, #{atSchool}, #{style},#{campus},#{departmentId},#{majorId},#{classId});")
+	public void save(Student student);
 	
 	@Select("select * from student")
 	public List<Student> findAll();

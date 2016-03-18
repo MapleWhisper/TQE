@@ -1,4 +1,6 @@
 package com.tqe.controller;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.tqe.base.enums.DepartmentType;
@@ -15,6 +17,8 @@ import com.tqe.po.Student;
 import com.tqe.po.TeaStuResultTable;
 import com.tqe.utils.SystemUtils;
 
+import javax.servlet.http.HttpSession;
+
 @Controller()
 @RequestMapping("/admin")
 public class StudentController extends BaseController{
@@ -25,7 +29,7 @@ public class StudentController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value={"/student"},method={RequestMethod.GET})
-	public String student(Model model){
+	public String student(Model model,HttpSession session){
 
 		model.addAttribute("departmentList", departmentService.findAvailableDepartmentList(DepartmentType.STUDENT));
 
@@ -42,7 +46,6 @@ public class StudentController extends BaseController{
 			Model model,
 			PageVO pageVO){
 		model.addAttribute("departmentList", departmentService.findAvailableDepartmentList(DepartmentType.STUDENT));
-
 		model.addAttribute("condition", pageVO.getFilters());
 		model.addAttribute("studentList", studentService.findByPageVO(pageVO));
 		return "student/student";

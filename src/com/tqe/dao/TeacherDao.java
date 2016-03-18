@@ -19,8 +19,8 @@ public interface TeacherDao extends BaseDao<Teacher>{
 	@Select("select * from teacher where id = #{id}")
 	public Teacher getById(@Param("id")String id);
 	
-	@Insert("INSERT INTO `tqe`.`teacher` (`id`, `name`,`password`, `sex`, `brithday`, `phone`, `email`, `addr`, `postId`, `nation`, `idType`, `idNumber`, `politicalStatus`, `department`, `title`, `folk`, `workDate`,`departmentid`) "
-			+ "	VALUES (#{id}, #{name},#{password}, #{sex}, #{brithday}, #{phone}, #{email}, #{addr}, #{postId}, #{nation}, #{idType}, #{idNumber}, #{politicalStatus}, #{department}, #{title}, #{folk}, #{workDate}, #{departmentId})")
+	@Insert("INSERT INTO `tqe`.`teacher` (`id`, `name`,`password`, `sex`, `birthday`, `phone`, `email`, `addr`, `postId`, `nation`, `idType`, `idNumber`, `politicalStatus`, `department`, `title`, `folk`, `workDate`,`departmentid`) "
+			+ "	VALUES (#{id}, #{name},#{password}, #{sex}, #{birthday}, #{phone}, #{email}, #{addr}, #{postId}, #{nation}, #{idType}, #{idNumber}, #{politicalStatus}, #{department}, #{title}, #{folk}, #{workDate}, #{departmentId})")
 	public void save(Teacher teacher);
 	
 	@Select("select * from teacher")

@@ -4,7 +4,9 @@ package com.tqe.po;
 import com.tqe.utils.MD5Utils;
 import org.apache.commons.lang3.StringUtils;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable{
 
 	private String id;
 	private String username;
@@ -26,8 +28,10 @@ public class User {
 		if(StringUtils.isNotBlank(password) && password.length()!=32){
 			this.password = MD5Utils.string2MD5(password);
 		}
-		
 	}
+    public void setMd5Password(String md5Password){
+        this.password = md5Password;
+    }
 	public String getType() {
 		return type;
 	}

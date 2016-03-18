@@ -77,18 +77,29 @@ public class LoginFilter implements  Filter{
 	 * @return
 	 */
 	public boolean checkPrivilege(String path,List<Privilege> pList){
+
+        if(path.startsWith("/admin")){
+            path = path.substring(6);
+        }
+
+        boolean pathIsFirstLevel = path.indexOf("/")==path.lastIndexOf("/");
+
 		for(Privilege p : pList){
-			if(path.endsWith(p.getUrl())){		//如果是例如（/privilege）的页面，直接默认为继续
-				return true;
-			}
-		}
-		//如果是二级权限
-		for(Privilege p : pList){
-			if(p.getUrl().lastIndexOf("/")!=0){	//是二级权限
-				if(path.indexOf(p.getUrl())!=-1){	//如果和二级或多级权限匹配，那么继续
-					return true;
-				}
-			}
+            String url = p.getUrl();
+            boolean urlIsFirstLevel = url.indexOf("/")==url.lastIndexOf("/");
+
+            //如果是一级权限 /privilege
+			if( pathIsFirstLevel && urlIsFirstLevel ){
+                if(path.contains(url)){
+                    return true;
+                }
+            }
+            //二级权限和 二级权限对比
+            if( !pathIsFirstLevel && !urlIsFirstLevel){
+                if(path.contains(url)){
+                    return true;
+                }
+            }
 		}
 		return false;
 

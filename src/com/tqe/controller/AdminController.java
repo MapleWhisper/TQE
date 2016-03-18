@@ -3,86 +3,112 @@ package com.tqe.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
+import com.tqe.base.BaseResult;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.tqe.po.Admin;
 import com.tqe.service.AdminServiceImpl;
 
 
-
 /**
- * 后台的管理员账号管理，可以查看列表，添加管理员，初始化密码，删除管理员，修改管理员信息
- * 
- * @author 于广路
- *
+ * 管理员管理
  */
 @Controller("adminControl")
 @RequestMapping("/admin")
-public class AdminController {
+public class AdminController extends BaseController{
 	
 	@Resource(name="adminServiceImpl")
-	private AdminServiceImpl adminService;	//注入admin服务	adminServerImpl
+	private AdminServiceImpl adminService;	//???admin????	adminServerImpl
 	
 	/*
 	@Resource(name="privilegeServiceImpl")
 	private PrivilegeService privilegeService;
 	*/
 	/**
-	 * 显示管理员列表页面
-	 * @return
+     * 显示管理员管理页面
 	 */
 	@RequestMapping("/admin")
 	public String admin(Model model){
-		List<Admin> adminList = adminService.findAll();	//查询管理员列表
+		List<Admin> adminList = adminService.findAll();
 		model.addAttribute("adminList", adminList);
-		return "admin/admin";				//直接返回  前缀加 字符串+jsp的页面
+		return "admin/admin";
 	}
 	
-	/**
-	 * 增加管理员页面
-	 * @return
-	 */
-	@RequestMapping("/admin/add")
-	public String addAdmin(Model model){
-		//model.addAttribute("privilegeList", privilegeService.findAll());		
-		return "admin/addAdmin";	//转到添加页面
-	}
-	
+
+    @RequestMapping("/admin/getInfo")
+    public @ResponseBody BaseResult getAdminById(
+            @RequestParam Integer id
+    ){
+        if(id ==null || id< 0 ){
+            return BaseResult.createFailure("对不起，该用户不存在 id:"+id);
+        }
+        Admin admin = adminService.getById(id);
+        if(admin==null || admin.getId()==null){
+            return BaseResult.createFailure("对不起，该用户不存在 id:"+id);
+        }
+        return BaseResult.createSuccess(admin);
+    }
+
 	/**
 	 * 保存管理员
-	 * @return
 	 */
 	@RequestMapping("/admin/save")
-	public String save(@ModelAttribute Admin admin){
-		/*
-		Integer[] a = admin.getPrivilegeIds();
-		HashSet<Privilege> set = new HashSet<>();
-		for(int i:a){
-			set.add(privilegeService.getById(i));
-		}
-		admin.setPrivileges(set);
-		*/
+	public String save(
+            @ModelAttribute Admin admin,
+            Model model
+    ){
+		if(StringUtils.isBlank(admin.getName()) || StringUtils.isBlank(admin.getPosition())
+                || StringUtils.isBlank(admin.getUsername()) || StringUtils.isBlank(admin.getPassword())){
+           return  sendError(model, "管理员的姓名 职位和用户名 和 密码不能为空");
+        }
 		adminService.save(admin);
-		return "redirect:/admin/admin";	//保存完成后  跳转到管理员列表页面
+		return "redirect:/admin/admin";
 	}
-	
+
+    /**
+     * 更新管理员
+     */
+    @RequestMapping("/admin/update")
+    public String update(
+            @ModelAttribute Admin admin,
+            Model model,
+            HttpSession session
+    ){
+
+        if(admin == null || admin.getId()==null){
+            return sendError(model,"管理员Id不能为空啊");
+        }
+        Admin curAdmin = (Admin) session.getAttribute("admin");
+        if(!curAdmin.getName().equals("admin")){   //如果不是超级管理员 那么普通管理员只能修改自己账号信息
+            if(!curAdmin.getId().equals(admin.getId())){
+                return sendError(model,"您只能修改自己的账号信息!");
+            }
+        }
+
+        Admin a = adminService.getById(admin.getId());
+        a.setName(admin.getName());
+        a.setPosition(admin.getPosition());
+        if(!admin.getPassword().contains("***")){
+            a.setPassword(admin.getPassword());
+        }
+        adminService.update(a);
+        return "redirect:/admin/admin";
+
+    }
 	
 	/**
-	 * 删除管理员
-	 * @param id 需要删除的管理员id
-	 * @return	返回到管理员列表页面
-	 */
-	/*
+	 *删除管理员
+     * */
 	@RequestMapping("admin/delete/{id}")
 	public String delete(@PathVariable int id){
 		
-		adminService.delete(id);
+		//adminService.delete(id);
 		
-		return "redirect:/admin/admin";	//跳到管理员列表页面
+		return "redirect:/admin/admin";
 	}
-	*/
 }

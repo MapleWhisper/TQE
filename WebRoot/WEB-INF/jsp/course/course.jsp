@@ -9,7 +9,7 @@
 }
 </style>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.css"></link>
+	href="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.css"/>
 <title>课程列表</title>
 </head>
 
@@ -29,7 +29,7 @@
 						<blockquote>
 							<form class="form-inline" method="post" action="${pageContext.request.contextPath}/admin/course">
 								<div class="form-group">
-									<label >学院:</label>
+									<label for="department" >学院:</label>
 									<select  class="form-control" id="department" name="did" >
 										<option value="">不限</option>
 										<c:forEach items="${ departmentList}" var="dep" >
@@ -43,16 +43,26 @@
 									</select>
 									
 								</div>
+                                <div class="form-group">
+                                    <input type="hidden" id="condition-season" value="${condition.season}">
+                                    <label for="season" >学期:</label>
+                                    <select name="season" class="form-control" id="season" >
+                                        <c:forEach begin="2015" end="2050" step="1" var="s">
+                                            <option  value="${s}春">${s}春</option>
+                                            <option  value="${s}秋">${s}秋</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
 								<div class="form-group">
-									<label  >课程名:</label> <input type="text"
+									<label for="cname" >课程名:</label> <input type="text"
 										class="form-control" id="cname" name="cname">
 								</div>
 								<div class="form-group">
-									<label  >课程号:</label> <input type="text"
+									<label for="cid" >课程号:</label> <input type="text"
 										class="form-control" id="cid" name="cid">
 								</div>
 								<div class="form-group">
-									<label  >教师名:</label> <input type="text"
+									<label for="tname" >教师名:</label> <input type="text"
 										class="form-control" id="tname" name="tname">
 								</div>
 
@@ -74,7 +84,8 @@
 									<td>学期</td>
 									<td>学生数</td>
 									<td>学分</td>
-									<!-- 
+									<td width="10%">合班</td>
+									<!--
 									<td>操作</td>
 									 -->
 									<td>操作</td>
@@ -92,7 +103,8 @@
 										<td>${c.season }</td>
 										<td>${c.stuNumber }</td>
 										<td>${c.credit }</td>
-										<!-- 
+										<td>${c.combine }</td>
+										<!--
 										<td><a href="admin/edit/${admin.id }"
 											class="btn btn-info"><span
 												class=" glyphicon glyphicon-edit"></span>&nbsp;&nbsp;修改</a></td>
@@ -116,10 +128,7 @@
 
 						</div>
 						 -->
-
-
 					</div>
-
 				</div>
 			</div>
 
@@ -131,6 +140,11 @@
 		src="${pageContext.request.contextPath}/js/datatables/js/jquery.dataTables.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            seasonSelectorRemember();
+        });
+    </script>
 </body>
 </html>
 

@@ -53,12 +53,14 @@ public class Student implements Serializable{
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
+
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
 	}
 	public Date getBirthday(){
 		return this.birthday;
 	}
+
 	public String getIdNumber() {
 		return idNumber;
 	}

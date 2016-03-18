@@ -1,90 +1,73 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
+<div class="container-fluid">
+    <div class="row">
+        <form action="${pageContext.request.contextPath }/admin/admin/save" class="form-horizontal" role="form"
+              id="add-admin-form" method="post">
+            <div class="form-group">
 
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+                <label for="username" class="col-xs-3 control-label">管理员账号</label>
 
-<html>
-<head>
-<%@ include file="../header.jspf"%>
-<title>添加管理员</title>
-</head>
+                <div class="col-xs-8">
+                    <input type="text" class="form-control inputxt" name="username" id="username" required>
+                </div>
+            </div>
 
-<body>
-	<div class="container-fluid">
-		<%@ include file="../head.jsp" %>
-		<div class="row " style="margin-top: 70px">
-			<div class="col-sm-2">
-				<%@ include file="../left.jsp"%>
-			</div>
-			<div class="col-sm-10 ">
-				<div class="panel panel-primary">
-					<div class="panel-heading">管理员信息填写</div>
+            <div class="form-group">
+                <label for="password" class="col-xs-3 control-label">输入密码</label>
 
-					<div class="panel-body">
-					<div class="row">
-						<div class="col-xs-8 col-xs-offset-2">
-							<form action="${pageContext.request.contextPath }/admin/admin/save" class="form-horizontal" role="form" id="form" method="post">
-								<div class="form-group">
-									
-									<label for="inputEmail3" class="col-xs-3 control-label">管理员账号</label>
-									<div class="col-xs-9">
-										<input type="text" class="form-control inputxt" name="username" id="username" >
-									</div>
-								</div>
-								
-								<div class="form-group">
-									<label for="inputEmail3" class="col-xs-3 control-label">输入密码</label>
-									<div class="col-xs-9">
-										<input type="text" class="form-control inputxt" name="password" id="username">
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="inputEmail3" class="col-xs-3 control-label">确认输入密码</label>
-									<div class="col-xs-9">
-										<input type="text" class="form-control inputxt" id="username">
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="inputEmail3" class="col-xs-3 control-label">姓名</label>
-									<div class="col-xs-9">
-										<input type="text" class="form-control inputxt" name="name" id="username"	>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="inputEmail3" class="col-xs-3 control-label">职位</label>
-									<div class="col-xs-9">
-										<input type="text" class="form-control inputxt" name="position" id="username"	>
-									</div>
-								</div>
-								<div class="form-group" data-toggle="tooltip" data-placement="top" title="可多选" onmouseover="$(this).tooltip('show')">
-									<label for="inputEmail3" class="col-xs-3 control-label">权限</label>
-									<div class="col-xs-9">
-										<c:forEach items="${privilegeList}" var="p">
-											<label class="checkbox-inline">
-											  <input type="checkbox"  name="privilegeIds" value="${p.id}"/> ${p.name}
-											</label>
-										</c:forEach>
-									</div>
-								</div>
-								<div>
-									
-									<div class="form-group">    
-										 <div class="col-xs-6 col-xs-offset-4">
-											<button type="submit" class="btn btn-primary  btn-lg ">提交管理员</button>																			 
-										 </div>
-									</div>
-								</div>
-						</form>
-						</div>
-					
-					</div>
+                <div class="col-xs-8">
+                    <input type="text" class="form-control inputxt" name="password" id="password" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="rePassword" class="col-xs-3 control-label">确认输入密码</label>
+
+                <div class="col-xs-8">
+                    <input type="text" class="form-control inputxt" id="rePassword" equalTo="#password" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-xs-3 control-label">姓名</label>
+
+                <div class="col-xs-8">
+                    <input type="text" class="form-control inputxt" name="name" id="name" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="position" class="col-xs-3 control-label">职位</label>
+
+                <div class="col-xs-8">
+                    <input type="text" class="form-control inputxt" name="position" id="position" required>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-xs-4 col-xs-offset-3">
+                    <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">关闭</button>
+                </div>
+
+                <div class="col-xs-4 ">
+                    <button type="submit" class="btn btn-primary  btn-lg ">添加管理员</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function() {
+        $("#add-admin-form").validate({
+            rules:{
+                password:"required",
+                rePassword:{
+                    required:true,
+                    equalTo:"#password"
+                }
+            }
+        });
+    });
+</script>
 						
-					</div>
-				</div>
-			</div>
-		</div>
-
-	</div>
-<!-- 	container -->
-	<%@ include file="../buttom.jsp" %>
-</body>
-</html>
 

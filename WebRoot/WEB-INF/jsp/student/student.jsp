@@ -5,7 +5,7 @@
 <%@ include file="../header.jspf"%>
 <title>学生列表</title>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.css"></link>
+	href="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.css"/>
 <style type="text/css">
 
 </style>
@@ -47,7 +47,6 @@
 												</c:if>
 											</c:forEach>
 									</select>
-									
 								</div>
 								<div class="form-group">
 									<label for="major" >专业:</label>
@@ -55,6 +54,15 @@
 									  <option value="" selected="selected">不限</option>
 									</select>
 								</div>
+                                <div class="form-group">
+                                    <label for="grade" >年级:</label>
+                                    <select  class="form-control" id="grade" name="grade">
+                                        <option value="" selected="selected">不限</option>
+                                        <c:forEach begin="2012" end="${seasonScopr.curYear}"  var="g">
+                                            <option  value="${g}级">${g}级</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
 								<div class="form-group">
 									<label for="clazz" >班级:</label>
 										<select  class="form-control" id="clazz" name="cid">
@@ -161,7 +169,7 @@
 						$(data).each(function(){
 							//alert(this.id);
 							//alert(this.name);
-							var opt = $("<option value="+this.id+">"+this.name+"</option>")
+							var opt = $("<option value="+this.id+">"+this.name+"</option>");
 
 							$("#major").append(opt);
 						});

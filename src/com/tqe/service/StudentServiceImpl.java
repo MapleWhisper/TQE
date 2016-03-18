@@ -142,6 +142,7 @@ public class StudentServiceImpl extends BaseService<Student>{
 				clazz.setName(s.getClazz());
 				clazz.setMajorId(mMap.get(s.getMajor()));
 				clazz.setDepartmentId(dMap.get(s.getDepartment()));
+                clazz.setGrade(s.getGrade());
 				classDao.save(clazz);
 				cMap = convertClaListToMap(classDao.findAll());
 				reload = true;

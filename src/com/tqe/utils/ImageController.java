@@ -69,7 +69,7 @@ public class ImageController {
 		
 		g.drawString(sb.toString(),  3, 18);//写什么数字，在图片   的什么位置画
 		
-		session.setAttribute("valifCode", ans+"");
+		session.setAttribute("verificationCode", ans+"");
 		try {
 			ImageIO.write(image, "JPG", response.getOutputStream());
 			

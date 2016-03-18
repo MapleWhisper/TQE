@@ -111,7 +111,7 @@
                     <h4>学生信息上传</h4>
 
                     <form class="form-horizontal" name="import-teacher-form"
-                          action="${pageContext.request.contextPath}/admin/dataImport/teacher"
+                          action="${pageContext.request.contextPath}/admin/dataImport/student"
                           enctype="multipart/form-data" method="post">
                         <div class="form-group">
                             <label for="student-file" class="col-sm-2 control-label">要上传的学生文件</label>

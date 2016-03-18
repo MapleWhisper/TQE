@@ -26,5 +26,14 @@ function showErrorMessage(className){
             }
         });
     }
+}
 
+/**
+ * 记住搜索框上次选中的学期
+ */
+function seasonSelectorRemember(){
+        var seasonVal = $("#condition-season").val();
+        if(seasonVal){
+            $("select#season").find("option[value='"+seasonVal+"']").attr("selected","true");
+        }
 }
