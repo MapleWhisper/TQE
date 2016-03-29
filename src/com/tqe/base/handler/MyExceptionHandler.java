@@ -22,7 +22,7 @@ public class MyExceptionHandler implements HandlerExceptionResolver {
 
     private  static  Map<String,String> messageConvertMap = new HashMap<String,String>();
     static {
-        messageConvertMap.put("OLE2","¶Ô²»Æğ£¬ÄúÉÏ´«µÄEXCEL¸ñÊ½²»ÕıÈ·£¬Çë×ª»»ÎªÕıÈ·¸ñÊ½ºóÔÙÊÔ£¡");
+        messageConvertMap.put("OLE2","EXCELçš„æ ¼å¼é”™è¯¯ï¼Œä¸èƒ½è§£æï¼Œè¯·è½¬æ¢åå†è¯•");
     }
 
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
@@ -30,18 +30,18 @@ public class MyExceptionHandler implements HandlerExceptionResolver {
 
         ModelAndView modelAndView = new ModelAndView("error");
         modelAndView.addObject("msg", messageConvert(ex.getMessage()));
-        logger.error("³ö´íÁË£¡",ex);
+        logger.error("å‡ºé”™äº†",ex);
         return modelAndView;
     }
 
 
     /**
-     * ¶Ô²¶»ñµÄ´íÎóÏûÏ¢½øĞĞ×ª»»ËµÃ÷
+     * æŠŠç³»ç»Ÿå¼‚å¸¸è½¬æ¢æˆäººèƒ½çœ‹çš„æ ¼å¼
      */
     public String messageConvert(String errorMsg){
 
         if(StringUtils.isBlank(errorMsg)){
-            return "±§Ç¸£¬ÏµÍ³³öÏÖÁËÎ´ÖªµÄ´íÎó";
+            return "æœªçŸ¥çš„é”™è¯¯";
         }
 
         for(String keyValue:messageConvertMap.keySet()){

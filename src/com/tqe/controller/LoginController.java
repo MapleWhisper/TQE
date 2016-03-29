@@ -26,8 +26,8 @@ import com.tqe.po.Teacher;
 import com.tqe.po.User;
 
 /**
- * µÇÂ½¿ØÖÆÆ÷
- * @author ¹ãÂ·
+ * ç™»é™†æ§åˆ¶å™¨
+ * @author å¹¿è·¯
  *
  */
 @Controller
@@ -36,7 +36,7 @@ public class LoginController extends BaseController{
 	Log logger = LogFactory.getLog(LoginController.class);
 
 	/**
-	 * ÓÃ»§µÇÂ½
+	 * ç”¨æˆ·ç™»é™†
 	 * @return
 	 */
 	@RequestMapping("/login")
@@ -44,22 +44,23 @@ public class LoginController extends BaseController{
 						HttpSession session,
 						@RequestParam(required = false) String verificationCode,
 						HttpServletResponse response,
-						Model model){
+						Model model
+    ){
 
         session.setAttribute("lastLoginTime",new Date().getTime());
 
         Boolean skipVerify = (Boolean) session.getAttribute("skipVerify");
-        if(skipVerify==null){   //Èç¹ûsessionÒÑ¾­Ê§Ğ§ ËµÃ÷²»ĞèÒªÑéÖ¤ÂëÁË
+        if(skipVerify==null){   //å¦‚æœsessionå·²ç»å¤±æ•ˆ è¯´æ˜ä¸éœ€è¦éªŒè¯ç äº†
             skipVerify = false;
         }
 
 
-        //Èç¹ûĞèÒª¼ì²éÑéÖ¤Âë
+        //å¦‚æœéœ€è¦æ£€æŸ¥éªŒè¯ç 
 		if(!skipVerify)  {
-            //Èç¹ûÊäÈëµÄÑéÖ¤Âë²»ÕıÈ·
+            //å¦‚æœè¾“å…¥çš„éªŒè¯ç ä¸æ­£ç¡®
             if(StringUtils.isBlank(verificationCode) || !verificationCode.equals(session.getAttribute("verificationCode") )){
-                model.addAttribute("error","ÑéÖ¤Âë´íÎó");
-                session.setAttribute("skipVerify",false);   //ĞèÒªÑéÖ¤Âë
+                model.addAttribute("error","éªŒè¯ç é”™è¯¯");
+                session.setAttribute("skipVerify",false);   //éœ€è¦éªŒè¯ç 
                 return "index";
             }
 		}
@@ -69,7 +70,7 @@ public class LoginController extends BaseController{
 
         boolean loginSuccess = false;
 
-		//¼Ç×¡ÓÃ»§×îºóµÄµÇÂ¼·½Ê½
+		//è®°ä½ç”¨æˆ·æœ€åçš„ç™»å½•æ–¹å¼
 		Cookie cookie = new Cookie("loginType",type);
 		cookie.setMaxAge(365 * 24 * 60 * 60);
 		response.addCookie(cookie);
@@ -110,18 +111,18 @@ public class LoginController extends BaseController{
                 }
                 break;
             default:
-                logger.error("Î´ÖªµÄµÇÂ¼½ÇÉ«£¡ " + type);
-                model.addAttribute("error","Î´ÖªµÄµÇÂ¼ÓÃ»§µÄ½ÇÉ«£¡");
+                logger.error("æœªçŸ¥çš„ç™»å½•è§’è‰²ï¼ " + type);
+                model.addAttribute("error","æœªçŸ¥çš„ç™»å½•ç”¨æˆ·çš„è§’è‰²ï¼");
                 return "index";
         }
 
         if(loginSuccess) {
-            List<Privilege> pList = privilegeService.findAllByUserType(userType);   //È¨ÏŞĞÅÏ¢·ÅÈësession
+            List<Privilege> pList = privilegeService.findAllByUserType(userType);   //æƒé™ä¿¡æ¯æ”¾å…¥session
             addPrivilege(session, pList);
             removeOtherUser(session, userType);
             return viewName;
         }else {
-            model.addAttribute("error","ÓÃ»§Ãû»òÃÜÂë´íÎó");
+            model.addAttribute("error","ç”¨æˆ·åæˆ–å¯†ç é”™è¯¯");
             return "index";
         }
 
@@ -136,7 +137,7 @@ public class LoginController extends BaseController{
 	}
 
 	/**
-	 * Ìí¼ÓÈ¨ÏŞĞÅÏ¢µ½sessionÖĞ ÓÃÓÚÇ°Ì¨½øĞĞÈ¨ÏŞµÄÏÔÊ¾µÄÅĞ¶Ï
+	 * æ·»åŠ æƒé™ä¿¡æ¯åˆ°sessionä¸­ ç”¨äºå‰å°è¿›è¡Œæƒé™çš„æ˜¾ç¤ºçš„åˆ¤æ–­
 	 */
 	private void addPrivilege(HttpSession session,List<Privilege> pList){
 		session.setAttribute("pList", pList);
@@ -148,16 +149,16 @@ public class LoginController extends BaseController{
 	}
 	
 	/**
-	 * ÓÃ»§µÇÂ½Ê±£¬ÒÆ³ıÆäËûÎŞ¹ØµÄ½ÇÉ«£¬±£Ö¤ÏµÍ³Í¬Ò»Ê±¿ÌÖ»ÓĞÒ»¸ö½ÇÉ«ÄÜµÇÂ½
+	 * ç”¨æˆ·ç™»é™†æ—¶ï¼Œç§»é™¤å…¶ä»–æ— å…³çš„è§’è‰²ï¼Œä¿è¯ç³»ç»ŸåŒä¸€æ—¶åˆ»åªæœ‰ä¸€ä¸ªè§’è‰²èƒ½ç™»é™†
 	 */
 	private void removeOtherUser(HttpSession session , UserType userType) {
-        if(userType==null){ //ÒÆ³ıµ±ÏÈ»Ø»°ÖĞµÄËùÓĞÓÃ»§
+        if(userType==null){ //ç§»é™¤å½“å…ˆå›è¯ä¸­çš„æ‰€æœ‰ç”¨æˆ·
             for(UserType uType : UserType.values() ){
                     session.removeAttribute(uType.getName());
             }
             return ;
         }
-        //Èç¹ûÖ¸¶¨ÁË½ÇÉ«£¬ÄÇÃ´ÒÆ³ıÆäËû½ÇÉ«µÄsessionĞÅÏ¢
+        //å¦‚æœæŒ‡å®šäº†è§’è‰²ï¼Œé‚£ä¹ˆç§»é™¤å…¶ä»–è§’è‰²çš„sessionä¿¡æ¯
         for(UserType uType : UserType.values() ){
             if(!uType.equals(userType)){
                 session.removeAttribute(uType.getName());

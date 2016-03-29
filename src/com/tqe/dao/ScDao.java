@@ -3,6 +3,7 @@ package com.tqe.dao;
 import com.tqe.po.Department;
 import com.tqe.po.SC;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
@@ -18,4 +19,6 @@ public interface ScDao extends BaseDao<SC>{
 	@Insert("insert into sc values( #{cid}, #{cno},#{sid})")
 	void save(SC sc);
 
+    @Select("select count(*) from sc where cid = #{cid} and cno = #{cno}")
+    int totalStuNumByCidAndCno(@Param("cid")String cid,@Param("cno")Integer cno);
 }

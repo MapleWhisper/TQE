@@ -32,7 +32,7 @@ public class LoginFilter implements  Filter{
 			FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req =  (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;
-		String path = req.getRequestURI();	//µÃµ½ÇëÇóUrl
+		String path = req.getRequestURI();	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½Url
 		HttpSession session = req.getSession();
 		String ctxPath = req.getContextPath();
 
@@ -41,37 +41,35 @@ public class LoginFilter implements  Filter{
 		Admin admin = (Admin) session.getAttribute("admin");
 		Leader leader = (Leader) session.getAttribute("leader");
 		
-		if(!path.contains("/admin")){	//Èç¹û·ÃÎÊµÄ²»ÊÇºóÌ¨Êı¾İ£¬ÄÇÃ´Ìø¹ı
+		if(!path.contains("/admin")){	// æ£€æŸ¥å¸¦ /adminè®¿é—®URL çš„æƒé™
 			chain.doFilter(req, resp);
 			return;
 		}
 		
-		if( stu==null && tea==null && admin==null && leader==null){		//Èç¹û¶¼Ã»ÓĞµÇÂ½£¬¾Í·µ»ØµÇÂ¼Ò³
+		if( stu==null && tea==null && admin==null && leader==null){		// æ£€æŸ¥ç”¨æˆ·æ˜¯å¦ç™»å½•
 			resp.sendRedirect(ctxPath+"/index");
 			return;
 		}
-		if(admin!=null && admin.getUsername().equals("admin")){		//Èç¹ûÊÇ³¬¼¶¹ÜÀíÔ±£¬ÄÇÃ´²»½øĞĞÈ¨ÏŞ¼ì²é
+		if(admin!=null && admin.getUsername().equals("admin")){		//å¦‚æœæ˜¯è¶…çº§ç®¡ç†å‘˜ ä¸æ£€æŸ¥æƒé™
 			chain.doFilter(req, resp);
 			return;
 		}
-		//Èç¹ûµÇÂ½ÁË ÄÇÃ´¾Í¼ì²éÈ¨ÏŞ
 		@SuppressWarnings("unchecked")
-		//»ñÈ¡µÇÂ¼ÓÃ»§µÄÈ¨ÏŞÁĞ±í
+		//è·å–è§’è‰²æ‹¥æœ‰çš„æƒé™
 		List<Privilege> plist = (List<Privilege>) session.getAttribute("pList");
 		boolean f = checkPrivilege(path, plist);
 		if(f){
 			chain.doFilter(req, resp);
 		}else{
-			session.setAttribute("msg", "¶Ô²»Æğ£¬ÄúÃ»ÓĞ·ÃÎÊÈ¨ÏŞ");
+			session.setAttribute("msg", "å¯¹ä¸èµ· æ‚¨æ²¡æœ‰æƒé™è®¿é—®è¯¥é¡µé¢");
 			resp.sendRedirect(ctxPath+"/error");
-			return;
 		}
 		
 		
 	}
 	
 	/**
-	 * ¸ù¾İÓÃ»§·ÃÎÊÂ·¾¶ ÅĞ¶ÏÓÃ»§ÊÇ·ñÓĞÈ¨ÏŞ·ÃÎÊ
+	 * æ£€æŸ¥è®¿é—®çš„URLæ˜¯å¦æœ‰æƒé™
 	 * @param path
 	 * @param pList
 	 * @return
@@ -88,13 +86,13 @@ public class LoginFilter implements  Filter{
             String url = p.getUrl();
             boolean urlIsFirstLevel = url.indexOf("/")==url.lastIndexOf("/");
 
-            //Èç¹ûÊÇÒ»¼¶È¨ÏŞ /privilege
+            //ä¸€çº§æƒé™ /privilege
 			if( pathIsFirstLevel && urlIsFirstLevel ){
                 if(path.contains(url)){
                     return true;
                 }
             }
-            //¶ş¼¶È¨ÏŞºÍ ¶ş¼¶È¨ÏŞ¶Ô±È
+            //å¤šçº§æƒé™Şº
             if( !pathIsFirstLevel && !urlIsFirstLevel){
                 if(path.contains(url)){
                     return true;

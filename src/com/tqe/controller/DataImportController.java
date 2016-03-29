@@ -23,9 +23,9 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * ÓÃÀ´¿ØÖÆ ½«excelÎÄ¼şµ¼ÈëÊı¾İ¿âµÄ¿ØÖÆÆ÷
+ * æ•°æ®å¯¼å…¥æ§åˆ¶å™¨
  *
- * @author ¹ãÂ·
+ * @author ??Â·
  */
 @Controller
 @RequestMapping("/admin")
@@ -51,7 +51,7 @@ public class DataImportController extends BaseController {
     }
 
     /**
-     * ½ÌÊ¦ĞÅÏ¢µ¼Èë
+     * å¯¼å…¥æ•™å¸ˆä¿¡æ¯
      */
     @RequestMapping("/dataImport/teacher")
     public String dataImportTeacher(
@@ -79,7 +79,7 @@ public class DataImportController extends BaseController {
     }
 
     /**
-     * Ñ§ÉúĞÅÏ¢µ¼Èë
+     * å¯¼å…¥å­¦ç”Ÿä¿¡æ¯
      */
     @RequestMapping("/dataImport/student")
     public String dataImportStudent(
@@ -107,7 +107,7 @@ public class DataImportController extends BaseController {
     }
 
     /**
-     * ¿Î³Ì°àĞÅÏ¢µ¼Èë
+     * å¯¼å…¥è¯¾ç¨‹ä¿¡æ¯
      */
     @RequestMapping("/dataImport/course")
     public String dataImportCourse(
@@ -116,8 +116,8 @@ public class DataImportController extends BaseController {
             @RequestParam("season") String season,
             Model model
     ) {
-        if (StringUtils.isBlank(season)) {    //Èç¹ûseasonÎª¿Õ£¬ÄÇÃ´²»ÄÜ¼ÌĞø
-            model.addAttribute("error", "season²»ÄÜÎª¿Õ£¡");
+        if (StringUtils.isBlank(season)) {    //å¯¼å…¥è¯¾ç¨‹å¿…é¡»é€‰æ‹©è¯¾ç¨‹çš„å­¦æœŸ
+            model.addAttribute("error", "å­¦æœŸä¸èƒ½ä¸ºç©ºï¼");
         }else{
             try {
                 if (checkFileName(courseFile, model)) {
@@ -137,7 +137,7 @@ public class DataImportController extends BaseController {
     }
 
     /**
-     * Ñ§ÉúÑ¡¿ÎĞÅÏ¢µ¼Èë
+     * å­¦ç”Ÿé€‰è¯¾ä¿¡æ¯å¯¼å…¥
      */
     @RequestMapping("/dataImport/sc")
     public String dataImportSc(
@@ -164,13 +164,12 @@ public class DataImportController extends BaseController {
     }
 
     /**
-     * ¼ì²éÎÄ¼şÃûÊÇ·ñºÏ·¨
-     * ºÏ·¨·µ»Øtrue ·ñÔò·µ»Øfalse
+     * æ£€æŸ¥æ–‡ä»¶çš„åç¼€æ˜¯å¦æ˜¯Excel
      */
     private boolean checkFileName(CommonsMultipartFile file, Model model) {
         String fileName = file.getOriginalFilename();
-        if (!fileName.trim().endsWith(".xls")) {  //Èç¹ûÎÄ¼ş²»ÊÇexcel  ÄÇÃ´±¨´í
-            model.addAttribute("error", "ÎÄ¼ş±ØĞëÊÇÒªÒÔ.xls½áÎ²µÄExcelÎÄ¼ş£¡");
+        if (!fileName.trim().endsWith(".xls")) {
+            model.addAttribute("error", "æ–‡ä»¶å¿…é¡»æ˜¯.xlsç»“å°¾çš„EXCELæ–‡ä»¶");
             return false;
         }
         return true;

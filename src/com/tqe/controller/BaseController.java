@@ -56,6 +56,9 @@ public class BaseController {
 
     @Autowired
     protected ScServiceImpl scService;
+
+    @Autowired
+    protected CourseBatchServiceImpl courseBatchService;
 	
 	protected void addSearcherResource(Model model){
 		
@@ -63,7 +66,7 @@ public class BaseController {
 	}
 
     /**
-     * ·µ»ØÊ§°ÜµÄÒ³Ãæ²¢ÏÔÊ¾´íÎóµÄĞÅÏ¢
+     * å‘é€é”™è¯¯
      */
 	protected String sendError(Model model ,String msg){
 		model.addAttribute("msg",msg);
@@ -74,6 +77,11 @@ public class BaseController {
 		log.error(msg);
 		return this.sendError(model,msg);
 	}
+
+    protected String sendError(Model model ,String msg,Log log ,Exception e){
+        log.error(msg,e);
+        return this.sendError(model,msg);
+    }
 
 
 }

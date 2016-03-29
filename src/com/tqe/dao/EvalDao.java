@@ -47,6 +47,18 @@ public interface EvalDao extends BaseDao<EvalTable>{
 	@Select("select `id`,  `tid`,`sid`,  `eid`,  `cid`,  `cno`,  `bid`,  `score`,  `level`,`tname` from teaStutable where sid =#{sid}  and bid =#{bid} ")
 	public List<TeaStuResultTable> findAllTeaStuTableBySid(@Param("sid") String sid, @Param("bid")Integer bid);
 
+    @Select("select * from stutable where cid =#{cid} and cno=#{cno} and bid =#{bid} ")
+    List<StuResultTable> findAllStuTableWithJSONString(@Param("cid")String cid, @Param("cno")Integer cno, @Param("bid")Integer bid);
+
+    @Select("select * from teatable where cid =#{cid} and cno=#{cno} and bid =#{bid} ")
+     List<TeaResultTable> findAllTeaTableWithJSONString(@Param("cid")String cid, @Param("cno")Integer cno, @Param("bid")Integer bid);
+
+    @Select("select * from leatable where cid =#{cid} and cno=#{cno} and bid =#{bid} ")
+     List<LeaResultTable> findAllLeaTableWithJSONString(@Param("cid")String cid, @Param("cno")Integer cno, @Param("bid")Integer bid);
+
+    @Select("select * from teaStutable where sid =#{sid}  and bid =#{bid} ")
+     List<TeaStuResultTable> findAllTeaStuTableWithJSONString(@Param("sid") String sid, @Param("bid")Integer bid);
+
 	@Select("select * from stutable where id = #{stuTableId}")
 	public StuResultTable getStuTableById(Integer stuTableId);
 	
@@ -70,8 +82,12 @@ public interface EvalDao extends BaseDao<EvalTable>{
 	@Select("select sid from teastutable where tid = #{tid} and cid = #{cid} and cno = #{cno} and bid = #{bid}")
 	public List<String> findAllSidsByCidTid(@Param("cid")String cid, @Param("cno")Integer cno,@Param("tid")String tid, @Param("bid")Integer bid);
 
-	
 
+    /**
+     *  统计指定课程指定批次 学生已经评教的人数
+     */
+    @Select("select count(*) from stutable where cno = #{cno} and cid = #{cid} and bid = #{bid}")
+    int cntStuEvalByCidCnoBid(@Param("cid")String cid,@Param("cno")Integer cno,@Param("bid")Integer bid);
 
 	
 

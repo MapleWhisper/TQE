@@ -16,7 +16,7 @@ import com.tqe.service.AdminServiceImpl;
 
 
 /**
- * ¹ÜÀíÔ±¹ÜÀí
+ * ç®¡ç†å‘˜æ§åˆ¶å™¨
  */
 @Controller("adminControl")
 @RequestMapping("/admin")
@@ -30,7 +30,7 @@ public class AdminController extends BaseController{
 	private PrivilegeService privilegeService;
 	*/
 	/**
-     * ÏÔÊ¾¹ÜÀíÔ±¹ÜÀíÒ³Ãæ
+     * æ˜¾ç¤ºç®¡ç†å‘˜æ˜¾ç¤ºé¡µé¢
 	 */
 	@RequestMapping("/admin")
 	public String admin(Model model){
@@ -45,17 +45,17 @@ public class AdminController extends BaseController{
             @RequestParam Integer id
     ){
         if(id ==null || id< 0 ){
-            return BaseResult.createFailure("¶Ô²»Æğ£¬¸ÃÓÃ»§²»´æÔÚ id:"+id);
+            return BaseResult.createFailure("ç®¡ç†å‘˜çš„Idä¸èƒ½ä¸ºç©º id:"+id);
         }
         Admin admin = adminService.getById(id);
         if(admin==null || admin.getId()==null){
-            return BaseResult.createFailure("¶Ô²»Æğ£¬¸ÃÓÃ»§²»´æÔÚ id:"+id);
+            return BaseResult.createFailure("æ²¡æœ‰æ‰¾åˆ°è¯¥ç®¡ç†å‘˜ä¿¡æ¯ id:"+id);
         }
         return BaseResult.createSuccess(admin);
     }
 
 	/**
-	 * ±£´æ¹ÜÀíÔ±
+	 * ä¿å­˜ç®¡ç†å‘˜
 	 */
 	@RequestMapping("/admin/save")
 	public String save(
@@ -64,14 +64,14 @@ public class AdminController extends BaseController{
     ){
 		if(StringUtils.isBlank(admin.getName()) || StringUtils.isBlank(admin.getPosition())
                 || StringUtils.isBlank(admin.getUsername()) || StringUtils.isBlank(admin.getPassword())){
-           return  sendError(model, "¹ÜÀíÔ±µÄĞÕÃû Ö°Î»ºÍÓÃ»§Ãû ºÍ ÃÜÂë²»ÄÜÎª¿Õ");
+           return  sendError(model, "ç®¡ç†å‘˜çš„å§“å èŒä½ ç”¨æˆ·å å’Œå¯†ç  ä¸èƒ½ä¸ºç©º");
         }
 		adminService.save(admin);
 		return "redirect:/admin/admin";
 	}
 
     /**
-     * ¸üĞÂ¹ÜÀíÔ±
+     * æ›´æ–°ç®¡ç†å‘˜
      */
     @RequestMapping("/admin/update")
     public String update(
@@ -81,12 +81,12 @@ public class AdminController extends BaseController{
     ){
 
         if(admin == null || admin.getId()==null){
-            return sendError(model,"¹ÜÀíÔ±Id²»ÄÜÎª¿Õ°¡");
+            return sendError(model,"ç®¡ç†å‘˜Idä¸èƒ½ä¸ºç©º");
         }
         Admin curAdmin = (Admin) session.getAttribute("admin");
-        if(!curAdmin.getName().equals("admin")){   //Èç¹û²»ÊÇ³¬¼¶¹ÜÀíÔ± ÄÇÃ´ÆÕÍ¨¹ÜÀíÔ±Ö»ÄÜĞŞ¸Ä×Ô¼ºÕËºÅĞÅÏ¢
+        if(!curAdmin.getName().equals("admin")){   //æ™®é€šç®¡ç†å‘˜åªèƒ½ä¿®æ”¹è‡ªå·±çš„ä¿¡æ¯ é™¤äº†è¶…çº§ç®¡ç†å‘˜
             if(!curAdmin.getId().equals(admin.getId())){
-                return sendError(model,"ÄúÖ»ÄÜĞŞ¸Ä×Ô¼ºµÄÕËºÅĞÅÏ¢!");
+                return sendError(model,"æ‚¨åªèƒ½ä¿®æ”¹è‡ªå·±çš„ä¿¡æ¯ï¼");
             }
         }
 
@@ -102,7 +102,7 @@ public class AdminController extends BaseController{
     }
 	
 	/**
-	 *É¾³ı¹ÜÀíÔ±
+	 * åˆ é™¤ç®¡ç†å‘˜
      * */
 	@RequestMapping("admin/delete/{id}")
 	public String delete(@PathVariable int id){

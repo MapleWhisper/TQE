@@ -29,7 +29,7 @@ public interface CourseDao {
 	public List<Course> findAllBySid(@Param("sid") String sid, @Param("season")String season);
 
 	/**
-	 * Ñ¡³öÒ»¸ö½ÌÊ¦Ëù½Ì¿Î³ÌµÄËùÓĞÈÎ¿Î×éµÄ¿Î³Ì
+	 * æ ¹æ®æ•™å¸ˆId é€‰æ‹©æ•™å¸ˆæ‰€æ•™çš„æ‰€æœ‰è¯¾ç¨‹
 	 * @param tid
 	 * @return
 	 */
@@ -40,12 +40,6 @@ public interface CourseDao {
 
 
 
-
-	/**
-	 * Ñ¡³öÒ»¸ö½ÌÊ¦Ëù½Ì¿Î³ÌµÄËùÓĞÈÎ¿Î×éµÄ¿Î³Ì
-	 * @param tid
-	 * @return
-	 */
 	@Select("select c.*,t.name as  `teacher.name` , t.id as `teacher.id`  from course c ,teacher t where c.teacherId = t.id and t.id = #{tid}")
 	public List<Course> findAllByTid(String tid);
 

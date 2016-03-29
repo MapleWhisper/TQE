@@ -16,7 +16,7 @@
 		<div class="row">
 			<%@ include file="../head.jsp"%>
 		</div>
-		<div class="row" style="margin-top: 70px">
+		<div class="row" >
 			<!--左侧的导航条 -->
 			<div class="col-sm-2">
 				<%@include file="../left.jsp"%>
@@ -55,10 +55,10 @@
 									</select>
 								</div>
                                 <div class="form-group">
-                                    <label for="grade" >年级:</label>
+                                    <label for="grade" >年级</label>
                                     <select  class="form-control" id="grade" name="grade">
                                         <option value="" selected="selected">不限</option>
-                                        <c:forEach begin="2012" end="${seasonScopr.curYear}"  var="g">
+                                        <c:forEach begin="2012" end="${applicationScope.curYear}"  var="g">
                                             <option  value="${g}级">${g}级</option>
                                         </c:forEach>
                                     </select>
@@ -155,6 +155,10 @@
 				fetchClassList();
 			});
 
+            $("#grade").change(function(){
+                fetchClassList();
+            });
+
 			fetchMajorList();
 			fetchClassList();
 		});
@@ -184,16 +188,21 @@
 		function fetchClassList(departmentId ,majorId){
 			var did = $("#department").find("option:selected").val();
 			var mid = $("#major").find("option:selected").val();
-			if(did && mid){
-				$.post("../getClazz/"+did+"/"+mid,function(data){
+            var grade = $("#grade").find("option:selected").val();
+            log(grade);
+			if(did && mid && grade){
+				$.post("../getClazz",
+                        {
+                            did:did,
+                            mid:mid,
+                            grade:grade
+                        },
+                        function(data){
 					//alert(data);
-					if(data!=null){
+					if(data){
 						$("#clazz").html("<option value='' selected='selected'>不限</option>");
 						$(data).each(function(){
-							//alert(this.id);
-							//alert(this.name);
 							var opt = $("<option value="+this.id+">"+this.name+"</option>")
-
 							$("#clazz").append(opt);
 						});
 					}
@@ -202,7 +211,6 @@
 				$("#major option[value='']:selected");
 				$("#clazz option[value='']:selected");
 			}
-
 		}
 	</script>
 </body>

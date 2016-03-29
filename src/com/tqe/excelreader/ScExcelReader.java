@@ -8,19 +8,19 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * ÓÃ»§ÊµÏÖ Student-Course Ñ§ÉúÑ¡¿ÎEXCELµÄ¶ÁÈ¡
+ * ç”¨æˆ·å®ç° Student-Course å­¦ç”Ÿé€‰è¯¾EXCELçš„è¯»å–
  */
 @Component
 public class ScExcelReader extends ExcelReader<SC> {
 
 	/**
-	 * ¼ì²éÎÄ¼şÊÇ·ñÊÇscÎÄ¼ş
+	 * æ£€æŸ¥æ–‡ä»¶æ˜¯å¦æ˜¯scæ–‡ä»¶
 	 */
 	@Override
 	public boolean checkFile(String excelDir) {
 		List<String> list = ExcelUtils.getRow(excelDir, 0, 2);
 		
-		return list.contains("¿Î³ÌºÅ")&&list.contains("¿ÎĞòºÅ")&&list.contains("Ñ§ÉúÑ§ºÅ");
+		return list.contains("è¯¾ç¨‹å·")&&list.contains("è¯¾åºå·")&&list.contains("å­¦ç”Ÿå­¦å·");
 	}
 
 

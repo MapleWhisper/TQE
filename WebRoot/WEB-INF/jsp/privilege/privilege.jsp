@@ -16,8 +16,10 @@
 
 <body>
 	<div class="container-fluid">
+        <div class="row">
 		<%@ include file="../head.jsp"%>
-		<div class="row " style="margin-top: 70px">
+            </div>
+		<div class="row " >
 			<div class="col-sm-2">
 				<%@ include file="../left.jsp"%>
 			</div>

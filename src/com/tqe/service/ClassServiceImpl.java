@@ -19,11 +19,10 @@ public class ClassServiceImpl extends BaseService<Clazz>{
 	 * 根据学院Id 和专业id 找到对应的课程
 	 * @param did departmentid 学院id
 	 * @param mid majorid 专业id
-	 * @return
+	 * @param grade
+     * @return
 	 */
-	@Cacheable(value="mCache",key="#did + #mid + 'findAllByDidMid'")
-	public List<Clazz> findAllByDidMid(Integer did,Integer mid) {
-		
-		return classDao.findAllByDidMid(did,mid);
+	public List<Clazz> findAllByDidMid(Integer did, Integer mid, String grade) {
+		return classDao.findAllByDidMid(did,mid,grade);
 	}
 }

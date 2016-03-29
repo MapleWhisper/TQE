@@ -15,8 +15,10 @@
 
 <body>
 	<div class="container-fluid">
-		<%@ include file="../head.jsp"%>
-		<div class="row " style="margin-top: 70px">
+        <div class="row">
+		    <%@ include file="../head.jsp"%>
+        </div>
+		<div class="row " >
 			<div class="col-sm-2">
 				<%@ include file="../left.jsp"%>
 			</div>
@@ -47,7 +49,8 @@
                                     <input type="hidden" id="condition-season" value="${condition.season}">
                                     <label for="season" >学期:</label>
                                     <select name="season" class="form-control" id="season" >
-                                        <c:forEach begin="2015" end="2050" step="1" var="s">
+                                        <option value="">不限</option>
+                                        <c:forEach begin="2015" end="${applicationScope.curYear+1}" step="1" var="s">
                                             <option  value="${s}春">${s}春</option>
                                             <option  value="${s}秋">${s}秋</option>
                                         </c:forEach>
@@ -73,7 +76,7 @@
 
 
 						</blockquote>
-						<table class="table table-hover table-striped table-bordered table-condensed">
+						<table class="table table-hover table-striped  table-condensed ">
 							<thead>
 								<tr class="info">
 									<td>课程名</td>
@@ -142,7 +145,7 @@
 		src="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.js"></script>
     <script type="text/javascript">
         $(function(){
-            seasonSelectorRemember();
+            autoSeasonSelect();
         });
     </script>
 </body>

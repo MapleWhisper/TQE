@@ -14,21 +14,24 @@
 </style>
 <body>
 	<div class="container-fluid">
-		<%@ include file="../head.jsp"%>
-		<div class="row " style="margin-top: 70px">
+        <div class="row">
+		    <%@ include file="../head.jsp"%>
+        </div>
+		<div class="row " >
 			<div class="col-sm-2">
 				<%@ include file="../left.jsp"%>
 			</div>
 			<div class="col-sm-10 ">
 				<table
-					class="table table-hover table-striped table-bordered" style="text-align: center">
-					<tr class="warning">
+					class="table table-hover table-striped " style="text-align: center">
+					<tr class="info">
 						<td>课程名</td>
 						<td>教师</td>
 						<td>学院</td>
 						<td>学期</td>
 						<td>课程号</td>
 						<td>课序号</td>
+						<td>合班</td>
 					<tr>
 						<td>${course.name }</td>
 						<td>${course.teacher.name	 }</td>
@@ -36,6 +39,7 @@
 						<td>${course.season }</td>
 						<td>${course.cid }</td>
 						<td>${course.cno }</td>
+						<td>${course.combine }</td>
 
 						<!-- 
 						<td>${batches.name }</td>
@@ -62,7 +66,8 @@
 					<div class="tab-content">
 						<!-- 学生评教信息表 -->
 						<div role="tabpanel" class="tab-pane active" style="padding-top: 10px;" id="student">
-							<%@ include file="showCourseStu.jsp"%>
+							<jsp:include page="showCourseStu.jsp"/>
+
 						</div>
 
 						<!-- 教师评教信息表 -->
@@ -84,6 +89,10 @@
 	</div>
 	<!-- 	container -->
 	<%@ include file="../buttom.jsp"%>
+    <script
+            src="${pageContext.request.contextPath}/js/datatables/js/jquery.dataTables.min.js"></script>
+    <script
+            src="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.js"></script>
 </body>
 </html>
 

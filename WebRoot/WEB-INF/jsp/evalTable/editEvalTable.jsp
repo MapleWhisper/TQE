@@ -32,13 +32,27 @@
 			</div>
 			<div class="col-sm-10">
 				<div class="panel panel-primary">
-					<div class="panel-heading">管理员信息填写</div>
+					<div class="panel-heading">修改评教指标</div>
 
 					<div class="panel-body">
 						<form
 							action="${pageContext.request.contextPath }/admin/evalTable/update"
 							class="form-horizontal" role="form" id="form" method="post">
 							<input value="${evalTable.id }" type="hidden" name="eid">
+
+                            <div class="form-group">
+                                <label for="type" class="col-xs-2 control-label">评教指标类型</label>
+                                <div class="col-xs-3">
+                                    <select class="form-control auto-select" name="type" required="required"
+                                            id="type" key="${evalTable.type}" >
+                                        <option value="学生评教师">学生评教师</option>
+                                        <option value="教师评教师">教师评教师</option>
+                                        <option value="教师评学生">教师评学生</option>
+                                        <option value="领导评教师">领导评教师</option>
+                                    </select>
+                                </div>
+                            </div>
+
 							<div class="form-group">
 
 								<label class="col-xs-2 control-label">评教指标标题</label>
@@ -109,7 +123,7 @@
 									</div>
 									<c:forEach items="${evalTable.tableItemList}" var="item"
 										varStatus="s">
-										<div class="tableItem" style="margin-top: 20px;">
+										<div class="tableItem row" style="padding-top: 20px;">
 
 
 											<div class="col-xs-6 context">
@@ -149,7 +163,7 @@
 							<div class="form-group">
 								<label class="col-xs-2 control-label">问题和建议</label>
 								<div class="col-xs-10" id="question">
-									<c:forEach items="${evalTable.tableItemList}" var="item"
+									<c:forEach items="${evalTable.questionList}" var="item"
 										varStatus="s">
 										<div class="col-xs-12 question" style="margin-top: 5px;">
 
@@ -243,6 +257,7 @@
 				$("#tableItem .tableItem:last").remove();
 				return false;
 			});
+            autoSelect();
 
 		});
 	</script>

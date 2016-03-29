@@ -5,6 +5,7 @@
 <%@ include file="../header.jspf"%>
 <title>评教指标显示|${evalTable.title}</title>
 <style type="text/css">
+
 .quest {
 	font-size: medium;
 	margin-top: 50px
@@ -20,10 +21,11 @@
 	width: 60px;
 	height: 60px
 }
+
 </style>
 </head>
 
-<body>
+<body >
 	<div class="container-fluid">
 		<%@ include file="../head.jsp"%>
 		<div class="row" style="margin-top: 70px">
@@ -36,47 +38,43 @@
 				</div>
 				<div class="row">
 					<!--左侧的导航条 -->
-					<div class="col-xs-1">
+					<div class="col-xs-1" id="navbar-evalTable">
 						<ul class="nav nav-pills nav-stacked nav-left" role="tablist"
 							id="nav">
-							<li role="presentation" class="pre active"><a href="#part1">评教须知</a></li>
-							<li role="presentation" class="pre"><a href="#part2">表单</a></li>
-							<li role="presentation" class="pre"><a href="#part3">表项</a></li>
+							<li  class="pre active"><a href="#part1">评教须知</a></li>
+							<li  class="pre"><a href="#part2">表单</a></li>
+							<li  class="pre"><a href="#part3">表项</a></li>
 						</ul>
 					</div>
 					<!--左侧的导航条 -->
-					<div class="col-xs-11">
+					<div class="col-xs-11"  >
 						
 						<form
 							action="${pageContext.request.contextPath}/admin/paper/answer"
 							method="post">
 							<input type="hidden" name="id" value="${evalTable.id}">
-							<!--单选题 -->
-							<div class="panel panel-primary" id="part1">
-								<div class="panel-heading">
-									<h3 class="panel-title">评教须知:</h3>
-								</div>
-								<div class="panel-body">${evalTable.note }</div>
-							</div>
 
-							<div class="panel panel-primary" id="part2">
-								<div class="panel-heading">
-									<h3 class="panel-title">请如实填写表单信息</h3>
-								</div>
-								<div class="panel-body">
-									<table class="table table-striped table-hover table-bordered">
+                            <div class=" bs-callout bs-callout-danger" id="part1">
 
-										<c:forEach items="${evalTable.itemList}" var="item"
-											varStatus="s">
-											<tr>
-												<td style="width: 100px;">${item.context}：</td>
-												<td><input type="text" class="form-control"></td>
-											</tr>
+                                <h4>评教须知:</h4>
 
-										</c:forEach>
-									</table>
-								</div>
-							</div>
+                                <p>${evalTable.note }</p>
+                            </div>
+
+                            <div class=" bs-callout bs-callout-info" id="part2">
+                                <h4>请如实填写表单信息:</h4>
+                                <table class="table table-striped table-hover ">
+                                    <c:forEach items="${evalTable.itemList}" var="item"
+                                               varStatus="s">
+                                        <tr>
+                                            <td style="width: 10%;"><p class="">${item.context}：<p></td>
+                                            <td ><input type="text" class="form-control"/></td>
+                                        </tr>
+                                    </c:forEach>
+                                </table>
+                            </div>
+
+
 
 
 							<!-- 问答题 -->
@@ -153,6 +151,8 @@
 	</div>
 	<script type="text/javascript">
 		$(function() {
+
+
 			$(".score").bind('change click ready',function() {
 				var sum = 0;
 				$.each($(".score"), function() {

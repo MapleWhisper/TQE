@@ -21,27 +21,26 @@ public class EvalController extends BaseController{
 	
 	/**
 	 * 
-	 * ±£´æÑ§ÉúÆÀ½Ì½á¹û
-	 * @param evalTable	ÆÀ½Ì±í
-	 * @param stuTable	Ñ§Éú±í
+	 * å­¦ç”Ÿè¯„æ•™ç®¡ç†ä¿å­˜
 	 */
 	@RequestMapping(value={"/eval/save/student"},method={RequestMethod.POST})
-	public String evalTable( @ModelAttribute EvalTable evalTable, @ModelAttribute StuResultTable stuTable ,Model model,HttpSession session){
-		//ÅĞ¶ÏÑ§ÉúÊÇ·ñ
-		//´¦ÀíÆÀ½Ì½á¹ûÊı¾İ
+	public String evalTable(
+            @ModelAttribute EvalTable evalTable,
+            @ModelAttribute StuResultTable stuTable ,
+            Model model,
+            HttpSession session){
+
 		
 		try {
 			preSaveTable(evalTable, stuTable);
 			Student stu = (Student) session.getAttribute("student");
 			if(stu==null){
-				logger.error("¶Ô²»Æğ£¡µ±Ç°µÇÂ¼ÓÃ»§²»ÊÇÑ§Éú\\n»òÕßµÇÂ¼³¬Ê±£¬ÇëÖØĞÂµÇÂ¼!");
-				return sendError(model,"¶Ô²»Æğ£¡µ±Ç°µÇÂ¼ÓÃ»§²»ÊÇÑ§Éú\\n»òÕßµÇÂ¼³¬Ê±£¬ÇëÖØĞÂµÇÂ¼!");
+				return sendError(model,"å½“å‰ç™»å½•çš„è§’è‰²ä¸æ˜¯å­¦ç”Ÿ",logger);
 			}
 			stuTable.setSname(stu.getName());
 			evalService.saveStuTable(stuTable);
 		} catch (Exception e1) {
-			logger.error("¸Ã¿Î³ÌÒÑ¾­ÆÀ¼Û£¡²»ÄÜÖØ¸´ÆÀ¼Û£¡»òÕßÄúÃ»ÓĞÑ¡ÕâÃÅ¿Î³Ì!",e1);
-			return sendError(model,"¸Ã¿Î³ÌÒÑ¾­ÆÀ¼Û£¡²»ÄÜÖØ¸´ÆÀ¼Û£¡»òÕßÄúÃ»ÓĞÑ¡ÕâÃÅ¿Î³Ì!");
+			return sendError(model,"ä¿å­˜è¯„æ•™è¡¨å¤±è´¥!",logger,e1);
 		}
 		return "redirect:/admin/stuEval";
 	}
@@ -49,10 +48,7 @@ public class EvalController extends BaseController{
 	
 	/**
 	 * 
-	 * ±£´æÁìµ¼ÆÀ½Ì½á¹û
-	 * @param evalTable	ÆÀ½Ì±í
-	 * @param leaTable	½ÌÊ¦±í
-	 * @return
+	 * ä¿å­˜é¢†å¯¼è¯„æ•™è¡¨
 	 */
 	@RequestMapping(value={"/eval/save/leader"},method={RequestMethod.POST})
 	public String evalTable( @ModelAttribute EvalTable evalTable,
@@ -63,25 +59,18 @@ public class EvalController extends BaseController{
 		
 		try {
 			if(leader==null){
-				logger.error("µ±Ç°ÆÀ½Ì±íÖ»ÓĞÁìµ¼½ÇÉ«²ÅÄÜ±£´æ£¬ÇëÈ·ÈÏµÇÂ¼ÓÃ»§»òÕßÇëÖØĞÂµÇÂ¼");
-				return sendError(model,"µ±Ç°ÆÀ½Ì±íÖ»ÓĞÁìµ¼½ÇÉ«²ÅÄÜ±£´æ£¬ÇëÈ·ÈÏµÇÂ¼ÓÃ»§»òÕßÇëÖØĞÂµÇÂ¼");
+				return sendError(model,"å½“å‰ç™»å½•çš„è§’è‰²ä¸æ˜¯é¢†å¯¼",logger);
 			}
 			preSaveTable(evalTable, leaTable);
 			evalService.saveLeaTable(leaTable);
 		} catch (Exception e1) {
-			model.addAttribute("msg","¸Ã¿Î³ÌÒÑ¾­ÆÀ¼Û£¡²»ÄÜÖØ¸´ÆÀ¼Û£¡");
-			e1.printStackTrace();
-			return "error";
+			return sendError(model,"ä¿å­˜é¢†å¯¼è¯„æ•™è¡¨å¤±è´¥",logger,e1);
 		}
 		return "redirect:/admin/leaEval";
 	}
 	
 	/**
-	 * 
-	 * ±£´æ½ÌÊ¦ÆÀ½Ì½á¹û
-	 * @param evalTable	ÆÀ½Ì±í
-	 * @param teaTable	½ÌÊ¦±í
-	 * @return
+	 * ä¿å­˜æ•™å¸ˆè¯„æ•™è¡¨
 	 */
 	@RequestMapping(value={"/eval/save/teacher"},method={RequestMethod.POST})
 	public String evalTable(
@@ -92,25 +81,22 @@ public class EvalController extends BaseController{
 		
 		try {
 			if(teacher == null){
-				String msg = "µ±Ç°ÆÀ½Ì±íÖ»ÓĞ½ÌÊ¦½ÇÉ«²ÅÄÜ±£´æ£¬ÇëÈ·ÈÏµÇÂ¼ÓÃ»§»òÕßÇëÖØĞÂµÇÂ¼";
-				logger.error(msg);
-				return sendError(model,msg);
+				String msg = "å½“å‰ç™»å½•çš„è§’è‰²ä¸æ˜¯æ•™å¸ˆ";
+				return sendError(model,msg,logger);
 
 			}
 			preSaveTable(evalTable, teaTable);
 			evalService.saveTeaTable(teaTable);
 		} catch (Exception e1) {
-			logger.error("¸Ã¿Î³ÌÒÑ¾­ÆÀ¼Û£¡²»ÄÜÖØ¸´ÆÀ¼Û£¡", e1);
-			return sendError(model,"¸Ã¿Î³ÌÒÑ¾­ÆÀ¼Û£¡²»ÄÜÖØ¸´ÆÀ¼Û£¡");
+
+			return sendError(model,"ä¿å­˜æ•™å¸ˆè¯„æ•™å¤±è´¥ï¼");
 		}
 		return "redirect:/admin/teaEval";
 	}
 	
 	/**
-	 * 
-	 * ±£´æ½ÌÊ¦ÆÀ¼ÛÑ§ÉúÆÀ½Ì½á¹û
-	 * @param evalTable	ÆÀ½Ì±í
-	 * @return
+	 * ä¿å­˜æ•™å¸ˆå¯¹å­¦ç”Ÿçš„è¯„æ•™è¡¨
+	 *
 	 */
 	@RequestMapping(value={"/eval/save/teaStu"},method={RequestMethod.POST})
 	public String teaStuevalTable(
@@ -121,17 +107,15 @@ public class EvalController extends BaseController{
 		
 		try {
 			if(teacher==null){
-				String msg = "µ±Ç°ÆÀ½Ì±íÖ»ÓĞ½ÌÊ¦½ÇÉ«²ÅÄÜ±£´æ£¬ÇëÈ·ÈÏµÇÂ¼ÓÃ»§»òÕßÇëÖØĞÂµÇÂ¼";
-				logger.error(msg);
-				return sendError(model,msg);
+				return sendError(model,"å½“å‰ç™»å½•çš„è§’è‰²ä¸æ˜¯æ•™å¸ˆ",logger);
 			}
 			teaStuTable.setSname(studentService.getNameById(teaStuTable.getSid()).getName());
 
 			preSaveTable(evalTable, teaStuTable);
 			evalService.saveTeaStuTable(teaStuTable);
 		} catch (Exception e1) {
-			model.addAttribute("msg","¸Ã¿Î³ÌÒÑ¾­ÆÀ¼Û£¡²»ÄÜÖØ¸´ÆÀ¼Û£¡");
-			e1.printStackTrace();
+
+			sendError(model,"ä¿å­˜æ•™å¸ˆè¯„ä»·å­¦ç”Ÿè¡¨å¤±è´¥",logger,e1);
 			return "error";
 		}
 		String cid = teaStuTable.getCid();
@@ -145,11 +129,7 @@ public class EvalController extends BaseController{
 	
 	
 	/**
-	 * ÏÔÊ¾ÆÀ½Ì½á¹û
-	 * @param id ÆÀ½Ì½á¹ûId
-	 * @param model
-	 * @param type [student|teacher|lead]
-	 * @return
+	 * æ˜¾ç¤ºè¯„æ•™è¡¨è¯¦æƒ…
 	 */
 	@RequestMapping("/eval/show/{type}/{id}")
 	public String showEvalTable( @PathVariable Integer id ,Model model,@PathVariable String type){
@@ -190,14 +170,13 @@ public class EvalController extends BaseController{
 
 
 	/**
-	 * ¶ÔÒª±£´æµÄÆÀ½Ì½á¹û½øĞĞÔ¤´¦Àí
-	 * @param evalTable	ÆÀ½Ì±í
-	 * @param resultTable ÆÀ½Ì½á¹û±í
+	 * è¯„æ•™è¡¨ä¿å­˜é¢„å¤„ç†
 	 */
 	private void preSaveTable(EvalTable evalTable, ResultTable resultTable) {
-		EvalTable e = evalTableService.getById(resultTable.getEid()).json2Object();
-		e.setAns(e, evalTable);
-		resultTable.setJsonString(JSON.toJSONString(e));
+
+		EvalTable e = evalTableService.getById(resultTable.getEid()).json2Object();     //ä»æ•°æ®åº“ä¸­å–å‡ºè¯„æ•™è¡¨
+		e.setAns(e, evalTable);     //å°† ç­”å·ä¸­çš„ç­”æ¡ˆæ”¾åˆ°è¯„æ•™ç»“æœè¡¨ä¸­
+		resultTable.setJsonString(JSON.toJSONString(e));    //å°†è¯„æ•™è¡¨åºåˆ—åŒ–åå­˜å…¥ å†é‡æ–°è¯„æ•™ç»“æœè¡¨ä¸­
 		Course course = courseService.getById(resultTable.getCid(), resultTable.getCno());
 		resultTable.setDepartmentId(course.getDepartmentId());
 		resultTable.setTname(course.getTeacher().getName());
@@ -206,14 +185,13 @@ public class EvalController extends BaseController{
 		}
 		try {
 			resultTable.setQuestion1(evalTable.getQuestionList().get(0)==null?null:evalTable.getQuestionList().get(0).getAns());
-			resultTable.setQuestion2(evalTable.getQuestionList().get(1)==null?null:evalTable.getQuestionList().get(0).getAns());
-			resultTable.setQuestion3(evalTable.getQuestionList().get(2)==null?null:evalTable.getQuestionList().get(0).getAns());
-			resultTable.setQuestion4(evalTable.getQuestionList().get(3)==null?null:evalTable.getQuestionList().get(0).getAns());
-			resultTable.setQuestion5(evalTable.getQuestionList().get(4)==null?null:evalTable.getQuestionList().get(0).getAns());
+			resultTable.setQuestion2(evalTable.getQuestionList().get(1)==null?null:evalTable.getQuestionList().get(1).getAns());
+			resultTable.setQuestion3(evalTable.getQuestionList().get(2)==null?null:evalTable.getQuestionList().get(2).getAns());
+			resultTable.setQuestion4(evalTable.getQuestionList().get(3)==null?null:evalTable.getQuestionList().get(3).getAns());
+			resultTable.setQuestion5(evalTable.getQuestionList().get(4)==null?null:evalTable.getQuestionList().get(4).getAns());
 		} catch (Exception e2) {
-			//ÕâÀï·¢ÉúÒì³£ ±íÃ÷ÆÀ½Ì±íµÄÎÊÌâÃ»ÓĞ´ïµ½5¸ö µ¼ÖÂList·ÃÎÊÊı×éÔ½½ç ·¢ÉúÒì³£
-			//ÎŞÊÓÒì³£ ÍË³ö±£´æ¼´¿É
-			//logger.error("±£´æÆÀ½Ì½á¹ûÊ§°Ü"+evalTable,e2);
+
+			logger.debug("è¯„æ•™è¡¨çš„é—®é¢˜å°äº5ä¸ª");
 		}
 	}
 }

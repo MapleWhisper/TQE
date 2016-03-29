@@ -37,6 +37,9 @@ public class BaseDaoTemplate<T> {
 		if(StringUtils.isNotBlank(filters.get("sid"))){
 			WHERE("sid = #{filters.sid}");
 		}
+        if(StringUtils.isNoneBlank(filters.get("grade"))){
+            WHERE("grade = #{filters.grade}");
+        }
 		return  SQL()+ LIMIT(300);
 		
 	}

@@ -56,6 +56,9 @@ public abstract class BaseService<E> {
 
 	@Autowired
 	public ScDao scDao;
+
+    @Autowired
+    public CourseBatchDao courseBatchDao;
 	
 	public  E getById(Integer id){
 		return null;
@@ -112,4 +115,6 @@ public abstract class BaseService<E> {
 		}
 		return map;
 	}
+
+
 }

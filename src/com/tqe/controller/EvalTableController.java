@@ -17,7 +17,7 @@ public class EvalTableController extends BaseController{
 	
 	
 	/**
-	 * ÏÔÊ¾ÆÀ½Ì±íÁĞ±í
+	 * è¯„æ•™è¡¨
 	 */
 	@RequestMapping("/evalTable")
 	public String evalTable(Model model){
@@ -27,7 +27,7 @@ public class EvalTableController extends BaseController{
 	}
 	
 	/**
-	 * Ìí¼ÓÆÀ½Ì±íÒ³Ãæ
+	 * æ·»åŠ è¯„æ•™è¡¨é¡µé¢
 	 */
 	@RequestMapping("/evalTable/add")
 	public String addEvalTable(){
@@ -35,22 +35,20 @@ public class EvalTableController extends BaseController{
 	}
 	
 	/**
-	 * ÏÔÊ¾ÆÀ½Ì±í
-	 * @param id ÆÀ½Ì±íµÄID
+	 * æ˜¾ç¤ºè¯„æ•™è¡¨
 	 */
 	@RequestMapping("/evalTable/show/{id}")
 	public String showEvalTable(@PathVariable Integer id,Model model){
 		EvalTable evalTable = evalTableService.getById(id);
 		if(evalTable==null){
-			return sendError(model,"Äú·ÃÎÊµÄÆÀ½Ì±í²»´æÔÚ");
+			return sendError(model,"æ²¡æœ‰æ‰¾åˆ°æŒ‡å®šçš„è¯„æ•™è¡¨");
 		}
 		model.addAttribute("evalTable",evalTable);
 		return "evalTable/showEvalTable";
 	}
 	
 	/**
-	 * ±£´æÆÀ½Ì±í
-	 * @param evalTable ĞèÒª±»±£´æµÄÆÀ½Ì±í
+	 * ä¿å­˜è¯„æ•™è¡¨
 	 */
 	@RequestMapping("/evalTable/save")
 	public String saveEvalTable(@ModelAttribute()EvalTable evalTable){
@@ -60,35 +58,32 @@ public class EvalTableController extends BaseController{
 	}
 	
 	/**
-	 * ĞŞ¸ÄÆÀ½Ì±íÒ³Ãæ
-	 * @param eid	ĞèÒª±»ĞŞ¸ÄµÄÆ½½Ç±í
+	 * ä¿®æ”¹è¯„æ•™è¡¨é¡µé¢
 	 */
 	@RequestMapping("/evalTable/edit/{eid}")
 	public String editEvalTable(@PathVariable Integer eid,Model model){
 		
 		EvalTable eTable = evalTableService.getById(eid);
 		if(eTable==null){
-			return sendError(model,"Äú·ÃÎÊµÄÆÀ½Ì±í²»´æÔÚ");
+			return sendError(model,"æ²¡æœ‰æ‰¾åˆ°å¯ä»¥ä¿®æ”¹çš„è¯„æ•™è¡¨");
 		}
 		model.addAttribute("evalTable",eTable);
 		return "evalTable/editEvalTable";
 	}
 	
 	/**
-	 * ĞŞ¸ÄÆÀ½Ì±í
-	 * @param evalTable ĞŞ¸ÄĞèÒª±£´æµÄÆÀ½Ì±í
+	 * æ›´æ–°è¯„æ•™è¡¨
 	 */
 	@RequestMapping("/evalTable/update")
 	public String updateEvalTable(Integer eid,Model model,@ModelAttribute()EvalTable evalTable){
 		
 		EvalTable eTable = evalTableService.getById(eid);
 		if(eTable==null){
-			return sendError(model,"Äú·ÃÎÊµÄÆÀ½Ì±í²»´æÔÚ");
+			return sendError(model,"æ²¡æœ‰æ‰¾åˆ°è¦æ›´æ–°çš„è¯„æ•™è¡¨");
 		}
-		eTable.setJsonString(JSON.toJSONString(evalTable));
 		eTable.setTitle(evalTable.getTitle());
 		eTable.setNote(evalTable.getNote());
-		evalService.update(eTable);
+		evalTableService.update(eTable);
 		model.addAttribute("evalTable",eTable);
 		return "redirect:/admin/evalTable";
 	}

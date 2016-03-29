@@ -48,7 +48,8 @@
 											<td class="old"><input type="date" class="form-control" value="<fm:formatDate value="${batches.endDate}" pattern="yyyy-MM-dd"/>" id="endDate" onClick="WdatePicker()"></td>
 											
 											<td class="new"><button class="btn btn-warning" id="edit">修改</button></td>
-											<td class="old"><button class="btn btn-warning" id="save">保存</button></td>
+											<td class="old"><button class="btn btn-warning" id="save">保存</button>
+                                                <button class="btn btn-info" id="cancel">取消</button></td>
 										</tr>
 									</table>
 									<table class="table table-striped table-hover table-bordered">
@@ -109,7 +110,7 @@
 	<script type="text/javascript">
 		$(function(){
 			$(".old").css("display","none");
-			
+
 			$("#edit").click(function(){
 				$(".new").css("display","none");
 				$(".old").css("display","");
@@ -125,11 +126,15 @@
 				}
 				var id = $("#id").val();
 				$.post("../update",{beginDate:beginDate,endDate:endDate,id:id},function(data){
-					alert(data.message);
+                    alert(data.message);
 					window.location.reload();
 				});
 				
 			});
+            $("#cancel").click(function(){
+                $(".new").css("display","");
+                $(".old").css("display","none");
+            });
 		});
 	</script>
 	<%@ include file="../buttom.jsp"%>

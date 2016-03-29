@@ -38,8 +38,8 @@
 					
 					<div class="col-xs-11">
 					<hr>
-						<table class="table table-hover table-striped table-bordered table-condensed">
-								<tr class="warning">
+						<table class="table table-hover table-striped  table-condensed">
+								<tr class="info">
 									<td>学院</td>
 									<td>学期</td>
 									<td>批次</td>

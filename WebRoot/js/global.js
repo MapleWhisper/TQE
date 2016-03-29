@@ -2,7 +2,7 @@
  * Created by Maple on 2015/12/2.
  */
 /**
- * ¹Ø±Õµ±Ç°´°¿Ú
+ * å…³é—­å½“å‰æµè§ˆå™¨TABé¡µ
  */
 function closeWindow(){
     window.opener = null;
@@ -29,11 +29,39 @@ function showErrorMessage(className){
 }
 
 /**
- * ¼Ç×¡ËÑË÷¿òÉÏ´ÎÑ¡ÖĞµÄÑ§ÆÚ
+ * è®°ä½seasonçš„é€‰æ‹©
  */
-function seasonSelectorRemember(){
+function autoSeasonSelect(){
         var seasonVal = $("#condition-season").val();
         if(seasonVal){
             $("select#season").find("option[value='"+seasonVal+"']").attr("selected","true");
         }
+}
+
+function log(_object){
+    console.log(_object);
+}
+
+/**
+ * select å¯ä»¥è‡ªåŠ¨æ ¹æ® selectä¸­çš„ key é€‰ä¸­å¯¹åº”valueçš„option
+ */
+function autoSelect(){
+    $(".auto-select").each(function(){
+        var $select = $(this);
+        var key = $select.attr("key");
+        log(key);
+        $select.find("option[value='"+key+"']").attr("selected","true");
+    })
+}
+
+
+function showGlobalNotification(msg){
+
+    if(msg){
+        var globalNotification = $("#global-notification");
+        globalNotification.find("#global-notification-text").html(msg);
+        globalNotification.fadeIn("fast");
+        //globalNotification.fadeOut(3000);
+    }
+
 }

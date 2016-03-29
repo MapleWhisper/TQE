@@ -9,6 +9,8 @@ public class ResultTable {
 	protected Integer score;	  //得分
 	protected String level;		//等级
 	protected String jsonString;	//存储的评价信息
+
+
 	
 	protected Integer eid;	//评教表
 	protected String  cid;	//课程号
@@ -24,6 +26,8 @@ public class ResultTable {
 	protected String question3;	//回答3
 	protected String question4;	//回答4
 	protected String question5;	//回答5
+
+    protected EvalTable evalTable;  //评教表结果内容
 	
 	protected Student student;
 	protected Batches batches;
@@ -61,31 +65,31 @@ public class ResultTable {
 		return question1;
 	}
 	public void setQuestion1(String question1) {
-		this.question1 = question1;
+		this.question1 = (question1!=null)?question1.replaceAll(",","，"):null;
 	}
 	public String getQuestion2() {
 		return question2;
 	}
 	public void setQuestion2(String question2) {
-		this.question2 = question2;
+		this.question2 = (question2!=null)?question2.replaceAll(",","，"):null;
 	}
 	public String getQuestion3() {
 		return question3;
 	}
 	public void setQuestion3(String question3) {
-		this.question3 = question3;
+		this.question3 = (question3!=null)?question3.replaceAll(",","，"):null;
 	}
 	public String getQuestion4() {
 		return question4;
 	}
 	public void setQuestion4(String question4) {
-		this.question4 = question4;
+		this.question4 = (question4!=null)?question4.replaceAll(",","，"):null;
 	}
 	public String getQuestion5() {
 		return question5;
 	}
 	public void setQuestion5(String question5) {
-		this.question5 = question5;
+		this.question5 = (question5!=null)?question5.replaceAll(",","，"):null;
 	}
 	public Student getStudent() {
 		return student;
@@ -159,6 +163,12 @@ public class ResultTable {
 	public void setTid(String tid) {
 		this.tid = tid;
 	}
-	
-	
+
+    public EvalTable getEvalTable() {
+        return evalTable;
+    }
+
+    public void setEvalTable(EvalTable evalTable) {
+        this.evalTable = evalTable;
+    }
 }

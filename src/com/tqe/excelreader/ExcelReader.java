@@ -24,22 +24,22 @@ public abstract class ExcelReader<E> {
 	Log logger = LogFactory.getLog(ExcelReader.class);;
 
 	/**
-	 * ¼ì²éÎÄ¼şÊÇ·ñ·ûºÏ
+	 * æ£€æŸ¥æ–‡ä»¶æ˜¯å¦ç¬¦åˆ
 	 * @param excelDir
 	 * @return
 	 */
 	public abstract boolean checkFile(String excelDir);
 	
 	private Class<?> clazz = null;	
-	public ExcelReader() {	//»ñÈ¡·ºĞÍÀàĞÍ
+	public ExcelReader() {	//è·å–æ³›å‹ç±»å‹
 		ParameterizedType type =   (ParameterizedType) this.getClass().getGenericSuperclass();
 		this.clazz = (Class<?>) type.getActualTypeArguments()[0];
 	}
 	
 	/**
-	 * »ñÈ¡excel±í¸ñÄÚÈİ £¬²¢·â×°³ÉList
-	 * Ä¬ÈÏ²»ÉèÖÃ³õÊ¼ÃÜÂë
-	 * @param excelDir	ÎÄ¼şÂ·¾¶
+	 * è·å–excelè¡¨æ ¼å†…å®¹ ï¼Œå¹¶å°è£…æˆList
+	 * é»˜è®¤ä¸è®¾ç½®åˆå§‹å¯†ç 
+	 * @param excelDir	æ–‡ä»¶è·¯å¾„
 	 * @return	
 	 * @throws FileNotFoundException
 	 */
@@ -48,16 +48,16 @@ public abstract class ExcelReader<E> {
 	}
 	
 	/**
-	 * »ñÈ¡excel±í¸ñÄÚÈİ £¬²¢·â×°³ÉList
-	 * @param excelDir	ÎÄ¼şÂ·¾¶
-	 * @param needSetPassword		ÊÇ·ñÉèÖÃ³õÊ¼ÃÜÂë
+	 * è·å–excelè¡¨æ ¼å†…å®¹ ï¼Œå¹¶å°è£…æˆList
+	 * @param excelDir	æ–‡ä»¶è·¯å¾„
+	 * @param needSetPassword		æ˜¯å¦è®¾ç½®åˆå§‹å¯†ç 
 	 * @return
 	 * @throws FileNotFoundException
 	 */
 	public List<E> getAll(String excelDir,boolean needSetPassword) throws FileNotFoundException {
 		List<E> list = new ArrayList<E>();
 
-		int titleIndex = 0;		//ÓĞĞ§Êı¾İµÄ´ÓµÚ¼¸ĞĞ¿ªÊ¼µÄ
+		int titleIndex = 0;		//æœ‰æ•ˆæ•°æ®çš„ä»ç¬¬å‡ è¡Œå¼€å§‹çš„
 		if(clazz==Teacher.class){
 			titleIndex = 0;
 		}else if(clazz == Course.class || clazz==SC.class){
@@ -70,13 +70,13 @@ public abstract class ExcelReader<E> {
 			
 		}else{
 			logger.error("file not fount! excelDir:"+excelDir);
-			throw new FileNotFoundException("ÎÄ¼şÃ»ÓĞÕÒµ½");
+			throw new FileNotFoundException("æ–‡ä»¶æ²¡æœ‰æ‰¾åˆ°");
 		}
 		return list;
 	}
 	
 	/**
-	 * °ÑExcelÊı¾İ×ª»»Îª Pojo µÄListÀàĞÍµÄÊı¾İ
+	 * æŠŠExcelæ•°æ®è½¬æ¢ä¸º Pojo çš„Listç±»å‹çš„æ•°æ®
 	 * @param excelDir
 	 * @param list
 	 * @return
@@ -84,12 +84,12 @@ public abstract class ExcelReader<E> {
 	@SuppressWarnings("unchecked")
 	protected List<E> excelStringValueToPojoList(String excelDir, List<E> list,boolean needSetPassword,int titleIndex) {
 		
-		List<Map<String,String>> data = ExcelUtils.getExcelRecords(excelDir, 0 ,titleIndex);	//´ÓexcelÖĞ»ñÈ¡Êı¾İ
+		List<Map<String,String>> data = ExcelUtils.getExcelRecords(excelDir, 0 ,titleIndex);	//ä»excelä¸­è·å–æ•°æ®
 		
 		if(data!=null && !data.isEmpty()){
-			for(Map<String,String> row :data){	//±éÀúÃ¿ĞĞÊı¾İ
+			for(Map<String,String> row :data){	//éå†æ¯è¡Œæ•°æ®
 				E e  = null;
-		        boolean isSkip = false;     //¸ÄĞĞÊÇ·ñĞèÒª¹ıÂËµô
+		        boolean isSkip = false;     //æ”¹è¡Œæ˜¯å¦éœ€è¦è¿‡æ»¤æ‰
 				Object obj  = null;
 				try {
 					obj = clazz.newInstance();
@@ -98,14 +98,14 @@ public abstract class ExcelReader<E> {
 				} catch (IllegalAccessException ex){
 					ex.printStackTrace();
 				}
-				Field[] fields = clazz.getDeclaredFields();		//»ñÈ¡³ÉÔ±µÄÈ«²¿Filed
+				Field[] fields = clazz.getDeclaredFields();		//è·å–æˆå‘˜çš„å…¨éƒ¨Filed
 				for(Field f : fields){
-					String fieldName = f.getName();		//»ñÈ¡³ÉÔ±±äÁ¿Ãû
+					String fieldName = f.getName();		//è·å–æˆå‘˜å˜é‡å
 					String fn = new String(fieldName);
 
-                    fn = clazz.getSimpleName().toLowerCase()+"."+fn;  //»ñÈ¡PropertyÎÄ¼şÖĞµÄkey
+                    fn = clazz.getSimpleName().toLowerCase()+"."+fn;  //è·å–Propertyæ–‡ä»¶ä¸­çš„key
 
-					String columnName = ExcelProperty.getProperty(fn);	//»ñµÃexcelÖĞÎÄÁĞÃû
+					String columnName = ExcelProperty.getProperty(fn);	//è·å¾—excelä¸­æ–‡åˆ—å
 					String methodName = fieldNameToSetter(fieldName);
 
 					Method m;
@@ -115,7 +115,7 @@ public abstract class ExcelReader<E> {
 
                         String filterFieldName = "filter."+fn;
                         String filterFieldValue = ExcelProperty.getProperty(filterFieldName);
-                        if(filterFieldValue!=null && value.equalsIgnoreCase(filterFieldValue.trim())){   //Èç¹û¸Ã×Ö¶ÎµÄÖµ·ûºÏ¹ıÂËÌõ¼ş ÄÇÃ´¸ÃĞĞÊı¾İ¾ÍÌø¹ı
+                        if(filterFieldValue!=null && value.equalsIgnoreCase(filterFieldValue.trim())){   //å¦‚æœè¯¥å­—æ®µçš„å€¼ç¬¦åˆè¿‡æ»¤æ¡ä»¶ é‚£ä¹ˆè¯¥è¡Œæ•°æ®å°±è·³è¿‡
                             isSkip = true;
                             break;
                         }
@@ -125,11 +125,11 @@ public abstract class ExcelReader<E> {
 					}
 				}
 				
-				//Èç¹ûĞèÒªÌí¼Ó³õÊ¼ÃÜÂë  ÄÇÃ´,Ïò³õÊ¼ Êı¾İÖĞÌí¼ÓÄ¬ÈÏÃÜÂë£¨Ö¤¼şºÅÂëºóÁùÎ»£©
+				//å¦‚æœéœ€è¦æ·»åŠ åˆå§‹å¯†ç   é‚£ä¹ˆ,å‘åˆå§‹ æ•°æ®ä¸­æ·»åŠ é»˜è®¤å¯†ç ï¼ˆè¯ä»¶å·ç åå…­ä½ï¼‰
 				if(needSetPassword){
 					setPassword(obj, row);
 				}
-                if(!isSkip){    //Ö»Ìí¼Ó
+                if(!isSkip){    //åªæ·»åŠ 
                     e = (E)obj;
                     list.add(e);
                 }
@@ -140,7 +140,7 @@ public abstract class ExcelReader<E> {
 	}
 	
 	/**
-	 * ¸ù¾İ³ÉÔ±ÊôĞÔ»ñÈ¡Setter·½·¨
+	 * æ ¹æ®æˆå‘˜å±æ€§è·å–Setteræ–¹æ³•
 	 * @param fieldName
 	 * @return
 	 */
@@ -148,35 +148,35 @@ public abstract class ExcelReader<E> {
 		if(fieldName!=null){
 			fieldName = fieldName.substring(0, 1).toUpperCase()+fieldName.substring(1);
 		}
-		return "set"+fieldName;	//¸ù¾İ³ÉÔ±±äÁ¿Ãû×ª»»³É·½·¨Ãû
+		return "set"+fieldName;	//æ ¹æ®æˆå‘˜å˜é‡åè½¬æ¢æˆæ–¹æ³•å
 	}
 	
 	/**
-	 * ¸ù¾İIdÉú³ÉÃÜÂë,²¢×¢Èëµ½¶ÔÏóµ±ÖĞ
-	 * ÃÜÂëÉú³É²ßÂÔ£º
-	 * Èç¹ûÓĞÖ¤¼şºÅ ²¢ÇÒÖ¤¼şºÅÎª18Î» ÄÇÃ´Ä¬ÈÏÃÜÂëÎªÖ¤¼şºÅµÄºó8Î»
-	 * Ã»ÓĞµÄ»° Ñ§ÉúÎªÑ§ÉúÑ§ºÅ ½ÌÊ¦Îª½ÌÊ¦Ñ§ºÅ
-	 * Èç¹ûÑ§ºÅºÍ½ÌÊ¦ºÅ¶¼Ã»ÓĞ£¬ÄÇÃ´Ä¬ÈÏÃÜÂëÎª 8¸ö8 88888888
+	 * æ ¹æ®Idç”Ÿæˆå¯†ç ,å¹¶æ³¨å…¥åˆ°å¯¹è±¡å½“ä¸­
+	 * å¯†ç ç”Ÿæˆç­–ç•¥ï¼š
+	 * å¦‚æœæœ‰è¯ä»¶å· å¹¶ä¸”è¯ä»¶å·ä¸º18ä½ é‚£ä¹ˆé»˜è®¤å¯†ç ä¸ºè¯ä»¶å·çš„å8ä½
+	 * æ²¡æœ‰çš„è¯ å­¦ç”Ÿä¸ºå­¦ç”Ÿå­¦å· æ•™å¸ˆä¸ºæ•™å¸ˆå­¦å·
+	 * å¦‚æœå­¦å·å’Œæ•™å¸ˆå·éƒ½æ²¡æœ‰ï¼Œé‚£ä¹ˆé»˜è®¤å¯†ç ä¸º 8ä¸ª8 88888888
 	 */
 	private void setPassword(Object obj,Map<String,String> row){
 		
 		String defaultPwd;
-		//Ê×ÏÈ»ñÈ¡Ö¤¼şºÅÂë
-		String idNumber = row.get("Ö¤¼şºÅÂë");
-		if(idNumber!=null && idNumber.length()==18){	//Èç¹ûÓĞÖ¤¼şºÅÂë ²¢ÇÒÖ¤¼şºÅÂëÎª18Î»
-			defaultPwd = idNumber.substring(10);		//ÄÇÃ´¾ÍÈ¡Ö¤¼şºÅÂëºó8Î»×÷ÎªµÇÂ½ÃÜÂë
+		//é¦–å…ˆè·å–è¯ä»¶å·ç 
+		String idNumber = row.get("è¯ä»¶å·ç ");
+		if(idNumber!=null && idNumber.length()==18){	//å¦‚æœæœ‰è¯ä»¶å·ç  å¹¶ä¸”è¯ä»¶å·ç ä¸º18ä½
+			defaultPwd = idNumber.substring(10);		//é‚£ä¹ˆå°±å–è¯ä»¶å·ç å8ä½ä½œä¸ºç™»é™†å¯†ç 
 		}else{
 			if(clazz == Teacher.class){
-				defaultPwd = row.get("½ÌÊ¦ºÅ");		//½ÌÊ¦ºÅ×÷ÎªÄ¬ÈÏµÄÃÜÂë
+				defaultPwd = row.get("æ•™å¸ˆå·");		//æ•™å¸ˆå·ä½œä¸ºé»˜è®¤çš„å¯†ç 
 			}
-			else if(clazz == Student.class){		//Ñ§ÉúÑ§ºÅ×÷ÎªÄ¬ÈÏµÄÃÜÂë
-				defaultPwd = row.get("Ñ§ºÅ");
+			else if(clazz == Student.class){		//å­¦ç”Ÿå­¦å·ä½œä¸ºé»˜è®¤çš„å¯†ç 
+				defaultPwd = row.get("å­¦å·");
 			}else{
-				defaultPwd = "88888888";		//Èç¹ûÃ»ÓĞ½ÌÊ¦ºÅ ºÍ Ñ§ÉúºÃ£¬ÄÇÃ´Ä¬ÈÏÃÜÂë¾ÍÊÇ88888888
+				defaultPwd = "88888888";		//å¦‚æœæ²¡æœ‰æ•™å¸ˆå· å’Œ å­¦ç”Ÿå¥½ï¼Œé‚£ä¹ˆé»˜è®¤å¯†ç å°±æ˜¯88888888
 			}
 		}
 		
-		//»ñÈ¡SetPassword·½·¨
+		//è·å–SetPasswordæ–¹æ³•
 		Method m = null ;
 		try {
 			m = clazz.getDeclaredMethod("setPassword", String.class);
@@ -186,18 +186,18 @@ public abstract class ExcelReader<E> {
             logger.warn(e.getMessage());
 		}
 
-		if(m!=null){	//×¢ÈëÃÜÂë
+		if(m!=null){	//æ³¨å…¥å¯†ç 
 			convertAndInvoke(m, obj, defaultPwd, String.class);
 		}
 		
 	}
 	
 	/**
-	 *  ½«excelÖĞStringÀàĞÍµÄÊı¾İ×ª»»³ÉbeanÖĞµÄ³ÉÔ±±äÁ¿ÀàĞÍ£¬²¢×¢Èëµ½¶ÔÏóÖĞÈ¥
+	 *  å°†excelä¸­Stringç±»å‹çš„æ•°æ®è½¬æ¢æˆbeanä¸­çš„æˆå‘˜å˜é‡ç±»å‹ï¼Œå¹¶æ³¨å…¥åˆ°å¯¹è±¡ä¸­å»
 	 */
 	protected void convertAndInvoke(Method method, Object obj, String value, Class<?> type){
 		if(method==null){
-			throw new IllegalArgumentException("´«Èë·½·¨²»ÄÜÎª¿Õ");
+			throw new IllegalArgumentException("ä¼ å…¥æ–¹æ³•ä¸èƒ½ä¸ºç©º");
 		}
 		try {
 			if(value==null){

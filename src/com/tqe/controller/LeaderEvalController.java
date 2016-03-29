@@ -19,9 +19,7 @@ import com.tqe.po.Leader;
 import com.tqe.utils.SystemUtils;
 
 /**
- * Ñ§ÉúÆÀ½Ì¿ØÖÆÆ÷
- * @author ¹ãÂ·
- *
+ *é¢†å¯¼è¯„æ•™æ§åˆ¶å™¨
  */
 @Controller
 @RequestMapping("/admin")
@@ -29,7 +27,7 @@ public class LeaderEvalController extends BaseController{
 	
 	
 	/**
-	 * ÏÔÊ¾Áìµ¼ÖĞĞÄÖ÷Ò³Ãæ
+	 * é¢†å¯¼è¯„æ•™é¡µé¢
 	 * @param model
 	 * @return
 	 */
@@ -37,20 +35,20 @@ public class LeaderEvalController extends BaseController{
 	public String leaEval(Model model,HttpSession session){
 		Leader leader = (Leader) session.getAttribute("leader");
 		
-		Batches batches = batchesService.getAvailiableBatches(SystemUtils.getSeason());	//µÃµ½µ±Ç°¿ÉÓÃµÄÆÀ½ÌÅú´Î
+		Batches batches = batchesService.getAvailiableBatches(SystemUtils.getSeason());	//è·å–å½“å‰çš„æ‰¹æ¬¡
 		
-		if(batches!=null){		//Èç¹ûµ±Ç°´æÔÚ ¿ÉÒÔÆÀ½ÌµÄÅú´Î
+		if(batches!=null){
 			addSearcherResource(model);
 			model.addAttribute("batches", batches);
 			
-		}else{		//Èç¹ûµ±Ç°Ã»ÓĞÆÀ½ÌÅú´Î
-			model.addAttribute("msg", "¶Ô²»Æğ£¬µ±Ç°»¹Ã»ÓĞ¿ÉÒÔÆÀ½ÌµÄ¿Î³Ì");
+		}else{		//æ²¡æœ‰å¯ä»¥è¯„æ•™çš„æ‰¹æ¬¡
+			model.addAttribute("msg", "å½“å‰æ²¡æœ‰å¯ä»¥è¯„æ•™çš„è¯¾ç¨‹");
 		}
 		return "leaEval/leaEval";
 	}
 	
 	/**
-	 * ÏÔÊ¾Áìµ¼ÖĞĞÄÖ÷Ò³Ãæ(²éÑ¯½á¹û)
+	 * é¢†å¯¼è¯„æ•™æœç´¢
 	 * @param model
 	 * @return
 	 */
@@ -58,11 +56,11 @@ public class LeaderEvalController extends BaseController{
 	public String lea1Eval(Model model,HttpSession session,String did,String cname ,String  cid,String tname){
 		Leader leader = (Leader) session.getAttribute("leader");
 		
-		Batches batches = batchesService.getAvailiableBatches(SystemUtils.getSeason());	//µÃµ½µ±Ç°¿ÉÓÃµÄÆÀ½ÌÅú´Î
+		Batches batches = batchesService.getAvailiableBatches(SystemUtils.getSeason());
 		
-		if(batches!=null){		//Èç¹ûµ±Ç°´æÔÚ ¿ÉÒÔÆÀ½ÌµÄÅú´Î
+		if(batches!=null){
 			addSearcherResource(model);
-			//²éÑ¯²¢¼ÓÔØ¿Î³ÌÊı¾İĞÅÏ¢
+
 			HashMap<String,String> condition = new HashMap<String,String>();
 			condition.put("did", did);
 			condition.put("cname", cname);
@@ -78,18 +76,14 @@ public class LeaderEvalController extends BaseController{
 			model.addAttribute("batches", batches);
 			
 			
-		}else{		//Èç¹ûµ±Ç°Ã»ÓĞÆÀ½ÌÅú´Î
-			model.addAttribute("msg", "ÄúºÃ£¬µ±Ç°»¹Ã»ÓĞ¿ÉÒÔÆÀ½ÌµÄ¿Î³Ì");
+		}else{
+			model.addAttribute("msg", "å½“å‰æ²¡æœ‰å¯ä»¥è¯„æ•™çš„æ‰¹æ¬¡");
 		}
 		return "leaEval/leaEval";
 	}
 	
 	/**
-	 * Áìµ¼¿ªÊ¼ÆÀ½Ì
-	 * @param model
-	 * @param cid
-	 * @param cno
-	 * @return
+	 * é¢†å¯¼è¯„æ•™
 	 */
 	@RequestMapping("/leaEval/eval/{cid}/{cno}")
 	public String EvalleaEval(Model model,@PathVariable("cid") String cid ,@PathVariable("cno") Integer cno){
@@ -97,7 +91,7 @@ public class LeaderEvalController extends BaseController{
 		if(c!=null){
 			Batches batches = batchesService.getAvailiableBatches(c.getSeason());
 			if(batches==null){
-				model.addAttribute("msg", "¶Ô²»Æğ£¬µ±Ç°ÆÀ½Ì»¹Î´¿ªÊ¼");
+				model.addAttribute("msg", "å½“å‰æ²¡æœ‰å¯ä»¥è¯„æ•™çš„æ‰¹æ¬¡Ê¼");
 				return "leaEval/leaEval";
 			}
 			model.addAttribute("batches", batches);

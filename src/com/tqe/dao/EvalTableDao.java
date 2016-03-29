@@ -13,10 +13,10 @@ import com.tqe.po.EvalTable;
 
 @Repository
 public interface EvalTableDao extends BaseDao<EvalTable>{
-	@Select("select * from EvalTable where id = #{id}")
+	@Select("select * from evalTable where id = #{id}")
 	public EvalTable getById(@Param("id")Integer id);
 	
-	@Insert("insert into evalTable values(null,#{title},#{note},#{createDate},#{jsonString}) ")
+	@Insert("insert into evalTable values(null,#{type},#{title},#{note},#{createDate},#{jsonString}) ")
 	public void save(EvalTable	EvalTable);
 	
 	@Select("select * from evalTable")

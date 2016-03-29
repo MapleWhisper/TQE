@@ -14,7 +14,7 @@
 		<div class="row">
 			<%@ include file="../head.jsp"%>
 		</div>
-		<div class="row" style="margin-top: 70px">
+		<div class="row" >
 			<!--左侧的导航条 -->
 			<div class="col-sm-2">
 				<%@include file="../left.jsp"%>
@@ -75,6 +75,7 @@
 									<td>性别</td>
 									<td>院系</td>
 									<td>职称</td>
+                                    <td>操作</td>
 									<!-- 
 									<td>操作</td>
 									 
@@ -97,12 +98,10 @@
 										<td>${tea.sex }</td>
 										<td>${tea.department }</td>
 										<td>${tea.title }</td>
-										<!-- 
 										<td><a href="${pageContext.request.contextPath}/admin/teacher/show/${tea.id}"
 											class="btn btn-danger" ><span
 												class=" glyphicon glyphicon-zoom-in"></span>查看评教详情</a></td>
-										 -->
-										<!-- 
+										<!--
 										<td><a href="teacherAction!edit?id=${tea.id }"
 											class="btn btn-info"><span
 												class=" glyphicon glyphicon-edit"></span>&nbsp;&nbsp;修改</a></td>

@@ -10,7 +10,7 @@
 <body>
 	<div class="container">
 		<%@ include file="../head.jsp" %>
-		<div class="row " style="margin-top: 70px">
+		<div class="row " >
 			<div class="col-xs-3">
 				<%@ include file="../left.jsp"%>
 			</div>

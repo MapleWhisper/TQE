@@ -12,5 +12,9 @@
         
     </settings>   
     <typeAliases>   
-    </typeAliases>   
+    </typeAliases>
+
+    <typeHandlers>
+        <package name="com.tqe.base.mybatis.handler" />
+    </typeHandlers>
 </configuration>

@@ -34,9 +34,8 @@
             <div style="text-align: center">
                 <h2>${evalTable.title }</h2>
 
-                <h3>${course.name }</h3>
+                <h3>${course.name } ---- ${course.teacher.name }</h3>
 
-                <h3>${course.teacher.name }</h3>
             </div>
             <div class="row">
                 <!--左侧的导航条 -->
@@ -51,27 +50,25 @@
                 <!--左侧的导航条 -->
 
                 <div class="col-xs-11">
-                    <hr>
-                    <table class="table table-hover table-striped table-bordered " style="text-align: center;">
-                        <tr class="warning">
+                    <table class="table table-hover table-striped " style="text-align: center;">
+                        <tr class="info">
                             <td>学院</td>
                             <td>学期</td>
                             <td>批次</td>
-                            <td>开始日期</td>
-                            <td>截止日期</td>
+                            <td>评教开始日期</td>
+                            <td>评教截止日期</td>
                         </tr>
                         <tr>
                             <td>${course.department }</td>
                             <td>${course.season }</td>
                             <td>${batches.name }</td>
-                            <td><fm:formatDate value="${batches.beginDate}" pattern="yyyy-MM-dd"/></td>
-                            <td><fm:formatDate value="${batches.endDate }" pattern="yyyy-MM-dd"/></td>
+                            <td><fm:formatDate value="${batches.beginDate}" dateStyle="medium" /></td>
+                            <td><fm:formatDate value="${batches.endDate }" dateStyle="medium" /></td>
                         </tr>
                     </table>
-                    <hr>
                     <form
                             action="${pageContext.request.contextPath}/admin/eval/save/${type}"
-                            method="post" id="form">
+                            method="post" id="eval-form">
                         <input type="hidden" name="eid" value="${evalTable.id}">
                         <input type="hidden" name="cid" value="${ course.cid}">
                         <input type="hidden" name="cno" value="${ course.cno}">
@@ -82,31 +79,24 @@
                         <input type="hidden" name="score" id="sum1" value="">
                         <input type="hidden" name="level" id="level1" value="">
                         <!--评教须知: -->
-                        <div class="panel panel-primary" id="part1">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">评教须知:</h3>
-                            </div>
-                            <div class="panel-body">${evalTable.note}</div>
+                        <div class=" bs-callout bs-callout-danger" id="part1">
+                            <h4>评教须知:</h4>
+                            <p>${evalTable.note }</p>
                         </div>
 
-                        <div class="panel panel-primary" id="part2">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">请如实填写表单信息</h3>
-                            </div>
-                            <div class="panel-body">
-                                <table class="table table-striped table-hover table-bordered">
+                        <div class=" bs-callout bs-callout-info" id="part2">
+                            <h4>请如实填写表单信息:</h4>
+                            <table class="table table-striped table-hover ">
+                                <c:forEach items="${evalTable.itemList}" var="item"
+                                           varStatus="s">
+                                    <tr>
+                                        <td style="width: 100px;">${item.context}：</td>
+                                        <td><input type="text" class="form-control" name="itemList[${s.index}].ans"
+                                                   required="required"></td>
+                                    </tr>
 
-                                    <c:forEach items="${evalTable.itemList}" var="item"
-                                               varStatus="s">
-                                        <tr>
-                                            <td style="width: 100px;">${item.context}：</td>
-                                            <td><input type="text" class="form-control" name="itemList[${s.index}].ans"
-                                                       required="required"></td>
-                                        </tr>
-
-                                    </c:forEach>
-                                </table>
-                            </div>
+                                </c:forEach>
+                            </table>
                         </div>
 
 
@@ -118,12 +108,15 @@
                             <div class="panel-body">
                                 <table class="table table-striped table-hover table-bordered table-condensed"
                                        style="text-align: center">
-                                    <tr>
+                                    <thead >
+                                        <tr hight="10px">
                                         <td width="8%">序号</td>
                                         <td>评价项目</td>
                                         <td>评价等级及参考分数(A B C D)</td>
                                         <td>得分</td>
-                                    </tr>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
                                     <c:forEach items="${evalTable.tableItemList}" var="item"
                                                varStatus="s">
                                         <tr>
@@ -131,8 +124,9 @@
                                             <td>${item.context}</td>
                                             <td>${item.level}</td>
                                             <td>
-                                                <select type="number" class="form-control score" required="required"
+                                                <select  class="form-control score" required="required"
                                                         name="tableItemList[${s.index}].ans" min="0" max="100">
+                                                    <option value="0">未选</option>
                                                     <c:forTokens items="${item.level}" delims=" " var="num">
                                                         <option value="${num}">${num}</option>
                                                     </c:forTokens>
@@ -156,6 +150,7 @@
                                         <td>总分</td>
                                         <td id="sum">0分</td>
                                     </tr>
+                                    </tbody>
                                 </table>
                                 <c:forEach items="${evalTable.questionList}" var="que"
                                            varStatus="s">
@@ -240,10 +235,25 @@
 
     $(function () {
 
-        if(valid){
-            $("#form").validate();
-        }
+            $("#eval-form").validate({
+                submitHandler:function(form){
+                    var success = true;
+                    $(".score").each(function(){
+                        var $score = $(this);
+                        var value = $score.find("option:selected").val();
+                        if(value == 0){
+                            $score.focus();
+                            alert("您还有评分没有选择");
+                            success = false;
+                            return false;
+                        }
+                    });
+                    if(success){
+                        form.submit();
+                    }
 
+                }
+            });
     });
 </script>
 <%@ include file="../buttom.jsp" %>

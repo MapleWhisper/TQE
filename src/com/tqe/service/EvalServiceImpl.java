@@ -1,14 +1,10 @@
 package com.tqe.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.tqe.po.*;
 import org.springframework.stereotype.Service;
-
-import com.tqe.po.EvalTable;
-import com.tqe.po.LeaResultTable;
-import com.tqe.po.StuResultTable;
-import com.tqe.po.TeaStuResultTable;
-import com.tqe.po.TeaResultTable;
 
 @Service
 public class EvalServiceImpl extends BaseService<EvalTable>{
@@ -42,7 +38,6 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 	
 	/**
 	 * 保存教师评价学生表
-	 * @param teaTable
 	 * @throws Exception
 	 */
 	public void saveTeaStuTable(TeaStuResultTable teaStuTable) throws Exception{
@@ -68,8 +63,6 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 	
 	/**
 	 * 根据学生评教表Id取出学生评教表
-	 * @param stuTableId
-	 * @return
 	 */
 	public StuResultTable getStuTableById(Integer stuTableId) {
 		StuResultTable stuTable = evalDao.getStuTableById(stuTableId);
@@ -81,8 +74,6 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 	
 	/**
 	 * 根据教师评教表Id取出教师评教表
-	 * @param teaTableid
-	 * @return
 	 */
 	public TeaResultTable getTeaTableById(Integer teaTableid) {
 		TeaResultTable teaTable = evalDao.getTeaTableById(teaTableid);
@@ -94,8 +85,6 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 	
 	/**
 	 * 根据领导评教表Id取出教师评教表
-	 * @param teaTableid
-	 * @return
 	 */
 	public LeaResultTable getLeaTableById(Integer leaTableId) {
 		LeaResultTable leaTable = evalDao.getLeaTableById(leaTableId);
@@ -131,7 +120,7 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 	 * @param bid 批次号
 	 * @return
 	 */
-	public List<StuResultTable> findAllStuTableByCourse(String cid,Integer cno,Integer bid){
+	public List<StuResultTable> findAllStuTableByCidAndBid(String cid, Integer cno, Integer bid){
 		List<StuResultTable> list = evalDao.findAllStuTableByCourse(cid,cno,bid);
 		for(StuResultTable stuTable : list){
 			stuTable.setStudent(studentDao.getById(stuTable.getSid()));
@@ -142,8 +131,6 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 	
 	/**
 	 * 根据 sid 和 bid 获取对应 教师评价学生 所有结果
-	 * @param cid 课程号
-	 * @param cno 课序号
 	 * @param bid 批次号
 	 * @return
 	 */
@@ -162,8 +149,8 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 	 * @param bid 批次号
 	 * @return
 	 */
-	public List<TeaResultTable> findAllTeaTableByCourse(String cid, Integer cno,
-			Integer bid) {
+	public List<TeaResultTable> findAllTeaTableByCidAndBid(String cid, Integer cno,
+                                                           Integer bid) {
 		
 		List<TeaResultTable> list = evalDao.findAllTeaTableByCourse(cid,cno,bid);
 		for(TeaResultTable teaTable : list){
@@ -181,8 +168,8 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 	 * @param bid 批次号
 	 * @return
 	 */
-	public List<LeaResultTable> findAllTeaLableByCourse(String cid, Integer cno,
-			Integer bid) {
+	public List<LeaResultTable> findAllTeaLableByCidAndBid(String cid, Integer cno,
+                                                           Integer bid) {
 		List<LeaResultTable> list = evalDao.findAllLeaTableByCourse(cid,cno,bid);
 		for(LeaResultTable leaTable : list){
 			leaTable.setLeader(leaderDao.getById(leaTable.getLid()));
@@ -190,18 +177,40 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 		}
 		return list; 
 	}
-	
+
+
+
 	public void update(EvalTable eTable) {
 		evalTableDao.update(eTable);
 	}
 
-	
 
-	
-	
+    public List<StuResultTable> findAllStuTableWithEvalTable(String cid, Integer cno, Integer bid) {
+        List<StuResultTable> resultTableList = evalDao.findAllStuTableWithJSONString(cid,cno,bid);
+        deSerializableResultTable(new ArrayList<ResultTable>(resultTableList));
+        return resultTableList;
+    }
 
+    public List<TeaResultTable> findAllTeaTableWithEvalTable(String cid, Integer cno, Integer bid) {
+        List<TeaResultTable> resultTableList = evalDao.findAllTeaTableWithJSONString(cid, cno, bid);
+        deSerializableResultTable(new ArrayList<ResultTable>(resultTableList));
+        return resultTableList;
+    }
 
+    public List<LeaResultTable> findAllLeaTableWithEvalTable(String cid, Integer cno, Integer bid) {
+        List<LeaResultTable> resultTableList = evalDao.findAllLeaTableWithJSONString(cid, cno, bid);
+        deSerializableResultTable(new ArrayList<ResultTable>(resultTableList));
+        return resultTableList;
+    }
 
-	
-	
+    /**
+     * 反序列化 评教结果表的评价内容
+     */
+    private void deSerializableResultTable(List<ResultTable> resultTableList){
+        if(resultTableList!=null && !resultTableList.isEmpty()){
+            for(ResultTable resultTable : resultTableList){
+                resultTable.setEvalTable(EvalTable.json2Object(resultTable.getJsonString()));
+            }
+        }
+    }
 }

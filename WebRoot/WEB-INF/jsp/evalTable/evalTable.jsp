@@ -5,7 +5,7 @@
 <%@ include file="../header.jspf"%>
 <title>评教指标</title>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.css"></link>
+	href="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.css"/>
 </head>
 
 <body>
@@ -16,22 +16,14 @@
 				<%@ include file="../left.jsp"%>
 			</div>
 			<div class="col-sm-10">
-				<!-- 生成试卷 -->
-				<div class="panel panel-primary">
-					<div class="panel-heading">
-						<h3 class="panel-title">生成新指标</h3>
-					</div>
-					<div class="panel-body">
-						<center>
-							<a href="${pageContext.request.contextPath}/admin/evalTable/add"
-								class="btn btn-info btn-lg">生成新指标</a>
-						</center>
-					</div>
-				</div>
-				<!-- 生成试卷 -->
+
+                <div class="bs-callout bs-callout-info">
+                    <a href="${pageContext.request.contextPath}/admin/evalTable/add"
+                       class="btn btn-info btn-lg">生成新指标</a>
+                </div>
 
 
-				<!-- 试卷列表 -->
+
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<h3 class="panel-title">指标列表</h3>
@@ -42,7 +34,9 @@
 						<table class="table table-hover table-striped table-bordered table-condensed">
 							<thead>
 								<tr class="info">
-									<td>评教指标标题</td>
+
+									<td>指标标题</td>
+                                    <td>指标类型</td>
 									<td>生成时间</td>
 									<td>操作</td>
 								</tr>
@@ -50,8 +44,10 @@
 							<tbody>
 								<c:forEach items="${evalTableList }" var="e">
 									<tr>
+
 										<td><a target="_blank"
 											href="${pageContext.request.contextPath}/admin/evalTable/show/${e.id}">${e.title }</a></td>
+                                        <td>${e.type}</td>
 										<td><fm:formatDate value="${e.createDate}"
 												pattern="yyyy-MM-dd" /></td>
 										<td><a href="${pageContext.request.contextPath}/admin/evalTable/edit/${e.id}" class="btn btn-sm btn-warning update">修改</a></td>
@@ -96,7 +92,6 @@
 						</table>
 					</div>
 				</div>
-				<!-- 试卷列表 -->
 			</div>
 		</div>
 		<script type="text/javascript">

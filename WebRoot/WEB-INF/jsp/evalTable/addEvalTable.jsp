@@ -21,6 +21,10 @@
 	height: 60px
 }
 </style>
+    <script
+            src="${pageContext.request.contextPath}/js/jquery.validate.min.js"></script>
+    <script
+            src="${pageContext.request.contextPath}/js/messages_zh.min.js"></script>
 </head>
 
 <body>
@@ -32,25 +36,39 @@
 			</div>
 			<div class="col-sm-10">
 				<div class="panel panel-primary">
-					<div class="panel-heading">管理员信息填写</div>
+					<div class="panel-heading">创建新的评教指标</div>
 
 					<div class="panel-body">
 						<form
 							action="${pageContext.request.contextPath }/admin/evalTable/save"
-							class="form-horizontal" role="form" id="form" method="post">
+							class="form-horizontal" role="form" id="add-evalTable-form" method="post">
+
+                            <div class="form-group">
+                                <label for="type" class="col-xs-2 control-label">评教指标类型</label>
+                                <div class="col-xs-3">
+                                    <select type="text" class="form-control" name="type" required="required"
+                                           id="type">
+                                        <option value="学生评教师">学生评教师</option>
+                                        <option value="教师评教师">教师评教师</option>
+                                        <option value="教师评学生">教师评学生</option>
+                                        <option value="领导评教师">领导评教师</option>
+                                    </select>
+                                </div>
+                            </div>
+
 							<div class="form-group">
 
-								<label class="col-xs-2 control-label">评教指标标题</label>
+								<label for="title" class="col-xs-2 control-label">评教指标标题</label>
 								<div class="col-xs-10">
 									<input type="text" class="form-control inputxt" name="title" required="required"
-										id="username">
+										id="title">
 								</div>
 							</div>
 							
 							<div class="form-group">
-								<label class="col-xs-2 control-label">评教须知</label>
+								<label for="note" class="col-xs-2 control-label">评教须知</label>
 								<div class="col-xs-10">
-									<textarea rows="5" cols="100%" name="note" required="required"></textarea>
+									<textarea rows="5" cols="100%" class="form-control" name="note" id="note" required="required"></textarea>
 								</div>
 							</div>
 							
@@ -83,12 +101,12 @@
 									<div class="col-xs-6">
 										<div class="alert alert-success" role="alert">
 											请在下面  ↓ ↓ ↓ 输入评教等级或评分<br>
-											<code>不同等级评分之间使用 空格 逗号 隔开</code>
+											<code>不同等级评分之间使用 空格 或者 逗号 隔开</code>
 											<br>例如：<code>10 8 5 2</code> 或者 <code>10,8,5,2</code>
 										</div>
 
 									</div>
-									<div class="tableItem" style="margin-top: 20px;">
+									<div class="tableItem row" style="padding-top: 20px;">
 
 										<div class="col-xs-6 context">
 											<input type="text" class="form-control inputxt" required="required"
@@ -153,31 +171,35 @@
 	<script type="text/javascript">
 	$(function(){
 		$("#addItem").click(function(){
-			var cnt = $("#item .item").size();
+            var $item = $("#item");
+			var cnt = $item.find(".item").size();
 			var contextName = "itemList["+cnt+"].context";
-			var item = $("#item .item:last").clone();
+			var item = $item.find(".item:last").clone();
 			$(item).children("input").attr("name",contextName);
-			$("#item .item:last").after(item);
+            $item.find(".item:last").after(item);
 			return false;
 		});
 		$("#addQuestion").click(function(){
-			var cnt = $("#question .question").size();
+            var $question = $("#question");
+			var cnt = $question.find(".question").size();
 			var contextName = "questionList["+cnt+"].context";
-			var item = $("#question .question:last").clone();
+			var item = $question.find(".question:last").clone();
 			$(item).children("input").attr("name",contextName);
-			$("#question .question:last").after(item);
+            $question.find(".question:last").after(item);
 			return false;
 		});
 		$("#addTableItem").click(function(){
-			var cnt = $("#tableItem .tableItem").size();
+            var $tableItem = $("#tableItem");
+			var cnt = $tableItem.find(".tableItem").size();
 			var contextName = "tableItemList["+cnt+"].context";
 			var levelName = "tableItemList["+cnt+"].level";
-			var item = $("#tableItem .tableItem:last").clone();
+			var item = $tableItem.find(".tableItem:last").clone();
 			$(item).children(".context").children("input").attr("name",contextName);
 			$(item).children(".level").children("input").attr("name",levelName);
-			$("#tableItem .tableItem:last").after(item);
+            $tableItem.find(".tableItem:last").after(item);
 			return false;
-		});	
+		});
+        $("#add-evalTable-form").validate();
 		
 	});
 		

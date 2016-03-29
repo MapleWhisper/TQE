@@ -5,7 +5,11 @@
 <%@ include file="../header.jspf"%>
 <title>评教批次</title>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.css"></link>
+	href="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.css"/>
+    <script
+            src="${pageContext.request.contextPath}/js/jquery.validate.min.js"></script>
+    <script
+            src="${pageContext.request.contextPath}/js/messages_zh.min.js"></script>
 </head>
 
 <body>
@@ -16,22 +20,11 @@
 				<%@ include file="../left.jsp"%>
 			</div>
 			<div class="col-sm-10">
-				<!-- 生成试卷 -->
-				<div class="panel panel-primary">
-					<div class="panel-heading">
-						<h3 class="panel-title">生成新批次</h3>
-					</div>
-					<div class="panel-body">
-						<center>
-							<a href="${pageContext.request.contextPath}/admin/batches/add"
-								class="btn btn-info btn-lg">生成新批次</a>
-						</center>
-					</div>
-				</div>
-				<!-- 生成试卷 -->
 
+                <div class="bs-callout bs-callout-info">
+                    <a class="btn btn-info btn-lg" data-toggle="modal" data-target="#add-batch-modal">生成新批次</a>
+                </div>
 
-				<!-- 试卷列表 -->
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<h3 class="panel-title">批次列表</h3>
@@ -43,18 +36,17 @@
 								<tr class="info">
 									<td>批次名</td>
 									<td>学期</td>
-									<td>当前课程总数</td>
-									<td>已评教课程总数</td>
+									<td>开始/结束时间</td>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach items="${batchesList }" var="b">
 									<tr>
 										<td><a 
-											href="${pageContext.request.contextPath}/admin/batches/show/${b.id}">${b.name }</a></td>
+											href="${pageContext.request.contextPath}/admin/batches/show/${b.id}">${b.name}</a></td>
 										<td>${b.season}</td>
-										<td>${b.courseNumber}</td>
-										<td>${b.curCourseNumber}</td>
+                                        <td><fm:formatDate value="${b.beginDate}"  dateStyle="medium"/> ~
+                                            <fm:formatDate value="${b.endDate}"  dateStyle="medium"/></td>
 
 									</tr>
 								</c:forEach>
@@ -62,9 +54,28 @@
 						</table>
 					</div>
 				</div>
-				<!-- 试卷列表 -->
 			</div>
 		</div>
+
+
+
+        <!-- 添加批次Modal -->
+        <div class="modal fade" id="add-batch-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="add-admin-modal-title">添加新批次</h4>
+                    </div>
+                    <div class="modal-body">
+                        <jsp:include page="addBatch.jsp"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
 		<script type="text/javascript">
     			$(function(){
     				$(".delete").click(function(){

@@ -11,7 +11,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import java.util.Map;
 
 /**
- * 前台传来的搜索信息封装成pageVO对象
+ * 鎶婂墠绔紶鏉ョ殑鍙傛暟杞崲鎴怭ageVO瀵硅薄
  * Created by Maple on 2015/12/2.
  */
 public class PageVOHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {

@@ -35,6 +35,6 @@ public enum UserType {
         if(userType.equals("leader")){
             return UserType.LEADER;
         }
-        throw new IllegalArgumentException("Î´ÖªµÄÓÃ»§ÀàÐÍ");
+        throw new IllegalArgumentException("æœªçŸ¥çš„ç”¨æˆ·ç±»åž‹");
     }
 }

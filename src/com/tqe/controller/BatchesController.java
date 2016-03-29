@@ -5,9 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-
-import com.fasterxml.jackson.databind.deser.Deserializers;
 import com.tqe.base.BaseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,7 +35,7 @@ public class BatchesController extends BaseController {
 	
 	@RequestMapping("/batches/add")
 	public String addbatches(){
-		return "batches/addBatches";
+		return "batches/addBatch";
 	}
 	
 	
@@ -61,11 +58,11 @@ public class BatchesController extends BaseController {
 	BaseResult
 	updateBatches(@ModelAttribute() Batches batches) throws IOException{
 		if(batches.getBeginDate()==null || batches.getEndDate()==null || batches.getBeginDate().getTime()>=batches.getEndDate().getTime()){
-			return BaseResult.createFailure("ÆğÊ¼Ê±¼ä²»ÄÜÎª¿Õ ½ØÖ¹Ê±¼ä²»ÄÜÎª¿Õ ÆğÊ¼Ê±¼ä±ØĞëÒªÒªĞ¡ÓÚ½ØÖ¹Ê±¼ä");
+			return BaseResult.createFailure("èµ·å§‹æ—¶é—´ä¸èƒ½ä¸ºç©º æˆªæ­¢æ—¶é—´ä¸èƒ½ä¸ºç©º èµ·å§‹æ—¶é—´å¿…é¡»è¦è¦å°äºæˆªæ­¢æ—¶é—´");
 		}
 		Date latest = batchesService.getLatestDate(batches.getId());
 		if(latest!=null && batches.getBeginDate().getTime() <= latest.getTime()){
-			return BaseResult.createFailure("Éè¶¨ÈÕÆÚÊ§°Ü! ÄúÉèÖÃµÄÆÀ½ÌÅú´ÎµÄÆğÊ¼ÈÕÆÚ±ØĞë´óÓÚ×îĞÂÅú´ÎµÄ½ØÖ¹ÈÕÆÚ:"+new SimpleDateFormat("yyyy-MM-dd").format(latest)+" ÇëÖØĞÂÉèÖÃ¿ªÊ¼ÈÕÆÚ»òÕß½ØÖ¹ÈÕÆÚ");
+			return BaseResult.createFailure("è®¾å®šæ—¥æœŸå¤±è´¥! æ‚¨è®¾ç½®çš„è¯„æ•™æ‰¹æ¬¡çš„èµ·å§‹æ—¥æœŸå¿…é¡»å¤§äºæœ€æ–°æ‰¹æ¬¡çš„æˆªæ­¢æ—¥æœŸ:"+new SimpleDateFormat("yyyy-MM-dd").format(latest)+" è¯·é‡æ–°è®¾ç½®å¼€å§‹æ—¥æœŸæˆ–è€…æˆªæ­¢æ—¥æœŸ");
 		}
 		Batches b = batchesService.getById(batches.getId());
 		if(b!=null){
@@ -74,16 +71,16 @@ public class BatchesController extends BaseController {
 		}
 
 		batchesService.update(b);
-		return BaseResult.createSuccess("ĞŞ¸ÄÈÕÆÚ³É¹¦£¡");
+		return BaseResult.createSuccess("ä¿®æ”¹æ—¥æœŸæˆåŠŸï¼");
 	}
 	
 	
 	/**
 	 * 
-	 * ÉèÖÃÆÀ½ÌÅú´ÎµÄÄ¬ÈÏÆÀ¼Û±í
-	 * @param bid ÆÀ½ÌÅú´ÎId
-	 * @param eid ÆÀ½Ì±íId
-	 * @param type student:Ñ§Éú teacher:½ÌÊ¦ lead:Áìµ¼
+	 * è®¾ç½®è¯„æ•™æ‰¹æ¬¡çš„é»˜è®¤è¯„ä»·è¡¨
+	 * @param bid è¯„æ•™æ‰¹æ¬¡Id
+	 * @param eid è¯„æ•™è¡¨Id
+	 * @param type student:å­¦ç”Ÿ teacher:æ•™å¸ˆ lead:é¢†å¯¼
 	 * @return
 	 */
 	@RequestMapping("/batches/setEval/{type}/{bid}/{eid}")
@@ -94,7 +91,7 @@ public class BatchesController extends BaseController {
 		}
 		Batches b = batchesService.getById(bid);
 			
-		if(StringUtils.hasText(type) && b!=null){		//Èç¹ûÓĞÄÚÈİ
+		if(StringUtils.hasText(type) && b!=null){		//å¦‚æœæœ‰å†…å®¹
 			if(type.equals("student")){
 				
 				b.setStuEvalId(eid);
@@ -119,7 +116,7 @@ public class BatchesController extends BaseController {
 			}
 			
 		}
-		model.addAttribute("msg", "Â·¾¶²ÎÊı²»ÕıÈ·:/batches/setEval/{type}/{bid}/{eid}\n");
+		model.addAttribute("msg", "è·¯å¾„å‚æ•°ä¸æ­£ç¡®:/batches/setEval/{type}/{bid}/{eid}\n");
 		return "error";
 		
 			

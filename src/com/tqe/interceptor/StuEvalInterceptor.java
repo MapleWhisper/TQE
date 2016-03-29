@@ -15,7 +15,7 @@ public class StuEvalInterceptor extends HandlerInterceptorAdaptor{
 			Object arg2) throws Exception {
 		HttpSession session = req.getSession();
 		if(session.getAttribute("student")==null){
-			sendError(req, resp, "对不起，您还没有登陆。请登录学生信息");
+			sendError(req, resp, "瀵逛笉璧凤紝鎮ㄨ繕娌℃湁鐧婚檰銆傝鐧诲綍瀛︾敓淇℃伅");
 			return false;
 		}
 		return true;

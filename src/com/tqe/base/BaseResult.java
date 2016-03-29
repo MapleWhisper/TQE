@@ -1,5 +1,8 @@
 package com.tqe.base;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import java.io.Serializable;
 
 /**
@@ -12,8 +15,7 @@ public class BaseResult implements Serializable{
     private Object item;
 
     /**
-     * 返回正确的结果相应
-     * @param message 成功消息
+     * 鍒涘缓涓�涓垚鍔熺殑缁撴灉
      */
     public static BaseResult createSuccess(String message){
         return new BaseResult(true,message);
@@ -27,10 +29,10 @@ public class BaseResult implements Serializable{
     }
 
     /**
-     * 返回失败的结果相应
-     * @param message 失败消息
+     * 鍒涘缓涓�涓け璐ョ殑缁撴灉
      */
     public static BaseResult createFailure(String message){
+
         return new BaseResult(false,message);
     }
 

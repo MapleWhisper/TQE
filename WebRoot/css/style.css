@@ -124,3 +124,22 @@ body {
 .error-message-container{
     display: none;
 }
+
+.float_left{
+     float: left;
+}
+.float_right {
+    float:right;
+}
+
+#global-notification{
+    display:none ;
+    margin-top:30px;
+    text-align: center;
+    width: 50%;
+    margin-left: 25%;
+}
+
+.container-fluid>.row{
+    margin-top: 30px;
+}

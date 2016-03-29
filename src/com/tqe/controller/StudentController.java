@@ -17,6 +17,7 @@ import com.tqe.po.Student;
 import com.tqe.po.TeaStuResultTable;
 import com.tqe.utils.SystemUtils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 @Controller()
@@ -29,7 +30,10 @@ public class StudentController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value={"/student"},method={RequestMethod.GET})
-	public String student(Model model,HttpSession session){
+	public String student(
+            Model model,
+            HttpSession session
+    ){
 
 		model.addAttribute("departmentList", departmentService.findAvailableDepartmentList(DepartmentType.STUDENT));
 

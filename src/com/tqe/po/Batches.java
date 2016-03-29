@@ -11,20 +11,20 @@ public class Batches {
 	private Integer curCourseNumber;
 	private String season;
 	
-	private Date beginDate;		//ÆÀ½Ì¿ªÊ¼ÈÕÆÚ
-	private Date endDate;		//ÆÀ½Ì½áÊøÈÕÆÚ
+	private Date beginDate;		//è¯„æ•™å¼€å§‹æ—¥æœŸ
+	private Date endDate;		//è¯„æ•™ç»“æŸæ—¥æœŸ
 	
-	private EvalTable stuEval;	//Ä¬ÈÏµÄÑ§ÉúÆÀ½ÌÖ¸±ê±í
-	private Integer stuEvalId;		//Ä¬ÈÏµÄÑ§ÉúÆÀ½ÌÖ¸±ê±íId
+	private EvalTable stuEval;	//é»˜è®¤çš„å­¦ç”Ÿè¯„æ•™æŒ‡æ ‡è¡¨
+	private Integer stuEvalId;		//é»˜è®¤çš„å­¦ç”Ÿè¯„æ•™æŒ‡æ ‡è¡¨Id
 	
-	private EvalTable teaEval;	//Ä¬ÈÏµÄ½ÌÊ¦ÆÀ½ÌÖ¸±ê±í
-	private Integer teaEvalId;		//Ä¬ÈÏµÄ½ÌÊ¦ÆÀ½ÌÖ¸±ê±íId
+	private EvalTable teaEval;	//é»˜è®¤çš„æ•™å¸ˆè¯„æ•™æŒ‡æ ‡è¡¨
+	private Integer teaEvalId;		//é»˜è®¤çš„æ•™å¸ˆè¯„æ•™æŒ‡æ ‡è¡¨Id
 	
-	private EvalTable leadEval;	//Ä¬ÈÏµÄÁìµ¼ÆÀ½ÌÖ¸±ê±í
-	private Integer leadEvalId;		//Ä¬ÈÏµÄÁìµ¼ÆÀ½ÌÖ¸±ê±íId
+	private EvalTable leadEval;	//é»˜è®¤çš„é¢†å¯¼è¯„æ•™æŒ‡æ ‡è¡¨
+	private Integer leadEvalId;		//é»˜è®¤çš„é¢†å¯¼è¯„æ•™æŒ‡æ ‡è¡¨Id
 	
-	private EvalTable teaStuEval;	//Ä¬ÈÏµÄ½ÌÊ¦ÆÀ¼ÛÑ§Éú±í
-	private Integer teaStuEvalId;	//Ä¬ÈÏµÄ½ÌÊ¦ÆÀ¼ÛÑ§Éú±íId
+	private EvalTable teaStuEval;	//é»˜è®¤çš„æ•™å¸ˆè¯„ä»·å­¦ç”Ÿè¡¨
+	private Integer teaStuEvalId;	//é»˜è®¤çš„æ•™å¸ˆè¯„ä»·å­¦ç”Ÿè¡¨Id
 	
 	
 	public Integer getId() {

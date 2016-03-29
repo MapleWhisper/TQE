@@ -43,7 +43,7 @@ public class AdminServiceImpl extends BaseService<Admin>{
 
     public void update(Admin admin) {
         if(admin==null || admin.getId()==null){
-            throw new IllegalArgumentException("id ²»ÄÜÎªnull");
+            throw new IllegalArgumentException("id ä¸èƒ½ä¸ºç©º");
         }
 
         adminDao.update(admin);

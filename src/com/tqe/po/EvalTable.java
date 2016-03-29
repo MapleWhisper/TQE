@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.alibaba.fastjson.JSON;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 评教表
@@ -12,6 +13,7 @@ import com.alibaba.fastjson.JSON;
 public class EvalTable {
 	
 	private Integer id;
+    private String type;    //评教表的类型
 	private String title;	//评教表的标题
 	private String note;	//评教须知
 	private List<EvalItem> itemList = new ArrayList<EvalItem>();	//表单信息
@@ -22,8 +24,16 @@ public class EvalTable {
 	
 	private String score;	//得分
 	private String level;	//评价结果等级
-	
-	public static class EvalItem {
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public static class EvalItem {
 		private String context;
 		private String ans;
 		public EvalItem() {
@@ -54,15 +64,18 @@ public class EvalTable {
 	}
 	
 	public static class EvalTableItem {
-		private String context;
-		private String level;
-		private String ans;
-		
+		private String context;     //文本
+		private String level;       //等级
+		private Integer ans;         //回答(得分)
+
+        private Integer avgScore;   //平均得分
+        private List<Integer> scoreLevelCnts;   //得分等级统计
+
 		public EvalTableItem() {
 			super();
 		}
 
-		public EvalTableItem(String context, String level, String ans) {
+		public EvalTableItem(String context, String level, Integer ans) {
 			super();
 			this.context = context;
 			this.level = level;
@@ -81,14 +94,40 @@ public class EvalTable {
 		public void setLevel(String level) {
 			this.level = level;
 		}
-		public String getAns() {
+		public Integer getAns() {
 			return ans;
 		}
-		public void setAns(String ans) {
+		public void setAns(Integer ans) {
 			this.ans = ans;
 		}
-		
-	}
+
+        public Integer getAvgScore() {
+            return avgScore;
+        }
+
+        public void setAvgScore(Integer avgScore) {
+            this.avgScore = avgScore;
+        }
+
+        public List<Integer> getScoreLevelCnts() {
+            return scoreLevelCnts;
+        }
+
+        public void setScoreLevelCnts(List<Integer> scoreLevelCnts) {
+            this.scoreLevelCnts = scoreLevelCnts;
+        }
+
+        @Override
+        public String toString() {
+            return "EvalTableItem{" +
+                    "context='" + context + '\'' +
+                    ", level='" + level + '\'' +
+                    ", ans=" + ans +
+                    ", avgScore=" + avgScore +
+                    ", scoreLevelCnts=" + scoreLevelCnts +
+                    '}';
+        }
+    }
 
 	
 	public EvalTable() {
@@ -144,7 +183,10 @@ public class EvalTable {
 	public void setQuestionList(List<EvalItem> questionList) {
 		this.questionList = questionList;
 	}
-	
+
+    /**
+     * 将评教表中的JSON内容序列化成内存对象
+     */
 	public EvalTable json2Object(){
 		EvalTable tem = JSON.parseObject(this.getJsonString(), EvalTable.class);
 		this.setItemList(tem.getItemList());
@@ -152,6 +194,14 @@ public class EvalTable {
 		this.setTableItemList(tem.getTableItemList());
 		return this;
 	}
+
+    public static EvalTable json2Object(String jsonString){
+        if(StringUtils.isNoneBlank(jsonString)){
+            return JSON.parseObject(jsonString, EvalTable.class);
+        }
+        return null;
+    }
+
 	public void setAns(EvalTable src,EvalTable ans){
 		for(int i=0;i<src.getItemList().size();i++){
 			src.getItemList().get(i).setAns(ans.getItemList().get(i).getAns());

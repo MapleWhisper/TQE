@@ -3,7 +3,7 @@ package com.tqe.po;
 import java.io.Serializable;
 
 public class StuResultTable extends ResultTable implements Serializable{
-	private String  sid;	//Ñ§ÉúºÅ
+	private String  sid;	//å­¦ç”Ÿid
 
 	
 	private String tname;

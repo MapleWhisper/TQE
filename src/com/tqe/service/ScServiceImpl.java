@@ -20,7 +20,7 @@ public class ScServiceImpl extends BaseService<SC>{
 	}
 
     /**
-     * @return 导入的成功记录数
+     * @return 淇濆瓨瀛︾敓閫夎淇℃伅
      */
     public int saveAll(List<SC> scList){
         int cnt = 0;

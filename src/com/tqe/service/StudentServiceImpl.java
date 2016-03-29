@@ -16,8 +16,8 @@ public class StudentServiceImpl extends BaseService<Student>{
 		private DepartmentServiceImpl departmentService;
 		
 		/**
-		 * µÃµ½ËùÓĞµÄÑ§ÉúÁĞ±í
-		 * ²»ÍÆ¼öÊ¹ÓÃ
+		 * å¾—åˆ°æ‰€æœ‰çš„å­¦ç”Ÿåˆ—è¡¨
+		 * ä¸æ¨èä½¿ç”¨
 		 */
 		@Override
 		public List<Student> findAll() {
@@ -26,13 +26,13 @@ public class StudentServiceImpl extends BaseService<Student>{
 		
 		
 		/**
-		 * ¸ù¾İ²éÑ¯Ìõ¼şµÃµ½ËùÓĞµÄÑ§ÉúÁĞ±í
+		 * æ ¹æ®æŸ¥è¯¢æ¡ä»¶å¾—åˆ°æ‰€æœ‰çš„å­¦ç”Ÿåˆ—è¡¨
 		 * @return
 		 */
 		public List<Student> findByPageVO(PageVO pageVO) {
 			List<Student> stuList  = studentDao.findByPageVO(pageVO);
 			if(stuList!=null){
-				//²»ÄÜ±»·¢ÏÖ...
+				//ä¸èƒ½è¢«å‘ç°...
 				for(Student stu : stuList){
 					stu.setIdNumber(null);
 					stu.setPassword(null);
@@ -42,7 +42,7 @@ public class StudentServiceImpl extends BaseService<Student>{
 		}
 		
 		/**
-		 * ¸ù¾İÑ§ÉúµÄidµÃµ½Ñ§Éú
+		 * æ ¹æ®å­¦ç”Ÿçš„idå¾—åˆ°å­¦ç”Ÿ
 		 * @param sid
 		 * @return
 		 */
@@ -51,7 +51,7 @@ public class StudentServiceImpl extends BaseService<Student>{
 		}
 		
 		/**
-		 * ¸ù¾İÑ§ÉúµÄidµÃµ½Ñ§ÉúĞÕÃû
+		 * æ ¹æ®å­¦ç”Ÿçš„idå¾—åˆ°å­¦ç”Ÿå§“å
 		 * @param sid
 		 * @return
 		 */
@@ -60,7 +60,7 @@ public class StudentServiceImpl extends BaseService<Student>{
 		}
 		
 		/**
-		 * ±£´æÑ§ÉúĞÅÏ¢
+		 * ä¿å­˜å­¦ç”Ÿä¿¡æ¯
 		 */
 		public void save(Student e) {
 			studentDao.save(e);
@@ -68,8 +68,8 @@ public class StudentServiceImpl extends BaseService<Student>{
 		
 		
 		/**
-		 * ´ÓexcelµÃµ½µÄÑ§ÉúÊı¾İ
-		 * µ¼Èëµ½Êı¾İ¿â
+		 * ä»excelå¾—åˆ°çš„å­¦ç”Ÿæ•°æ®
+		 * å¯¼å…¥åˆ°æ•°æ®åº“
 		 * @param list
 		 * @return
 		 */
@@ -84,7 +84,7 @@ public class StudentServiceImpl extends BaseService<Student>{
 					for(Student s:list){
 						if(s.getSid()!=null){
 							boolean reload  = processStuData(dMap, mMap, cMap, s);
-							if(reload){		//Èç¹û²åÈëÑ§ÉúÊı¾İµÄÍ¬Ê±²åÈëÁË Ñ§Ôº ×¨Òµ °à¼¶µÈĞÅÏ¢ ÄÇÃ´ÖØĞÂ¼ÓÔØMap
+							if(reload){		//å¦‚æœæ’å…¥å­¦ç”Ÿæ•°æ®çš„åŒæ—¶æ’å…¥äº† å­¦é™¢ ä¸“ä¸š ç­çº§ç­‰ä¿¡æ¯ é‚£ä¹ˆé‡æ–°åŠ è½½Map
 								dMap = convertDepListToMap(departmentDao.findAll());
 								mMap = convertMajListToMap(majorDao.findAll());
 								cMap = convertClaListToMap(classDao.findAll());
@@ -104,45 +104,44 @@ public class StudentServiceImpl extends BaseService<Student>{
 		}
 		
 		/**
-		 * ´¦ÀíÑ§ÉúÊı¾İ Íâ¼ü¹ØÏµ
-		 * @param dMap Ñ§ÔºĞÅÏ¢
-		 * @param mMap ×¨ÒµĞÅÏ¢
-		 * @param cMap °à¼¶ĞÅÏ¢
-		 * @param s Ñ§Éú
+		 * å¤„ç†å­¦ç”Ÿæ•°æ® å¤–é”®å…³ç³»
+		 * @param dMap å­¦é™¢ä¿¡æ¯
+		 * @param mMap ä¸“ä¸šä¿¡æ¯
+		 * @param cMap ç­çº§ä¿¡æ¯
+		 * @param s å­¦ç”Ÿ
 		 */
 		private boolean processStuData(Map<String, Integer> dMap,
 				Map<String, Integer> mMap, Map<String, Integer> cMap, Student s) {
 			String m = s.getMajor();
 			boolean reload =false;
-			if(m.endsWith(".")){		//Èç¹û×¨ÒµÊÇÒÔ "." ½áÊøµÄ ÄÇÃ´¾Í°Ñ "." È¥µô
+			if(m.endsWith(".")){		//å¦‚æœä¸“ä¸šæ˜¯ä»¥ "." ç»“æŸçš„ é‚£ä¹ˆå°±æŠŠ "." å»æ‰
 				s.setMajor(m.substring(0, m.length()-1));
 			}
-			//Èç¹û¸ÃÑ§ÉúµÄ²¿ÃÅ²»´æÔÚ ÄÇÃ´²åÈë¸Ã²¿ÃÅ
+			//å¦‚æœè¯¥å­¦ç”Ÿçš„éƒ¨é—¨ä¸å­˜åœ¨ é‚£ä¹ˆæ’å…¥è¯¥éƒ¨é—¨
 			if(StringUtils.isNoneBlank(s.getDepartment()) && !dMap.containsKey(s.getDepartment()) ) {
 				departmentDao.save(new Department(s.getDepartment()));
-				dMap = convertDepListToMap(departmentDao.findAll());	//ÖØĞÂ¼ÓÔØ
+				dMap = convertDepListToMap(departmentDao.findAll());	//é‡æ–°åŠ è½½
 				reload = true;
 			}
 			s.setDepartmentId(dMap.get(s.getDepartment()));
 
-			//Èç¹ûÑ§ÉúµÄ×¨Òµ²»´æÔÚ ÄÇÃ´²åÈë¸Ã×¨Òµ
+			//å¦‚æœå­¦ç”Ÿçš„ä¸“ä¸šä¸å­˜åœ¨ é‚£ä¹ˆæ’å…¥è¯¥ä¸“ä¸š
 			if(StringUtils.isNotBlank(s.getMajor()) && !mMap.containsKey(s.getMajor())){
 				Major major = new Major();
 				major.setName(s.getMajor());
 				major.setDepartmentId(dMap.get(s.getDepartment()));
 				majorDao.save(major);
-				mMap = convertMajListToMap(majorDao.findAll());	//ÖØĞÂ¼ÓÔØ
+				mMap = convertMajListToMap(majorDao.findAll());	//é‡æ–°åŠ è½½
 				reload = true;
 			}
 			s.setMajorId(mMap.get(s.getMajor()));
 
-			//Èç¹ûÑ§ÉúµÄ°à¼¶ĞÅÏ¢²»´æÔÚ ÄÇÃ´²åÈë¸Ã°à¼¶
+			//å¦‚æœå­¦ç”Ÿçš„ç­çº§ä¿¡æ¯ä¸å­˜åœ¨ é‚£ä¹ˆæ’å…¥è¯¥ç­çº§
 			if(StringUtils.isNotBlank(s.getClazz()) && !cMap.containsKey(s.getClazz())){
 				Clazz clazz = new Clazz();
 				clazz.setName(s.getClazz());
 				clazz.setMajorId(mMap.get(s.getMajor()));
 				clazz.setDepartmentId(dMap.get(s.getDepartment()));
-                clazz.setGrade(s.getGrade());
 				classDao.save(clazz);
 				cMap = convertClaListToMap(classDao.findAll());
 				reload = true;
@@ -152,7 +151,7 @@ public class StudentServiceImpl extends BaseService<Student>{
 		}
 
 		/**
-		 * Ñ§ÉúµÇÂ¼
+		 * å­¦ç”Ÿç™»å½•
 		 * @param user
 		 * @return
 		 */
@@ -162,17 +161,17 @@ public class StudentServiceImpl extends BaseService<Student>{
 
 		
 		/**
-		 * ¸ù¾İ¿Î³ÌºÅ Ñ¡³öËùÓĞÑ¡ÁËÕâÃÅ¿ÎµÄÑ§Éú
-		 * Èç¹û¸Ä½ÌÊ¦ÔÚ¸ÄÅú´ÎÒÑ¾­ÆÀ¼Û¹ıÑ§ÉúÁË
-		 * ÄÇÃ´¾ÍÉèÖÃ×´Ì¬²»¿ÉÆÀ¼Û
+		 * æ ¹æ®è¯¾ç¨‹å· é€‰å‡ºæ‰€æœ‰é€‰äº†è¿™é—¨è¯¾çš„å­¦ç”Ÿ
+		 * å¦‚æœæ”¹æ•™å¸ˆåœ¨æ”¹æ‰¹æ¬¡å·²ç»è¯„ä»·è¿‡å­¦ç”Ÿäº†
+		 * é‚£ä¹ˆå°±è®¾ç½®çŠ¶æ€ä¸å¯è¯„ä»·
 		 * @param cid
 		 * @param cno
 		 * @return
 		 */
 		public List<Student> findAllByCId(String cid, Integer cno,String tid,Integer bid ) {
 			List<Student> studentList = studentDao.findAllByCId(cid,cno);
-			List<String> sidList = evalDao.findAllSidsByCidTid(cid,cno,tid,bid);	//Ñ¡³ö¶ÔÓ¦¿Î³Ì ½ÌÊ¦ºÅ ºÍ Åú´Î ÒÑ¾­ÆÀ¼Û¹ıµÃÑ§ÉúIds
-			for(Student stu : studentList){		//×´Ì¬Îª²»¿ÉÆÀ¼Û
+			List<String> sidList = evalDao.findAllSidsByCidTid(cid,cno,tid,bid);	//é€‰å‡ºå¯¹åº”è¯¾ç¨‹ æ•™å¸ˆå· å’Œ æ‰¹æ¬¡ å·²ç»è¯„ä»·è¿‡å¾—å­¦ç”ŸIds
+			for(Student stu : studentList){		//çŠ¶æ€ä¸ºä¸å¯è¯„ä»·
 				if(sidList.contains(stu.getSid())){
 					stu.setIsEvaled(true);
 				}
