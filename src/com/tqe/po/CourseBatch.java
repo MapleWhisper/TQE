@@ -1,7 +1,10 @@
 package com.tqe.po;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Maple on 2016/3/24.
@@ -12,6 +15,8 @@ public class CourseBatch {
     private String cid;
     private Integer cno;
     private Integer bid;
+
+
 
     private Double stuEvalAvgScore=0d;    //学生评教平均分
     private Double teaEvalAvgScore=0d;
@@ -31,6 +36,10 @@ public class CourseBatch {
 
     private Integer stuEvalTotal;   //总学生人数
     private Integer stuEvalCnt;     //已经评教的学生人数
+
+    private List<Pair<String,List<String>>> stuQuestionList;   //学生评教的回答标题和 答案列表
+    private List<Pair<String,List<String>>> teaQuestionList;
+    private List<Pair<String,List<String>>> leaQuestionList;
 
 
 
@@ -215,5 +224,29 @@ public class CourseBatch {
                 ", course=" + course +
                 ", batch=" + batch +
                 '}';
+    }
+
+    public List<Pair<String,List<String>>> getStuQuestionList() {
+        return stuQuestionList;
+    }
+
+    public void setStuQuestionList(List<Pair<String,List<String>>> stuQuestionList) {
+        this.stuQuestionList = stuQuestionList;
+    }
+
+    public List<Pair<String,List<String>>> getTeaQuestionList() {
+        return teaQuestionList;
+    }
+
+    public void setTeaQuestionList(List<Pair<String,List<String>>> teaQuestionList) {
+        this.teaQuestionList = teaQuestionList;
+    }
+
+    public List<Pair<String,List<String>>> getLeaQuestionList() {
+        return leaQuestionList;
+    }
+
+    public void setLeaQuestionList(List<Pair<String,List<String>>> leaQuestionList) {
+        this.leaQuestionList = leaQuestionList;
     }
 }

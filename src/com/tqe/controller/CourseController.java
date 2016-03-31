@@ -74,7 +74,7 @@ public class CourseController extends BaseController{
 		for(Batches b : batchesList){	//遍历所有得到的批次列表
 			List<StuResultTable> stuTableList = evalService.findAllStuTableByCidAndBid(cid, cno, b.getId());
 			List<TeaResultTable> teaTableList = evalService.findAllTeaTableByCidAndBid(cid, cno, b.getId());
-			List<LeaResultTable> leaTableList = evalService.findAllTeaLableByCidAndBid(cid, cno, b.getId());
+			List<LeaResultTable> leaTableList = evalService.findAllLeaTableByCidAndBid(cid, cno, b.getId());
 			CourseModel.Batches batches = new CourseModel.Batches();
 			batches.setStuTableList(stuTableList);
 			batches.setTeaTableList(teaTableList);

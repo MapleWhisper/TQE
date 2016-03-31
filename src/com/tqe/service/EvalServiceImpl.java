@@ -17,9 +17,10 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 	public void saveStuTable(StuResultTable stuTable) throws Exception{
 			Integer isCoursePermited = studentDao.isCoursePermitted(stuTable.getSid(),stuTable.getCid(),stuTable.getCno());
 			if(isCoursePermited>=1){		//判断学生是否可以评价该课程
+
 				evalDao.saveStuTable(stuTable);
 			}else{
-				throw new IllegalAccessException("学生还有选择门课，不能评价！");
+				throw new IllegalAccessException("学生没有选该门课程，不能评价！");
 			}
 	}
 	
@@ -42,6 +43,7 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 	 */
 	public void saveTeaStuTable(TeaStuResultTable teaStuTable) throws Exception{
 		try {
+
 			evalDao.saveTeaStuTable(teaStuTable);
 		} catch (Exception e) {
 			throw e;
@@ -168,7 +170,7 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 	 * @param bid 批次号
 	 * @return
 	 */
-	public List<LeaResultTable> findAllTeaLableByCidAndBid(String cid, Integer cno,
+	public List<LeaResultTable> findAllLeaTableByCidAndBid(String cid, Integer cno,
                                                            Integer bid) {
 		List<LeaResultTable> list = evalDao.findAllLeaTableByCourse(cid,cno,bid);
 		for(LeaResultTable leaTable : list){

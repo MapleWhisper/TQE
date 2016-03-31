@@ -1,5 +1,6 @@
 package com.tqe.base.task;
 
+import com.tqe.utils.SystemUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.annotation.Lazy;
@@ -21,6 +22,9 @@ public class ResetGlobalEnvironmentTask {
 
     Log logger = LogFactory.getLog(ResetGlobalEnvironmentTask.class);
 
+    /**
+     * 1分钟一次
+     */
     @Scheduled(cron = "0 0/1 * * * ?")
     public void resetEnvironment() {
         WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();
@@ -37,6 +41,7 @@ public class ResetGlobalEnvironmentTask {
         int year = Calendar.getInstance().get(Calendar.YEAR);
 
         applicationContext.setAttribute("curYear",year);
+        applicationContext.setAttribute("curSeason", SystemUtils.getSeason());
 
         //logger.info("reset curYear :"+year);
     }

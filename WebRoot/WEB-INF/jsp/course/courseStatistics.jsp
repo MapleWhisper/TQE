@@ -10,9 +10,10 @@
         .eval-level-cnts{
             height: 400px;
         }
+        .eval-table-item-cnts{
+            height: 400px;
+        }
     </style>
-    <link rel="stylesheet"
-          href="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.css"/>
 
     <title>课程列表</title>
 </head>
@@ -29,7 +30,7 @@
         <div class="col-sm-10 ">
             <input type="hidden" id="cid" name="cid" value="${courseModel.course.cid}"/>
             <input type="hidden" id="cno" name="cno" value="${courseModel.course.cno}"/>
-            <input type="hidden" id="bid" name="bid" value="${batch.id}"/>
+            <input type="hidden" id="bid" name="bid" value="${courseBatch.batch.id}"/>
             <table
                     class="table table-hover table-striped " style="text-align: center">
                 <tr class="info">
@@ -69,8 +70,11 @@
                              <c:forEach items="${courseModel.batchesList}" var="b" varStatus="s">
                                  <tr>
                                      <td>${s.count}</td>
-                                     <td><a
-                                             href="${pageContext.request.contextPath}/admin/batches/show/${b.batches.id}">${b.batches.name}</a></td>
+                                     <td><a class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="点击查看课程统计信息"
+                                             href="${pageContext.request.contextPath}/admin/statistics/course?cid=${courseModel.course.cid}&cno=${courseModel.course.cno}&bid=${b.batches.id}">
+                                             ${b.batches.name}
+                                        </a>
+                                     </td>
                                      <td>${b.batches.season}</td>
                                      <td><fm:formatDate value="${b.batches.beginDate}"  dateStyle="medium"/> ~
                                          <fm:formatDate value="${b.batches.endDate}"  dateStyle="medium"/></td>
@@ -85,18 +89,18 @@
             <div class="bs-callout bs-callout-info">
                 <h4 class="panel-heading">
                     <a
-                            href="${pageContext.request.contextPath}/admin/batches/show/${batch.id}"
-                            target="_blank">${batch.name}</a>
+                            href="${pageContext.request.contextPath}/admin/batches/show/${courseBatch.batch.id}"
+                            target="_blank">${courseBatch.batch.name}</a>
                     <a style="padding-left: 50px;"
-                       href="${pageContext.request.contextPath}/admin/evalTable/show/${batch.stuEvalId}"
+                       href="${pageContext.request.contextPath}/admin/evalTable/show/${courseBatch.batch.stuEvalId}"
                        target="_blank">点我查看评教表</a>
                     <a style="padding-left: 30px;">
-                        评教时间: <fm:formatDate value="${batch.beginDate}"  dateStyle="medium"/> ~ <fm:formatDate value="${b.batches.endDate}"  dateStyle="medium"/>
+                        评教时间: <fm:formatDate value="${courseBatch.batch.beginDate}"  dateStyle="medium"/> ~ <fm:formatDate value="${courseBatch.batch.endDate}"  dateStyle="medium"/>
                     </a>
                 </h4>
                 <hr>
                 <h4 class="">学生评教进程: 已评 <code>${courseBatch.stuEvalCnt}</code> 人/ 共 <code>${courseBatch.stuEvalTotal}</code> 人</h4>
-                <div class="progress">
+                <div class="progress" style="margin-top: 20px">
                     <div
                             class="progress-bar progress-bar-info progress-bar-striped active"
                             role="progressbar" aria-valuenow="10" aria-valuemin="0"
@@ -119,10 +123,139 @@
                         <div id="lea-eval-level-cnts" class="eval-level-cnts" ></div>
                     </div>
                 </div>
+
+                <hr>
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col-sm-6">
+                        <h4>学生评教打分表统计</h4>
+                        <div id="stu-eval-table-item-cnts" class="eval-table-item-cnts" ></div>
+                    </div>
+                    <div class="col-sm-6">
+                        <h4>教师评教打分表统计</h4>
+                        <div id="tea-eval-table-item-cnts" class="eval-table-item-cnts" ></div>
+                    </div>
+                    <div class="col-sm-6">
+                        <h4>领导评教打分表统计</h4>
+                        <div id="lea-eval-table-item-cnts" class="eval-table-item-cnts" ></div>
+                    </div>
+
+                </div>
+                <hr>
+
+                <div class="row" style="margin-top: 20px">
+                    <div role="tabpanel">
+
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#student"
+                                                                      aria-controls="student" role="tab" data-toggle="tab"><h4>学生问题回答和建议</h4></a></li>
+                            <li role="presentation"><a href="#teacher"
+                                                       aria-controls="teacher" role="tab" data-toggle="tab"><h4>教师问题回答和建议</h4></a></li>
+                            <li role="presentation"><a href="#leader"
+                                                       aria-controls="leader" role="tab" data-toggle="tab"><h4>领导问题回答和建议</h4></a></li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div role="tabpanel" class="tab-content" >
+                            <!-- 学生评论信息 -->
+                            <div role="tabpanel" class="tab-pane active"  id="student" >
+                                <c:if test="${courseBatch.stuQuestionList == null}">
+                                    <h3>暂无评教数据</h3>
+                                </c:if>
+                                <c:forEach var="quest" items="${courseBatch.stuQuestionList}" varStatus="v">
+
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading"> <code>${v.count}</code> ${quest.left}</div>
+                                            <!-- Table -->
+                                            <table class="table table-hover table-condensed">
+                                                <thead>
+                                                <tr >
+                                                    <td>#</td>
+                                                    <td>评论与建议内容</td>
+                                                </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                <c:forEach varStatus="vs" var="q" items="${quest.right}">
+                                                    <tr>
+                                                        <td>${vs.count}</td>
+                                                        <td>${q}</td>
+                                                    </tr>
+                                                </c:forEach>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                </c:forEach>
+                            </div>
+
+                            <!-- 教师评论信息 -->
+                            <div role="tabpanel" class="tab-pane " id="teacher">
+                                <c:if test="${courseBatch.teaQuestionList == null}">
+                                    <h3>暂无评教数据</h3>
+                                </c:if>
+                                <c:forEach var="quest" items="${courseBatch.teaQuestionList}" varStatus="v">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading"> <code>${v.count}</code> ${quest.left}</div>
+                                            <!-- Table -->
+                                            <table class="table table-hover table-condensed">
+                                                <thead>
+                                                <tr >
+                                                    <td>#</td>
+                                                    <td>评论与建议内容</td>
+                                                </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                <c:forEach varStatus="vs" var="q" items="${quest.right}">
+                                                    <tr>
+                                                        <td>${vs.count}</td>
+                                                        <td>${q}</td>
+                                                    </tr>
+                                                </c:forEach>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                </c:forEach>
+                            </div>
+
+
+
+                            <!-- 领导评论信息 -->
+                            <div role="tabpanel" class="tab-pane" id="leader">
+                                <c:if test="${courseBatch.leaQuestionList == null}">
+                                    <h3>暂无评教数据</h3>
+                                </c:if>
+                                <c:forEach var="quest" items="${courseBatch.leaQuestionList}" varStatus="v">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading"> <code>${v.count}</code> ${quest.left}</div>
+                                            <!-- Table -->
+                                            <table class="table table-hover table-condensed">
+                                                <thead>
+                                                <tr >
+                                                    <td>#</td>
+                                                    <td>评论与建议内容</td>
+                                                </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                <c:forEach varStatus="vs" var="q" items="${quest.right}">
+                                                    <tr>
+                                                        <td>${vs.count}</td>
+                                                        <td>${q}</td>
+                                                    </tr>
+                                                </c:forEach>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                </c:forEach>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             </div>
-
         </div>
-
     </div>
 
 </div>
@@ -207,7 +340,138 @@
         option.series[0].name = "领导评教等级";
         var leaEvalLevelCntsChart = echarts.init(document.getElementById('lea-eval-level-cnts'));
         leaEvalLevelCntsChart.setOption(option);
+
+
+
+        fillTableItemLevelInfo(courseBatch,'stu');
+        fillTableItemLevelInfo(courseBatch,'tea');
+        fillTableItemLevelInfo(courseBatch,'lea');
+        //TODO
     }
+
+    /**
+     *  打分表的 表项的统计图的绘制
+     */
+    function fillTableItemLevelInfo(courseBatch,type) {
+        var id = type+'-eval-table-item-cnts';
+        var evalTableItemChart = echarts.init(document.getElementById(id));
+
+        var evalTable = $.parseJSON(courseBatch.stuEvalTableJsonString);
+        if(type=='tea'){
+            evalTable = $.parseJSON(courseBatch.teaEvalTableJsonString);
+        }
+        if(type=='lea'){
+            evalTable = $.parseJSON(courseBatch.leaEvalTableJsonString);
+        }
+        if(!evalTable){
+            $("#"+id).html("<h3 style='text-align: center;margin-top: 30px;'>暂无评教数据</h3>");
+            return ;
+        }
+        var tableItemList = evalTable.tableItemList;
+        var itemList = [];
+
+        var bestCnt=[];
+        var goodCnt=[];
+        var avgCnt=[];
+        var badCnt=[];
+        $.each(tableItemList,function(){
+            var itemName = this.context;
+            var item = {
+                value:itemName + "\n \n 平均得分: "+this.avgScore+" 分/共"+this.level.split(' ')[0]+"分",
+                textStyle:{
+                    fontSize:15
+                }
+            };
+            itemList.push(item);
+            bestCnt.push(this.scoreLevelCnts[0]);
+            goodCnt.push(this.scoreLevelCnts[1]);
+            avgCnt.push(this.scoreLevelCnts[2]);
+            badCnt.push(this.scoreLevelCnts[3]);
+        });
+
+
+        var option = {
+            tooltip : {
+                trigger: 'axis',
+                axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                    type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            legend: {
+                data: ['优','良','中','差']
+            },
+            grid: {
+                left: '5%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis:  {
+                type: 'value'
+            },
+            yAxis: {
+                type: 'category',
+                data: itemList
+            },
+            series: [
+                {
+                    name: '优',
+                    type: 'bar',
+                    stack: '总量',
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'inside',
+                            formatter: "{a}{c}个"
+                        }
+                    },
+                    data: bestCnt
+                },
+                {
+                    name: '良',
+                    type: 'bar',
+                    stack: '总量',
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'inside',
+                            formatter: "{a}{c}个"
+                        }
+                    },
+                    data: goodCnt
+                },
+                {
+                    name: '中',
+                    type: 'bar',
+                    stack: '总量',
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'inside',
+                            formatter: "{a}{c}个"
+                        }
+                    },
+                    data: avgCnt
+                },
+                {
+                    name: '差',
+                    type: 'bar',
+                    stack: '总量',
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'inside',
+                            formatter: "{a}{c}个"
+                        }
+                    },
+                    data: badCnt
+                }
+            ]
+        };
+        evalTableItemChart.setOption(option);
+    }
+
+
 
     $(function(){
 
@@ -224,6 +488,7 @@
                 showGlobalNotification(data.msg);
             }
         });
+        $('[data-toggle="tooltip"]').tooltip();
     });
 </script>
 <script src="${pageContext.request.contextPath}/js/echarts.common.min.js"></script>

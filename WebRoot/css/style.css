@@ -1,5 +1,6 @@
 body {
     font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+    background-color: rgb(249, 249, 249)
 }
 
 .tree {
@@ -84,6 +85,15 @@ body {
     font-size: 15px;
 }
 
+.table-condensed > thead {
+    font-size: 18px;
+}
+
+.thead{
+    font-weight: bold;
+    font-size: 18px;
+}
+
 .bs-callout {
     padding: 20px;
     margin: 20px 0;
@@ -142,4 +152,9 @@ body {
 
 .container-fluid>.row{
     margin-top: 30px;
+}
+
+thead {
+    font-weight: bold;
+    font-size: 18px;
 }

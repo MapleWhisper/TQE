@@ -22,6 +22,7 @@ public class SystemUtils extends Properties{
 		}
 		return season;
 	}
+
 	public static String getSeasonT()  {
 		Calendar now = Calendar.getInstance();
 		int year = now.get(Calendar.YEAR);

@@ -76,7 +76,8 @@
 									</table>
 								</div>
 							</div>
-							
+
+                            <%--
 							<div class="panel panel-primary" id="part1">
 								<div class="panel-heading">
 									<h3 class="panel-title">学生评教</h3>
@@ -91,7 +92,7 @@
 								<div class="panel-body">
 								</div>
 							</div>
-							
+
 							<div class="panel panel-primary" id="part3">
 								<div class="panel-heading">
 									<h3 class="panel-title">领教评教</h3>
@@ -99,6 +100,7 @@
 								<div class="panel-body">
 								</div>
 							</div>
+							--%>
 
 
 				</div>

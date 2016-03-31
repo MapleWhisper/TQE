@@ -6,7 +6,7 @@
 <%@ include file="../header.jspf"%>
 <title>教师详情</title>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.css"></link>
+	href="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.css"/>
 
 
 <style type="text/css">
@@ -23,100 +23,112 @@
 		<div class="row">
 			<%@ include file="../head.jsp"%>
 		</div>
-		<div class="row" style="margin-top: 70px">
+		<div class="row" >
 			<!--左侧的导航条 -->
-			<div class="col-xs-2">
+			<div class="col-sm-2">
 				<%@include file="../left.jsp"%>
 			</div>
 			<!--左侧的导航条 -->
 
-			<!--右侧的内容 -->
+			<div class="col-sm-10">
 
-			<!-- 班级详情 -->
-			<div class="col-xs-10">
-				<div class="panel panel-info">
-					<div class="panel-heading">
-						<h1 class="panel-title" style="font-size: 25px">教师详情</h1>
-					</div>
-					<div class="panel-body ">
-						<table
-					class="table table-hover table-striped table-bordered table-condensed">
-					<tr class="warning">
-						<td>教师名</td>
-						<td>教师号</td>
-						<td>学院</td>
-						<td>职称</td>
-					<tr>
-						<td>${teacher.name }</td>
-						<td>${teacher.id }</td>
-						<td>${teacher.department }</td>
-						<td>${teacher.title }</td>
+						<table class="table table-hover ">
+                                <tr class="info thead">
+                                    <td>教师名</td>
+                                    <td>教师号</td>
+                                    <td>学院</td>
+                                    <td>职称</td>
+                                </tr>
+                                <tr>
 
-						<!-- 
-						<td>${batches.name }</td>
-						<td><fm:formatDate value="${batches.beginDate}"
-								pattern="yyyy-MM-dd" /></td>
-						<td><fm:formatDate value="${batches.endDate }"
-								pattern="yyyy-MM-dd" /></td>
-							 -->
-					</tr>
-				</table>
-					</div>
+                                    <td>${teacher.name }</td>
+                                    <td>${teacher.id }</td>
+                                    <td>${teacher.department }</td>
+                                    <td>${teacher.title }</td>
+
+                                    <!--
+                                        <td>${batches.name }</td>
+                                        <td><fm:formatDate value="${batches.beginDate}"
+                                                pattern="yyyy-MM-dd" /></td>
+                                        <td><fm:formatDate value="${batches.endDate }"
+                                                pattern="yyyy-MM-dd" /></td>
+                                             -->
+                                </tr>
+                        </table>
 
 
-				</div>
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                       教师所教班级
+                    </div>
+                    <div class="panel-body">
+                        <div class="bs-callout bs-callout-info">
+                            <form class="form-inline" id="teacher-course-form" method="post" action="${pageContext.request.contextPath}/admin/teacher/show">
+
+                                <div class="form-group">
+                                    <input type="hidden" id="tid" name="tid" value="${teacher.id}">
+                                    <label for="season" >选择学期查看课程:</label>
+                                    <select name="season" class="form-control" id="season" key="${condition.season}">
+                                        <option value="">当前学期:${applicationScope.curSeason}</option>
+                                        <c:forEach begin="2015" end="${applicationScope.curYear+1}" step="1" var="s">
+                                            <option  value="${s}春">${s}春</option>
+                                            <option  value="${s}秋">${s}秋</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+
+                            </form>
+                        </div>
+                        <table class="table table-hover table-striped  table-condensed ">
+                            <thead>
+                            <tr class="info">
+                                <td>课程名</td>
+                                <td>课程号</td>
+                                <td>课序号</td>
+                                <td>教师名</td>
+                                <td>学院</td>
+                                <td>学期</td>
+                                <td>学生数</td>
+                                <td>学分</td>
+                                <td width="10%">合班</td>
+                                <!--
+                                <td>操作</td>
+                                 -->
+                                <td>操作</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${courseList}" var="c">
+                                <tr>
+
+                                    <td><a href="${pageContext.request.contextPath}/admin/course/show/${c.cid}/${c.cno}">${c.name }</a></td>
+                                    <td>${c.cid }</td>
+                                    <td>${c.cno }</td>
+                                    <td>${c.teacher.name }</td>
+                                    <td>${c.department }</td>
+                                    <td>${c.season }</td>
+                                    <td>${c.stuNumber }</td>
+                                    <td>${c.credit }</td>
+                                    <td>${c.combine }</td>
+                                    <!--
+										<td><a href="admin/edit/${admin.id }"
+											class="btn btn-info"><span
+												class=" glyphicon glyphicon-edit"></span>&nbsp;&nbsp;修改</a></td>
+										 -->
+                                    <td><a href="${pageContext.request.contextPath}/admin/course/show/${c.cid}/${c.cno}"
+                                           class="btn btn-danger" ><span
+                                            class=" glyphicon glyphicon-zoom-in"></span>查看评教详情</a></td>
+                                </tr>
+                            </c:forEach>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- panel-body -->
+                </div>
 			</div>
 			<!-- 班级详情 -->
-
-
-
-
-			<div class="panel panel-info">
-				<div class="panel-heading">
-					<h1 class="panel-title" style="font-size: 25px">老师教的班级</h1>
-				</div>
-				<div class="panel-body">
-
-					<!-- 班级内容 -->
-					<div class="tab-content">
-						<div role="tabpanel" class="tab-pane active" id="list1">
-							<table
-								class="table table-hover table-striped table-bordered table-condensed"
-								style="margin-top: 10px">
-								<thead>
-									<tr class="info">
-										<td>课程名</td>
-										<td>开课时间</td>
-										<td>结束时间</td>
-										<td>状态</td>
-										<td>操作</td>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${teacher.classes}" var="c">
-										<tr>
-											<td>${c.name }</td>
-											<td><fm:formatDate value="${c.beginDate }"
-													pattern="yyyy-MM-dd" /></td>
-											<td><fm:formatDate value="${c.endDate }"
-													pattern="yyyy-MM-dd" /></td>
-											<td><button class="btn label" disabled="disabled">${c.status}</button></td>
-
-											<td><a
-												href="${pageContext.request.contextPath}/admin/classes/classesAction!show?id=${c.id }"
-												class="btn btn-info" target="_blank"><span
-													class=" glyphicon glyphicon-zoom-in"></span>&nbsp;&nbsp;查看</a></td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-				<!-- panel-body -->
-			</div>
-
-
 
 		</div>
 		<!--右侧的内容 -->
@@ -126,15 +138,21 @@
 
 	<%@ include file="../buttom.jsp"%>
 	<script
-		src="${pageContext.request.contextPath}/js/jquery.validate.min.js"></script>
-	<script src="${pageContext.request.contextPath}/js/messages_zh.js"></script>
-	<script
 		src="${pageContext.request.contextPath}/js/datatables/js/jquery.dataTables.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.js"></script>
 
+
 	<script type="text/javascript">
-    	</script>
+        $(function(){
+            autoSelect();
+            $("#season").change(function(){
+                $("#teacher-course-form").submit();
+            });
+        });
+
+
+    </script>
 
 </body>
 </html>

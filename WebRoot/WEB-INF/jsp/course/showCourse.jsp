@@ -93,6 +93,7 @@
             src="${pageContext.request.contextPath}/js/datatables/js/jquery.dataTables.min.js"></script>
     <script
             src="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.js"></script>
+
 </body>
 </html>
 

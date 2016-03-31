@@ -81,9 +81,8 @@ public class EvalTableController extends BaseController{
 		if(eTable==null){
 			return sendError(model,"没有找到要更新的评教表");
 		}
-		eTable.setTitle(evalTable.getTitle());
-		eTable.setNote(evalTable.getNote());
-		evalTableService.update(eTable);
+        evalTable.setId(eid);
+		evalTableService.update(evalTable);
 		model.addAttribute("evalTable",eTable);
 		return "redirect:/admin/evalTable";
 	}

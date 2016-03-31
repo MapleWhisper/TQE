@@ -42,7 +42,7 @@ public class BatchesController extends BaseController {
 	
 	@RequestMapping("/batches/show/{id}")
 	public String addbatches(@PathVariable int id,Model model){
-		model.addAttribute("batches",batchesService.getById(id));
+		model.addAttribute("batches",batchesService.getByIdWithEvalTable(id));
 		return "batches/showBatches";
 	}
 	

@@ -16,7 +16,7 @@ public interface EvalTableDao extends BaseDao<EvalTable>{
 	@Select("select * from evalTable where id = #{id}")
 	public EvalTable getById(@Param("id")Integer id);
 	
-	@Insert("insert into evalTable values(null,#{type},#{title},#{note},#{createDate},#{jsonString}) ")
+	@Insert("insert into evalTable values(null,#{type},#{title},#{note},#{createDate},#{jsonString},#{questionNameList}) ")
 	public void save(EvalTable	EvalTable);
 	
 	@Select("select * from evalTable")
@@ -25,7 +25,7 @@ public interface EvalTableDao extends BaseDao<EvalTable>{
 	@Delete("delete from EvalTable where id = #{id}")
 	public void delete(Integer id);
 	
-	@Update("update evaltable set title = #{title} , note = #{note} ,jsonString = #{jsonString} where id = #{id}")
+	@Update("update evaltable set title = #{title} , note = #{note} ,jsonString = #{jsonString} ,questionNameList = #{questionNameList} where id = #{id}")
 	public void update(EvalTable eTable);
 
 

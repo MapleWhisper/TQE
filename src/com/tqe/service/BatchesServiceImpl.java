@@ -17,14 +17,22 @@ public class BatchesServiceImpl extends BaseService<Batches>{
 	private BatchesDao batchesDao;
 	@Override
 	public Batches getById(Integer id) {
-		Batches b = batchesDao.getById(id);
+		return  batchesDao.getById(id);
 		
-		b.setStuEval(evalTableDao.getById(b.getStuEvalId()));
-		b.setTeaEval(evalTableDao.getById(b.getTeaEvalId()));
-		b.setLeadTval(evalTableDao.getById(b.getLeadEvalId()));
-		b.setTeaStuEval(evalTableDao.getById(b.getTeaStuEvalId()));
-		return b;
+
 	}
+
+    public Batches getByIdWithEvalTable(Integer id){
+        Batches b = this.getById(id);
+        if(b!=null){
+            b.setStuEval(evalTableDao.getById(b.getStuEvalId()));
+            b.setTeaEval(evalTableDao.getById(b.getTeaEvalId()));
+            b.setLeadTval(evalTableDao.getById(b.getLeadEvalId()));
+            b.setTeaStuEval(evalTableDao.getById(b.getTeaStuEvalId()));
+            return b;
+        }
+        return null;
+    }
 	
 	@Override
 	public void save(Batches e) {

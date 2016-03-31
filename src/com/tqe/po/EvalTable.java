@@ -21,7 +21,9 @@ public class EvalTable {
 	private List<EvalItem> questionList =new ArrayList<EvalItem>();	//问题表
 	private Date createDate;	//创建时间
 	private String jsonString;	//序列化表
-	
+
+    private List<String> questionNameList = new ArrayList<String>();
+
 	private String score;	//得分
 	private String level;	//评价结果等级
 
@@ -31,6 +33,17 @@ public class EvalTable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public List<String> getQuestionNameList() {
+        if(questionNameList == null){
+            questionNameList = new ArrayList<String>();
+        }
+        return questionNameList;
+    }
+
+    public void setQuestionNameList(List<String> questionNameList) {
+        this.questionNameList = questionNameList;
     }
 
     public static class EvalItem {
@@ -60,8 +73,15 @@ public class EvalTable {
 			}
 			this.ans = ans;
 		}
-		
-	}
+
+        @Override
+        public String toString() {
+            return "EvalItem{" +
+                    "context='" + context + '\'' +
+                    ", ans='" + ans + '\'' +
+                    '}';
+        }
+    }
 	
 	public static class EvalTableItem {
 		private String context;     //文本
@@ -169,6 +189,7 @@ public class EvalTable {
 		return jsonString;
 	}
 	public void setJsonString(String jsonString) {
+
 		this.jsonString = jsonString;
 	}
 	public Date getCreateDate() {

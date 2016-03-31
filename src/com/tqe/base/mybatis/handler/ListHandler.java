@@ -2,6 +2,8 @@ package com.tqe.base.mybatis.handler;
 
 import com.google.common.base.CaseFormat;
 import com.tqe.po.CourseBatch;
+import com.tqe.po.EvalTable;
+import com.tqe.po.ResultTable;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -34,6 +36,8 @@ public class ListHandler extends BaseTypeHandler<List> {
     static {
         targetClassFilterList = new ArrayList<Class>();
         targetClassFilterList.add(CourseBatch.class);
+        targetClassFilterList.add(EvalTable.class);
+        targetClassFilterList.add(ResultTable.class);
     }
 
     @Override

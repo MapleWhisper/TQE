@@ -5,7 +5,8 @@ import com.tqe.base.enums.EvalResultLevel;
 import com.tqe.base.enums.UserType;
 import com.tqe.po.*;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.commons.lang3.tuple.MutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,38 @@ public class CourseBatchServiceImpl extends BaseService<CourseBatch>{
 
     public CourseBatch getById(String cid,Integer cno ,Integer bid) {
         return courseBatchDao.getById(cid,cno,bid);
+    }
+
+    public CourseBatch getByIdWithQuestList(String cid,Integer cno ,Integer bid) {
+        CourseBatch courseBatch = courseBatchDao.getById(cid,cno,bid);
+        List<StuResultTable> stuTableList = evalService.findAllStuTableWithEvalTable(cid, cno, bid);
+        List<TeaResultTable> teaTableList = evalService.findAllTeaTableByCidAndBid(cid, cno, bid);
+        List<LeaResultTable> leaTableList = evalService.findAllLeaTableWithEvalTable(cid, cno, bid);
+        if(stuTableList.size()>0){
+            EvalTable stuTable = EvalTable.json2Object(stuTableList.get(0).getJsonString());
+            courseBatch.setStuQuestionList(buildQuestionWithAnsPairList(stuTable.getQuestionNameList(), new ArrayList<ResultTable>(stuTableList)));
+        }
+        if(teaTableList.size()>0){
+            EvalTable teaTable = EvalTable.json2Object(teaTableList.get(0).getJsonString());
+            courseBatch.setTeaQuestionList(buildQuestionWithAnsPairList(teaTable.getQuestionNameList(),new ArrayList<ResultTable>(teaTableList)));
+        }
+        if(leaTableList.size()>0){
+            EvalTable leaTable = EvalTable.json2Object(leaTableList.get(0).getJsonString());
+            courseBatch.setLeaQuestionList(buildQuestionWithAnsPairList(leaTable.getQuestionNameList(), new ArrayList<ResultTable>(leaTableList)));
+        }
+        return courseBatch;
+    }
+
+    private List<Pair<String,List<String>>> buildQuestionWithAnsPairList(List<String> questionNameList,List<ResultTable> table){
+        if(questionNameList==null){
+            return null;
+        }
+        List<Pair<String,List<String>>> pairList = new ArrayList<Pair<String, List<String>>>();
+        for(int i=0;i<questionNameList.size();i++){
+            Pair<String,List<String>> questionWithAnsListPair = new MutablePair<String, List<String>>(questionNameList.get(i),table.get(i).getQuestionAnsList());
+            pairList.add(questionWithAnsListPair);
+        }
+        return pairList;
     }
 
     /**
@@ -154,6 +187,7 @@ public class CourseBatchServiceImpl extends BaseService<CourseBatch>{
                 tableItem.setScoreLevelCnts(tableItemLevelMap.get(key));
             }
         }
+        table.setJsonString(null);
         return table;
 
 
@@ -169,8 +203,7 @@ public class CourseBatchServiceImpl extends BaseService<CourseBatch>{
 
             String key = tableItem.getContext();
             if(tableItemLevelMap.get(key)==null){
-                List<Integer> list = new ArrayList<Integer>(4);
-                Collections.fill(list,0);
+                List<Integer> list = Arrays.asList(0,0,0,0);
                 tableItemLevelMap.put(key,list);
             }
             if(tableItemScoreMap.get(key)==null){

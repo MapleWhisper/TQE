@@ -33,7 +33,7 @@ public class CourseModel {
 		private  List<StuResultTable> stuTableList;	//学生评教表
 		private  List<TeaResultTable> teaTableList;	//教师评教表
 		private  List<LeaResultTable> leaTableList;	//领导评教表
-		private List<TeaStuResultTable> teaStuTableList;	//教师评价学生表
+		private  List<TeaStuResultTable> teaStuTableList;	//教师评价学生表
 
 		public  List<StuResultTable> getStuTableList() {
 			return stuTableList;

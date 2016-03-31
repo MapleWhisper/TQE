@@ -175,6 +175,7 @@ public class EvalController extends BaseController{
 	private void preSaveTable(EvalTable evalTable, ResultTable resultTable) {
 
 		EvalTable e = evalTableService.getById(resultTable.getEid()).json2Object();     //从数据库中取出评教表
+        e.setJsonString("");
 		e.setAns(e, evalTable);     //将 答卷中的答案放到评教结果表中
 		resultTable.setJsonString(JSON.toJSONString(e));    //将评教表序列化后存入 再重新评教结果表中
 		Course course = courseService.getById(resultTable.getCid(), resultTable.getCno());
@@ -184,11 +185,16 @@ public class EvalController extends BaseController{
 			resultTable.setTid(course.getTeacherId());
 		}
 		try {
-			resultTable.setQuestion1(evalTable.getQuestionList().get(0)==null?null:evalTable.getQuestionList().get(0).getAns());
-			resultTable.setQuestion2(evalTable.getQuestionList().get(1)==null?null:evalTable.getQuestionList().get(1).getAns());
-			resultTable.setQuestion3(evalTable.getQuestionList().get(2)==null?null:evalTable.getQuestionList().get(2).getAns());
-			resultTable.setQuestion4(evalTable.getQuestionList().get(3)==null?null:evalTable.getQuestionList().get(3).getAns());
-			resultTable.setQuestion5(evalTable.getQuestionList().get(4)==null?null:evalTable.getQuestionList().get(4).getAns());
+
+            for(EvalTable.EvalItem questionItem :evalTable.getQuestionList()){
+                String ans = questionItem.getAns();
+                if(ans==null){
+                    throw new IllegalArgumentException("问题回答不能为空!question:"+questionItem);
+                }
+                ans = ans.replaceAll(",","，");
+                resultTable.getQuestionAnsList().add(ans);
+            }
+
 		} catch (Exception e2) {
 
 			logger.debug("评教表的问题小于5个");

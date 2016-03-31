@@ -83,6 +83,9 @@ public class BaseDaoTemplate<T> {
 		if(StringUtils.isNotBlank(filters.get("tname"))){
 			WHERE("t.name = #{filters.tname}");
 		}
+        if(StringUtils.isNotBlank(filters.get("tid"))){
+            WHERE("t.id = #{filters.tid}");
+        }
         if(StringUtils.isNotBlank(filters.get("season"))){
             WHERE("c.season = #{filters.season}");
         }

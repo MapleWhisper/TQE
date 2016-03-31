@@ -87,18 +87,16 @@
 								
 								<c:forEach items="${teacherList}" var="tea">
 									<tr>
-										<!-- 
 										<td><a
-											href="${pageContext.request.contextPath}/admin/teacher/show/${tea.id}">${tea.name}</a></td>
-										 -->
-										 <td>${tea.name}</td>
+											href="${pageContext.request.contextPath}/admin/teacher/show?tid=${tea.id}">${tea.name}</a></td>
+
 										<td>${tea.id}</td>
 										<td>${tea.email }</td>
 										<%--<td>${tea.idNumber }</td>--%>
 										<td>${tea.sex }</td>
 										<td>${tea.department }</td>
 										<td>${tea.title }</td>
-										<td><a href="${pageContext.request.contextPath}/admin/teacher/show/${tea.id}"
+										<td><a href="${pageContext.request.contextPath}/admin/teacher/show?tid=${tea.id}"
 											class="btn btn-danger" ><span
 												class=" glyphicon glyphicon-zoom-in"></span>查看评教详情</a></td>
 										<!--
@@ -115,14 +113,7 @@
 							</tbody>
 
 						</table>
-						<div class="row">
-							<div class="col-xs-6 col-xs-offset-5">
-								<div class="no1">
-									<a class="btn btn-primary " href="teacherAction!add">添加教师</a>
-								</div>
 
-							</div>
-						</div>
 					</div>
 					<!-- panel-body -->
 				</div>
