@@ -66,7 +66,8 @@ public class BaseDaoTemplate<T> {
 
 		Map<String,String> filters = pageVO.getFilters();
 		BEGIN();
-		SELECT("c.* , t.name as `teacher.name`");
+		SELECT("c.cid,c.cno,c.name,c.stuNumber,c.peroid,c.credit,c.attr,c.examMode,c.nature,c.teacherId,c.department," +
+                "c.campus,c.season,c.combine,c.departmentId, c.stuEvalAvgScore,c.teaEvalAvgScore,c.leaEvalAvgScore, t.name as `teacher.name`");
 		FROM("course c");
 		FROM("teacher t");
 		if(StringUtils.isNotBlank(filters.get("did"))){

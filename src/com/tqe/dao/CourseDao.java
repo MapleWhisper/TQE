@@ -4,10 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.tqe.base.vo.PageVO;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import com.tqe.po.Course;
@@ -15,8 +12,12 @@ import com.tqe.po.Course;
 
 @Repository
 public interface CourseDao {
-	@Select("select * from `course` where cid=#{cid} and cno=#{cno}")
-	public Course getById(@Param("cid") String  cid,@Param("cno") int cno);
+
+	@Select("select cid,cno,name,stuNumber,peroid,credit,attr,examMode,nature,teacherId,department,campus,season,combine,departmentId from course where cid=#{cid} and cno=#{cno}")
+	Course getById(@Param("cid") String  cid,@Param("cno") int cno);
+
+    @Select("select * from course where cid=#{cid} and cno=#{cno}")
+    Course getAllById(@Param("cid") String  cid,@Param("cno") int cno);
 
 	@Insert("INSERT INTO `tqe`.`course` (`cid`, `cno`, `name`, `stuNumber`, `peroid`, `credit`, `attr`, `examMode`, `nature`, `teacherId`, `department`, `campus`,`season`,`combine`,`departmentid`) "
 			+ "VALUES (#{cid}, #{cno}, #{name}, #{stuNumber}, #{peroid}, #{credit}, #{attr}, #{examMode}, #{nature}, #{teacherId}, #{department}, #{campus},#{season},#{combine},#{departmentId});")
@@ -45,5 +46,11 @@ public interface CourseDao {
 
 	@SelectProvider(type=BaseDaoTemplate.class,method="findCourseByCondition")
 	List<Course> findByCondition(PageVO pageVO);
+
+
+    @Update("update course set `stuEvalAvgScore` = #{stuEvalAvgScore} ,`teaEvalAvgScore`=#{teaEvalAvgScore} ,`leaEvalAvgScore`=#{leaEvalAvgScore} " +
+            ",`stuEvalScores`=#{stuEvalScores} ,`teaEvalScores`=#{teaEvalScores} ,`leaEvalScores` = #{leaEvalScores}," +
+            "`stuEvalLevelCnts`=#{stuEvalLevelCnts},`teaEvalLevelCnts`=#{teaEvalLevelCnts},`leaEvalLevelCnts`=#{leaEvalLevelCnts} where cid = #{cid} and cno = #{cno}")
+    void updateStatisticalData(Course course);
 
 }

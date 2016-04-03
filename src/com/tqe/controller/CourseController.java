@@ -64,7 +64,8 @@ public class CourseController extends BaseController{
             @PathVariable String cid,
             @PathVariable Integer cno
     ){
-		Course course = courseService.getById(cid,cno);
+		Course course = courseService.getAllById(cid,cno);
+
 		if(course == null){
 			return sendError(model,"没有找到指定的课程！ cid:"+cid+"  cno:"+cno,logger);
 		}
@@ -84,6 +85,8 @@ public class CourseController extends BaseController{
 		}
 		model.addAttribute("course", course);
 		model.addAttribute("courseModel",courseModel);
+
+        courseService.updateCourseStatisticalData(cid,cno);
 		return "course/showCourse";	//转到添加页面
 	}
 	

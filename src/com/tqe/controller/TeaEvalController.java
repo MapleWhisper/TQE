@@ -5,15 +5,12 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import com.tqe.po.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.tqe.po.Batches;
-import com.tqe.po.Course;
-import com.tqe.po.Student;
-import com.tqe.po.Teacher;
 import com.tqe.utils.SystemUtils;
 
 /**
@@ -119,9 +116,14 @@ public class TeaEvalController extends BaseController{
 				model.addAttribute("msg", "对不起，当前评教还未开始");
 				return "teaEval/teaEval";
 			}
+            EvalTable evalTable = evalTableService.getById(batches.getTeaEvalId());
+            if(evalTable==null){
+                model.addAttribute("msg", "对不起当前评教批次还没有设置教师评教表，请联系管理设置评教表");
+                return "teaEval/teaEval";
+            }
 			model.addAttribute("batches", batches);
 			model.addAttribute("course", c);
-			model.addAttribute("evalTable", evalTableService.getById(batches.getTeaEvalId()));
+			model.addAttribute("evalTable", evalTable);
 			model.addAttribute("type", "teacher");
 			return "eval/eval";
 		}
@@ -145,9 +147,14 @@ public class TeaEvalController extends BaseController{
 				model.addAttribute("msg", "对不起，当前评教还未开始");
 				return "teaEval/teaStuEval";
 			}
+            EvalTable evalTable = evalTableService.getById(batches.getTeaStuEvalId());
+            if(evalTable==null){
+                model.addAttribute("msg", "对不起当前评教批次还没有设置教师评学生表，请联系管理设置评教表");
+                return "teaEval/teaStuEval";
+            }
 			model.addAttribute("batches", batches);
 			model.addAttribute("course", c);
-			model.addAttribute("evalTable", evalTableService.getById(batches.getTeaStuEvalId()));
+			model.addAttribute("evalTable", evalTable);
 			model.addAttribute("sid", sid);
 			model.addAttribute("type", "teaStu");
 			return "eval/eval";

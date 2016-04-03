@@ -31,7 +31,7 @@ public class StatisticsController extends  BaseController{
             Integer bid
     ){
 
-        Course course = courseService.getById(cid,cno);
+        Course course = courseService.getAllById(cid,cno);
         if(course == null){
             return sendError(model,"没有找到指定的课程！ cid:"+cid+"  cno:"+cno,logger);
         }
@@ -57,6 +57,7 @@ public class StatisticsController extends  BaseController{
         courseBatchService.reAnalyseCourseBatch(cid, cno, bid);
         CourseBatch courseBatch = courseBatchService.getByIdWithQuestList(cid, cno, bid);
         courseBatch.setBatch(batch);
+        model.addAttribute("course",course);
         model.addAttribute("courseModel", courseModel);
         model.addAttribute("courseBatch",courseBatch);
 

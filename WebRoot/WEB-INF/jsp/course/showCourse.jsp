@@ -22,34 +22,46 @@
 				<%@ include file="../left.jsp"%>
 			</div>
 			<div class="col-sm-10 ">
-				<table
-					class="table table-hover table-striped " style="text-align: center">
-					<tr class="info">
-						<td>课程名</td>
-						<td>教师</td>
-						<td>学院</td>
-						<td>学期</td>
-						<td>课程号</td>
-						<td>课序号</td>
-						<td>合班</td>
-					<tr>
-						<td>${course.name }</td>
-						<td>${course.teacher.name	 }</td>
-						<td>${course.department }</td>
-						<td>${course.season }</td>
-						<td>${course.cid }</td>
-						<td>${course.cno }</td>
-						<td>${course.combine }</td>
+                <div class="bs-callout bs-callout-danger">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h4 >${course.teacher.name} -- ${course.name} (${course.season })</h4>
+                            <hr>
+                            <h5>${course.department } </h5>
+                            <h5>课程号-课序号 :${course.cid}-${course.cno}</h5>
+                            <h5>合班:${course.combine }</h5>
+                        </div>
+                        <div class="col-sm-9">
+                            <table class="table no-border" style="text-align: center">
+                                <tr class="thead">
+                                    <td>角色</td>
+                                    <td>平均得分</td>
+                                    <td>各批次平均得分</td>
+                                    <td>得分统计</td>
+                                </tr>
+                               <tr>
+                                   <td>学生评教</td>
+                                   <td> <code>${course.stuEvalAvgScore}</code>分 </td>
+                                   <td> <code>${course.stuEvalScores}</code>分 </td>
+                                   <td> <div class="eval-process-bar progress" value="${course.stuEvalLevelCnts}">${course.stuEvalLevelCnts}</div> </td>
+                               </tr>
+                                <tr>
+                                    <td>教师评教</td>
+                                    <td><code>${course.teaEvalAvgScore}</code>分 </td>
+                                    <td> <code>${course.teaEvalScores}</code>分 </td>
+                                    <td> <div class="eval-process-bar" value="${course.teaEvalLevelCnts}"></div> </td>
+                                </tr>
+                                <tr>
+                                    <td>领导评教</td>
+                                    <td> <code>${course.leaEvalAvgScore}</code>分</td>
+                                    <td> <code>${course.leaEvalScores}</code>分 </td>
+                                    <td> <div class="eval-process-bar" value="${course.leaEvalLevelCnts}"></div> </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
 
-						<!-- 
-						<td>${batches.name }</td>
-						<td><fm:formatDate value="${batches.beginDate}"
-								pattern="yyyy-MM-dd" /></td>
-						<td><fm:formatDate value="${batches.endDate }"
-								pattern="yyyy-MM-dd" /></td>
-							 -->
-					</tr>
-				</table>
 				<div role="tabpanel">
 
 					<!-- Nav tabs -->
@@ -93,7 +105,10 @@
             src="${pageContext.request.contextPath}/js/datatables/js/jquery.dataTables.min.js"></script>
     <script
             src="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.js"></script>
+    <script src="${pageContext.request.contextPath}/js/tqe/course/eval-process-bar.js"/>
+    <script  type="text/javascript">
 
+    </script>
 </body>
 </html>
 

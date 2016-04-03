@@ -22,7 +22,9 @@ public class MyExceptionHandler implements HandlerExceptionResolver {
 
     private  static  Map<String,String> messageConvertMap = new HashMap<String,String>();
     static {
+
         messageConvertMap.put("OLE2","EXCEL的格式错误，不能解析，请转换后再试");
+        messageConvertMap.put("Data too long","您输入的数据太长了！");
     }
 
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
@@ -36,7 +38,7 @@ public class MyExceptionHandler implements HandlerExceptionResolver {
 
 
     /**
-     * 把系统异常转换成人能看的格式
+     * 把英文系统异常转换成 可读的消息提醒
      */
     public String messageConvert(String errorMsg){
 
@@ -46,7 +48,9 @@ public class MyExceptionHandler implements HandlerExceptionResolver {
 
         for(String keyValue:messageConvertMap.keySet()){
             if(errorMsg.contains(keyValue)){
-                errorMsg = messageConvertMap.get(keyValue)+"\n"+errorMsg;
+                String msg = messageConvertMap.get(keyValue);
+                msg = "<h2>"+msg+"</h2>";
+                errorMsg = msg +"\n"+errorMsg;
                 break;
             }
         }

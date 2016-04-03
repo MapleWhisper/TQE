@@ -54,7 +54,10 @@ function autoSelect(){
     })
 }
 
-
+/**
+ * 显示全局的消息通知
+ * @param msg   要显示的消息
+ */
 function showGlobalNotification(msg){
 
     if(msg){
@@ -64,4 +67,24 @@ function showGlobalNotification(msg){
         //globalNotification.fadeOut(3000);
     }
 
+}
+
+function batchStatusRender(){
+    var batchStatus = $(".batch-status");
+
+    $.each(batchStatus,function(){
+        var $this = $(this);
+        var text = $this.html().trim();
+        if(text){
+            if(text=='未开始'){
+                $this.addClass("bg-primary");
+            }
+            if(text=='进行中'){
+                $this.addClass("bg-danger");
+            }
+            if(text=='已结束'){
+                $this.addClass("bg-info");
+            }
+        }
+    })
 }

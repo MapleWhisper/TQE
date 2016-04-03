@@ -26,7 +26,7 @@ public class CourseBatch {
     private List<Integer> teaEvalLevelCnts;
     private List<Integer> leaEvalLevelCnts;
 
-    private String stuEvalTableJsonString;
+    private String stuEvalTableJsonString;      //学生评教表项的统计结果
     private String teaEvalTableJsonString;
     private String leaEvalTableJsonString;
 

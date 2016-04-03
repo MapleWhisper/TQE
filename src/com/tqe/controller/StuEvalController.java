@@ -3,6 +3,8 @@ package com.tqe.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpSession;
+
+import com.tqe.po.EvalTable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -59,9 +61,13 @@ public class StuEvalController extends BaseController{
 				model.addAttribute("message", "您好，当前评教还未开始~");
 				return "error";
 			}
+            EvalTable evalTable = evalTableService.getById(batches.getStuEvalId());
+            if(evalTable==null){
+                return sendError(model,"对不起当前评教批次还没有设置学生评教表，请联系管理设置评教表");
+            }
 			model.addAttribute("batches", batches);
 			model.addAttribute("course", c);
-			model.addAttribute("evalTable", evalTableService.getById(batches.getStuEvalId()));
+			model.addAttribute("evalTable",evalTable );
 			model.addAttribute("type", "student");
 			return "eval/eval";
 		}

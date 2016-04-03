@@ -2,6 +2,7 @@ package com.tqe.po;
 
 import java.util.Date;
 
+import com.tqe.base.enums.BatchStatus;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class Batches {
@@ -10,9 +11,13 @@ public class Batches {
 	private Integer courseNumber;
 	private Integer curCourseNumber;
 	private String season;
+
+
 	
 	private Date beginDate;		//评教开始日期
 	private Date endDate;		//评教结束日期
+
+    private String batchStatus;     //当前批次的状态 (评教中，已结束，未开始)
 	
 	private EvalTable stuEval;	//默认的学生评教指标表
 	private Integer stuEvalId;		//默认的学生评教指标表Id
@@ -126,7 +131,17 @@ public class Batches {
 	public void setLeadEval(EvalTable leadEval) {
 		this.leadEval = leadEval;
 	}
-	
-	
-	
+
+
+    public String getBatchStatus() {
+        if(this.batchStatus==null){
+
+            this.batchStatus = BatchStatus.getBatchStatusName(this.beginDate,this.endDate);
+        }
+        return this.batchStatus;
+    }
+
+    public void setBatchStatus(String batchStatus) {
+        this.batchStatus = batchStatus;
+    }
 }

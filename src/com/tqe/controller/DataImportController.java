@@ -1,10 +1,7 @@
 package com.tqe.controller;
 
 import com.tqe.excelreader.ExcelReader;
-import com.tqe.po.Course;
-import com.tqe.po.SC;
-import com.tqe.po.Student;
-import com.tqe.po.Teacher;
+import com.tqe.po.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
@@ -64,7 +61,7 @@ public class DataImportController extends BaseController {
             if (!checkFileName(teacherFile, model)) {
                 return "dataImport/dataImport";
             }
-            String fileDir = storeFileAndReturnFilePath(request, teacherFile);
+            String fileDir = storeFile(request, teacherFile);
             List<Teacher> teacherList = teacherReader.getAll(fileDir, true);
             teacherService.saveAll(teacherList);
 
@@ -91,7 +88,7 @@ public class DataImportController extends BaseController {
             if (!checkFileName(studentFile, model)) {
                 return "dataImport/dataImport";
             }
-            String fileDir = storeFileAndReturnFilePath(request, studentFile);
+            String fileDir = storeFile(request, studentFile);
             List<Student> studentList = studentReader.getAll(fileDir, true);
             studentService.saveAll(studentList);
 
@@ -121,9 +118,10 @@ public class DataImportController extends BaseController {
         }else{
             try {
                 if (checkFileName(courseFile, model)) {
-                    String fileDir = storeFileAndReturnFilePath(request, courseFile);
+                    String fileDir = storeFile(request, courseFile);
                     List<Course> courseList = courseReader.getAll(fileDir, false);
-                    courseService.saveAll(courseList,season);
+                    ImportResult result = courseService.saveAll(courseList, season);
+                    model.addAttribute("importResult",result);
                 }
             } catch (FileNotFoundException e) {
                 model.addAttribute("error", e.getMessage());
@@ -149,7 +147,7 @@ public class DataImportController extends BaseController {
             if (!checkFileName(scFile, model)) {
                 return "dataImport/dataImport";
             }
-            String fileDir = storeFileAndReturnFilePath(request, scFile);
+            String fileDir = storeFile(request, scFile);
             List<SC> scList = scReader.getAll(fileDir, false);
             scService.saveAll(scList);
 
@@ -175,7 +173,12 @@ public class DataImportController extends BaseController {
         return true;
     }
 
-    private String storeFileAndReturnFilePath(
+    /**
+     * 保存上传的文件到临时的目录中
+     * 如果目录已经存在同名文件 那么就覆盖
+     * @return 返回保存文件的绝对路径
+     */
+    private String storeFile(
             HttpServletRequest request,
             CommonsMultipartFile uploadFile) throws IOException {
 

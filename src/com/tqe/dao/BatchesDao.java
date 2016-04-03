@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.tqe.po.Batches;
 
 /**
- * @author ¹ãÂ·
+ * @author ï¿½ï¿½Â·
  *
  */
 @Repository

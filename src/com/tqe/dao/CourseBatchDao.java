@@ -1,9 +1,10 @@
 package com.tqe.dao;
 
-import com.tqe.base.vo.PageVO;
-import com.tqe.po.Course;
 import com.tqe.po.CourseBatch;
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,4 +26,11 @@ public interface CourseBatchDao {
             "`teaEvalLevelCnts`=#{teaEvalLevelCnts}, `leaEvalLevelCnts`=#{leaEvalLevelCnts} ,`stuEvalTableJsonString`=#{stuEvalTableJsonString}," +
             " `teaEvalTableJsonString`=#{teaEvalTableJsonString}, `leaEvalTableJsonString`=#{leaEvalTableJsonString} WHERE  `cid`=#{cid} AND `cno`=#{cno} AND `bid`=#{bid};")
     void update(CourseBatch courseBatch);
+
+    @Select("SELECT  `cid`,  `cno`,  `bid`,  `stuEvalAvgScore`,  `teaEvalAvgScore`,  `leaEvalAvgScore`,  `stuEvalTotal`,  `stuEvalCnt`,  `stuEvalLevelCnts`,  `teaEvalLevelCnts`,  `leaEvalLevelCnts` " +
+            " FROM `tqe`.`coursebatch`  where cid = #{cid} and cno = #{cno}")
+    List<CourseBatch> getAllByCidAndCno(@Param("cid")String cid, @Param("cno")Integer cno);
+
+
+
 }

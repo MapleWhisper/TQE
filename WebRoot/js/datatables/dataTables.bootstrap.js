@@ -166,8 +166,9 @@ $(function(){
                  "previous":   "上一页"
              }
          },
-			"lengthMenu": [[ 25, 50, 100,-1], [ 25, 50,100, "所有记录"]],
-        "dom":"<'float_left'f>r<'float_right'l>t<'float_left'i><'float_right'p>"
+        "lengthMenu": [[ 25, 50, 100,-1], [ 25, 50,100, "所有记录"]],
+        "dom":"<'float_left'f>r<'float_right'l>t<'float_left'i><'float_right'p>",
+        "order": [[ 0, "desc" ]]
 	});
 });
 

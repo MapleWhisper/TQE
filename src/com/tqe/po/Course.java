@@ -1,6 +1,12 @@
 package com.tqe.po;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Course {
+
+
 	private String cid;		//课程号
 	private Integer cno;	//课序号
 	private String name;		//课程名
@@ -15,16 +21,32 @@ public class Course {
 	private String campus;	//校区
 	private String season;	//学年春/秋
 	private String combine;	//合班
-	
 	private Integer departmentId;
 	
 	private Teacher teacher;	//主讲教师
 	private boolean isEvaled ;	//是否已经评价过
-	
 
-	
 
-	public Integer getCno() {
+    /**
+     * 课程统计信息
+     */
+    private Double stuEvalAvgScore=0d;      //学生评教平均分
+    private Double teaEvalAvgScore=0d;
+    private Double leaEvalAvgScore=0d;
+
+    private List<Double> stuEvalScores=new ArrayList<Double>();    //课程批每批次的得分列表
+    private List<Double> teaEvalScores=new ArrayList<Double>();
+    private List<Double> leaEvalScores=new ArrayList<Double>();
+
+    private List<Integer> stuEvalLevelCnts=new ArrayList<Integer>(Arrays.asList(0,0,0,0));     //学生评教各等级的统计次数
+    private List<Integer> teaEvalLevelCnts=new ArrayList<Integer>(Arrays.asList(0,0,0,0));
+    private List<Integer> leaEvalLevelCnts=new ArrayList<Integer>(Arrays.asList(0,0,0,0));
+
+    public Course() {
+
+    }
+
+    public Integer getCno() {
 		return cno;
 	}
 
@@ -162,9 +184,79 @@ public class Course {
 		this.departmentId = departmentId;
 	}
 
+    public boolean isEvaled() {
+        return isEvaled;
+    }
 
-	
-	
-	
-	
+    public Double getStuEvalAvgScore() {
+        return stuEvalAvgScore;
+    }
+
+    public void setStuEvalAvgScore(Double stuEvalAvgScore) {
+        this.stuEvalAvgScore = stuEvalAvgScore;
+    }
+
+    public Double getTeaEvalAvgScore() {
+        return teaEvalAvgScore;
+    }
+
+    public void setTeaEvalAvgScore(Double teaEvalAvgScore) {
+        this.teaEvalAvgScore = teaEvalAvgScore;
+    }
+
+    public Double getLeaEvalAvgScore() {
+        return leaEvalAvgScore;
+    }
+
+    public void setLeaEvalAvgScore(Double leaEvalAvgScore) {
+        this.leaEvalAvgScore = leaEvalAvgScore;
+    }
+
+    public List<Double> getStuEvalScores() {
+        return stuEvalScores;
+    }
+
+    public void setStuEvalScores(List<Double> stuEvalScores) {
+        this.stuEvalScores = stuEvalScores;
+    }
+
+    public List<Double> getTeaEvalScores() {
+        return teaEvalScores;
+    }
+
+    public void setTeaEvalScores(List<Double> teaEvalScores) {
+        this.teaEvalScores = teaEvalScores;
+    }
+
+    public List<Double> getLeaEvalScores() {
+        return leaEvalScores;
+    }
+
+    public void setLeaEvalScores(List<Double> leaEvalScores) {
+        this.leaEvalScores = leaEvalScores;
+    }
+
+    public List<Integer> getStuEvalLevelCnts() {
+        return stuEvalLevelCnts;
+    }
+
+    public void setStuEvalLevelCnts(List<Integer> stuEvalLevelCnts) {
+        this.stuEvalLevelCnts = stuEvalLevelCnts;
+    }
+
+    public List<Integer> getTeaEvalLevelCnts() {
+        return teaEvalLevelCnts;
+    }
+
+    public void setTeaEvalLevelCnts(List<Integer> teaEvalLevelCnts) {
+        this.teaEvalLevelCnts = teaEvalLevelCnts;
+    }
+
+    public List<Integer> getLeaEvalLevelCnts() {
+        return leaEvalLevelCnts;
+    }
+
+    public void setLeaEvalLevelCnts(List<Integer> leaEvalLevelCnts) {
+        this.leaEvalLevelCnts = leaEvalLevelCnts;
+    }
 }

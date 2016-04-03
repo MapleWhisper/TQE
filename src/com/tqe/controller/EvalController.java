@@ -2,6 +2,7 @@ package com.tqe.controller;
 
 import javax.servlet.http.HttpSession;
 
+import com.tqe.base.enums.BatchStatus;
 import com.tqe.po.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -173,6 +174,16 @@ public class EvalController extends BaseController{
 	 * 评教表保存预处理
 	 */
 	private void preSaveTable(EvalTable evalTable, ResultTable resultTable) {
+
+        int bid = resultTable.getBid();
+        Batches batch = batchesService.getById(bid);
+        if(bid<=0 || batch==null){
+            throw  new IllegalArgumentException("对不起！评教的批次不可为空！");
+        }
+
+        if(!batch.getBatchStatus().equals(BatchStatus.RUNNING.getName())){
+            throw  new IllegalArgumentException("当前批次的评教不可用！,评教截止为:"+batch.getEndDate());
+        }
 
 		EvalTable e = evalTableService.getById(resultTable.getEid()).json2Object();     //从数据库中取出评教表
         e.setJsonString("");

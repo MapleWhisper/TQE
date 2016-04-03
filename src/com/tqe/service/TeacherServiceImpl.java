@@ -7,7 +7,11 @@ import javax.annotation.Resource;
 
 import com.tqe.base.vo.PageVO;
 import com.tqe.po.Department;
+import com.tqe.po.ImportResult;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import com.tqe.dao.TeacherDao;
@@ -16,8 +20,10 @@ import com.tqe.po.User;
 
 @Service
 public class TeacherServiceImpl extends BaseService<Teacher>{
-	@Resource(name="teacherDao")
-	private TeacherDao teacherDao;
+
+    private static final Log logger = LogFactory.getLog(TeacherServiceImpl.class);
+
+
 	
 	public Teacher getById(String id) {
 		return  teacherDao.getById(id);
@@ -30,16 +36,28 @@ public class TeacherServiceImpl extends BaseService<Teacher>{
 	
 	public boolean saveAll(List<Teacher> list){
 		boolean f = false;
+        ImportResult result = null;
 		Map<String,Integer> dMap = convertDepListToMap(departmentDao.findAll());
 		try {
 			if(list!=null){
+                result  = new ImportResult(list.size());
 				for(Teacher t:list){
 					if(t.getId()!=null){ 
 						boolean reload = processTeaData(dMap, t);   //教师数据预处理
 						if(reload){	//如果插入教师过程中 添加了学院信息 那么重新加载Map
 							dMap = convertDepListToMap(departmentDao.findAll());
 						}
-						save(t);					//保存教师到数据库
+                        try {
+                            save(t);					//保存教师到数据库
+                            result.addSuccessCnt();
+                        } catch (DuplicateKeyException e1){
+                            result.addExitCnt();
+                        } catch (Exception e) {
+                            logger.info(e.getMessage(), e);
+                            result.addFailCnt();
+                            result.getFailMegs().add(e.getMessage());
+                        }
+
 					}
 					
 				}

@@ -34,20 +34,25 @@
 						<table class="table table-hover table-striped table-bordered table-condensed">
 							<thead>
 								<tr class="info">
+                                    <td>批次号</td>
 									<td>批次名</td>
 									<td>学期</td>
+                                    <td>状态</td>
 									<td>开始/结束时间</td>
+                                    <td>操作</td>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach items="${batchesList }" var="b">
 									<tr>
+                                        <td>${b.id}</td>
 										<td><a 
 											href="${pageContext.request.contextPath}/admin/batches/show/${b.id}">${b.name}</a></td>
 										<td>${b.season}</td>
+                                        <td><span class="batch-status">${b.batchStatus}</span></td>
                                         <td><fm:formatDate value="${b.beginDate}"  dateStyle="medium"/> ~
                                             <fm:formatDate value="${b.endDate}"  dateStyle="medium"/></td>
-
+                                        <td><a href="${pageContext.request.contextPath}/admin/batches/show/${b.id}" class="btn btn-primary">查看批次</a></td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -101,5 +106,12 @@
 		src="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.js"></script>
 	<script language="javascript" type="text/javascript"
 		src="${pageContext.request.contextPath}/js/My97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            batchStatusRender();
+
+
+        });
+    </script>
 </body>
 </html>

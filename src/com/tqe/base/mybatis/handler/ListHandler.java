@@ -1,6 +1,7 @@
 package com.tqe.base.mybatis.handler;
 
 import com.google.common.base.CaseFormat;
+import com.tqe.po.Course;
 import com.tqe.po.CourseBatch;
 import com.tqe.po.EvalTable;
 import com.tqe.po.ResultTable;
@@ -38,6 +39,7 @@ public class ListHandler extends BaseTypeHandler<List> {
         targetClassFilterList.add(CourseBatch.class);
         targetClassFilterList.add(EvalTable.class);
         targetClassFilterList.add(ResultTable.class);
+        targetClassFilterList.add(Course.class);
     }
 
     @Override

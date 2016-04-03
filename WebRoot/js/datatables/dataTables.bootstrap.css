@@ -34,7 +34,7 @@ div.dataTables_paginate ul.pagination {
 table.table {
 	clear: both;
 	text-align:center;
-	margin-top: 6px !important;
+	margin-top: 2px !important;
 	margin-bottom: 6px !important;
 	max-width: none !important;
 }

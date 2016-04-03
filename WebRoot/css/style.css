@@ -75,10 +75,8 @@ body {
     color: #000
 }
 
-.table-condensed > thead > tr > th,
 .table-condensed > tbody > tr > th,
 .table-condensed > tfoot > tr > th,
-.table-condensed > thead > tr > td,
 .table-condensed > tbody > tr > td,
 .table-condensed > tfoot > tr > td {
     padding: 2px 2px;
@@ -86,12 +84,20 @@ body {
 }
 
 .table-condensed > thead {
+    border-top:0px ;
+    font-weight: bold;
     font-size: 18px;
 }
 
-.thead{
+.thead ,
+.thead > td {
+    border-top:0px !important;
     font-weight: bold;
     font-size: 18px;
+}
+
+.no-border > tbody > tr > td{
+    border-top:0px !important;
 }
 
 .bs-callout {

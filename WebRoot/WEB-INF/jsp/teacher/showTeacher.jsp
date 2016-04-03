@@ -69,7 +69,7 @@
                                 <div class="form-group">
                                     <input type="hidden" id="tid" name="tid" value="${teacher.id}">
                                     <label for="season" >选择学期查看课程:</label>
-                                    <select name="season" class="form-control" id="season" key="${condition.season}">
+                                    <select name="season" class="form-control auto-select" id="season" key="${condition.season}">
                                         <option value="">当前学期:${applicationScope.curSeason}</option>
                                         <c:forEach begin="2015" end="${applicationScope.curYear+1}" step="1" var="s">
                                             <option  value="${s}春">${s}春</option>
@@ -84,13 +84,10 @@
                             <thead>
                             <tr class="info">
                                 <td>课程名</td>
-                                <td>课程号</td>
-                                <td>课序号</td>
-                                <td>教师名</td>
-                                <td>学院</td>
+                                <td>课程号/课序号</td>
                                 <td>学期</td>
                                 <td>学生数</td>
-                                <td>学分</td>
+                                <td>平均评分(学生/教师/领导)</td>
                                 <td width="10%">合班</td>
                                 <!--
                                 <td>操作</td>
@@ -103,13 +100,10 @@
                                 <tr>
 
                                     <td><a href="${pageContext.request.contextPath}/admin/course/show/${c.cid}/${c.cno}">${c.name }</a></td>
-                                    <td>${c.cid }</td>
-                                    <td>${c.cno }</td>
-                                    <td>${c.teacher.name }</td>
-                                    <td>${c.department }</td>
+                                    <td>${c.cid }/${c.cno}</td>
                                     <td>${c.season }</td>
                                     <td>${c.stuNumber }</td>
-                                    <td>${c.credit }</td>
+                                    <td><code>${c.stuEvalAvgScore}分</code>---<code>${c.teaEvalAvgScore}分</code>---<code>${c.leaEvalAvgScore}分</code></td>
                                     <td>${c.combine }</td>
                                     <!--
 										<td><a href="admin/edit/${admin.id }"

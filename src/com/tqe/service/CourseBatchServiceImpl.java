@@ -27,6 +27,9 @@ public class CourseBatchServiceImpl extends BaseService<CourseBatch>{
         return courseBatchDao.getById(cid,cno,bid);
     }
 
+    /**
+     * 显示每个问题对应 所有学生的回答
+     */
     public CourseBatch getByIdWithQuestList(String cid,Integer cno ,Integer bid) {
         CourseBatch courseBatch = courseBatchDao.getById(cid,cno,bid);
         List<StuResultTable> stuTableList = evalService.findAllStuTableWithEvalTable(cid, cno, bid);
@@ -47,13 +50,17 @@ public class CourseBatchServiceImpl extends BaseService<CourseBatch>{
         return courseBatch;
     }
 
-    private List<Pair<String,List<String>>> buildQuestionWithAnsPairList(List<String> questionNameList,List<ResultTable> table){
+    private List<Pair<String,List<String>>> buildQuestionWithAnsPairList(List<String> questionNameList,List<ResultTable> resultTables){
         if(questionNameList==null){
             return null;
         }
         List<Pair<String,List<String>>> pairList = new ArrayList<Pair<String, List<String>>>();
+        //对于每个问题 加入说有学生的回答
         for(int i=0;i<questionNameList.size();i++){
-            Pair<String,List<String>> questionWithAnsListPair = new MutablePair<String, List<String>>(questionNameList.get(i),table.get(i).getQuestionAnsList());
+            Pair<String,List<String>> questionWithAnsListPair = new MutablePair<String, List<String>>(questionNameList.get(i), new ArrayList<String>());
+            for(int j=0;j<resultTables.size();j++){
+                questionWithAnsListPair.getValue().add(resultTables.get(j).getQuestionAnsList().get(i));
+            }
             pairList.add(questionWithAnsListPair);
         }
         return pairList;
@@ -72,7 +79,7 @@ public class CourseBatchServiceImpl extends BaseService<CourseBatch>{
         if(courseBatch!=null){
 
             if(courseBatch.getStuEvalCnt()==stuEvalCnt && courseBatch.getStuEvalTotal() == stuEvalTotal){
-                //数据数据库已经存在该记录 并且选课的总人数 和 评教的人数都没有发生变化 那么就不需要改变
+                //数据数据库已经存在该记录 并且选课的总人数 和 评教的人数都没有发生变化 那么暂时不需要重新统计
                 return ;
             }else{  //如果数据有变化 重新分析数据
                 doAnalyseCourseBatch(courseBatch);
@@ -161,10 +168,12 @@ public class CourseBatchServiceImpl extends BaseService<CourseBatch>{
             case TEACHER:
                 courseBatch.setTeaEvalAvgScore(avgScore);
                 courseBatch.setTeaEvalLevelCnts(levelCnts);
+                courseBatch.setTeaEvalTableJsonString(tableItemListJsonString);
                 break;
             case LEADER:
                 courseBatch.setLeaEvalAvgScore(avgScore);
                 courseBatch.setLeaEvalLevelCnts(levelCnts);
+                courseBatch.setLeaEvalTableJsonString(tableItemListJsonString);
                 break;
             default:
                 logger.error("unknown userType :"+userType+"  in setAvgScoreAndLevelCnt:"+courseBatch);
