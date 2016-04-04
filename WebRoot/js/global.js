@@ -10,6 +10,10 @@ function closeWindow(){
     window.close();
 }
 
+/**
+ * 如果错误提示窗里的消息不为空 就显示该错误消息
+ * @param className
+ */
 function showErrorMessage(className){
     $(".error-message").map(function(){
        if($(this).text().trim().length>=1){
@@ -49,8 +53,13 @@ function autoSelect(){
     $(".auto-select").each(function(){
         var $select = $(this);
         var key = $select.attr("key");
-        log(key);
-        $select.find("option[value='"+key+"']").attr("selected","true");
+        if(!key){
+            key = $select.attr("value");
+        }
+        if(key){
+            key = key.trim();
+            $select.find("option[value='"+key+"']").attr("selected","true");
+        }
     })
 }
 

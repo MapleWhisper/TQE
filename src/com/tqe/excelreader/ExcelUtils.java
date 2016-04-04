@@ -320,4 +320,30 @@ public class ExcelUtils {
 		}
 		return rowList;
 	}
+
+
+    public  static  boolean checkFileType(String filePath){
+
+        boolean checkedFile = true;
+
+        File excelFile = getExcelFile(filePath);
+
+        HSSFWorkbook workbook=null;
+
+        try {
+            workbook = new HSSFWorkbook(new FileInputStream(excelFile));
+        }  catch (IOException e) {
+            checkedFile = false;
+        }
+        finally{
+            try {
+                if (workbook != null) {
+                    workbook.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return checkedFile;
+    }
 }

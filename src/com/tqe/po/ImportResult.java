@@ -8,6 +8,8 @@ import java.util.List;
  */
 public class ImportResult {
 
+    private String message;       //导入信息
+
     private String importType;  //导入类型
 
     private int size = 0;
@@ -20,8 +22,9 @@ public class ImportResult {
 
     private int existCnt = 0;       //数据库已经存在个数
 
-    public ImportResult(int size) {
+    public ImportResult(int size,String importType) {
         this.size = size;
+        this.importType = importType;
     }
     public  ImportResult(){
 
@@ -85,5 +88,13 @@ public class ImportResult {
 
     public void setSize(int size) {
         this.size = size;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

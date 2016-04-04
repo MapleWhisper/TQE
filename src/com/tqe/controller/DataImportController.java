@@ -1,6 +1,7 @@
 package com.tqe.controller;
 
 import com.tqe.excelreader.ExcelReader;
+import com.tqe.excelreader.ExcelUtils;
 import com.tqe.po.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -15,7 +16,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -28,7 +28,11 @@ import java.util.List;
 @RequestMapping("/admin")
 public class DataImportController extends BaseController {
 
-    Log logger = LogFactory.getLog(DataImportController.class);
+    private static final String DATA_IMPORT = "dataImport/dataImport";
+
+    private static final String IMPORT_RESULT = "dataImport/import-result";
+
+    private static final Log logger = LogFactory.getLog(DataImportController.class);
 
     @Resource(name = "teacherExcelReader")
     private ExcelReader<Teacher> teacherReader;
@@ -42,9 +46,13 @@ public class DataImportController extends BaseController {
     @Resource(name = "scExcelReader")
     private ExcelReader<SC> scReader;
 
+
+    /**
+     * 显示数据导入首页
+     */
     @RequestMapping("/dataImport")
     public String dataImport() {
-        return "dataImport/dataImport";
+        return DATA_IMPORT;
     }
 
     /**
@@ -59,20 +67,23 @@ public class DataImportController extends BaseController {
 
         try {
             if (!checkFileName(teacherFile, model)) {
-                return "dataImport/dataImport";
+                return IMPORT_RESULT;
             }
             String fileDir = storeFile(request, teacherFile);
+            if(!ExcelUtils.checkFileType(fileDir)){
+                model.addAttribute("error","文件的格式必须为2003版本的EXCEL文件");
+                return IMPORT_RESULT;
+            }
             List<Teacher> teacherList = teacherReader.getAll(fileDir, true);
-            teacherService.saveAll(teacherList);
 
-        } catch (FileNotFoundException e) {
-            model.addAttribute("error", e.getMessage());
-            logger.error(e);
-        } catch (IOException e) {
+            ImportResult result = teacherService.saveAll(teacherList);
+            model.addAttribute("importResult",result);
+
+        }  catch (IOException e) {
             model.addAttribute("error", e.getMessage());
             logger.error(e);
         }
-        return "dataImport/dataImport";
+        return IMPORT_RESULT;
     }
 
     /**
@@ -86,20 +97,18 @@ public class DataImportController extends BaseController {
     ) {
         try {
             if (!checkFileName(studentFile, model)) {
-                return "dataImport/dataImport";
+                return IMPORT_RESULT;
             }
             String fileDir = storeFile(request, studentFile);
             List<Student> studentList = studentReader.getAll(fileDir, true);
-            studentService.saveAll(studentList);
+            ImportResult result = studentService.saveAll(studentList);
+            model.addAttribute("importResult",result);
 
-        } catch (FileNotFoundException e) {
-            model.addAttribute("error", e.getMessage());
-            logger.error(e);
         } catch (IOException e) {
             model.addAttribute("error", e.getMessage());
             logger.error(e);
         }
-        return "dataImport/dataImport";
+        return IMPORT_RESULT;
 
     }
 
@@ -119,19 +128,20 @@ public class DataImportController extends BaseController {
             try {
                 if (checkFileName(courseFile, model)) {
                     String fileDir = storeFile(request, courseFile);
+                    if(!ExcelUtils.checkFileType(fileDir)){
+                        model.addAttribute("error","文件的格式必须为2003版本的EXCEL文件");
+                        return IMPORT_RESULT;
+                    }
                     List<Course> courseList = courseReader.getAll(fileDir, false);
                     ImportResult result = courseService.saveAll(courseList, season);
                     model.addAttribute("importResult",result);
                 }
-            } catch (FileNotFoundException e) {
-                model.addAttribute("error", e.getMessage());
-                logger.error(e);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 model.addAttribute("error", e.getMessage());
                 logger.error(e);
             }
         }
-        return "dataImport/dataImport";
+        return IMPORT_RESULT;
     }
 
     /**
@@ -145,21 +155,19 @@ public class DataImportController extends BaseController {
     ) {
         try {
             if (!checkFileName(scFile, model)) {
-                return "dataImport/dataImport";
+                return IMPORT_RESULT;
             }
             String fileDir = storeFile(request, scFile);
             List<SC> scList = scReader.getAll(fileDir, false);
             scService.saveAll(scList);
 
-        } catch (FileNotFoundException e) {
-            model.addAttribute("error", e.getMessage());
-            logger.error(e);
         } catch (IOException e) {
             model.addAttribute("error", e.getMessage());
             logger.error(e);
         }
-        return "dataImport/dataImport";
+        return IMPORT_RESULT;
     }
+
 
     /**
      * 检查文件的后缀是否是Excel
@@ -170,6 +178,7 @@ public class DataImportController extends BaseController {
             model.addAttribute("error", "文件必须是.xls结尾的EXCEL文件");
             return false;
         }
+
         return true;
     }
 

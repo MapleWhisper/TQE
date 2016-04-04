@@ -28,7 +28,11 @@ public abstract class ExcelReader<E> {
 	 * @param excelDir
 	 * @return
 	 */
-	public abstract boolean checkFile(String excelDir);
+	protected abstract boolean checkFile(String excelDir);
+
+    protected void postProcessList(List<E> list,String excelDir){
+
+    };
 	
 	private Class<?> clazz = null;	
 	public ExcelReader() {	//获取泛型类型
@@ -57,25 +61,33 @@ public abstract class ExcelReader<E> {
 	public List<E> getAll(String excelDir,boolean needSetPassword) throws FileNotFoundException {
 		List<E> list = new ArrayList<E>();
 
-		int titleIndex = 0;		//有效数据的从第几行开始的
-		if(clazz==Teacher.class){
-			titleIndex = 0;
-		}else if(clazz == Course.class || clazz==SC.class){
-			titleIndex = 2;
-		}else{
-			titleIndex = 0;
-		}
-		if(checkFile(excelDir)){
+		int titleIndex = getTitleIndex();;		//有效数据的从第几行开始的
+        if(checkFile(excelDir)){
 			list = excelStringValueToPojoList(excelDir, list, needSetPassword,titleIndex) ;
-			
+            postProcessList(list,excelDir);
 		}else{
 			logger.error("file not fount! excelDir:"+excelDir);
 			throw new FileNotFoundException("文件没有找到");
 		}
 		return list;
 	}
-	
-	/**
+
+    /**
+     * Excel 的标题是从 第几行开始的
+     */
+    private int getTitleIndex() {
+        int titleIndex = 0;
+        if(clazz==Teacher.class){
+            titleIndex = 0;
+        }else if(clazz == Course.class || clazz==SC.class){
+            titleIndex = 2;
+        }else{
+            titleIndex = 0;
+        }
+        return titleIndex;
+    }
+
+    /**
 	 * 把Excel数据转换为 Pojo 的List类型的数据
 	 * @param excelDir
 	 * @param list

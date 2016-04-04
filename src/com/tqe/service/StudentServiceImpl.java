@@ -1,5 +1,6 @@
 package com.tqe.service;
 
+import com.tqe.base.enums.ImportType;
 import com.tqe.base.vo.PageVO;
 import com.tqe.po.*;
 import org.apache.commons.lang3.StringUtils;
@@ -91,7 +92,7 @@ public class StudentServiceImpl extends BaseService<Student> {
         boolean f = false;
         try {
             if (list != null) {
-                result = new ImportResult(list.size());
+                result = new ImportResult(list.size(), ImportType.STUDENT.getName());
                 for (Student s : list) {
                     if (s.getSid() != null) {
                         boolean reload = processStuData(dMap, mMap, cMap, s);
@@ -106,7 +107,7 @@ public class StudentServiceImpl extends BaseService<Student> {
                         } catch (DuplicateKeyException e1) {
                             result.addExitCnt();
                         } catch (Exception e) {
-                            logger.info(e.getMessage(), e);
+                            logger.info(e.getMessage());
                             result.addFailCnt();
                             result.getFailMegs().add(e.getMessage());
                         }

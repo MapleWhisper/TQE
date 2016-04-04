@@ -23,7 +23,7 @@ public class MyExceptionHandler implements HandlerExceptionResolver {
     private  static  Map<String,String> messageConvertMap = new HashMap<String,String>();
     static {
 
-        messageConvertMap.put("OLE2","EXCEL的格式错误，不能解析，请转换后再试");
+        messageConvertMap.put("OLE2","Excel的内容不能解析，请转换后再试，详细说明查看首页导入说明！");
         messageConvertMap.put("Data too long","您输入的数据太长了！");
     }
 

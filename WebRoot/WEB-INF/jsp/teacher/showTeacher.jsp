@@ -60,7 +60,7 @@
 
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                       教师所教班级
+                       教师所教课程
                     </div>
                     <div class="panel-body">
                         <div class="bs-callout bs-callout-info">

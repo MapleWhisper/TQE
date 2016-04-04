@@ -186,15 +186,21 @@
 											<span class="glyphicon glyphicon-remove-sign"
 												aria-hidden="true">删除最后一个</span>
 										</button>
-
 									</div>
-
 								</div>
-
 							</div>
 
-							<div>
 
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">修改说明</label>
+                                <div class="col-sm-10" >
+                                    <p class="form-control-static text-danger " style="font-size: 18px;">
+                                        强烈不建议您对评教指标进行大幅度的修改，否则将会影响已经评教的数据的统计！！！<br>
+                                        您只能在该指标表没有使用的时候才可以修改成功</p>
+                                </div>
+                            </div>
+
+							<div>
 								<div class="form-group">
 									<div class="col-xs-6 col-xs-offset-4">
 										<button type="submit" class="btn btn-primary  btn-lg ">确认修改指标</button>

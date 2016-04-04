@@ -20,7 +20,8 @@ public interface BatchesDao extends BaseDao<Batches>{
 	@Select("select * from Batches where id = #{id}")
 	public Batches getById(@Param("id")Integer id);
 	
-	@Insert("insert into batches( id,name,courseNumber, curCourseNumber , season) values(null,#{name},#{courseNumber},#{curCourseNumber},#{season}) ")
+	@Insert("insert into batches( id,name,courseNumber, curCourseNumber , season ,beginDate ,endDate)" +
+            " values(null,#{name},#{courseNumber},#{curCourseNumber},#{season},#{beginDate},#{endDate} ) ")
 	public void save(Batches batches);
 	
 	@Select("select * from batches")

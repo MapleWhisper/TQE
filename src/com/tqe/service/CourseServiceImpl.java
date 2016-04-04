@@ -1,10 +1,12 @@
 package com.tqe.service;
 
+import com.tqe.base.enums.ImportType;
 import com.tqe.base.vo.PageVO;
 import com.tqe.po.Batches;
 import com.tqe.po.Course;
 import com.tqe.po.CourseBatch;
 import com.tqe.po.ImportResult;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.DuplicateKeyException;
@@ -43,36 +45,40 @@ public class CourseServiceImpl extends BaseService<Course> {
     /**
      * 保存所有课程到数据库
      *
-     * @param list
      * @param season 课程季度
-     * @return
      */
     public ImportResult saveAll(List<Course> list, String season) {
-        boolean f = false;
 
         ImportResult result = null;
         Map<String, Integer> dMap = convertDepListToMap(departmentDao.findAll());
         try {
             if (list != null) {
-                result = new ImportResult(list.size());
+                result = new ImportResult(list.size(), ImportType.STUDENT.getName());
                 for (Course c : list) {
                     if (c.getCid() != null && c.getCno() != null) {
+                        if(StringUtils.isNotBlank(c.getSeason())){      //确认EXCEL 中的season 和 用户选择要导入的 season 是否一致
+                            if(!c.getSeason().equals(season)){
+                                result.setMessage("EXCEL中解析到的当前学期为:"+c.getSeason()+"  而您选择的导入学期为："+season);
+                                break;
+                            }
+                        }
                         try {
+
                             c.setSeason(season);
+
                             processCouData(dMap, c);
                             save(c);
                             result.addSuccessCnt();
                         } catch (DuplicateKeyException e1){
                             result.addExitCnt();
                         } catch (Exception e) {
-                            logger.info(e.getMessage(), e);
+                            logger.info(e.getMessage());
                             result.addFailCnt();
                             result.getFailMegs().add(e.getMessage());
                         }
 
                     }
                 }
-                f = true;
             }
 
         } catch (Exception e) {
@@ -90,9 +96,8 @@ public class CourseServiceImpl extends BaseService<Course> {
      *
      * @param sid     学生Id
      * @param batches 当前可以评教的批次
-     * @return
      */
-    public List<Course> findAllBySId(String sid, Batches batches) {
+    public List<Course> findAllBySid(String sid, Batches batches) {
         List<Course> list = courseDao.findAllBySid(sid, batches.getSeason());
         List<String> cids = evalDao.findAllStuTablecids(sid, batches.getId());
         for (Course c : list) {    //如果课程已经评价 那么设置课程已评价
@@ -106,8 +111,6 @@ public class CourseServiceImpl extends BaseService<Course> {
     /**
      * 返回所有教师可以评价的课程组
      * 如果教师已经评价了课程，那么设置课程已评价
-     *
-     * @return
      */
     public List<Course> findAllByTId(String tid, Integer bid) {
         List<Course> list = courseDao.findAllByTId(tid);

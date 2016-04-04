@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.tqe.base.enums.ImportType;
 import com.tqe.base.vo.PageVO;
 import com.tqe.po.Department;
 import com.tqe.po.ImportResult;
@@ -34,13 +35,13 @@ public class TeacherServiceImpl extends BaseService<Teacher>{
 		teacherDao.save(e);
 	}
 	
-	public boolean saveAll(List<Teacher> list){
+	public ImportResult saveAll(List<Teacher> list){
 		boolean f = false;
         ImportResult result = null;
 		Map<String,Integer> dMap = convertDepListToMap(departmentDao.findAll());
 		try {
 			if(list!=null){
-                result  = new ImportResult(list.size());
+                result  = new ImportResult(list.size(), ImportType.TEACHER.getName());
 				for(Teacher t:list){
 					if(t.getId()!=null){ 
 						boolean reload = processTeaData(dMap, t);   //教师数据预处理
@@ -53,7 +54,7 @@ public class TeacherServiceImpl extends BaseService<Teacher>{
                         } catch (DuplicateKeyException e1){
                             result.addExitCnt();
                         } catch (Exception e) {
-                            logger.info(e.getMessage(), e);
+                            logger.info(e.getMessage());
                             result.addFailCnt();
                             result.getFailMegs().add(e.getMessage());
                         }
@@ -68,7 +69,7 @@ public class TeacherServiceImpl extends BaseService<Teacher>{
 			e.printStackTrace();
 		}
 		
-		return f;
+		return result;
 		
 	}
 	

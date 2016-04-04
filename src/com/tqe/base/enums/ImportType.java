@@ -8,7 +8,7 @@ public enum ImportType {
     TEACHER("教师"),
     STUDENT("学生"),
     COURSE("课程"),
-    SC("学生选课信息");
+    SC("学生选课");
 
     private String name;
     ImportType(String name){
@@ -21,5 +21,10 @@ public enum ImportType {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return this.name();
     }
 }

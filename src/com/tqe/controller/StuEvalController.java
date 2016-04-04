@@ -35,7 +35,7 @@ public class StuEvalController extends BaseController{
 		Student stu = (Student) session.getAttribute("student");
 		Batches batches = batchesService.getAvailiableBatches(SystemUtils.getSeason());
 		if(batches!=null){		//如果当前存在 可以评教的批次
-			List<Course> courseList = courseService.findAllBySId(stu.getSid(),batches);	//得到所有的课程列表
+			List<Course> courseList = courseService.findAllBySid(stu.getSid(), batches);	//得到所有的课程列表
 			model.addAttribute("courseList", courseList);
 			model.addAttribute("batches", batches);
 			
