@@ -1,5 +1,6 @@
 package com.tqe.service;
 
+import com.tqe.base.enums.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -12,11 +13,12 @@ import com.tqe.po.User;
 public class CommonServiceImpl extends BaseService<Object>{
 	
 	public void updatePwd(User user){
-		if(user.getType().equals("admin")){
+
+		if(user.getType().equals(UserType.ADMIN.getName())){
 			adminDao.updatePwd(user);
-		}else if(user.getType().equals("teacher")){
+		}else if(user.getType().equals(UserType.TEACHER.getName())){
 			teacherDao.updatePwd(user);
-		}else{
+		}else if(user.getType().equals(UserType.STUDENT.getName())){
 			studentDao.updatePwd(user);
 		}
 	}

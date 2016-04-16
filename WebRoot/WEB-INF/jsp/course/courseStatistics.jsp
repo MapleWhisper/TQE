@@ -117,7 +117,7 @@
                 </h4>
                 <hr>
                 <h4 class="">学生评教进程: 已评 <code>${courseBatch.stuEvalCnt}</code> 人/ 共 <code>${courseBatch.stuEvalTotal}</code> 人</h4>
-                <div class="progress" style="margin-top: 20px">
+                <div class="progress stu-eval-progress" style="margin-top: 20px">
                     <div
                             class="progress-bar progress-bar-info progress-bar-striped active"
                             role="progressbar" aria-valuenow="10" aria-valuemin="0"
@@ -248,12 +248,7 @@
                                             <div class="panel-heading" style="text-align: center"><h4> <code>${v.count}</code> ${quest.left}</h4></div>
                                             <!-- Table -->
                                             <table class="table table-hover table-condensed">
-                                                <thead>
-                                                <tr >
-                                                    <td>#</td>
-                                                    <td>评论与建议内容</td>
-                                                </tr>
-                                                </thead>
+
 
                                                 <tbody>
                                                 <c:forEach varStatus="vs" var="q" items="${quest.right}">
@@ -285,8 +280,8 @@
         var stuEvalTotal = courseBatch.stuEvalTotal;
         var stuEvalCnt = courseBatch.stuEvalCnt;
         var stuEvalPercent = parseInt((stuEvalCnt/stuEvalTotal)*100);
-        $(".progress .progress-bar:eq(0)").css("width",stuEvalPercent);
-        $(".progress .progress-bar:eq(0)").html("评教已进行:"+stuEvalPercent+"%");
+        $(".stu-eval-progress").find(".progress-bar").css("width",stuEvalPercent);
+        $(".stu-eval-progress").find(".progress-bar").html("评教已进行:"+stuEvalPercent+"%");
 
         var stuEvalLevelCntsChart = echarts.init(document.getElementById('stu-eval-level-cnts'));
 
@@ -496,7 +491,7 @@
         var cno= $("#cno").val();
         var bid= $("#bid").val();
 
-        $.get("/admin/course-batch/info",{cid:cid,cno:cno,bid:bid},function(data){
+        $.get("../course-batch/info",{cid:cid,cno:cno,bid:bid},function(data){
             if(data.success){
                 var courseBatch = data.item;
                 fillCourseBatchInfo(courseBatch);

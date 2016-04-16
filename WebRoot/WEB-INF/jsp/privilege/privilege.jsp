@@ -24,7 +24,7 @@
 				<%@ include file="../left.jsp"%>
 			</div>
 			<div class="col-sm-10 ">
-				<div class="panel panel-primary">
+				<div class="panel panel-default">
 					<div class="panel-heading">权限查看 与 管理</div>
                     <div class="alert alert-warning">如果您对该页面内容不了解 请谨慎修改！</div>
 					<div class="panel-body">
@@ -151,10 +151,15 @@
 			            "infoFiltered": "(过滤自  _MAX_ 条纪录)",
 			            "search":"搜索:",
 			            "searchPlaceholder":"请输入关键字",
-			            "next":"下一页",
-			            "previous":"上一页"
+                         "paginate": {
+                             "first":      "首页",
+                             "last":       "末页",
+                             "next":       "下一页",
+                             "previous":   "上一页"
+                         }
 			        },
-					"lengthMenu": [[-1], [  "所有记录"]]
+					"lengthMenu": [[-1], [  "所有记录"]],
+                    "dom":"<'float_left'f>r<'float_right'l>t<'float_left'i><'float_right'p>"
 			});
 		});
 	</script>

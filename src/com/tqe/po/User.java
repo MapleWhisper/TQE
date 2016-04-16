@@ -3,6 +3,7 @@ package com.tqe.po;
 
 import com.tqe.utils.MD5Utils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.DigestUtils;
 
 import java.io.Serializable;
 
@@ -25,10 +26,13 @@ public class User implements Serializable{
 	}
 	public void setPassword(String password) {
 		this.password = password;
-		if(StringUtils.isNotBlank(password) && password.length()!=32){
-			this.password = MD5Utils.string2MD5(password);
-		}
 	}
+    public void setPassWordConvertMD5(String originPwd){
+        if(originPwd!=null){
+            this.password = DigestUtils.md5DigestAsHex(originPwd.getBytes()).toLowerCase();
+        }
+
+    }
     public void setMd5Password(String md5Password){
         this.password = md5Password;
     }

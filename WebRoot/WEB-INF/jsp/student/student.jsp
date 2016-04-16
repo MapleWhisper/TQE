@@ -26,13 +26,12 @@
 			<!--右侧的内容 -->
 			<div class="col-sm-10">
 				<!-- 面板开始 -->
-				<div class="panel panel-primary">
+				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h1 class="panel-title" style="font-size: 25px">学生列表 Student
-							List</h1>
+						学生列表
 					</div>
 					<div class="panel-body">
-						<blockquote>
+						<div class="bs-callout bs-callout-info">
 							<form class="form-inline" method="post" action="${pageContext.request.contextPath}/admin/student">
 								<div class="form-group">
 									<label >学院:</label>
@@ -84,7 +83,7 @@
 							</form>
 
 
-						</blockquote>
+						</div>
 						<table
 							class="table table-hover table-striped table-bordered table-condensed compact">
 							<thead>

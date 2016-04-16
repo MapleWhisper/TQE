@@ -39,9 +39,6 @@ public class Admin implements Serializable{
 	}
 	public void setPassword(String password) {
 		this.password = password;
-		if(StringUtils.hasText(password) && password.length()!=32){
-			this.password = MD5Utils.string2MD5(password);
-		}
 	}
 	public String getPosition() {
 		return position;

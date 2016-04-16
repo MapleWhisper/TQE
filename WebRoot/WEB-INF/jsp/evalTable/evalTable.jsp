@@ -17,19 +17,16 @@
 			</div>
 			<div class="col-sm-10">
 
-                <div class="bs-callout bs-callout-info">
-                    <a href="${pageContext.request.contextPath}/admin/evalTable/add"
-                       class="btn btn-info btn-lg">生成新指标</a>
-                </div>
 
-
-
-				<div class="panel panel-primary">
+				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title">指标列表</h3>
+						指标列表
 					</div>
 					<div class="panel-body">
-
+                        <div class="bs-callout bs-callout-info">
+                            <a href="${pageContext.request.contextPath}/admin/evalTable/add"
+                               class="btn btn-info btn-lg " icon="plus">生成新指标</a>
+                        </div>
 
 						<table class="table table-hover table-striped table-bordered table-condensed">
 							<thead>
@@ -50,7 +47,7 @@
                                         <td>${e.type}</td>
 										<td><fm:formatDate value="${e.createDate}"
 												pattern="yyyy-MM-dd" /></td>
-										<td><a href="${pageContext.request.contextPath}/admin/evalTable/edit/${e.id}" class="btn btn-sm btn-warning update">修改</a></td>
+										<td><a href="${pageContext.request.contextPath}/admin/evalTable/edit/${e.id}" class="btn btn-sm btn-info update" icon="edit">修改</a></td>
 										<!--	评教指标暂时不能删除 
 										<td><a id="${e.id}" class="btn btn-sm btn-warning delete">删除</a></td>
 										 -->
@@ -119,5 +116,10 @@
 		src="${pageContext.request.contextPath}/js/datatables/js/jquery.dataTables.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.js"></script>
+    <script type="text/javascript">
+        $(function(){
+           autoAddIcon();
+        });
+    </script>
 </body>
 </html>

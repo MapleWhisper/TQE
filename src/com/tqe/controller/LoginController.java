@@ -75,6 +75,7 @@ public class LoginController extends BaseController{
 		cookie.setMaxAge(365 * 24 * 60 * 60);
 		response.addCookie(cookie);
         String viewName = "index";
+        user.setPassWordConvertMD5(user.getPassword());
         switch (userType){
             case ADMIN:
                 Admin a =adminService.login(user);

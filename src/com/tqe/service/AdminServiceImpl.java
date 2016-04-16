@@ -20,7 +20,7 @@ public class AdminServiceImpl extends BaseService<Admin>{
 	public Admin getById(Integer id) {
         Admin admin = adminDao.getById(id);
         admin.setPassword("******");
-		return adminDao.getById(id);
+		return admin;
 	}
 	
 	@Override
@@ -48,10 +48,10 @@ public class AdminServiceImpl extends BaseService<Admin>{
 
         adminDao.update(admin);
 
-        if(!admin.getPassword().contains("***")){
+        if(!admin.getPassword().contains("*")){
             User user = new User();
             user.setId(admin.getId()+"");
-            user.setMd5Password(admin.getPassword());
+            user.setPassWordConvertMD5(admin.getPassword());
             adminDao.updatePwd(user);
         }
     }

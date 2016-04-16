@@ -135,10 +135,6 @@ public class Teacher implements Serializable{
 	}
 	public void setPassword(String password) {
 		this.password = password;
-		if(StringUtils.hasText(password) && password.length()!=32){
-			this.password = MD5Utils.string2MD5(password);
-		}
-		
 	}
 	public Integer getDepartmentId() {
 		return departmentId;

@@ -38,11 +38,11 @@
 
             <div class="form-group">
                 <div class="col-xs-4 col-xs-offset-3">
-                    <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">关闭</button>
+                    <a type="button" class="btn btn-default btn-lg" data-dismiss="modal" icon="remove">关闭</a>
                 </div>
 
                 <div class="col-xs-4 ">
-                    <button type="submit" class="btn btn-primary  btn-lg ">修改管理员</button>
+                    <button type="submit" class="btn btn-primary  btn-lg " icon="saved">修改管理员</button>
                 </div>
 
             </div>

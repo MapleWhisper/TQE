@@ -13,6 +13,7 @@ import java.util.Map;
 import com.tqe.po.SC;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 
 import com.tqe.po.Course;
@@ -189,17 +190,18 @@ public abstract class ExcelReader<E> {
 		}
 		
 		//获取SetPassword方法
-		Method m = null ;
+		Method method = null ;
 		try {
-			m = clazz.getDeclaredMethod("setPassword", String.class);
+			method = clazz.getDeclaredMethod("setPassword", String.class);
 		} catch (NoSuchMethodException e) {
             logger.warn(e.getMessage());
 		} catch (SecurityException e) {
             logger.warn(e.getMessage());
 		}
 
-		if(m!=null){	//注入密码
-			convertAndInvoke(m, obj, defaultPwd, String.class);
+		if(method!=null){	//注入密码
+            String md5Pwd = DigestUtils.md5DigestAsHex(defaultPwd.getBytes()).toLowerCase();
+			convertAndInvoke(method, obj, md5Pwd, String.class);
 		}
 		
 	}

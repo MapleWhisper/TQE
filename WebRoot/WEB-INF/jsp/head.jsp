@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <!--导航条 -->
-<nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<nav class="navbar navbar-default navbar-fixed-top ">
 
 	<div class="container-fluid">
 		<div class="navbar-header">
@@ -17,9 +17,10 @@
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li class="active"><a
-					href="${pageContext.request.contextPath}/admin/admin"><span
-						class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;后台管理</a></li>
+				<%--<li ><a--%>
+					<%--href="${pageContext.request.contextPath}/admin/admin"><span--%>
+						<%--class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;后台管理</a></li>--%>
+                <li><a ><span class="glyphicon glyphicon-home"></span> 教学质量评教</a></li>
 			</ul>
 			<form class="navbar-form navbar-left" role="search"></form>
 			<ul class="nav navbar-nav navbar-right">
@@ -31,9 +32,14 @@
 					</p>
 				</li>
 
-				<li><a
-					href="${pageContext.request.contextPath}/admin/resetPwdUI">修改密码</a></li>
-				<li class="active"><a
+				<%--<li><a--%>
+					<%--href="${pageContext.request.contextPath}/admin/resetPwdUI" ><span--%>
+                        <%--class="glyphicon glyphicon-edit"></span>  修改密码</a></li>--%>
+                <li><a data-toggle="modal" data-target="#reset-pwd" href="#"
+                       data-remote="${pageContext.request.contextPath}/admin/resetPwdUI">
+                    <span class="glyphicon glyphicon-edit"></span>  修改密码</a></li>
+
+				<li ><a
 					href="${pageContext.request.contextPath}/logout"><span
 						class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;退出登陆</a></li>
 

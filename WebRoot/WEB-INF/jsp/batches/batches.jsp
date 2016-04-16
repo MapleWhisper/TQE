@@ -21,16 +21,18 @@
 			</div>
 			<div class="col-sm-10">
 
-                <div class="bs-callout bs-callout-info">
-                    <a class="btn btn-info btn-lg" data-toggle="modal" data-target="#add-batch-modal">生成新批次</a>
-                </div>
 
-				<div class="panel panel-primary">
+
+				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title">批次列表</h3>
+						批次列表
 					</div>
 					<div class="panel-body">
-						
+
+                        <div class="bs-callout bs-callout-info">
+                            <a class="btn btn-info btn-lg" data-toggle="modal" icon="plus" data-target="#add-batch-modal">生成新批次</a>
+                        </div>
+
 						<table class="table table-hover table-striped table-bordered table-condensed">
 							<thead>
 								<tr class="info">
@@ -52,7 +54,7 @@
                                         <td><span class="batch-status">${b.batchStatus}</span></td>
                                         <td><fm:formatDate value="${b.beginDate}"  dateStyle="medium"/> ~
                                             <fm:formatDate value="${b.endDate}"  dateStyle="medium"/></td>
-                                        <td><a href="${pageContext.request.contextPath}/admin/batches/show/${b.id}" class="btn btn-primary">查看批次</a></td>
+                                        <td><a href="${pageContext.request.contextPath}/admin/batches/show/${b.id}" icon="zoom-in" class="btn btn-primary">查看批次</a></td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -109,7 +111,7 @@
     <script type="text/javascript">
         $(function(){
             batchStatusRender();
-
+            autoAddIcon();
 
         });
     </script>

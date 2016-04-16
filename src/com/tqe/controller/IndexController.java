@@ -3,6 +3,9 @@ package com.tqe.controller;
 
 import javax.servlet.http.HttpSession;
 
+import com.tqe.base.BaseResult;
+import com.tqe.base.enums.UserType;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -58,7 +61,7 @@ public class IndexController extends BaseController{
     @RequestMapping("/admin/resetPwdUI")
     public String resetPwdUI(){
 
-        return "resetPwd";
+        return "model/resetPwd";
     }
 
     /**
@@ -66,8 +69,13 @@ public class IndexController extends BaseController{
      * 重新设置密码
      */
     @RequestMapping("/admin/resetPwd")
-    public String resetPwd( Integer id ,String pwd,String oldPwd,
-                            Model model,HttpSession session){
+    @ResponseBody
+    public BaseResult resetPwd(
+            Integer id ,
+            String pwd,
+            String oldPwd,
+            HttpSession session)
+    {
         User user = new User();
         String Md5oldPwd = MD5Utils.string2MD5(oldPwd);
         if(session.getAttribute("admin")!=null){
@@ -76,30 +84,32 @@ public class IndexController extends BaseController{
 
                 user.setId(admin.getId() + "");
                 user.setUsername(admin.getUsername());
-                user.setPassword(pwd);
-                user.setType("admin");
+                user.setPassWordConvertMD5(pwd);
+                user.setType(UserType.ADMIN.getName());
 
             }
         }else if(session.getAttribute("teacher")!=null){
             Teacher teacher = teacherService.getById(id);
             if(teacher.getPassword().equalsIgnoreCase(Md5oldPwd)){
                 user.setId(teacher.getId());
-                user.setPassword(pwd);
-                user.setType("teacher");
+                user.setPassWordConvertMD5(pwd);
+                user.setType(UserType.TEACHER.getName());
             }
         }else if(session.getAttribute("student")!=null){
             Student student = studentService.getById(id+"");
             if(student.getPassword().equalsIgnoreCase(Md5oldPwd)){
                 user.setId(student.getSid()+"");
-                user.setPassword(pwd);
-                user.setType("student");
+                user.setPassWordConvertMD5(pwd);
+                user.setType(UserType.STUDENT.getName());
             }
         }else{
-			model.addAttribute("error","原密码错误");
-            return "resetPwd";
+            return BaseResult.createFailure("当前没有登录的用户！");
         }
-        commonService.updatePwd(user);
-        return "redirect:/logout";
+        if(StringUtils.isNotBlank(user.getPassword())){
+            commonService.updatePwd(user);
+            return BaseResult.createSuccess("密码修改成功");
+        }
+        return BaseResult.createFailure("用户原密码错误！！请重新输入");
 
     }
 

@@ -93,7 +93,7 @@ public class AdminController extends BaseController{
         Admin a = adminService.getById(admin.getId());
         a.setName(admin.getName());
         a.setPosition(admin.getPosition());
-        if(!admin.getPassword().contains("***")){
+        if(!admin.getPassword().contains("*")){   //只有不包含"*"才会继续修改密码
             a.setPassword(admin.getPassword());
         }
         adminService.update(a);

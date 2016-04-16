@@ -97,3 +97,26 @@ function batchStatusRender(){
         }
     })
 }
+
+/**
+ * 自动添加 图标 如果元素上有 icon标签 自动对标签内容前添加 <span class='glyphicon glyphicon-'></span>
+ */
+function autoAddIcon(){
+    $("a").each(function(){
+        addIcon($(this));
+    });
+    $("button").each(function(){
+        addIcon($(this));
+    });
+    function addIcon(element){
+        var icon = element.attr("icon");
+        log(icon);
+        if(icon){
+            log(icon);
+            var iconSpan = "<span class='glyphicon glyphicon-@1'></span>&nbsp;&nbsp;";
+            iconSpan = iconSpan.replace("@1",icon);
+            element.prepend(iconSpan);
+        }
+    }
+
+}

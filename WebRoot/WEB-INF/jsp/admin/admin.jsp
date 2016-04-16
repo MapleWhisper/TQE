@@ -28,7 +28,7 @@
 			</div>
 			<div class="col-sm-10 ">
 
-				<div class="panel panel-primary">
+				<div class="panel panel-default">
 					<div class="panel-heading">管理员列表</div>
 
 					<div class="panel-body">
@@ -68,7 +68,7 @@
                             <div class="row">
                                 <div class="col-xs-6 col-xs-offset-5">
                                     <div class="no1">
-                                        <a class="btn btn-primary" data-toggle="modal" data-target="#add-admin-modal">添加管理员</a>
+                                        <a class="btn btn-primary" icon="plus" data-toggle="modal" data-target="#add-admin-modal">添加管理员</a>
                                     </div>
 
                                 </div>
@@ -128,23 +128,28 @@
 
 
     <script type="text/javascript">
-        $('#edit-admin-modal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
-            var adminId = button.attr('admin-id');
-            var modal = $(this);
-            $.get("/admin/admin/getInfo",{id:adminId},function(data){
-                if(data.success){
-                    var admin = data.item;
-                    modal.find("#edit-username").html(admin.username);
-                    modal.find("#edit-password").val("******");
-                    modal.find("#edit-id").val(admin.id);
-                    modal.find("#edit-name").val(admin.name);
-                    modal.find("#edit-position").val(admin.position);
-                }else{
-                    alert(data.message);
-                }
+        $(function(){
+            $('#edit-admin-modal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var adminId = button.attr('admin-id');
+                var modal = $(this);
+                $.get("/admin/admin/getInfo",{id:adminId},function(data){
+                    if(data.success){
+                        var admin = data.item;
+                        modal.find("#edit-username").html(admin.username);
+                        modal.find("#edit-password").val("******");
+                        modal.find("#edit-id").val(admin.id);
+                        modal.find("#edit-name").val(admin.name);
+                        modal.find("#edit-position").val(admin.position);
+                    }else{
+                        alert(data.message);
+                    }
+                });
             });
-        })
+            autoAddIcon();
+
+        });
+
     </script>
 </body>
 </html>

@@ -3,8 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page import="java.text.*"%>
 <div class="tree well">
-	<div style="margin-left: 15px">
-		今天是:<br>
+	<div style="margin-left: 15px;margin-top: 10px;">
 		<p>
 			<code><%=DateFormat.getDateInstance(DateFormat.FULL,Locale.SIMPLIFIED_CHINESE).format(
 					new Date())%><br>
@@ -14,7 +13,7 @@
 	</div>
 	<ul style="margin-left: -40px">
 		<!-- 主菜单 -->
-		<li><span class="glyphicon glyphicon-folder-open">主菜单</span>
+		<li><span class="glyphicon glyphicon-folder-open"> 主菜单</span>
 			<ul>
 				<li class="root"><span><i
 						 ></i>评教中心</span>

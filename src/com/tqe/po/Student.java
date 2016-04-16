@@ -32,7 +32,7 @@ public class Student implements Serializable{
 	private Integer classId;
 	private Integer majorId;
 
-	private boolean isEvaled;	//ÅÐ¶ÏÑ§ÉúÊÇ·ñÒÑ¾­ÆÀ¼Û
+	private boolean isEvaled;	//ï¿½Ð¶ï¿½Ñ§ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½
 	
 	
 	public String getSid() {
@@ -145,9 +145,6 @@ public class Student implements Serializable{
 	}
 	public void setPassword(String password) {
 		this.password = password;
-		if(StringUtils.hasText(password) && password.length()!=32){
-			this.password = MD5Utils.string2MD5(password);
-		}
 	}
 	public String getCampus() {
 		return campus;
