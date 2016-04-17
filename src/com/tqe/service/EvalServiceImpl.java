@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tqe.po.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EvalServiceImpl extends BaseService<EvalTable>{
-	
+	private static final Log logger = LogFactory.getLog(EvalServiceImpl.class);
 	/**
 	 * 保存学生评教表
 	 * @param stuTable
@@ -33,6 +35,7 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 		try {
 			evalDao.saveTeaTable(teaTable);
 		} catch (Exception e) {
+            logger.warn("save teacher result table failed " ,e);
 			throw e;
 		}
 	}
@@ -46,6 +49,7 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 
 			evalDao.saveTeaStuTable(teaStuTable);
 		} catch (Exception e) {
+            logger.warn("save teaStu result table failed " ,e);
 			throw e;
 		}
 	}
@@ -59,7 +63,8 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 		try {
 			evalDao.saveLeaTable(leaTable);
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.warn("save leader result table failed " ,e);
+			throw  e;
 		}
 	}
 	

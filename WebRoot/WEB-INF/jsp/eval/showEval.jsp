@@ -19,11 +19,7 @@
 				<%@ include file="../left.jsp"%>
 			</div>
 			<div class="col-sm-10">
-				<div style="text-align: center;margin-top: 100px">
-					<h2>${evalTable.title }</h2>
-					<h3>${stuTable.course.name }</h3>
-					<h3>${table.course.name }</h3>
-				</div>
+
 				<div class="row">
 					<!--左侧的导航条 -->
 					<div class="col-xs-1">
@@ -38,36 +34,39 @@
 					
 					<div class="col-xs-11">
 					<hr>
-						<table class="table table-hover table-striped  table-condensed">
-								<tr class="info">
-									<td>学院</td>
-									<td>学期</td>
-									<td>批次</td>
-									<td>开始日期</td>
-									<td>截止日期</td>
-								</tr>
-									<tr>
-										<td>${table.course.department }</td>
-										<td>${table.course.season }</td>
-										<td>${table.batches.name }</td>
-										<td><fm:formatDate value="${table.batches.beginDate}" pattern="yyyy-MM-dd"/></td>
-										<td><fm:formatDate value="${table.batches.endDate }" pattern="yyyy-MM-dd"/></td>
-									</tr>
-						</table>
+                        <div class=" bs-callout bs-callout-info" >
+                            <div style="text-align: center;">
+                                <h2>${evalTable.title }</h2>
+                                <h3>${stuTable.course.name }</h3>
+                                <h3>${table.course.name }</h3>
+                            </div>
+                            <table class="table table-hover table-striped  table-condensed">
+                                <tr class="info">
+                                    <td>学院</td>
+                                    <td>学期</td>
+                                    <td>批次</td>
+                                    <td>开始日期</td>
+                                    <td>截止日期</td>
+                                </tr>
+                                <tr>
+                                    <td>${table.course.department }</td>
+                                    <td>${table.course.season }</td>
+                                    <td>${table.batches.name }</td>
+                                    <td><fm:formatDate value="${table.batches.beginDate}" pattern="yyyy-MM-dd"/></td>
+                                    <td><fm:formatDate value="${table.batches.endDate }" pattern="yyyy-MM-dd"/></td>
+                                </tr>
+                            </table>
+                        </div>
+
 						<hr>
 							<!--评教须知: -->
-							<div class="panel panel-primary" id="part1">
-								<div class="panel-heading">
-									<h3 class="panel-title">评教须知:</h3>
-								</div>
-								<div class="panel-body">${evalTable.note}</div>
-							</div>
+                            <div class=" bs-callout bs-callout-danger" id="part1">
+                                <h4>评教须知:</h4>
+                                <p>${evalTable.note }</p>
+                            </div>
 
-							<div class="panel panel-primary" id="part2">
-								<div class="panel-heading">
-									<h3 class="panel-title">请如实填写表单信息</h3>
-								</div>
-								<div class="panel-body">
+							<div class="bs-callout bs-callout-info" id="part2">
+									<h4 >请如实填写表单信息</h4>
 									<table class="table table-striped table-hover table-bordered table-condensed">
 
 										<c:forEach items="${evalTable.itemList}" var="item"
@@ -80,16 +79,12 @@
 
 										</c:forEach>
 									</table>
-								</div>
 							</div>
 
 
 							<!-- 打分表和评价 -->
-							<div class="panel panel-primary" id="part3">
-								<div class="panel-heading">
-									<h3 class="panel-title">打分表和评价</h3>
-								</div>
-								<div class="panel-body">
+							<div class="bs-callout bs-callout-info" id="part3">
+									<h4 >打分表和评价</h4>
 									<table class="table table-striped table-hover table-bordered">
 										<tr>
 											<td>序号</td>
@@ -142,7 +137,6 @@
 										
 									</div>
 									
-								</div>
 
 							</div>
 

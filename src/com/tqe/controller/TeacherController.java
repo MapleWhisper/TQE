@@ -56,7 +56,7 @@ public class TeacherController extends BaseController{
             @RequestParam String tid,
             @RequestParam(required = false) String season
     ){
-		//List<Course> courseList = courseService.findAllByTId(tid);
+		//List<Course> courseList = courseService.findCourseGroupByTid(tid);
         if(StringUtils.isBlank(tid)) {
             return sendError(model,"教师号不能为空！");
         }

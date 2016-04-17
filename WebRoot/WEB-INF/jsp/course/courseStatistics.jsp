@@ -185,17 +185,11 @@
                                             <div class="panel-heading" style="text-align: center"><h4> <code>${v.count}</code> ${quest.left}</h4></div>
                                             <!-- Table -->
                                             <table class="table table-hover table-condensed">
-                                                <thead>
-                                                <tr >
-                                                    <td>#</td>
-                                                    <td>评论与建议内容</td>
-                                                </tr>
-                                                </thead>
 
                                                 <tbody>
                                                 <c:forEach varStatus="vs" var="q" items="${quest.right}">
                                                     <tr>
-                                                        <td>${vs.count}</td>
+                                                        <td># ${vs.count}</td>
                                                         <td>${q}</td>
                                                     </tr>
                                                 </c:forEach>
@@ -216,17 +210,12 @@
                                             <div class="panel-heading" style="text-align: center"><h4> <code>${v.count}</code> ${quest.left}</h4></div>
                                             <!-- Table -->
                                             <table class="table table-hover table-condensed">
-                                                <thead>
-                                                <tr >
-                                                    <td>#</td>
-                                                    <td>评论与建议内容</td>
-                                                </tr>
-                                                </thead>
+
 
                                                 <tbody>
                                                 <c:forEach varStatus="vs" var="q" items="${quest.right}">
                                                     <tr>
-                                                        <td>${vs.count}</td>
+                                                        <td># ${vs.count}</td>
                                                         <td>${q}</td>
                                                     </tr>
                                                 </c:forEach>
@@ -249,14 +238,13 @@
                                             <!-- Table -->
                                             <table class="table table-hover table-condensed">
 
-
                                                 <tbody>
-                                                <c:forEach varStatus="vs" var="q" items="${quest.right}">
-                                                    <tr>
-                                                        <td>${vs.count}</td>
-                                                        <td>${q}</td>
-                                                    </tr>
-                                                </c:forEach>
+                                                    <c:forEach varStatus="vs" var="q" items="${quest.right}">
+                                                        <tr>
+                                                            <td># ${vs.count}</td>
+                                                            <td>${q}</td>
+                                                        </tr>
+                                                    </c:forEach>
                                                 </tbody>
                                             </table>
                                         </div>

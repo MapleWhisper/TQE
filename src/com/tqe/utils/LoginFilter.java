@@ -61,8 +61,8 @@ public class LoginFilter implements  Filter{
 		if(f){
 			chain.doFilter(req, resp);
 		}else{
-			session.setAttribute("msg", "对不起 您没有权限访问该页面");
-			resp.sendRedirect(ctxPath+"/error");
+
+			resp.sendRedirect(ctxPath+"/error?msg=Permission_denied");
 		}
 		
 		

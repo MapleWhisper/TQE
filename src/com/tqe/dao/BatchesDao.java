@@ -35,7 +35,7 @@ public interface BatchesDao extends BaseDao<Batches>{
 	public void update(Batches b);
 	
 	@Select("select * from batches b where now() between b.beginDate and b.endDate and b.season = #{season}")
-	public Batches getAvailiableBatches(@Param("season")String season);
+	public Batches getAvailableBatches(@Param("season")String season);
 	
 	@Select("select max(endDate) from batches where id != #{id}")
 	public Date getLatestDate(@Param("id")Integer id);

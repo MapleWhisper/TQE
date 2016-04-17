@@ -137,8 +137,15 @@ public class IndexController extends BaseController{
     }
 
     @RequestMapping("error")
-    public String error(Model model,HttpSession session){
-        model.addAttribute("msg",session.getAttribute("msg"));
+    public String error(
+            Model model,
+            @RequestParam(required = false) String msg
+    ){
+        if(StringUtils.isNotBlank(msg)){
+            model.addAttribute("msg",msg);
+        }else{
+            model.addAttribute("msg","未知的错误");
+        }
         return "error";
     }
 }

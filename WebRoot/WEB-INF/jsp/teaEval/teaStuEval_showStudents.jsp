@@ -26,9 +26,9 @@
 			<td>${stu.name }</td>
 			<td>${stu.sex }</td>
 			<c:if test="${stu.isEvaled=='false'}">
-				<td><a
-				href="${pageContext.request.contextPath}/admin/teaStuEval/eval/${course.cid}/${course.cno}/${stu.sid}"
-				class="btn btn-primary">去评价</a></td>
+				<td><a icon="edit" target="_blank"
+				href="${pageContext.request.contextPath}/admin/teaStuEval/eval?cid=${course.cid}&cno=${course.cno}&sid=${stu.sid}"
+				class="btn btn-danger">去评价</a></td>
 			</c:if>
 			<c:if test="${stu.isEvaled=='true'}">
 				<td><button class="btn btn-default" disabled="disabled">

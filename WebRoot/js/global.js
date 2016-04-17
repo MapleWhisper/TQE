@@ -110,7 +110,6 @@ function autoAddIcon(){
     });
     function addIcon(element){
         var icon = element.attr("icon");
-        log(icon);
         if(icon){
             log(icon);
             var iconSpan = "<span class='glyphicon glyphicon-@1'></span>&nbsp;&nbsp;";
@@ -120,3 +119,24 @@ function autoAddIcon(){
     }
 
 }
+
+var dataTableDefaultOptions = {
+    "language": {
+        "lengthMenu": "每页显示 _MENU_ 条纪录 ",
+        "zeroRecords": "抱歉,没有找到数据",
+        "info": "显示 _START_ - _END_ /共 _TOTAL_ 条记录",
+        "infoEmpty": "",
+        "infoFiltered": "(过滤自  _MAX_ 条纪录)",
+        "search":" 搜索: ",
+        "searchPlaceholder":"请输入关键字",
+        "paginate": {
+            "first":      "首页",
+            "last":       "末页",
+            "next":       "下一页",
+            "previous":   "上一页"
+        }
+    },
+    "lengthMenu": [[ 25, 50, 100,-1], [ 25, 50,100, "所有记录"]],
+    "dom":"<'float_left'f>r<'float_right'l>t<'float_left'i><'float_right'p>",
+    "order": [[ 0, "desc" ]]
+};

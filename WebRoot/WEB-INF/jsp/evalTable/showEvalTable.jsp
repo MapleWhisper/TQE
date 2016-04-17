@@ -37,17 +37,9 @@
 					<h2>${evalTable.title }</h2>
 				</div>
 				<div class="row">
+
 					<!--左侧的导航条 -->
-					<div class="col-xs-1" id="navbar-evalTable">
-						<ul class="nav nav-pills nav-stacked nav-left" role="tablist"
-							id="nav">
-							<li  class="pre active"><a href="#part1">评教须知</a></li>
-							<li  class="pre"><a href="#part2">表单</a></li>
-							<li  class="pre"><a href="#part3">表项</a></li>
-						</ul>
-					</div>
-					<!--左侧的导航条 -->
-					<div class="col-xs-11"  >
+					<div class="col-xs-12"  >
 						
 						<form
 							action="${pageContext.request.contextPath}/admin/paper/answer"
@@ -78,11 +70,8 @@
 
 
 							<!-- 问答题 -->
-							<div class="panel panel-primary" id="part3">
-								<div class="panel-heading">
-									<h3 class="panel-title">打分表和评价</h3>
-								</div>
-								<div class="panel-body">
+							<div class="bs-callout bs-callout-info" id="part3">
+									<h4 class="panel-title">打分表和评价</h4>
 									<table class="table table-striped table-hover table-bordered">
 										<tr>
 											<td>序号</td>
@@ -137,7 +126,6 @@
 										</div>
 									</c:forEach>
 
-								</div>
 
 							</div>
 

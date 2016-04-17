@@ -90,7 +90,7 @@ public class EvalController extends BaseController{
 			evalService.saveTeaTable(teaTable);
 		} catch (Exception e1) {
 
-			return sendError(model,"保存教师评教失败！");
+			return sendError(model,"保存教师评教失败！",logger,e1);
 		}
 		return "redirect:/admin/teaEval";
 	}
@@ -100,7 +100,7 @@ public class EvalController extends BaseController{
 	 *
 	 */
 	@RequestMapping(value={"/eval/save/teaStu"},method={RequestMethod.POST})
-	public String teaStuevalTable(
+	public String teaStuEvalTable(
 			@ModelAttribute EvalTable evalTable,
 			@ModelAttribute TeaStuResultTable teaStuTable ,
 			@ModelAttribute Teacher teacher,
@@ -121,9 +121,8 @@ public class EvalController extends BaseController{
 		}
 		String cid = teaStuTable.getCid();
 		Integer cno = teaStuTable.getCno();
-		StringBuilder sb = new StringBuilder();
-		String view = sb.append("redirect:/admin/").append(cid).append("/").append(cno).append("/teaStuEval").toString();
-		return view;
+
+		return "redirect:/admin/teaStuEval/show?cid="+cid+"&cno="+cno;
 	}
 
 

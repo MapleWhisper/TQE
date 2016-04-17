@@ -6,9 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSON;
 import com.tqe.dao.BatchesDao;
-import com.tqe.po.Batches;
 import com.tqe.po.Batches;
 
 @Service
@@ -52,8 +50,8 @@ public class BatchesServiceImpl extends BaseService<Batches>{
 		batchesDao.update(b);
 	}
 	
-	public Batches getAvailiableBatches(String season){
-		return batchesDao.getAvailiableBatches(season);
+	public Batches getAvailableBatches(String season){
+		return batchesDao.getAvailableBatches(season);
 	}
 
 	public Date getLatestDate(Integer id) {

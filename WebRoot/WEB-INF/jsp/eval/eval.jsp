@@ -31,12 +31,7 @@
             <%@ include file="../left.jsp" %>
         </div>
         <div class="col-sm-10">
-            <div style="text-align: center">
-                <h2>${evalTable.title }</h2>
 
-                <h3>${course.name } ---- ${course.teacher.name }</h3>
-
-            </div>
             <div class="row">
                 <!--左侧的导航条 -->
                 <div class="col-xs-1">
@@ -50,22 +45,30 @@
                 <!--左侧的导航条 -->
 
                 <div class="col-xs-11">
-                    <table class="table table-hover table-striped " style="text-align: center;">
-                        <tr class="info">
-                            <td>学院</td>
-                            <td>学期</td>
-                            <td>批次</td>
-                            <td>评教开始日期</td>
-                            <td>评教截止日期</td>
-                        </tr>
-                        <tr>
-                            <td>${course.department }</td>
-                            <td>${course.season }</td>
-                            <td>${batches.name }</td>
-                            <td><fm:formatDate value="${batches.beginDate}" dateStyle="medium" /></td>
-                            <td><fm:formatDate value="${batches.endDate }" dateStyle="medium" /></td>
-                        </tr>
-                    </table>
+                    <div class="bs-callout bs-callout-warning">
+                        <div style="text-align: center">
+                            <h2>${evalTable.title }</h2>
+
+                            <h3>${course.name } ---- ${course.teacher.name }</h3>
+
+                        </div>
+                         <table class="table table-hover table-striped " style="text-align: center;">
+                            <tr class="info">
+                                <td>学院</td>
+                                <td>学期</td>
+                                <td>批次</td>
+                                <td>评教开始日期</td>
+                                <td>评教截止日期</td>
+                            </tr>
+                            <tr>
+                                <td>${course.department }</td>
+                                <td>${course.season }</td>
+                                <td>${batches.name }</td>
+                                <td><fm:formatDate value="${batches.beginDate}" dateStyle="medium" /></td>
+                                <td><fm:formatDate value="${batches.endDate }" dateStyle="medium" /></td>
+                            </tr>
+                         </table>
+                    </div>
                     <form
                             action="${pageContext.request.contextPath}/admin/eval/save/${type}"
                             method="post" id="eval-form">

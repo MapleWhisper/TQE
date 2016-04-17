@@ -106,7 +106,7 @@
 								<c:forEach items="${studentList}" var="s">
 									<tr>
 										<td><a
-											href="${pageContext.request.contextPath}/admin/studnet/show/${s.sid}">${s.name}</a></td>
+											href="${pageContext.request.contextPath}/admin/student/show?sid=${s.sid}">${s.name}</a></td>
 										<td>${s.sid}</td>
 										<td>${s.sex }</td>
 										<td>${s.department }</td>
@@ -119,8 +119,8 @@
 										<td>${s.campus }</td>
 
 
-										<td><a href="${pageContext.request.contextPath}/admin/student/show/${s.sid}"
-											class="btn btn-danger">查看学生</a></td>
+										<td><a href="${pageContext.request.contextPath}/admin/student/show?sid=${s.sid}"
+											class="btn btn-primary" icon="zoom-in">查看学生</a></td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -160,6 +160,8 @@
 
 			fetchMajorList();
 			fetchClassList();
+
+            autoAddIcon();
 		});
 
 		function fetchMajorList(){

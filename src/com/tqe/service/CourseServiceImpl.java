@@ -12,6 +12,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -112,9 +113,16 @@ public class CourseServiceImpl extends BaseService<Course> {
      * 返回所有教师可以评价的课程组
      * 如果教师已经评价了课程，那么设置课程已评价
      */
-    public List<Course> findAllByTId(String tid, Integer bid) {
-        List<Course> list = courseDao.findAllByTId(tid);
-        List<String> cids = evalDao.findAllTeaTablecids(tid, bid);
+    public List<Course> findCourseGroupByTid(String tid, Integer bid) {
+        Batches batch = batchesDao.getById(bid);
+        if(batch==null){
+            return new ArrayList<>();
+        }
+        List<Course> list = courseDao.findCourseGroupByTid(tid,batch.getSeason());
+        if(list.isEmpty()){
+            return list;
+        }
+        List<String> cids = evalDao.findAllTeaTablecids(tid, bid);  //查询教师已经评教的课程
         for (Course c : list) {
             if (cids.contains(c.getCid() + c.getCno())) {
                 c.setIsEvaled(true);
@@ -125,21 +133,13 @@ public class CourseServiceImpl extends BaseService<Course> {
 
     /**
      * 返回所有教师教的所有课程
-     * 如果教师已经评价了课程，那么设置课程已评价
-     *
-     * @return
      */
-    public List<Course> findAllByTid(String tid, Integer bid) {
-        List<Course> list = courseDao.findAllByTid(tid);
-            /*
-			List<String> cids = evalDao.findAllTeaTablecids(tid,bid);
-			for(Course c: list){
-				if(cids.contains(c.getCid()+c.getCno())){
-					c.setIsEvaled(true);
-				}
-			}
-			*/
-        return list;
+    public List<Course> findAllByTid(String tid, String season) {
+
+        if(StringUtils.isBlank(season)){
+            return courseDao.findAllByTid(tid);
+        }
+        return courseDao.findAllByTidSeason(tid,season);
     }
 
     public List<Course> findByCondition(PageVO pageVO) {

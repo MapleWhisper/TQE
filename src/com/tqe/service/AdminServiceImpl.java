@@ -1,16 +1,12 @@
 package com.tqe.service;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.tqe.dao.AdminDao;
 import com.tqe.po.Admin;
 import com.tqe.po.User;
-import com.tqe.utils.MD5Utils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class AdminServiceImpl extends BaseService<Admin>{

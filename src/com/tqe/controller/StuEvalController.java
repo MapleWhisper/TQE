@@ -33,7 +33,7 @@ public class StuEvalController extends BaseController{
 	@RequestMapping("/stuEval")
 	public String stuEval(Model model,HttpSession session){
 		Student stu = (Student) session.getAttribute("student");
-		Batches batches = batchesService.getAvailiableBatches(SystemUtils.getSeason());
+		Batches batches = batchesService.getAvailableBatches(SystemUtils.getSeason());
 		if(batches!=null){		//如果当前存在 可以评教的批次
 			List<Course> courseList = courseService.findAllBySid(stu.getSid(), batches);	//得到所有的课程列表
 			model.addAttribute("courseList", courseList);
@@ -56,7 +56,7 @@ public class StuEvalController extends BaseController{
 	public String EvalstuEval(Model model,@PathVariable("cid") String cid ,@PathVariable("cno") Integer cno){
 		Course c = courseService.getById(cid, cno);
 		if(c!=null){	//如果要评教的课程不为空
-			Batches batches = batchesService.getAvailiableBatches(c.getSeason());
+			Batches batches = batchesService.getAvailableBatches(c.getSeason());
 			if(batches==null){
 				model.addAttribute("message", "您好，当前评教还未开始~");
 				return "error";

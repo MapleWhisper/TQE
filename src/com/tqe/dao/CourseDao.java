@@ -30,19 +30,20 @@ public interface CourseDao {
 	public List<Course> findAllBySid(@Param("sid") String sid, @Param("season")String season);
 
 	/**
-	 * 根据教师Id 选择教师所教的所有课程
-	 * @param tid
-	 * @return
+	 * 根据教师Id 选择教师所教课程的所有课程组
 	 */
 	@Select("select c.*,t.name as  `teacher.name` , t.id as `teacher.id` from course c ,teacher t where c.name in("
 			+"select name from course where teacherid = #{tid}"
-			+") and c.teacherId =t.id and t.id!= #{tid}")
-	public List<Course> findAllByTId(String tid);
+			+") and c.teacherId =t.id and t.id!= #{tid} and c.season = #{season}")
+    List<Course> findCourseGroupByTid(@Param("tid") String tid, @Param("season") String season);
 
 
 
 	@Select("select c.*,t.name as  `teacher.name` , t.id as `teacher.id`  from course c ,teacher t where c.teacherId = t.id and t.id = #{tid}")
-	public List<Course> findAllByTid(String tid);
+	List<Course> findAllByTid(String tid);
+
+    @Select("select c.*,t.name as  `teacher.name` , t.id as `teacher.id`  from course c ,teacher t where c.teacherId = t.id and t.id = #{tid} and c.season = #{season}")
+    List<Course> findAllByTidSeason(@Param("tid")String tid, @Param("season") String season);
 
 	@SelectProvider(type=BaseDaoTemplate.class,method="findCourseByCondition")
 	List<Course> findByCondition(PageVO pageVO);
@@ -52,5 +53,6 @@ public interface CourseDao {
             ",`stuEvalScores`=#{stuEvalScores} ,`teaEvalScores`=#{teaEvalScores} ,`leaEvalScores` = #{leaEvalScores}," +
             "`stuEvalLevelCnts`=#{stuEvalLevelCnts},`teaEvalLevelCnts`=#{teaEvalLevelCnts},`leaEvalLevelCnts`=#{leaEvalLevelCnts} where cid = #{cid} and cno = #{cno}")
     void updateStatisticalData(Course course);
+
 
 }

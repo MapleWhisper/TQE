@@ -15,14 +15,16 @@
 
 <body>
 	<div class="container-fluid">
-		<%@ include file="../head.jsp"%>
+        <div class="row">
+		    <%@ include file="../head.jsp"%>
+        </div>
 		<div class="row " >
 			<div class="col-sm-2">
 				<%@ include file="../left.jsp"%>
 			</div>
 			<div class="col-sm-10 ">
 
-				<div class="panel panel-primary">
+				<div class="panel panel-default">
 					<div class="panel-heading">我的课程组 | ${batches.name}</div>
 
 					<div class="panel-body">
@@ -49,7 +51,7 @@
 										<td>${c.stuNumber }</td>
 										<td>${c.combine }</td>
 										<c:if test="${c.isEvaled=='false'}">
-											<td><a href="${pageContext.request.contextPath}/admin/teaEval/eval/${c.cid}/${c.cno}"
+											<td><a target="_blank" href="${pageContext.request.contextPath}/admin/teaEval/eval?cid=${c.cid}&cno=${c.cno}"
 											class="btn btn-danger"><span
 												class=" glyphicon glyphicon-edit"></span>&nbsp;&nbsp;评价</a></td>
 										</c:if>
@@ -62,9 +64,16 @@
 
 							</tbody>
 						</table>
-						<div style="text-align: center">
-							<h1 class="well text-danger error-message">${requestScope.msg}</h1>
-						</div>
+                        <div class="form-group error-message-container">
+                            <div class="col-sm-8 col-sm-offset-2">
+                                <div class="alert alert-danger alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert">
+                                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                                    </button>
+                                    <span class="error-message">${msg}</span>
+                                </div>
+                            </div>
+                        </div>
 
 					</div>
 

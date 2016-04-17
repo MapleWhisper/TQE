@@ -64,21 +64,9 @@
                     </div>
                     <div class="panel-body">
                         <div class="bs-callout bs-callout-info">
-                            <form class="form-inline" id="teacher-course-form" method="post" action="${pageContext.request.contextPath}/admin/teacher/show">
+                            <c:set scope="request" var="userType" value="teacher"/>
+                            <jsp:include page="../model/seasonSelectForm.jsp"/>
 
-                                <div class="form-group">
-                                    <input type="hidden" id="tid" name="tid" value="${teacher.id}">
-                                    <label for="season" >选择学期查看课程:</label>
-                                    <select name="season" class="form-control auto-select" id="season" key="${condition.season}">
-                                        <option value="">当前学期:${applicationScope.curSeason}</option>
-                                        <c:forEach begin="2015" end="${applicationScope.curYear+1}" step="1" var="s">
-                                            <option  value="${s}春">${s}春</option>
-                                            <option  value="${s}秋">${s}秋</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-
-                            </form>
                         </div>
                         <table class="table table-hover table-striped  table-condensed ">
                             <thead>
@@ -144,8 +132,6 @@
                 $("#teacher-course-form").submit();
             });
         });
-
-
     </script>
 
 </body>

@@ -23,7 +23,7 @@
 		<div class="row">
 			<%@ include file="../head.jsp"%>
 		</div>
-		<div class="row" style="margin-top: 70px">
+		<div class="row">
 			<!--左侧的导航条 -->
 			<div class="col-xs-2">
 				<%@include file="../left.jsp"%>
@@ -33,13 +33,12 @@
 			<!--右侧的内容 -->
 			<!-- 学生详情 -->
 			<div class="col-xs-10">
-				<div class="panel panel-primary">
+				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h1 class="panel-title" style="font-size: 25px">学生受评价表</h1>
+						学生详情
 					</div>
 					<div class="panel-body ">
-						<table
-							class="table table-hover table-striped table-bordered">
+						<table class="table table-hover table-striped ">
 							<tr class="info">
 								<td>学生名</td>
 								<td>学生号</td>
@@ -57,44 +56,46 @@
 
 							</tr>
 						</table>
+                        <div class="bs-callout bs-callout-info">
+                            <c:set scope="request" var="userType" value="student"/>
+                            <jsp:include page="../model/seasonSelectForm.jsp"/>
+
+                        </div>
 						<c:forEach items="${courseModel.batchesList}" var="b">
-							<div role="tabpanel" class="tab-pane">
-								<div class="panel panel-warning">
-									<div class="panel-heading">
+							<div class="bs-callout bs-callout-danger" style="margin-top: 30px;">
+									<h4>
 										<a
 											href="${pageContext.request.contextPath}/admin/batches/show/${b.batches.id}"
 											target="_blank">${b.batches.name}</a>
-									</div>
-									<div class="panel-body">
+									</h4>
 										<table
-											class="table table-hover table-striped table-bordered table-condensed">
+											class="table table-hover table-striped  table-condensed" style="margin-top: 20px;">
+                                            <thead>
 											<tr>
 												<td>评价教师</td>
 												<td>评价课程</td>
-												<td>评教表</td>
 												<td>评分</td>
 												<td>等级</td>
 												<td>评教结果</td>
 											</tr>
+                                            </thead>
+                                            <tbody>
+                                            <c:forEach items="${b.teaStuTableList}" var="ts">
+                                                <tr>
+                                                    <td>${ts.tname}</td>
+                                                    <td>${ts.course.name}</td>
 
-											<c:forEach items="${b.teaStuTableList}" var="ts">
-												<tr>
-													<td>${ts.tname}</td>
-													<td>${ts.course.name}</td>
-													<td><a
-														href="${pageContext.request.contextPath}/admin/evalTable/show/${b.batches.teaStuEvalId}"
-														target="_blank">点此查看该课程评教指标表</a></td>
-													<td>${ts.score}</td>
-													<td>${ts.level}</td>
-													<td><a target="_blank"
-														href="${pageContext.request.contextPath}/admin/eval/show/teaStu/${ts.id}"
-														class="btn btn-warning">查看该评价</a></td>
-												</tr>
-											</c:forEach>
+                                                    <td>${ts.score}</td>
+                                                    <td>${ts.level}</td>
+                                                    <td><a target="_blank"
+                                                           href="${pageContext.request.contextPath}/admin/eval/show/teaStu/${ts.id}"
+                                                           class="btn btn-warning">查看该评价</a></td>
+                                                </tr>
+                                            </c:forEach>
+                                            </tbody>
+
 										</table>
-									</div>
 								</div>
-							</div>
 						</c:forEach>
 					</div>
 				</div>

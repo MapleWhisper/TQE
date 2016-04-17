@@ -35,7 +35,7 @@ public class LeaderEvalController extends BaseController{
 	public String leaEval(Model model,HttpSession session){
 		Leader leader = (Leader) session.getAttribute("leader");
 		
-		Batches batches = batchesService.getAvailiableBatches(SystemUtils.getSeason());	//获取当前的批次
+		Batches batches = batchesService.getAvailableBatches(SystemUtils.getSeason());	//获取当前的批次
 		
 		if(batches!=null){
 			addSearcherResource(model);
@@ -56,7 +56,7 @@ public class LeaderEvalController extends BaseController{
 	public String lea1Eval(Model model,HttpSession session,String did,String cname ,String  cid,String tname){
 		Leader leader = (Leader) session.getAttribute("leader");
 		
-		Batches batches = batchesService.getAvailiableBatches(SystemUtils.getSeason());
+		Batches batches = batchesService.getAvailableBatches(SystemUtils.getSeason());
 		
 		if(batches!=null){
 			addSearcherResource(model);
@@ -89,7 +89,7 @@ public class LeaderEvalController extends BaseController{
 	public String EvalleaEval(Model model,@PathVariable("cid") String cid ,@PathVariable("cno") Integer cno){
 		Course c = courseService.getById(cid, cno);
 		if(c!=null){
-			Batches batches = batchesService.getAvailiableBatches(c.getSeason());
+			Batches batches = batchesService.getAvailableBatches(c.getSeason());
 			if(batches==null){
 				model.addAttribute("msg", "当前没有可以评教的批次ʼ");
 				return "leaEval/leaEval";
