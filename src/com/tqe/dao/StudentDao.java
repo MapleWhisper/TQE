@@ -1,11 +1,9 @@
 package com.tqe.dao;
 
-import java.util.HashMap;
 import java.util.List;
 
 import com.tqe.base.vo.PageVO;
 import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
@@ -46,5 +44,6 @@ public interface StudentDao extends BaseDao<Student>{
 	@Select("select s.sid,s.name,s.sex from student s , sc where sc.cid = #{cid} and sc.cno =#{cno} and s.sid = sc.sid order by s.sid")
 	public List<Student> findAllByCId(@Param("cid")String cid, @Param("cno")Integer cno);
 
-	
+    @Update("update student s set s.avgScore = ( select avg(score) from teaStuTable t where t.sid = s.sid and t.score > 0 ) where sid = #{sid} ")
+    void updateStuAvgScore(String sid);
 }

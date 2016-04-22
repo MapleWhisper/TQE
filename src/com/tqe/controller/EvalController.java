@@ -113,6 +113,7 @@ public class EvalController extends BaseController{
 			teaStuTable.setSname(studentService.getNameById(teaStuTable.getSid()).getName());
 
 			preSaveTable(evalTable, teaStuTable);
+
 			evalService.saveTeaStuTable(teaStuTable);
 		} catch (Exception e1) {
 

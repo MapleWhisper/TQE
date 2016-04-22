@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.tqe.base.vo.PageVO;
 import com.tqe.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -59,6 +60,9 @@ public abstract class BaseService<E> {
 
     @Autowired
     public CourseBatchDao courseBatchDao;
+
+    @Autowired
+    public StudentSeasonDao studentSeasonDao;
 	
 	public  E getById(Integer id){
 		return null;

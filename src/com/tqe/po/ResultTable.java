@@ -1,5 +1,8 @@
 package com.tqe.po;
 
+import com.alibaba.fastjson.JSON;
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -137,6 +140,11 @@ public class ResultTable {
 	}
 
     public EvalTable getEvalTable() {
+        if(this.evalTable==null){
+            if(StringUtils.isNotBlank(this.jsonString)){
+                this.evalTable = EvalTable.json2Object(this.jsonString);
+            }
+        }
         return evalTable;
     }
 

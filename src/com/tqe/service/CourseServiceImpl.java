@@ -2,13 +2,13 @@ package com.tqe.service;
 
 import com.tqe.base.enums.ImportType;
 import com.tqe.base.vo.PageVO;
-import com.tqe.po.Batches;
-import com.tqe.po.Course;
-import com.tqe.po.CourseBatch;
-import com.tqe.po.ImportResult;
+import com.tqe.model.CourseModel;
+import com.tqe.po.*;
+import com.tqe.utils.ResultTableUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +21,12 @@ public class CourseServiceImpl extends BaseService<Course> {
 
 
     private static final Log logger = LogFactory.getLog(CourseServiceImpl.class);
+
+    @Autowired
+    private BatchesServiceImpl batchesService;
+
+    @Autowired
+    private EvalServiceImpl evalService;
 
     @Override
     public List<Course> findAll() {
@@ -181,33 +187,34 @@ public class CourseServiceImpl extends BaseService<Course> {
             }
 
         }
-        course.setStuEvalAvgScore(avgList(course.getStuEvalScores()));
-        course.setTeaEvalAvgScore(avgList(course.getTeaEvalScores()));
-        course.setLeaEvalAvgScore(avgList(course.getLeaEvalScores()));
+        course.setStuEvalAvgScore(ResultTableUtils.avgList(course.getStuEvalScores()));
+        course.setTeaEvalAvgScore(ResultTableUtils.avgList(course.getTeaEvalScores()));
+        course.setLeaEvalAvgScore(ResultTableUtils.avgList(course.getLeaEvalScores()));
 
         courseDao.updateStatisticalData(course);
 
     }
 
-    /**
-     * 对List的元素求平均值
-     */
-    private static double avgList(List<Double> list) {
-        int cnt = 0;
-        double sum = 0L;
-        double avg = 0L;
-        for (double d : list) {
-            if (d == 0) {
-                continue;
-            }
-            cnt++;
-            sum += d;
+    public CourseModel buildCourseModel(String cid,  Integer cno, Course course) {
+
+        CourseModel courseModel = new CourseModel(course);
+        List<Batches> batchesList = batchesService.findAllBySeason(course.getSeason());	//默认得到课程所在学期的所有批次
+
+        for(Batches b : batchesList){	//遍历所有得到的批次列表
+            List<StuResultTable> stuTableList = evalService.findAllStuTableByCidAndBid(cid, cno, b.getId());
+            List<TeaResultTable> teaTableList = evalService.findAllTeaTableByCidAndBid(cid, cno, b.getId());
+            List<LeaResultTable> leaTableList = evalService.findAllLeaTableByCidAndBid(cid, cno, b.getId());
+            CourseModel.Batches batches = new CourseModel.Batches();
+            batches.setStuTableList(stuTableList);
+            batches.setTeaTableList(teaTableList);
+            batches.setLeaTableList(leaTableList);
+            batches.setBatches(b);
+            courseModel.getBatchesList().add(batches);
         }
-        if (cnt > 0 && sum > 0) {
-            avg = sum / cnt;
-        }
-        return avg;
+        return courseModel;
     }
+
+
 
 
 }

@@ -8,9 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
+import java.text.SimpleDateFormat;
+
 @Component
 public class BaseController {
-	
+
+	public SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
 	@Resource(name="adminServiceImpl")
 	protected AdminServiceImpl adminService;
@@ -59,6 +62,9 @@ public class BaseController {
 
     @Autowired
     protected CourseBatchServiceImpl courseBatchService;
+
+    @Autowired
+    protected StudentSeasonServiceImpl studentSeasonService;
 	
 	protected void addSearcherResource(Model model){
 		

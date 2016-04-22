@@ -6,19 +6,17 @@ import java.util.Date;
 import java.util.List;
 
 import com.tqe.base.BaseResult;
+import com.tqe.base.vo.PageVO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.tqe.po.Batches;
 import com.tqe.service.BatchesServiceImpl;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
@@ -31,9 +29,13 @@ public class BatchesController extends BaseController {
 	private BatchesServiceImpl batchesService;
 	
 	@RequestMapping("/batches")
-	public String batches(Model model){
-		List<Batches> list = batchesService.findAll();
+	public String batches(
+            Model model,
+            PageVO pageVO
+    ){
+		List<Batches> list = batchesService.findAll(pageVO);
 		model.addAttribute("batchesList",list);
+        model.addAttribute("condition",pageVO.getFilters());
 		return "batches/batches";
 	}
 	
@@ -97,11 +99,18 @@ public class BatchesController extends BaseController {
         if(batches.getBeginDate()==null || batches.getEndDate()==null || batches.getBeginDate().getTime()>=batches.getEndDate().getTime()){
             return "起始时间不能为空 截止时间不能为空 起始时间必须要要小于截止时间";
         }
-        Date latest = batchesService.getLatestDate(batches.getId());
-        if(latest!=null && batches.getBeginDate().getTime() <= latest.getTime()){
-            return "设定日期失败! 您设置的评教批次的起始日期必须大于最新批次的截止日期:"+new SimpleDateFormat("yyyy-MM-dd").format(latest)+" 请重新设置开始日期或者截止日期";
+        //对新设置的批次时间 进行查询是否可用
+        // 批次的开始时间和 结束时间都不能是 数据库已经存在批次的时间段内
+        Batches conflictBatch = batchesService.checkDateConflict(batches);
+        if(conflictBatch!=null){
+            return getErrorMsg(conflictBatch);
         }
         return null;
+    }
+
+    private String getErrorMsg(Batches conflictBatch) {
+        return "新日期和已存在的批次时间冲突:批次名:"+conflictBatch.getName()+" 冲突时间:"+sdf.format(conflictBatch.getBeginDate())
+                +" ~ "+ sdf.format(conflictBatch.getEndDate())+" 请重新设置开始日期或者截止日期!";
     }
 
 
@@ -151,5 +160,22 @@ public class BatchesController extends BaseController {
 		
 			
 	}
+
+
+    @RequestMapping("/batches/delete")
+    @ResponseBody
+    public BaseResult batches(
+            @RequestParam Integer bid
+    ){
+        if(bid==null || bid <=0){
+            return BaseResult.createFailure("批次号为空: bid :"+bid);
+        }
+        try{
+            batchesService.delete(bid);
+        }catch (Exception e){
+            return BaseResult.createFailure("删除批次失败！"+e.getMessage());
+        }
+        return BaseResult.createSuccess("删除批次成功");
+    }
 
 }

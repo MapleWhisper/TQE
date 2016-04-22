@@ -2,6 +2,7 @@ package com.tqe.service;
 
 import java.util.List;
 
+import com.tqe.base.vo.PageVO;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,6 @@ import com.tqe.po.Major;
 @Service
 public class MajorServiceImpl extends BaseService<Major>{
 	@Override
-	@Cacheable(value="mCache")
 	public List<Major> findAll() {
 		
 		return majorDao.findAll();

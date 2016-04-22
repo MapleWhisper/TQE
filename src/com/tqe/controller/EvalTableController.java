@@ -2,13 +2,12 @@ package com.tqe.controller;
 
 import java.util.List;
 
+import com.tqe.base.BaseResult;
+import com.tqe.base.vo.PageVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import com.alibaba.fastjson.JSON;
 import com.tqe.po.EvalTable;
 
 @Controller
@@ -20,9 +19,13 @@ public class EvalTableController extends BaseController{
 	 * 评教表
 	 */
 	@RequestMapping("/evalTable")
-	public String evalTable(Model model){
-		List<EvalTable> list = evalTableService.findAll();
+	public String evalTable(
+            PageVO pageVO,
+            Model model
+    ){
+		List<EvalTable> list = evalTableService.findAll(pageVO);
 		model.addAttribute("evalTableList",list);
+        model.addAttribute("condition",pageVO.getFilters());
 		return "evalTable/evalTable";
 	}
 	
@@ -86,4 +89,25 @@ public class EvalTableController extends BaseController{
 		model.addAttribute("evalTable",eTable);
 		return "redirect:/admin/evalTable";
 	}
+
+
+    /**
+     * 删除评教表
+     */
+    @RequestMapping("/evalTable/delete")
+    @ResponseBody
+    public BaseResult deleteEvalTable(
+            @RequestParam()Integer eid
+    ){
+        if(eid==null || eid<=0){
+            return BaseResult.createFailure("评教表id 不能为null！eid:"+eid);
+        }
+        try{
+            evalTableService.delete(eid);
+        }catch (Exception e){
+            return BaseResult.createFailure("删除评教表失败！"+e.getMessage());
+        }
+        return BaseResult.createSuccess("删除评教表成功");
+
+    }
 }

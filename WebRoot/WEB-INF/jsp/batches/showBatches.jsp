@@ -61,17 +61,17 @@
 										</tr>
 										<tr>
 											
-											<td class="new"><a href="${pageContext.request.contextPath}/admin/evalTable/show/${batches.stuEvalId}">${batches.stuEval.title}</a></td>
-											<td class="old"><a class="btn btn-info" target="_blank" href="${pageContext.request.contextPath}/admin/evalTable?action=stuEval&bid=${batches.id}">点此更换默认<Strong>学生</Strong>评教指标表</a></td>
+											<td class="new evalTable"><a target="_blank" href="${pageContext.request.contextPath}/admin/evalTable/show/${batches.stuEvalId}">${batches.stuEval.title}</a></td>
+											<td class="old"><a class="btn btn-info" target="_blank" href="${pageContext.request.contextPath}/admin/evalTable?action=stuEval&bid=${batches.id}&type=stu">点此更换默认<Strong>学生</Strong>评教指标表</a></td>
 											
-											<td class="new"><a href="${pageContext.request.contextPath}/admin/evalTable/show/${batches.teaEvalId}">${batches.teaEval.title}</a></td>
-											<td class="old"><a class="btn btn-info" target="_blank" href="${pageContext.request.contextPath}/admin/evalTable?action=teaEval&bid=${batches.id}">点此更换默认<Strong>教师</Strong>评教指标表</a></td>
+											<td class="new evalTable"><a target="_blank" href="${pageContext.request.contextPath}/admin/evalTable/show/${batches.teaEvalId}">${batches.teaEval.title}</a></td>
+											<td class="old"><a class="btn btn-info" target="_blank" href="${pageContext.request.contextPath}/admin/evalTable?action=teaEval&bid=${batches.id}&type=tea">点此更换默认<Strong>教师</Strong>评教指标表</a></td>
 											
-											<td class="new"><a href="${pageContext.request.contextPath}/admin/evalTable/show/${batches.leadEvalId}">${batches.leadEval.title}</a></td>
-											<td class="old"><a class="btn btn-info" target="_blank" href="${pageContext.request.contextPath}/admin/evalTable?action=leadEval&bid=${batches.id}">点此更换默认<Strong>领导</Strong>评教指标表</a></td>
+											<td class="new evalTable"><a target="_blank" href="${pageContext.request.contextPath}/admin/evalTable/show/${batches.leadEvalId}">${batches.leadEval.title}</a></td>
+											<td class="old"><a class="btn btn-info" target="_blank" href="${pageContext.request.contextPath}/admin/evalTable?action=leadEval&bid=${batches.id}&type=lea">点此更换默认<Strong>领导</Strong>评教指标表</a></td>
 											
-											<td class="new"><a href="${pageContext.request.contextPath}/admin/evalTable/show/${batches.teaStuEvalId}">${batches.teaStuEval.title}</a></td>
-											<td class="old"><a class="btn btn-info" target="_blank" href="${pageContext.request.contextPath}/admin/evalTable?action=teaStuEval&bid=${batches.id}">点此更换默认<Strong>教师评学生</Strong>指标表</a></td>
+											<td class="new evalTable"><a target="_blank" href="${pageContext.request.contextPath}/admin/evalTable/show/${batches.teaStuEvalId}">${batches.teaStuEval.title}</a></td>
+											<td class="old"><a class="btn btn-info" target="_blank" href="${pageContext.request.contextPath}/admin/evalTable?action=teaStuEval&bid=${batches.id}&type=teaStu">点此更换默认<Strong>教师评学生</Strong>指标表</a></td>
 										</tr>
 									</table>
 								</div>
@@ -136,6 +136,13 @@
             $("#cancel").click(function(){
                 $(".new").css("display","");
                 $(".old").css("display","none");
+            });
+            $("td.evalTable").each(function(){
+               var $this = $(this);
+               if($this.find("a").html().trim() <= 0){
+                   $this.hide();
+                   $this.next().show();
+               }
             });
 		});
 	</script>

@@ -1,9 +1,12 @@
 package com.tqe.dao;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import com.tqe.base.vo.PageVO;
+import com.tqe.dao.SqlProvider.BatchesDaoSqlProvider;
+import com.tqe.po.Batches;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -47,6 +50,7 @@ public interface CourseDao {
 
 	@SelectProvider(type=BaseDaoTemplate.class,method="findCourseByCondition")
 	List<Course> findByCondition(PageVO pageVO);
+
 
 
     @Update("update course set `stuEvalAvgScore` = #{stuEvalAvgScore} ,`teaEvalAvgScore`=#{teaEvalAvgScore} ,`leaEvalAvgScore`=#{leaEvalAvgScore} " +

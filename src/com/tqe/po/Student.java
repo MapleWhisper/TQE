@@ -32,7 +32,9 @@ public class Student implements Serializable{
 	private Integer classId;
 	private Integer majorId;
 
-	private boolean isEvaled;	//�ж�ѧ���Ƿ��Ѿ�����
+    private Double avgScore;
+
+	private boolean isEvaled;	//是否已经评价过
 	
 	
 	public String getSid() {
@@ -208,4 +210,11 @@ public class Student implements Serializable{
 	}
 
 
+    public Double getAvgScore() {
+        return avgScore;
+    }
+
+    public void setAvgScore(Double avgScore) {
+        this.avgScore = avgScore;
+    }
 }

@@ -2,6 +2,7 @@ package com.tqe.dao;
 
 import java.util.List;
 
+import com.tqe.base.vo.PageVO;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
@@ -12,7 +13,6 @@ import com.tqe.po.Major;
 public interface MajorDao extends BaseDao<Major>{
 	String major = "major";
 	
-	@Override
 	@Select(value="select * from major")
 	List<Major> findAll();
 	

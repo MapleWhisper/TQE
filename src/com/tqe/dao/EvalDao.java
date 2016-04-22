@@ -3,9 +3,12 @@ package com.tqe.dao;
 
 import java.util.List;
 
+import com.tqe.base.vo.PageVO;
+import com.tqe.dao.SqlProvider.EvalDaoSqlProvider;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 import org.springframework.stereotype.Repository;
 
 import com.tqe.po.EvalTable;
@@ -30,8 +33,8 @@ public interface EvalDao extends BaseDao<EvalTable>{
 							 + "	VALUES (null, #{lid},  #{eid}, #{cid}, #{cno}, #{bid}, #{score}, #{level}, #{jsonString} ,#{tname},#{departmentId},#{questionAnsList});")
 	public void saveLeaTable(LeaResultTable leaTable);
 	
-	@Insert("INSERT INTO `tqe`.`teaStutable` (`id`,`tid`,`sid`,  `eid`, `cid`, `cno`, `bid`, `score`, `level`, `jsonString`,`tname`,`sname`,`departmentid`,`questionAnsList`) "
-						+ "	VALUES (null, #{tid},#{sid},  #{eid}, #{cid}, #{cno}, #{bid}, #{score}, #{level}, #{jsonString} ,#{tname},#{sname},#{departmentId},#{questionAnsList});")
+	@Insert("INSERT INTO `tqe`.`teaStutable` (`id`,`tid`,`sid`,  `eid`, `cid`, `cno`, `bid`, `score`, `level`, `jsonString`,`tname`,`sname`,`season`,`departmentid`,`questionAnsList`) "
+						+ "	VALUES (null, #{tid},#{sid},  #{eid}, #{cid}, #{cno}, #{bid}, #{score}, #{level}, #{jsonString} ,#{tname},#{sname}, #{season} , #{departmentId},#{questionAnsList});")
 	public void saveTeaStuTable(TeaStuResultTable teaStuTable);
 	
 	
@@ -44,8 +47,8 @@ public interface EvalDao extends BaseDao<EvalTable>{
 	@Select("select `id`,  `lid`,  `eid`,  `cid`,  `cno`,  `bid`,  `score`,  `level` from leatable where cid =#{cid} and cno=#{cno} and bid =#{bid} ")
 	public List<LeaResultTable> findAllLeaTableByCourse(@Param("cid")String cid, @Param("cno")Integer cno, @Param("bid")Integer bid);
 	
-	@Select("select `id`,  `tid`,`sid`,  `eid`,  `cid`,  `cno`,  `bid`,  `score`,  `level`,`tname` from teaStutable where sid =#{sid}  and bid =#{bid} ")
-	public List<TeaStuResultTable> findAllTeaStuTableBySid(@Param("sid") String sid, @Param("bid")Integer bid);
+    @SelectProvider(type = EvalDaoSqlProvider.class,method = "findTeaStuResultTable")
+	public List<TeaStuResultTable> findTeaStuResultTable(PageVO pageVO);
 
     @Select("select * from stutable where cid =#{cid} and cno=#{cno} and bid =#{bid} ")
     List<StuResultTable> findAllStuTableWithJSONString(@Param("cid")String cid, @Param("cno")Integer cno, @Param("bid")Integer bid);

@@ -1,6 +1,5 @@
 package com.tqe.dao;
 
-import java.util.HashMap;
 import java.util.List;
 
 import com.tqe.base.vo.PageVO;

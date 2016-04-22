@@ -7,6 +7,10 @@
  * 用于将页面 这种格式的统计数据[0,1,3,1] 渲染成进度条的形式
  */
 $(function(){
+    renderProcessBar();
+});
+
+function renderProcessBar(){
     $(".eval-process-bar").each(function(){
         var $this = $(this);
         var cntsString = $this.attr('value');
@@ -40,4 +44,4 @@ $(function(){
             processBarElement.append(tmpBar);
         }
     }
-});
+}

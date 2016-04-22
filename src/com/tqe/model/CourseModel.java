@@ -27,6 +27,7 @@ public class CourseModel {
         this.course = course;
     }
 
+
     public static class Batches {
 		
 		private com.tqe.po.Batches batches;		//季度

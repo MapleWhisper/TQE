@@ -3,6 +3,7 @@ package com.tqe.dao;
 
 import java.util.List;
 
+import com.tqe.base.vo.PageVO;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;

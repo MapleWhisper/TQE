@@ -2,16 +2,15 @@ package com.tqe.dao;
 
 import java.util.List;
 
+import com.tqe.base.vo.PageVO;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import com.tqe.po.Department;
 
 @Repository
 public interface DepartmentDao extends BaseDao<Department>{
-	@Override
 	@Select("select * from department")
 	public List<Department> findAll();
 
@@ -20,7 +19,7 @@ public interface DepartmentDao extends BaseDao<Department>{
 	void save(Department department);
 
 	/**
-	 * 找到包含专业的学院列表
+	 * 锟揭碉拷锟斤拷锟斤拷专业锟斤拷学院锟叫憋拷
 	 */
 	@Select("select * from department d where d.id in (select  departmentid from major)")
 	List<Department> findDepListContainMajors();

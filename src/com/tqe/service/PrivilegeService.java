@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tqe.base.enums.UserType;
-import org.apache.ibatis.annotations.Select;
+import com.tqe.base.vo.PageVO;
 import org.springframework.stereotype.Service;
 
 import com.tqe.po.Privilege;

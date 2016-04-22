@@ -35,25 +35,14 @@ public class StatisticsController extends  BaseController{
         if(course == null){
             return sendError(model,"没有找到指定的课程！ cid:"+cid+"  cno:"+cno,logger);
         }
-        CourseModel courseModel = new CourseModel(course);
+
         Batches batch = batchesService.getById(bid);
         if(batch==null){
             return sendError(model,"没有找到指定的批次! cid:"+cid+" cno:"+cno+" batchId:"+bid,logger);
         }
 
-        List<Batches> batchesList = batchesService.findAllBySeason(course.getSeason());	//默认得到课程所在学期的所有批次
+        CourseModel courseModel =courseService.buildCourseModel(cid, cno, course);
 
-        for(Batches b : batchesList){	//遍历所有得到的批次列表
-            List<StuResultTable> stuTableList = evalService.findAllStuTableByCidAndBid(cid, cno, b.getId());
-            List<TeaResultTable> teaTableList = evalService.findAllTeaTableByCidAndBid(cid, cno, b.getId());
-            List<LeaResultTable> leaTableList = evalService.findAllLeaTableByCidAndBid(cid, cno, b.getId());
-            CourseModel.Batches batches = new CourseModel.Batches();
-            batches.setStuTableList(stuTableList);
-            batches.setTeaTableList(teaTableList);
-            batches.setLeaTableList(leaTableList);
-            batches.setBatches(b);
-            courseModel.getBatchesList().add(batches);
-        }
         courseBatchService.reAnalyseCourseBatch(cid, cno, bid);
         CourseBatch courseBatch = courseBatchService.getByIdWithQuestList(cid, cno, bid);
         courseBatch.setBatch(batch);
@@ -63,4 +52,8 @@ public class StatisticsController extends  BaseController{
 
         return "course/courseStatistics";
     }
+
+
+
+
 }

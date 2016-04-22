@@ -1,14 +1,13 @@
 package com.tqe.base.mybatis.handler;
 
 import com.google.common.base.CaseFormat;
-import com.tqe.po.Course;
-import com.tqe.po.CourseBatch;
-import com.tqe.po.EvalTable;
-import com.tqe.po.ResultTable;
+import com.tqe.po.*;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.type.BaseTypeHandler;
+import org.apache.ibatis.type.DoubleTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 
 import java.lang.reflect.Field;
@@ -40,6 +39,7 @@ public class ListHandler extends BaseTypeHandler<List> {
         targetClassFilterList.add(EvalTable.class);
         targetClassFilterList.add(ResultTable.class);
         targetClassFilterList.add(Course.class);
+        targetClassFilterList.add(StudentSeason.class);
     }
 
     @Override
@@ -63,18 +63,24 @@ public class ListHandler extends BaseTypeHandler<List> {
                 return Collections.emptyList();
             }
             List result;
-            boolean isNumeric = false;
+            boolean isInteger = false;
+            boolean isDouble = false;
             String replace = string.replace(",", "");
             if (StringUtils.isNumeric(replace)){
-                isNumeric=true;
+                isInteger = true;
                 result=new ArrayList<Integer>(split.length);
-            }else {
+            }else if(NumberUtils.isNumber(replace)){
+                isDouble = true;
+                result = new ArrayList<Double>(split.length);
+            }else{
                 result=new ArrayList<String>(split.length);
             }
             for (String id : split) {
-                if (isNumeric){
+                if (isInteger){
                     result.add(Integer.valueOf(id));
-                }else {
+                }else if(isDouble){
+                    result.add(Double.parseDouble(id));
+                } else {
                     result.add(id);
                 }
             }

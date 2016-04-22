@@ -10,7 +10,9 @@ import static org.apache.ibatis.jdbc.SqlBuilder.*;
 
 public class BaseDaoTemplate<T> {
 
-	public void delete(T obj){
+    private final static  int DEFAULT_LIMIT = 300;
+
+    public void delete(T obj){
 	}
 	
 	public void findAll(T obj){
@@ -40,7 +42,7 @@ public class BaseDaoTemplate<T> {
         if(StringUtils.isNoneBlank(filters.get("grade"))){
             WHERE("grade = #{filters.grade}");
         }
-		return  SQL()+ LIMIT(300);
+		return  SQL()+ LIMIT(DEFAULT_LIMIT);
 		
 	}
 	
@@ -58,7 +60,7 @@ public class BaseDaoTemplate<T> {
 		if(StringUtils.isNotBlank(filters.get("tid"))){
 			WHERE("id = #{filters.tid}");
 		}
-		return  SQL() + LIMIT(300);
+		return  SQL() + LIMIT(DEFAULT_LIMIT);
 		
 	}
 	
@@ -91,9 +93,33 @@ public class BaseDaoTemplate<T> {
             WHERE("c.season = #{filters.season}");
         }
 
-		return  SQL()+LIMIT(300);
+		return  SQL()+LIMIT(DEFAULT_LIMIT);
 		
 	}
+
+   public String findBatchAll(PageVO pageVO){
+        Map<String,String> filters = pageVO.getFilters();
+        BEGIN();
+        SELECT("*");
+        FROM("batches b");
+        if(StringUtils.isNotBlank(filters.get("season"))){
+             WHERE("b.season = #{filters.season}");
+        }
+        return  SQL() + LIMIT(DEFAULT_LIMIT);
+
+    }
+
+    public String findEvalTableAll(PageVO pageVO){
+        Map<String,String> filters = pageVO.getFilters();
+        BEGIN();
+        SELECT("*");
+        FROM("evalTable e");
+        if(StringUtils.isNotBlank(filters.get("type"))){
+            WHERE("e.type = #{filters.type}");
+        }
+        return  SQL() + LIMIT(DEFAULT_LIMIT);
+
+    }
 
 	public static String convertContains(String s){
 

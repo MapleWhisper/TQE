@@ -206,13 +206,14 @@ public class StudentServiceImpl extends BaseService<Student> {
 
 
     /**
-     * @param sid
-     * @param cid
-     * @param cno
-     * @return
      */
     public boolean isCoursePermitted(String sid, String cid, Integer cno) {
         return false;
     }
 
+    public void reAnalyseStudentStatistics(String sid) {
+
+        studentDao.updateStuAvgScore(sid);
+
+    }
 }

@@ -193,3 +193,8 @@ thead {
 .panel-heading {
     font-size: 19px;
 }
+
+code{
+    font-size: 100%;
+}
+

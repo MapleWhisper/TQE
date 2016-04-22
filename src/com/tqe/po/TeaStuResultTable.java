@@ -8,6 +8,8 @@ public class TeaStuResultTable extends ResultTable implements Serializable{
 	
 	private String sname;
 
+    private String season;
+
 
 
 	public String getSname() {
@@ -22,7 +24,13 @@ public class TeaStuResultTable extends ResultTable implements Serializable{
 	public void setSid(String sid) {
 		this.sid = sid;
 	}
-	
-	
-	
+
+
+    public String getSeason() {
+        return season;
+    }
+
+    public void setSeason(String season) {
+        this.season = season;
+    }
 }

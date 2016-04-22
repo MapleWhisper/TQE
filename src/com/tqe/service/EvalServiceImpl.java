@@ -3,6 +3,7 @@ package com.tqe.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.tqe.base.vo.PageVO;
 import com.tqe.po.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -46,7 +47,8 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 	 */
 	public void saveTeaStuTable(TeaStuResultTable teaStuTable) throws Exception{
 		try {
-
+            Batches batch = batchesDao.getById(teaStuTable.getBid());
+            teaStuTable.setSeason(batch.getSeason());
 			evalDao.saveTeaStuTable(teaStuTable);
 		} catch (Exception e) {
             logger.warn("save teaStu result table failed " ,e);
@@ -138,15 +140,16 @@ public class EvalServiceImpl extends BaseService<EvalTable>{
 	
 	/**
 	 * 根据 sid 和 bid 获取对应 教师评价学生 所有结果
-	 * @param bid 批次号
-	 * @return
 	 */
-	public List<TeaStuResultTable> findAllTeaStuTableBySid(String sid,Integer bid){
-		List<TeaStuResultTable> list = evalDao.findAllTeaStuTableBySid(sid,bid);
-		for(TeaStuResultTable t:list){
-			t.setCourse(courseDao.getById(t.getCid(), t.getCno()));
-		}
-		return list; 
+	public List<TeaStuResultTable> findTeaStuResultTable(PageVO pageVO,boolean withCourse){
+		List<TeaStuResultTable> list = evalDao.findTeaStuResultTable(pageVO);
+        if(withCourse){
+            for(TeaStuResultTable t:list){
+                t.setCourse(courseDao.getById(t.getCid(), t.getCno()));
+            }
+        }
+
+		return list;
 	}
 	
 	/**

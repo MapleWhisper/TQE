@@ -31,6 +31,24 @@
 
                         <div class="bs-callout bs-callout-info">
                             <a class="btn btn-info btn-lg" data-toggle="modal" icon="plus" data-target="#add-batch-modal">生成新批次</a>
+
+                            <form class="form-inline" method="post" action="${pageContext.request.contextPath}/admin/batches"
+                                  style=" margin-top: 30px">
+                                <div class="form-group">
+                                    <label for="season" >选择学期查看课程:</label>
+                                    <select name="season" class="form-control auto-select" id="season" key="${condition.season}">
+                                        <option value="">当前学期:${applicationScope.curSeason}</option>
+                                        <c:forEach begin="2015" end="${applicationScope.curYear+1}" step="1" var="s">
+                                            <option  value="${s}春">${s}春</option>
+                                            <option  value="${s}秋">${s}秋</option>
+                                        </c:forEach>
+                                    </select>
+                                    <button type="submit" class="btn btn-primary ">
+                                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>搜索
+                                    </button>
+                                </div>
+
+                            </form>
                         </div>
 
 						<table class="table table-hover table-striped table-bordered table-condensed">
@@ -54,7 +72,10 @@
                                         <td><span class="batch-status">${b.batchStatus}</span></td>
                                         <td><fm:formatDate value="${b.beginDate}"  dateStyle="medium"/> ~
                                             <fm:formatDate value="${b.endDate}"  dateStyle="medium"/></td>
-                                        <td><a href="${pageContext.request.contextPath}/admin/batches/show/${b.id}" icon="zoom-in" class="btn btn-primary">查看批次</a></td>
+                                        <td>
+                                            <a href="${pageContext.request.contextPath}/admin/batches/show/${b.id}" icon="zoom-in" class="btn btn-primary">查看批次</a>
+                                            <a href="${pageContext.request.contextPath}/admin/batches/delete"  bid="${b.id}" icon="remove" class="btn btn-danger remove-batch">删除批次</a>
+                                        </td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -112,7 +133,28 @@
         $(function(){
             batchStatusRender();
             autoAddIcon();
-
+            $(".remove-batch").click(function(e){
+                e.preventDefault();
+                if(confirm("您确认要删除该批次吗？只有新建的批次才可以删除！")){
+                    var bid = $(this).attr('bid');
+                    if(bid){
+                        $.post($(this).attr('href'),{bid:bid},function(data){
+                            if(data.success){
+                                showGlobalNotification("删除批次成功！");
+                                location.reload();
+                            }else{
+                                showGlobalNotification("删除批次失败！只有新建的批次才可以删除");
+                            }
+                        });
+                    }else{
+                        showGlobalNotification("删除失败！未知的批次号 id:"+bid);
+                    }
+                }
+            });
+            autoSelect();
+            $("#season").change(function(){
+                $(this).parents('form').submit();
+            });
         });
     </script>
 </body>

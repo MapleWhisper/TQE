@@ -1,8 +1,8 @@
 package com.tqe.service;
 
-import java.util.Date;
 import java.util.List;
 
+import com.tqe.base.vo.PageVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,8 +37,8 @@ public class BatchesServiceImpl extends BaseService<Batches>{
 		batchesDao.save(e);
 	}
 
-	public List<Batches> findAll() {
-		return batchesDao.findAll();
+	public List<Batches> findAll(PageVO pageVO) {
+		return batchesDao.findAll(pageVO);
 	}
 
 	public void delete(int id) {
@@ -54,9 +54,7 @@ public class BatchesServiceImpl extends BaseService<Batches>{
 		return batchesDao.getAvailableBatches(season);
 	}
 
-	public Date getLatestDate(Integer id) {
-		return batchesDao.getLatestDate(id);
-	}
+
 	
 	/**
 	 * 根据学期 season 得到所有的批次Bathces 列表
@@ -66,4 +64,30 @@ public class BatchesServiceImpl extends BaseService<Batches>{
 	public List<Batches> findAllBySeason(String season) {
 		return batchesDao.findAllBySeason(season);
 	}
+
+    /**
+     * 检查新批次的时间是否和已经存在的批次的时间冲突
+     * @return 检测到冲突的批次
+     */
+    public Batches checkDateConflict(Batches newBatch) {
+
+
+        if(newBatch == null ){
+            return null;
+        }
+        Batches conflictBatch = null;
+        //检查 开始日期
+        conflictBatch = batchesDao.checkDateConflict(newBatch.getId(),newBatch.getBeginDate());
+        if(conflictBatch!=null) return conflictBatch;
+
+        //检查截止 日期
+        conflictBatch = batchesDao.checkDateConflict(newBatch.getId(), newBatch.getEndDate());
+        if(conflictBatch!=null) return conflictBatch;
+
+        //检查 日期 是否 包含了 其他批次的时间
+        conflictBatch = batchesDao.checkDateRangeConflict(newBatch.getId(),newBatch.getBeginDate(),newBatch.getEndDate());
+        return conflictBatch;
+
+
+    }
 }

@@ -73,7 +73,7 @@ function showGlobalNotification(msg){
         var globalNotification = $("#global-notification");
         globalNotification.find("#global-notification-text").html(msg);
         globalNotification.fadeIn("fast");
-        //globalNotification.fadeOut(3000);
+        globalNotification.fadeOut(3000);
     }
 
 }

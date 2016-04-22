@@ -69,20 +69,10 @@ public class CourseController extends BaseController{
 		if(course == null){
 			return sendError(model,"没有找到指定的课程！ cid:"+cid+"  cno:"+cno,logger);
 		}
-		CourseModel courseModel = new CourseModel();
+
 		List<Batches> batchesList = batchesService.findAllBySeason(course.getSeason());	//默认得到课程所在学期的所有批次
 		
-		for(Batches b : batchesList){	//遍历所有得到的批次列表
-			List<StuResultTable> stuTableList = evalService.findAllStuTableByCidAndBid(cid, cno, b.getId());
-			List<TeaResultTable> teaTableList = evalService.findAllTeaTableByCidAndBid(cid, cno, b.getId());
-			List<LeaResultTable> leaTableList = evalService.findAllLeaTableByCidAndBid(cid, cno, b.getId());
-			CourseModel.Batches batches = new CourseModel.Batches();
-			batches.setStuTableList(stuTableList);
-			batches.setTeaTableList(teaTableList);
-			batches.setLeaTableList(leaTableList);
-			batches.setBatches(b);
-			courseModel.getBatchesList().add(batches);
-		}
+		CourseModel courseModel  = courseService.buildCourseModel(cid,cno,course);
 		model.addAttribute("course", course);
 		model.addAttribute("courseModel",courseModel);
 

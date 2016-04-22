@@ -3,6 +3,7 @@ package com.tqe.service;
 import java.util.List;
 
 import com.tqe.base.enums.DepartmentType;
+import com.tqe.base.vo.PageVO;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -10,10 +11,8 @@ import com.tqe.po.Department;
 
 @Service
 public class DepartmentServiceImpl extends BaseService<Department>{
-	@Override
-	@Cacheable(value="mCache")
+
 	public List<Department> findAll() {
-		
 		return departmentDao.findAll();
 	}
 

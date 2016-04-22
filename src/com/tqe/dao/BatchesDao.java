@@ -3,16 +3,14 @@ package com.tqe.dao;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import com.tqe.base.vo.PageVO;
+import com.tqe.dao.SqlProvider.BatchesDaoSqlProvider;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import com.tqe.po.Batches;
 
 /**
- * @author ��·
  *
  */
 @Repository
@@ -24,8 +22,8 @@ public interface BatchesDao extends BaseDao<Batches>{
             " values(null,#{name},#{courseNumber},#{curCourseNumber},#{season},#{beginDate},#{endDate} ) ")
 	public void save(Batches batches);
 	
-	@Select("select * from batches")
-	public List<Batches> findAll();
+    @SelectProvider(type = BaseDaoTemplate.class,method = "findBatchAll" )
+	public List<Batches> findAll(PageVO pageVO);
 	
 	@Delete("delete from batches where id = #{id}")
 	public void delete(int id);
@@ -37,10 +35,16 @@ public interface BatchesDao extends BaseDao<Batches>{
 	@Select("select * from batches b where now() between b.beginDate and b.endDate and b.season = #{season}")
 	public Batches getAvailableBatches(@Param("season")String season);
 	
-	@Select("select max(endDate) from batches where id != #{id}")
-	public Date getLatestDate(@Param("id")Integer id);
+
 	
 	@Select("select * from batches where season = #{season}  order by beginDate desc")
 	public List<Batches> findAllBySeason(@Param("season")String season);
-	
+
+
+
+    @SelectProvider(type=BatchesDaoSqlProvider.class, method="checkDateConflict")
+    Batches checkDateConflict(@Param("id")Integer id ,@Param("date") Date date);
+
+    @SelectProvider(type=BatchesDaoSqlProvider.class, method="checkDateRangeConflict")
+    Batches checkDateRangeConflict(@Param("id")Integer id ,@Param("beginDate")Date beginDate ,@Param("endDate")Date endDate);
 }

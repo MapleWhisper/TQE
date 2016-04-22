@@ -2,6 +2,7 @@ package com.tqe.service;
 
 import java.util.List;
 
+import com.tqe.base.vo.PageVO;
 import org.springframework.stereotype.Service;
 
 import com.tqe.po.Leader;
@@ -19,8 +20,8 @@ public class LeaderServiceImpl extends BaseService<Leader>{
 		leaderDao.save(lea);
 	}
 
-	public List<Leader> findAll() {
-		return leaderDao.findAll();
+	public List<Leader> findAll(PageVO type) {
+		return leaderDao.findAll(type);
 	}
 
 	public Leader login(User user) {

@@ -3,8 +3,6 @@ package com.tqe.service;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import com.tqe.base.enums.ImportType;
 import com.tqe.base.vo.PageVO;
 import com.tqe.po.Department;
@@ -15,7 +13,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
-import com.tqe.dao.TeacherDao;
 import com.tqe.po.Teacher;
 import com.tqe.po.User;
 

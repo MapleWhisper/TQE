@@ -3,6 +3,7 @@ package com.tqe.service;
 import java.util.Date;
 import java.util.List;
 
+import com.tqe.base.vo.PageVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,12 +27,12 @@ public class StuEvalServiceImpl extends BaseService<EvalTable>{
 		evalTableDao.save(e);
 	}
 
-	public List<EvalTable> findAll() {
-		List<EvalTable> list = evalTableDao.findAll();
+	public List<EvalTable> findAll(PageVO type) {
+		List<EvalTable> list = evalTableDao.findAll(type);
 		for(EvalTable evalTable : list){
 			evalTable.json2Object();
 		}
-		return evalTableDao.findAll();
+		return evalTableDao.findAll(type);
 	}
 
 	public void delete(int id) {
