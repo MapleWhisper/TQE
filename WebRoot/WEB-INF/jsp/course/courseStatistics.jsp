@@ -377,7 +377,7 @@
         $.each(tableItemList,function(){
             var itemName = this.context;
             var item = {
-                value:itemName + "\n \n 平均得分: "+this.avgScore+" 分/共"+this.level.split(' ')[0]+"分",
+                value:itemName + "\n \n 平均得分: "+this.avgScore+" 分/共"+this.maxLevel+"分("+this.percent+"%)",
                 textStyle:{
                     fontSize:15
                 }

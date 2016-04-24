@@ -17,14 +17,14 @@ public interface CourseBatchDao {
     CourseBatch getById(@Param("cid") String cid, @Param("cno") int cno , @Param("bid")int bid);
 
     @Insert("INSERT INTO `tqe`.`coursebatch` " +
-            "(`cid`, `cno`, `bid`, `stuEvalAvgScore`, `teaEvalAvgScore`, `leaEvalAvgScore`, `stuEvalTotal`, `stuEvalCnt`, `stuEvalLevelCnts`, `teaEvalLevelCnts`, `leaEvalLevelCnts`, `stuEvalTableJsonString`, `teaEvalTableJsonString`, `leaEvalTableJsonString`) VALUES " +
-            "(#{cid}, #{cno}, #{bid}, #{stuEvalAvgScore}, #{teaEvalAvgScore}, #{leaEvalAvgScore}, #{stuEvalTotal}, #{stuEvalCnt}, #{stuEvalLevelCnts}, #{teaEvalLevelCnts}, #{leaEvalLevelCnts}  ,#{stuEvalTableJsonString} ,#{teaEvalTableJsonString} ,#{leaEvalTableJsonString} );")
+            "(`cid`, `cno`, `bid`, `stuEvalAvgScore`, `teaEvalAvgScore`, `leaEvalAvgScore`, `stuEvalTotal`, `stuEvalCnt`, `stuEvalLevelCnts`, `teaEvalLevelCnts`, `leaEvalLevelCnts`, `stuEvalTableJsonString`, `teaEvalTableJsonString`, `leaEvalTableJsonString` ,`mtime`) VALUES " +
+            "(#{cid}, #{cno}, #{bid}, #{stuEvalAvgScore}, #{teaEvalAvgScore}, #{leaEvalAvgScore}, #{stuEvalTotal}, #{stuEvalCnt}, #{stuEvalLevelCnts}, #{teaEvalLevelCnts}, #{leaEvalLevelCnts}  ,#{stuEvalTableJsonString} ,#{teaEvalTableJsonString} ,#{leaEvalTableJsonString},now() );")
     void save(CourseBatch courseBatch);
 
     @Update("UPDATE `tqe`.`coursebatch` SET `stuEvalAvgScore`=#{stuEvalAvgScore}, `teaEvalAvgScore`=#{teaEvalAvgScore}," +
             " `leaEvalAvgScore`=#{leaEvalAvgScore}, `stuEvalTotal`=#{stuEvalTotal}, `stuEvalCnt`=#{stuEvalCnt}, `stuEvalLevelCnts`=#{stuEvalLevelCnts}, " +
             "`teaEvalLevelCnts`=#{teaEvalLevelCnts}, `leaEvalLevelCnts`=#{leaEvalLevelCnts} ,`stuEvalTableJsonString`=#{stuEvalTableJsonString}," +
-            " `teaEvalTableJsonString`=#{teaEvalTableJsonString}, `leaEvalTableJsonString`=#{leaEvalTableJsonString} WHERE  `cid`=#{cid} AND `cno`=#{cno} AND `bid`=#{bid};")
+            " `teaEvalTableJsonString`=#{teaEvalTableJsonString}, `leaEvalTableJsonString`=#{leaEvalTableJsonString} ,`mtime` = now() WHERE  `cid`=#{cid} AND `cno`=#{cno} AND `bid`=#{bid};")
     void update(CourseBatch courseBatch);
 
     @Select("SELECT  `cid`,  `cno`,  `bid`,  `stuEvalAvgScore`,  `teaEvalAvgScore`,  `leaEvalAvgScore`,  `stuEvalTotal`,  `stuEvalCnt`,  `stuEvalLevelCnts`,  `teaEvalLevelCnts`,  `leaEvalLevelCnts` " +

@@ -83,11 +83,8 @@ public class AdminController extends BaseController{
         if(admin == null || admin.getId()==null){
             return sendError(model,"管理员Id不能为空");
         }
-        Admin curAdmin = (Admin) session.getAttribute("admin");
-        if(!curAdmin.getName().equals("admin")){   //普通管理员只能修改自己的信息 除了超级管理员
-            if(!curAdmin.getId().equals(admin.getId())){
-                return sendError(model,"您只能修改自己的信息！");
-            }
+        if(!isSuperAdmin(session)){
+            return sendError(model,"您只能修改自己的信息！");
         }
 
         Admin a = adminService.getById(admin.getId());
@@ -104,11 +101,19 @@ public class AdminController extends BaseController{
 	/**
 	 * 删除管理员
      * */
-	@RequestMapping("admin/delete/{id}")
-	public String delete(@PathVariable int id){
-		
-		//adminService.delete(id);
-		
+	@RequestMapping("admin/delete")
+	public String delete(
+            @RequestParam Integer id,
+            Model model,
+            HttpSession session
+    ){
+		if(id==null){
+            return sendError(model,"未知的管理员Id");
+        }
+        if(!isSuperAdmin(session)){
+            return sendError(model,"只有超级管理员才能删除管理员！");
+        }
+		adminService.delete(id);
 		return "redirect:/admin/admin";
 	}
 }

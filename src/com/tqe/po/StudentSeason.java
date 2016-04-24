@@ -1,5 +1,6 @@
 package com.tqe.po;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,6 +20,8 @@ public class StudentSeason {
     private Integer resultTableNum;     //当前统计的评教表的数据
 
     private String resultTableJsonString;   //评教表项内容统计
+
+    private Date mtime; //最后修改时间
 
     public StudentSeason(){
 
@@ -83,5 +86,13 @@ public class StudentSeason {
 
     public void setResultTableJsonString(String resultTableJsonString) {
         this.resultTableJsonString = resultTableJsonString;
+    }
+
+    public Date getMtime() {
+        return mtime;
+    }
+
+    public void setMtime(Date mtime) {
+        this.mtime = mtime;
     }
 }

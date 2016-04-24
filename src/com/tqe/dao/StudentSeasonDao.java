@@ -17,11 +17,11 @@ public interface StudentSeasonDao {
     @Select("select * from studentSeason ss where ss.sid = #{sid} and ss.season = #{season} ")
     StudentSeason getById(@Param("sid") String sid, @Param("season")String season);
 
-    @Insert("INSERT INTO `studentseason` (`sid`, `season`, `avgScore`, `avgScoreList`, `levelCnts` ,`resultTableNum` , `resultTableJsonString` ) " +
-            "VALUES (#{sid}, #{season},#{avgScore}, #{avgScoreList}, #{levelCnts} , #{resultTableNum} , #{resultTableJsonString} );")
+    @Insert("INSERT INTO `studentseason` (`sid`, `season`, `avgScore`, `avgScoreList`, `levelCnts` ,`resultTableNum` , `resultTableJsonString` ,`mtime`) " +
+            "VALUES (#{sid}, #{season},#{avgScore}, #{avgScoreList}, #{levelCnts} , #{resultTableNum} , #{resultTableJsonString} ,now() );")
     void save(StudentSeason stuSeason);
 
     @Update("update `studentseason` set avgScore = #{avgScore} ,avgScoreList = #{avgScoreList} ,levelCnts =#{levelCnts}" +
-            " resultTableNum = #{resultTableNum} , resultTableJsonString = #{resultTableJsonString} where sid = #{sid} and season = #{season}")
+            " resultTableNum = #{resultTableNum} , resultTableJsonString = #{resultTableJsonString} , mtime = now() where sid = #{sid} and season = #{season}")
     void update(StudentSeason stuSeason);
 }

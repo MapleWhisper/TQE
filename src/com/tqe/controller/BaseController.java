@@ -1,7 +1,9 @@
 package com.tqe.controller;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
+import com.tqe.po.Admin;
 import com.tqe.service.*;
 import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,5 +91,15 @@ public class BaseController {
         return this.sendError(model,msg);
     }
 
+    /**
+     * 判断当前登录的用户是否是超级管理员
+     * @param session
+     * @return
+     */
+    protected boolean isSuperAdmin(HttpSession session){
 
+        Admin curAdmin = (Admin) session.getAttribute("admin");
+        return curAdmin != null && curAdmin.getName().equals("admin");
+
+    }
 }

@@ -38,21 +38,22 @@
 								style="margin-top: 20px" method="post">
 								<div class="form-group" align="center">
 									<label for="username" class="col-sm-3 control-label">用户名:</label>
-									<div class="col-sm-7">
+									<div class="col-sm-6">
 										<input type="text" class="form-control" id="username" required="required"
 											name="username"  placeholder="请输入学号/教师号/Id">
 									</div>
 								</div>
 								<div class="form-group" align="center">
 									<label for="password" class="col-sm-3 control-label">密码:</label>
-									<div class="col-sm-7">
+									<div class="col-sm-6">
 										<input type="password" class="form-control" name="password" required="required"
 											id="password">
 									</div>
-									<div class="col-sm-2">
-											<span style="top: 7px" class="glyphicon glyphicon-question-sign"
-												  aria-hidden="true" data-toggle="tooltip" data-placement="top"
-												  title="初始密码默认为身份证后8位" ></span>
+									<div class="col-sm-3">
+											<%--<span style="top: 7px" class="glyphicon glyphicon-question-sign"--%>
+												  <%--aria-hidden="true" data-toggle="tooltip" data-placement="top"--%>
+												  <%--title="初始密码默认为身份证后8位" ></span>--%>
+                                            <button id="init-pwd" class="btn btn-sm btn-default">初始密码？</button>
 									</div>
 								</div>
                                 <c:if test="${ not sessionScope.skipVerify }">
@@ -158,12 +159,15 @@
 				$("#login-btn").html($("input:radio:checked").next().text());
 			}
 
+            $("#init-pwd").click(function(e){
+                e.preventDefault();
+                alert("初始密码默认为身份证后8位\n如果身份证信息不完整，默认为学号\n进入系统后请及时修改密码！");
+            });
 
 		});
 
 		$(function () {
 			$('[data-toggle="tooltip"]').tooltip();
-			$('[data-toggle="popover"]').popover();
 		})
 
 	</script>

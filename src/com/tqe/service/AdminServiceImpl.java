@@ -1,11 +1,11 @@
 package com.tqe.service;
 
-import com.tqe.base.vo.PageVO;
 import com.tqe.dao.AdminDao;
 import com.tqe.po.Admin;
 import com.tqe.po.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 
 import java.util.List;
 
@@ -21,8 +21,9 @@ public class AdminServiceImpl extends BaseService<Admin>{
 	}
 	
 	@Override
-	public void save(Admin e) {
-		adminDao.save(e);
+	public void save(Admin admin) {
+        admin.setPassword(DigestUtils.md5DigestAsHex(admin.getPassword().getBytes()).toLowerCase());
+		adminDao.save(admin);
 	}
 
 	public List<Admin> findAll() {
@@ -34,6 +35,14 @@ public class AdminServiceImpl extends BaseService<Admin>{
 	}
 
 	public void delete(int id) {
+        Admin a = adminDao.getById(id);
+        if(a==null){
+            return ;
+        }else{
+            if(a.getUsername().equals("admin")){
+                throw new IllegalArgumentException("您不可以删除超级管理员！");
+            }
+        }
 		adminDao.delete(id);
 		
 	}
@@ -42,7 +51,10 @@ public class AdminServiceImpl extends BaseService<Admin>{
         if(admin==null || admin.getId()==null){
             throw new IllegalArgumentException("id 不能为空");
         }
-
+        if(admin.getUsername().equals("admin")){    //超级管理员的信息 不能修改
+            admin.setName("admin");
+            admin.setPosition("超级管理员");
+        }
         adminDao.update(admin);
 
         if(!admin.getPassword().contains("*")){

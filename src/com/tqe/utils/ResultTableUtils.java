@@ -104,20 +104,21 @@ public class ResultTableUtils {
     }
 
     public static  EvalTable processTableItemScoreAndLevelCnt(List<ResultTable> resultTables) {
-        //每个表项的平均得分 和 等级统计 结果
+        //每个表项的平均得分 和 等级统计 结果 ，还有表项的内容
         Map<String, List<Integer>> tableItemLevelMap = new HashMap<String, List<Integer>>();
         Map<String, Integer> tableItemScoreMap = new HashMap<String, Integer>();
+        Map<String,EvalTable.EvalTableItem> tableItemMap = new HashMap<String,EvalTable.EvalTableItem>();
         for (ResultTable table : resultTables) {
-            processTableItemCnt(table.getEvalTable(), tableItemLevelMap, tableItemScoreMap);
+            processTableItemCnt(table.getEvalTable(), tableItemLevelMap, tableItemScoreMap , tableItemMap);
         }
-        return postProcessTableItemCnt(resultTables, tableItemLevelMap, tableItemScoreMap);
+        return postProcessTableItemCnt(resultTables, tableItemLevelMap, tableItemScoreMap , tableItemMap);
     }
 
 
     /**
      *  将评教表单项的 统计内容放到 表单里
      */
-    private static EvalTable postProcessTableItemCnt(List<ResultTable> resultTables, Map<String, List<Integer>> tableItemLevelMap, Map<String, Integer> tableItemScoreMap) {
+    private static EvalTable postProcessTableItemCnt(List<ResultTable> resultTables, Map<String, List<Integer>> tableItemLevelMap, Map<String, Integer> tableItemScoreMap, Map<String, EvalTable.EvalTableItem> tableItemMap) {
         int tableSize = resultTables.size();
         EvalTable table = new EvalTable();
         if (resultTables.size() > 0) {
@@ -139,6 +140,9 @@ public class ResultTableUtils {
                 tableItem.setContext(tableItemKey);
                 tableItem.setAvgScore(tableItemScoreMap.get(tableItemKey) / tableSize);
                 tableItem.setScoreLevelCnts(tableItemLevelMap.get(tableItemKey));
+                tableItem.setMaxLevel(tableItemMap.get(tableItemKey).getMaxLevel());
+                int percent =   (int)(( (double)tableItem.getAvgScore()/tableItem.getMaxLevel()  )*100)   ;
+                tableItem.setPercent( percent ) ;
                 table.getTableItemList().add(tableItem);
             }
 
@@ -153,7 +157,9 @@ public class ResultTableUtils {
      *  统计评教表单项的等级统计和得分
      */
     private static void processTableItemCnt(
-            EvalTable evalTable , Map<String,List<Integer>> tableItemLevelMap,Map<String,Integer> tableItemScoreMap){
+            EvalTable evalTable, Map<String, List<Integer>> tableItemLevelMap,
+            Map<String, Integer> tableItemScoreMap,
+            Map<String, EvalTable.EvalTableItem> tableItemMap){
 
         List<EvalTable.EvalTableItem> tableItemList = evalTable.getTableItemList();
         for(EvalTable.EvalTableItem tableItem : tableItemList){
@@ -179,7 +185,8 @@ public class ResultTableUtils {
 
             tableItemScoreMap.put(key,tableItemScoreMap.get(key)+tableItem.getAns());
 
-
+            tableItem.setMaxLevel(Integer.parseInt(levels.get(0)));
+            tableItemMap.put(key,tableItem);
         }
     }
 

@@ -22,7 +22,7 @@
 	<context:component-scan base-package="com.tqe"/>
 	<aop:aspectj-autoproxy />
 	<!-- mvc注解驱动 -->
-	<mvc:annotation-driven >
+	<mvc:annotation-driven conversion-service="conversionService" >
 		<mvc:argument-resolvers>
 			<bean class="com.tqe.base.web.resolver.PageVOHandlerMethodArgumentResolver" />
 		</mvc:argument-resolvers>
@@ -40,7 +40,16 @@
 	</bean>
 
 
-	<!-- 视图解释类 -->
+    <bean id="conversionService"
+          class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="com.tqe.base.converter.StringConverter"/>
+            </set>
+        </property>
+    </bean>
+
+    <!-- 视图解释类 -->
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<!-- //Controler 返回的ModeAndView自动到此目录下找对应jsp为后缀的文件 -->

@@ -3,6 +3,7 @@ package com.tqe.po;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -45,6 +46,8 @@ public class CourseBatch {
 
     private Course course;
     private Batches batch;
+
+    private Date mtime; //最后修改时间
 
     public CourseBatch() {
     }
@@ -248,5 +251,13 @@ public class CourseBatch {
 
     public void setLeaQuestionList(List<Pair<String,List<String>>> leaQuestionList) {
         this.leaQuestionList = leaQuestionList;
+    }
+
+    public Date getMtime() {
+        return mtime;
+    }
+
+    public void setMtime(Date mtime) {
+        this.mtime = mtime;
     }
 }

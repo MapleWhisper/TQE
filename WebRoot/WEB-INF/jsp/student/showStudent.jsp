@@ -79,7 +79,8 @@
                             </div>
 
                             <div class="col-sm-6 table-item" style="display: none">
-                                <span class="table-item-key"></span> (平均得分:<code class="table-item-avgScore"></code>分)
+                                <span class="table-item-key"></span>
+                                (平均得分:<code class="table-item-avgScore"></code>/<code class="table-item-maxLevel"></code>分 <code class="table-item-percent"></code>)
                                 <div class="eval-process-bar progress table-item-level" value="" ></div>
                             </div>
 
@@ -143,35 +144,44 @@
         $(function(){
            $(".show-stu-statistic").click(function(e){
                e.preventDefault();
+               var container = $("#student-season-statistic");
+
+               if(!container.is(":hidden")){    //如果已经打开了 那么关闭了 并返回
+                   container.hide();
+                   return ;
+               }
+               container.show();
                var season = $("#season").val();
                if(season){
-                    var sid = $("input[name='sid']").val();
+                   var sid = $("input[name='sid']").val();
                    if(sid){
                        var $this = $(this);
                        $.post($this.attr("href"),{sid:sid,season:season},function(data){
                            if(data.success){
                                 log(data.item);
-                               var container = $("#student-season-statistic");
+
                                var ss = data.item;
                                $("#student-season").html(ss.season);
                                $("#stu-avgScore").html(ss.avgScore);
+
                                $(".avgScore-process-bar").attr("value","["+ss.levelCnts+"]");
                                $(".stu-avgScore-list").html(ss.avgScoreList);
                                $("#stu-table-num").html(ss.resultTableNum);
+
                                var tableItemList = $.parseJSON(ss.resultTableJsonString).tableItemList;
                                var $item = $(".table-item:first");
-                               log($item);
                                var $itemContainer = $(".table-item-container");
+                               $itemContainer.html('');
                                $.each(tableItemList,function(){
                                    var item = $item.clone().css("display","");
-
+                                    item.find(".table-item-maxLevel").html(this.maxLevel);
+                                   item.find(".table-item-percent").html(this.percent+"%");
                                    item.find(".table-item-key").html(this.context);
                                    item.find(".table-item-avgScore").html(this.avgScore);
                                    item.find(".table-item-level").attr("value","["+this.scoreLevelCnts+"]");
                                    $itemContainer.append(item);
                                });
                                renderProcessBar();
-                               container.show();
                            } else{
                                showGlobalNotification(data.message);
                            }

@@ -84,12 +84,20 @@ public class EvalTable {
     }
 	
 	public static class EvalTableItem {
+
+
 		private String context;     //文本
 		private String level;       //等级
+
 		private Integer ans;         //回答(得分)
+
 
         private Integer avgScore;   //平均得分
         private List<Integer> scoreLevelCnts;   //得分等级统计
+        private Integer maxLevel;   //最大分
+        private Integer percent;     //平均得分百分比
+
+
 
 		public EvalTableItem() {
 			super();
@@ -146,6 +154,22 @@ public class EvalTable {
                     ", avgScore=" + avgScore +
                     ", scoreLevelCnts=" + scoreLevelCnts +
                     '}';
+        }
+
+        public Integer getMaxLevel() {
+            return maxLevel;
+        }
+
+        public void setMaxLevel(Integer maxLevel) {
+            this.maxLevel = maxLevel;
+        }
+
+        public Integer getPercent() {
+            return percent;
+        }
+
+        public void setPercent(Integer percent) {
+            this.percent = percent;
         }
     }
 

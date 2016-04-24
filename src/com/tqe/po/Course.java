@@ -2,6 +2,7 @@ package com.tqe.po;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class Course {
@@ -26,6 +27,7 @@ public class Course {
 	private Teacher teacher;	//主讲教师
 	private boolean isEvaled ;	//是否已经评价过
 
+    private Date mtime; //最后修改时间
 
     /**
      * 课程统计信息
@@ -258,5 +260,13 @@ public class Course {
 
     public void setLeaEvalLevelCnts(List<Integer> leaEvalLevelCnts) {
         this.leaEvalLevelCnts = leaEvalLevelCnts;
+    }
+
+    public Date getMtime() {
+        return mtime;
+    }
+
+    public void setMtime(Date mtime) {
+        this.mtime = mtime;
     }
 }

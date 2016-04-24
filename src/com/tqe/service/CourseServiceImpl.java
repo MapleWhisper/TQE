@@ -6,6 +6,7 @@ import com.tqe.model.CourseModel;
 import com.tqe.po.*;
 import com.tqe.utils.ResultTableUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -165,14 +167,20 @@ public class CourseServiceImpl extends BaseService<Course> {
      * 生成课程的统计数据信息
      */
     public void updateCourseStatisticalData(String cid, Integer cno) {
-        List<CourseBatch> courseBatchList = courseBatchDao.getAllByCidAndCno(cid, cno);
-        if (courseBatchList.size() == 0) {
-            return;
-        }
+
         Course course = courseDao.getById(cid, cno);
         if (course == null) {
             return;
         }
+        //一天更新一次！
+        if(DateUtils.isSameDay(course.getMtime(),new Date())){
+            return ;
+        }
+        List<CourseBatch> courseBatchList = courseBatchDao.getAllByCidAndCno(cid, cno);
+        if (courseBatchList.isEmpty()) {
+            return;
+        }
+
         for (CourseBatch cb : courseBatchList) {
             //设置分数列表
             course.getStuEvalScores().add(cb.getStuEvalAvgScore());

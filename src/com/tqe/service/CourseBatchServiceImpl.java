@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.tqe.base.enums.UserType;
 import com.tqe.po.*;
 import com.tqe.utils.ResultTableUtils;
+import com.tqe.utils.SystemUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.logging.Log;
@@ -77,20 +79,23 @@ public class CourseBatchServiceImpl extends BaseService<CourseBatch>{
         int stuEvalCnt = evalDao.cntStuEvalByCidCnoBid(cid, cno, bid);
         CourseBatch courseBatch = courseBatchDao.getById(cid,cno,bid);
         if(courseBatch!=null){
-
-            if(courseBatch.getStuEvalCnt()==stuEvalCnt && courseBatch.getStuEvalTotal() == stuEvalTotal){
-                //数据数据库已经存在该记录 并且选课的总人数 和 评教的人数都没有发生变化 那么暂时不需要重新统计
+            Course course = courseDao.getById(cid,cno);
+            Batches batch = batchesDao.getById(bid);
+            if(course==null || batch==null) return;
+            if(!course.getSeason().equals(SystemUtils.getSeason()) && courseBatch.getMtime().getTime() > batch.getEndDate().getTime()){
+                //如果都不是当前学期了 并且课程最后一次修改时间是在课程批次结束之后 该courseBatch就再也不需要更新了
                 return ;
-            }else{  //如果数据有变化 重新分析数据
-                doAnalyseCourseBatch(courseBatch);
+            }else{
+                //一天只能更新一次！
+                if(DateUtils.isSameDay(courseBatch.getMtime(),new Date())){
+                    return ;
+                }
             }
-
-        }else {  //数据库不存在改记录 那么分析数据后创建
+        }else {  //数据库不存在改记录 那么分析后创建记录
             courseBatch = new CourseBatch(cid,cno,bid);
-            doAnalyseCourseBatch(courseBatch);
-
         }
 
+        doAnalyseCourseBatch(courseBatch);
         courseBatch.setStuEvalTotal(stuEvalTotal);
         courseBatch.setStuEvalCnt(stuEvalCnt);
 

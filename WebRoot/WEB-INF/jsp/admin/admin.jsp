@@ -51,9 +51,16 @@
 
                                         <c:if test="${ sessionScope.admin.name=='admin' || sessionScope.admin.id==a.id }">
                                             <td><a admin-id="${a.id}"
-                                                class="btn btn-info" data-toggle="modal" data-target="#edit-admin-modal">
-                                                <span class=" glyphicon glyphicon-edit"></span>&nbsp;&nbsp;修改信息</a>
+                                                class="btn btn-info btn-sm" data-toggle="modal" data-target="#edit-admin-modal" icon="edit">
+                                                修改</a>
+
+                                                <c:if test="${ sessionScope.admin.name=='admin'}">
+                                                    <a class="btn btn-danger btn-sm" onclick="return confirm('您确认要删除吗？')"
+                                                       href="${pageContext.request.contextPath}/admin/admin/delete?id=${a.id}" icon="remove">删除</a>
+                                                </c:if>
+
                                             </td>
+
                                         </c:if>
                                         <c:if test="${sessionScope.admin.name!='admin' && sessionScope.admin.id!=a.id}">
                                             <td>不可修改</td>
