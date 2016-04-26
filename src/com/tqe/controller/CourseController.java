@@ -70,7 +70,7 @@ public class CourseController extends BaseController{
 			return sendError(model,"没有找到指定的课程！ cid:"+cid+"  cno:"+cno,logger);
 		}
 
-		List<Batches> batchesList = batchesService.findAllBySeason(course.getSeason());	//默认得到课程所在学期的所有批次
+
 		
 		CourseModel courseModel  = courseService.buildCourseModel(cid,cno,course);
 		model.addAttribute("course", course);

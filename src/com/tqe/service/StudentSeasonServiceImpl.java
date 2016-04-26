@@ -17,25 +17,26 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class StudentSeasonServiceImpl extends BaseService<CourseBatch>{
+public class StudentSeasonServiceImpl extends BaseService<CourseBatch> {
 
     @Autowired
     private EvalServiceImpl evalService;
 
-    private static final  Log logger = LogFactory.getLog(StudentSeasonServiceImpl.class);
+    private static final Log logger = LogFactory.getLog(StudentSeasonServiceImpl.class);
 
     public StudentSeason getById(String sid, String season) {
 
-        return  studentSeasonDao.getById(sid,season);
+        return studentSeasonDao.getById(sid, season);
 
     }
 
 
-    public void saveOrUpdate(StudentSeason stuSeason){
-        StudentSeason s = studentSeasonDao.getById(stuSeason.getSid(),stuSeason.getSeason());
-        if(s==null){
+
+    public void saveOrUpdate(StudentSeason stuSeason) {
+        StudentSeason s = studentSeasonDao.getById(stuSeason.getSid(), stuSeason.getSeason());
+        if (s == null) {
             studentSeasonDao.save(stuSeason);
-        }else{
+        } else {
             studentSeasonDao.update(stuSeason);
         }
 
@@ -43,26 +44,26 @@ public class StudentSeasonServiceImpl extends BaseService<CourseBatch>{
 
 
     public void reAnalyseStuSeason(String sid, String season) {
-        if(StringUtils.isBlank(sid) || StringUtils.isBlank(season)){
-            throw  new IllegalArgumentException("sid 和 season 不能为空");
+        if (StringUtils.isBlank(sid) || StringUtils.isBlank(season)) {
+            throw new IllegalArgumentException("sid 和 season 不能为空");
         }
         PageVO pageVO = new PageVO();
-        pageVO.getFilters().put("sid",sid);
-        pageVO.getFilters().put("season",season);
-        pageVO.getFilters().put("withJsonString","true");
+        pageVO.getFilters().put("sid", sid);
+        pageVO.getFilters().put("season", season);
+        pageVO.getFilters().put("withJsonString", "true");
 
-        StudentSeason stuSeason = studentSeasonDao.getById(sid,season);
+        StudentSeason stuSeason = studentSeasonDao.getById(sid, season);
 
-        if(stuSeason==null){
-            stuSeason = new StudentSeason(sid,season);
-        }else{
+        if (stuSeason == null) {
+            stuSeason = new StudentSeason(sid, season);
+        } else {
             //如果已经存在评教表了  但是一天只能 更新一次
-            if(DateUtils.isSameDay(stuSeason.getMtime(),new Date())){
-                return ;
+            if (DateUtils.isSameDay(stuSeason.getMtime(), new Date())) {
+                return;
             }
         }
-        List<TeaStuResultTable> tableList = evalService.findTeaStuResultTable(pageVO,false);
-        if(tableList.isEmpty()){    //如果没有新的评教表 那么就返回
+        List<TeaStuResultTable> tableList = evalService.findTeaStuResultTable(pageVO, false);
+        if (tableList.isEmpty()) {    //如果没有新的评教表 那么就返回
             return;
         }
         doAnalyseStuSeason(stuSeason, tableList);
@@ -74,11 +75,14 @@ public class StudentSeasonServiceImpl extends BaseService<CourseBatch>{
         List<ResultTable> resultTableList = new ArrayList<ResultTable>(tableList);
         stuSeason.setResultTableNum(tableList.size());
         stuSeason.setAvgScore(ResultTableUtils.calcAvgScore(resultTableList));
-        stuSeason.setLevelCnts(Arrays.asList(ResultTableUtils.calcLevelCnt(resultTableList)) );
+        stuSeason.setLevelCnts(Arrays.asList(ResultTableUtils.calcLevelCnt(resultTableList)));
 
         stuSeason.setAvgScoreList(ResultTableUtils.getAvgScoreList(resultTableList));
 
         stuSeason.setResultTableJsonString(JSON.toJSONString(ResultTableUtils.processTableItemScoreAndLevelCnt(resultTableList)));
+
+        stuSeason.setQuestionList(ResultTableUtils.buildQuestionWithAnsPairList(resultTableList));
+        stuSeason.setQuestionListString(JSON.toJSONString(stuSeason.getQuestionList()));
 
         saveOrUpdate(stuSeason);
     }

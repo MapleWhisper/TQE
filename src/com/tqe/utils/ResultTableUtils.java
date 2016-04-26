@@ -4,6 +4,8 @@ import com.tqe.base.enums.EvalResultLevel;
 import com.tqe.po.EvalTable;
 import com.tqe.po.ResultTable;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.MutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.*;
 
@@ -190,4 +192,57 @@ public class ResultTableUtils {
         }
     }
 
+    /**
+     * 根据table的问题，构建问题对应的评教结果表的所有回答
+     * 其中 每个结果表的 nameList 都是相同的，同一批次的结果表 才适用
+     */
+    public static List<Pair<String,List<String>>> buildQuestionWithAnsPairList(
+            List<String> questionNameList,
+            List<ResultTable> resultTables
+    ){
+
+
+        if(questionNameList==null){
+            return null;
+        }
+        List<Pair<String,List<String>>> pairList = new ArrayList<Pair<String, List<String>>>();
+        //对于每个问题 加入所有结果表的回答
+        for(int i=0;i<questionNameList.size();i++){
+            Pair<String,List<String>> questionWithAnsListPair = new MutablePair<String, List<String>>(questionNameList.get(i), new ArrayList<String>());
+            for(int j=0;j<resultTables.size();j++){
+                questionWithAnsListPair.getValue().add(resultTables.get(j).getQuestionAnsList().get(i));
+            }
+            pairList.add(questionWithAnsListPair);
+        }
+        return pairList;
+    }
+
+    /**
+     * 如果结果表的中评教表不相同 那么使用改方法统计 回答的问题
+     * 性能问题比较严重，慎重使用
+     */
+    public static List<Pair<String, List<String>>> buildQuestionWithAnsPairList(List<ResultTable> resultTableList) {
+        HashMap<String,List<String>> map = new HashMap<String, List<String>>();
+        for(ResultTable table : resultTableList){
+            List<EvalTable.EvalItem> itemList = table.getEvalTable().getQuestionList();
+
+            if(itemList!=null && !itemList.isEmpty()){
+                for(EvalTable.EvalItem questionItem : itemList){
+                    String key = questionItem.getContext();
+                    String ans = questionItem.getAns();
+                    if(!map.containsKey(key)){
+                        map.put(key,new ArrayList<String>());
+                    }
+                    map.get(key).add(ans);
+                }
+            }
+
+        }
+        List<Pair<String, List<String>>> resultList = new ArrayList<Pair<String, List<String>>>();
+        for(Map.Entry<String,List<String>> entry: map.entrySet()){
+            Pair<String,List<String>>  pair = new MutablePair<String, List<String>>(entry.getKey(),entry.getValue());
+            resultList.add(pair);
+        }
+        return resultList;
+    }
 }

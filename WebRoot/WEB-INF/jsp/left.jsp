@@ -15,59 +15,35 @@
 		<!-- 主菜单 -->
 		<li><span class="glyphicon glyphicon-folder-open"> 主菜单</span>
 			<ul>
-				<li class="root"><span><i
-						 ></i>评教中心</span>
-					<ul>
-						<li
-							style="display: ${sessionScope.pMap.stuEval==true ? '' : 'none'}">
-							<span><i class="glyphicon glyphicon-leaf"></i> <a
-								href="${pageContext.request.contextPath}/admin/stuEval">学生评教
-							</a></span>
-						</li>
-						<li
-							style="display: ${sessionScope.pMap.teaEval==true ? '' : 'none'}">
-							<span><i class="glyphicon glyphicon-leaf"></i> <a
-								href="${pageContext.request.contextPath}/admin/teaEval">教师评教</a></span>
-						</li>
-						<li
-							style="display: ${sessionScope.pMap.teaStuEval==true ? '' : 'none'}">
-							<span><i class="glyphicon glyphicon-leaf"></i> <a
-								href="${pageContext.request.contextPath}/admin/teaStuEval">评教学生</a></span>
-						</li>
-						<li
-							style="display: ${sessionScope.pMap.leaEval==true ? '' : 'none'}">
-							<span><i class="glyphicon glyphicon-leaf"></i> <a
-								href="${pageContext.request.contextPath}/admin/leaEval">领导评教</a></span>
-						</li>
-					</ul></li>
-				<!-- 				
-							
-							<c:if test="${p.name == '申请管理' }">
-								<li><span><i  ></i>申请管理</span>
-									<ul>
-										<li><span><i class="glyphicon glyphicon-leaf"></i>
-										<a href="${pageContext.request.contextPath}/admin/apply">申请审核</a></span>
-										</li>
-									</ul>
-								</li>
-							</c:if>
-							
-						
-				<li><span><i  ></i>试卷试题</span>
-					<ul>
-							
-								<li><span><i class="glyphicon glyphicon-leaf"></i><a href="${pageContext.request.contextPath}/admin/paper">试卷管理</a></span></li>
-								<li><span><i class="glyphicon glyphicon-leaf"></i><a href="${pageContext.request.contextPath}/admin/problem">试题管理</a></span></li>
-						
-						
-					</ul>
-				</li>
-				简历管理 -->
+                <c:if test="${sessionScope.admin == null}">
+                    <li class="root"><span><i
+                             ></i>评教中心</span>
+                        <ul>
+                            <li
+                                style="display: ${sessionScope.pMap.stuEval==true ? '' : 'none'}">
+                                <span><i class="glyphicon glyphicon-leaf"></i> <a
+                                    href="${pageContext.request.contextPath}/admin/stuEval">学生评教
+                                </a></span>
+                            </li>
+                            <li
+                                style="display: ${sessionScope.pMap.teaEval==true ? '' : 'none'}">
+                                <span><i class="glyphicon glyphicon-leaf"></i> <a
+                                    href="${pageContext.request.contextPath}/admin/teaEval">教师评教</a></span>
+                            </li>
+                            <li
+                                style="display: ${sessionScope.pMap.teaStuEval==true ? '' : 'none'}">
+                                <span><i class="glyphicon glyphicon-leaf"></i> <a
+                                    href="${pageContext.request.contextPath}/admin/teaStuEval">评教学生</a></span>
+                            </li>
+                            <li
+                                style="display: ${sessionScope.pMap.leaEval==true ? '' : 'none'}">
+                                <span><i class="glyphicon glyphicon-leaf"></i> <a
+                                    href="${pageContext.request.contextPath}/admin/leaEval">领导评教</a></span>
+                            </li>
+                        </ul>
+                    </li>
+                </c:if>
 
-
-
-
-				<!-- 如果是系统管理员，才显示页面 -->
 
 				<li class="root"><span><i
 						 ></i>数据查询</span>
@@ -90,38 +66,44 @@
 								href="${pageContext.request.contextPath}/admin/student">学生列表</a></span>
 						</li>
 					</ul></li>
-				<li class="root"><span><i  ></i>评教管理</span>
-					<ul>
-						<li
-							style="display: ${sessionScope.pMap.evalTable==true ? '' : 'none'}"><span><i
-								class="glyphicon glyphicon-leaf"></i> <a
-								href="${pageContext.request.contextPath}/admin/evalTable">评教指标</a></span>
-						</li>
-						<li
-							style="display: ${sessionScope.pMap.batches==true ? '' : 'none'}"><span><i
-								class="glyphicon glyphicon-leaf"></i> <a
-								href="${pageContext.request.contextPath}/admin/batches">评教批次</a></span>
-						</li>
-					</ul></li>
-				<!-- 				系统管理 -->
-				<li class="root"><span><i
-						 ></i>系统管理</span>
-					<ul>
-						<li
-							style="display: ${sessionScope.pMap.admin==true ? '' : 'none'}"><span><i
-								class="glyphicon glyphicon-leaf"></i> <a
-								href="${pageContext.request.contextPath}/admin/admin">管理员表</a></span></li>
-						<li
-							style="display: ${sessionScope.pMap.privilege==true ? '' : 'none'}"><span><i
-								class="glyphicon glyphicon-leaf"></i> <a
-								href="${pageContext.request.contextPath}/admin/privilege">权限管理</a></span>
-						</li>
-						<li
-								style="display: ${sessionScope.pMap.dataImport==true ? '' : 'none'}"><span><i
-								class="glyphicon glyphicon-leaf"></i> <a
-								href="${pageContext.request.contextPath}/admin/dataImport">数据导入</a></span>
-						</li>
-					</ul></li>
+
+                <!-- 如果是系统管理员，才显示页面 -->
+                <c:if test="${sessionScope.admin != null}">
+                    <li class="root"><span><i  ></i>评教管理</span>
+                        <ul>
+                            <li
+                                    style="display: ${sessionScope.pMap.evalTable==true ? '' : 'none'}"><span><i
+                                    class="glyphicon glyphicon-leaf"></i> <a
+                                    href="${pageContext.request.contextPath}/admin/evalTable">评教指标</a></span>
+                            </li>
+                            <li
+                                    style="display: ${sessionScope.pMap.batches==true ? '' : 'none'}"><span><i
+                                    class="glyphicon glyphicon-leaf"></i> <a
+                                    href="${pageContext.request.contextPath}/admin/batches">评教批次</a></span>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--系统管理 -->
+                    <li class="root"><span><i
+                             ></i>系统管理</span>
+                        <ul>
+                            <li
+                                style="display: ${sessionScope.pMap.admin==true ? '' : 'none'}"><span><i
+                                    class="glyphicon glyphicon-leaf"></i> <a
+                                    href="${pageContext.request.contextPath}/admin/admin">管理员表</a></span></li>
+                            <li
+                                style="display: ${sessionScope.pMap.privilege==true ? '' : 'none'}"><span><i
+                                    class="glyphicon glyphicon-leaf"></i> <a
+                                    href="${pageContext.request.contextPath}/admin/privilege">权限管理</a></span>
+                            </li>
+                            <li
+                                    style="display: ${sessionScope.pMap.dataImport==true ? '' : 'none'}"><span><i
+                                    class="glyphicon glyphicon-leaf"></i> <a
+                                    href="${pageContext.request.contextPath}/admin/dataImport">数据导入</a></span>
+                            </li>
+                        </ul>
+                    </li>
+                </c:if>
 
 			</ul></li>
 	</ul>

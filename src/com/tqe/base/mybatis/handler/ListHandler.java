@@ -47,6 +47,16 @@ public class ListHandler extends BaseTypeHandler<List> {
         if(parameter==null || parameter.isEmpty()){
             ps.setString(i,"");
         }else{
+            // 由于使用了 , 作为分隔符，所以如果list中的String中含有了 , 那么就得转换为中文的，后再存入数据库
+            if(parameter.get(0) instanceof  String){
+                for(int index=0;index<parameter.size();index++){
+                    String s = (String) parameter.get(index);
+                    if(s.contains(",")){
+                        s = s.replaceAll(",","，");
+                    }
+                    parameter.set(index,s);
+                }
+            }
             ps.setString(i, StringUtils.join(parameter, ','));
         }
     }

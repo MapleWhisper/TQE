@@ -12,7 +12,9 @@
                                     target="_blank">${b.batches.name}</a>
 
                             <a style="padding-left: 30px;">
-                            <span class="glyphicon glyphicon-time"></span> 评教时间: <fm:formatDate value="${b.batches.beginDate}"  dateStyle="medium"/> ~ <fm:formatDate value="${b.batches.endDate}"  dateStyle="medium"/>
+                                <span class="glyphicon glyphicon-time"></span>
+                                评教时间: <fm:formatDate value="${b.batches.beginDate}"  dateStyle="medium"/> ~ <fm:formatDate value="${b.batches.endDate}"  dateStyle="medium"/>
+                                （${b.batches.batchStatus}）
                             </a>
                             <a style="" class="btn btn-info"
                                    href="${pageContext.request.contextPath}/admin/evalTable/show/${b.batches.stuEvalId}"

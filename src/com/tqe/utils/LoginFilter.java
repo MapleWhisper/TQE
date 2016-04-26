@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
 
 import com.tqe.po.Admin;
@@ -25,17 +27,19 @@ import com.tqe.po.Teacher;
 @Component
 public class LoginFilter implements  Filter{
 	
-	
+	private static final Log logger = LogFactory.getLog(LoginFilter.class);
 	
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req =  (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;
-		String path = req.getRequestURI();	//�õ�����Url
+		String path = req.getRequestURI();
 		HttpSession session = req.getSession();
 		String ctxPath = req.getContextPath();
-
+        if(path.contains(ctxPath)){
+            path = path.substring(ctxPath.length());
+        }
 		Student stu = (Student) session.getAttribute("student");
 		Teacher tea = (Teacher) session.getAttribute("teacher");
 		Admin admin = (Admin) session.getAttribute("admin");
@@ -54,15 +58,16 @@ public class LoginFilter implements  Filter{
 			chain.doFilter(req, resp);
 			return;
 		}
-		@SuppressWarnings("unchecked")
+
 		//获取角色拥有的权限
+        @SuppressWarnings("unchecked")
 		List<Privilege> plist = (List<Privilege>) session.getAttribute("pList");
 		boolean f = checkPrivilege(path, plist);
 		if(f){
 			chain.doFilter(req, resp);
 		}else{
-
-			resp.sendRedirect(ctxPath+"/error?msg=Permission_denied");
+            logger.warn("Permission_Denied  url:"+path);
+			resp.sendRedirect(ctxPath+"/error?msg=Permission_Denied");
 		}
 		
 		

@@ -71,7 +71,7 @@ public class IndexController extends BaseController{
     @RequestMapping("/admin/resetPwd")
     @ResponseBody
     public BaseResult resetPwd(
-            Integer id ,
+            String id ,
             String pwd,
             String oldPwd,
             HttpSession session)
@@ -79,7 +79,7 @@ public class IndexController extends BaseController{
         User user = new User();
         String Md5oldPwd = MD5Utils.string2MD5(oldPwd);
         if(session.getAttribute("admin")!=null){
-            Admin admin = adminService.getById(id);
+            Admin admin = adminService.getById(Integer.parseInt(id));
             if(admin.getPassword().equalsIgnoreCase(Md5oldPwd)){
 
                 user.setId(admin.getId() + "");
@@ -90,6 +90,7 @@ public class IndexController extends BaseController{
             }
         }else if(session.getAttribute("teacher")!=null){
             Teacher teacher = teacherService.getById(id);
+
             if(teacher.getPassword().equalsIgnoreCase(Md5oldPwd)){
                 user.setId(teacher.getId());
                 user.setPassWordConvertMD5(pwd);

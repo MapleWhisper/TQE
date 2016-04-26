@@ -25,6 +25,7 @@
 										value="${sessionScope.admin.id}${sessionScope.teacher.id}${sessionScope.student.sid}"/>
 
 								</div>
+                                
 							</div>
 							<div class="form-group">
 								<label class="col-xs-3 control-label">新密码</label>

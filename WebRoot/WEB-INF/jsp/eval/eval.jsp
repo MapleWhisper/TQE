@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
+<%@ page language="java" pageEncoding="UTF-8" %>
 
 <html>
 <head>
@@ -33,42 +33,68 @@
         <div class="col-sm-10">
 
             <div class="row">
+
                 <!--左侧的导航条 -->
-                <div class="col-xs-1">
-                    <ul class="nav nav-pills nav-stacked nav-left" role="tablist"
-                        id="nav">
-                        <li role="presentation" class="pre active"><a href="#part1">评教须知</a></li>
-                        <li role="presentation" class="pre"><a href="#part2">表头</a></li>
-                        <li role="presentation" class="pre"><a href="#part3">表单项</a></li>
-                    </ul>
-                </div>
+                <%--<div class="col-xs-1">--%>
+                <%--<ul class="nav nav-pills nav-stacked nav-left" role="tablist"--%>
+                <%--id="nav">--%>
+                <%--<li role="presentation" class="pre active"><a href="#part1">评教须知</a></li>--%>
+                <%--<li role="presentation" class="pre"><a href="#part2">表头</a></li>--%>
+                <%--<li role="presentation" class="pre"><a href="#part3">表单项</a></li>--%>
+                <%--</ul>--%>
+                <%--</div>--%>
                 <!--左侧的导航条 -->
 
-                <div class="col-xs-11">
-                    <div class="bs-callout bs-callout-warning">
-                        <div style="text-align: center">
-                            <h2>${evalTable.title }</h2>
+                <div class="col-xs-12">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="bs-callout bs-callout-warning">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div style="text-align: center">
+                                            <h2><span icon="bookmark"></span>${evalTable.title}</h2>
 
-                            <h3>${course.name } ---- ${course.teacher.name }</h3>
+                                            <h3>${course.name } ---- ${course.teacher.name }</h3>
 
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <table class="table table-condensed table-hover  no-border"
+                                               style="text-align: left;">
+                                            <tr>
+                                                <td>学院:</td>
+                                                <td>${course.department }</td>
+                                            </tr>
+                                            <tr>
+                                                <td>学期:</td>
+                                                <td>${course.season }</td>
+                                            </tr>
+                                            <tr>
+                                                <td>批次:</td>
+                                                <td>${batches.name }</td>
+                                            </tr>
+                                            <tr>
+                                                <td>评教开始日期：</td>
+                                                <td><fm:formatDate value="${batches.beginDate}"
+                                                                   dateStyle="medium"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td>评教截止时间：</td>
+                                                <td><fm:formatDate value="${batches.endDate }" dateStyle="medium"/></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                         <table class="table table-hover table-striped " style="text-align: center;">
-                            <tr class="info">
-                                <td>学院</td>
-                                <td>学期</td>
-                                <td>批次</td>
-                                <td>评教开始日期</td>
-                                <td>评教截止日期</td>
-                            </tr>
-                            <tr>
-                                <td>${course.department }</td>
-                                <td>${course.season }</td>
-                                <td>${batches.name }</td>
-                                <td><fm:formatDate value="${batches.beginDate}" dateStyle="medium" /></td>
-                                <td><fm:formatDate value="${batches.endDate }" dateStyle="medium" /></td>
-                            </tr>
-                         </table>
+                        <div class="col-sm-4">
+                            <div class=" bs-callout bs-callout-danger" id="part1">
+                                <h4 icon="warning-sign">评教须知:</h4>
+                                <p>${evalTable.note }</p>
+                            </div>
+                        </div>
                     </div>
+
                     <form
                             action="${pageContext.request.contextPath}/admin/eval/save/${type}"
                             method="post" id="eval-form">
@@ -82,14 +108,11 @@
                         <input type="hidden" name="score" id="sum1" value="">
                         <input type="hidden" name="level" id="level1" value="">
                         <!--评教须知: -->
-                        <div class=" bs-callout bs-callout-danger" id="part1">
-                            <h4>评教须知:</h4>
-                            <p>${evalTable.note }</p>
-                        </div>
+
 
                         <div class=" bs-callout bs-callout-info" id="part2">
                             <h4>请如实填写表单信息:</h4>
-                            <table class="table table-striped table-hover ">
+                            <table class="table table-hover ">
                                 <c:forEach items="${evalTable.itemList}" var="item"
                                            varStatus="s">
                                     <tr>
@@ -111,13 +134,14 @@
                             <div class="panel-body">
                                 <table class="table table-striped table-hover table-bordered table-condensed"
                                        style="text-align: center">
-                                    <thead >
-                                        <tr hight="10px">
+                                    <thead>
+                                    <tr hight="10px">
                                         <td width="8%">序号</td>
                                         <td>评价项目</td>
+                                        <td>评分</td>
                                         <td>评价等级及参考分数(A B C D)</td>
-                                        <td>得分</td>
-                                        </tr>
+
+                                    </tr>
                                     </thead>
                                     <tbody>
                                     <c:forEach items="${evalTable.tableItemList}" var="item"
@@ -125,9 +149,9 @@
                                         <tr>
                                             <td>${s.count}</td>
                                             <td>${item.context}</td>
-                                            <td>${item.level}</td>
+
                                             <td>
-                                                <select  class="form-control score" required="required"
+                                                <select class="form-control score" required="required"
                                                         name="tableItemList[${s.index}].ans" min="0" max="100">
                                                     <option value="0">未选</option>
                                                     <c:forTokens items="${item.level}" delims=" " var="num">
@@ -135,6 +159,9 @@
                                                     </c:forTokens>
                                                 </select>
                                             </td>
+
+                                            <td>${item.level}</td>
+
                                         </tr>
 
                                     </c:forEach>
@@ -170,9 +197,9 @@
 
                                 <div style="text-align: center;margin-top: 100px;">
                                     <c:if test="${type=='student' || type=='teacher' || type=='leader' || type=='teaStu'}">
-                                        <input class="btn btn-info btn-lg btn-block"
+                                        <button icon="saved" class="btn btn-info btn-lg btn-block"
                                                onclick="return confirm('一旦提交，不可修改，确认要提交吗？');"
-                                               type="submit" value="提交评价">
+                                               type="submit" >点此提交评价</button>
                                     </c:if>
 
                                 </div>
@@ -238,25 +265,26 @@
 
     $(function () {
 
-            $("#eval-form").validate({
-                submitHandler:function(form){
-                    var success = true;
-                    $(".score").each(function(){
-                        var $score = $(this);
-                        var value = $score.find("option:selected").val();
-                        if(value == 0){
-                            $score.focus();
-                            alert("您还有评分没有选择");
-                            success = false;
-                            return false;
-                        }
-                    });
-                    if(success){
-                        form.submit();
+        $("#eval-form").validate({
+            submitHandler: function (form) {
+                var success = true;
+                $(".score").each(function () {
+                    var $score = $(this);
+                    var value = $score.find("option:selected").val();
+                    if (value == 0) {
+                        $score.focus();
+                        alert("您还有评分没有选择");
+                        success = false;
+                        return false;
                     }
-
+                });
+                if (success) {
+                    form.submit();
                 }
-            });
+
+            }
+        });
+        autoAddIcon();
     });
 </script>
 <%@ include file="../buttom.jsp" %>

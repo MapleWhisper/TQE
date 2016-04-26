@@ -182,17 +182,17 @@
                                 <c:forEach var="quest" items="${courseBatch.stuQuestionList}" varStatus="v">
 
                                         <div class="panel panel-info ">
-                                            <div class="panel-heading" style="text-align: center"><h4> <code>${v.count}</code> ${quest.left}</h4></div>
+                                            <div class="panel-heading" style="text-align: center"><h4> <code>${v.count}</code> ${quest.key}</h4></div>
                                             <!-- Table -->
                                             <table class="table table-hover table-condensed">
 
                                                 <tbody>
-                                                <c:forEach varStatus="vs" var="q" items="${quest.right}">
-                                                    <tr>
-                                                        <td># ${vs.count}</td>
-                                                        <td>${q}</td>
-                                                    </tr>
-                                                </c:forEach>
+                                                    <c:forEach varStatus="vs" var="q" items="${quest.value}">
+                                                        <tr>
+                                                            <td># ${vs.count}</td>
+                                                            <td>${q}</td>
+                                                        </tr>
+                                                    </c:forEach>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -207,13 +207,13 @@
                                 </c:if>
                                 <c:forEach var="quest" items="${courseBatch.teaQuestionList}" varStatus="v">
                                         <div class="panel panel-default">
-                                            <div class="panel-heading" style="text-align: center"><h4> <code>${v.count}</code> ${quest.left}</h4></div>
+                                            <div class="panel-heading" style="text-align: center"><h4> <code>${v.count}</code> ${quest.key}</h4></div>
                                             <!-- Table -->
                                             <table class="table table-hover table-condensed">
 
 
                                                 <tbody>
-                                                <c:forEach varStatus="vs" var="q" items="${quest.right}">
+                                                <c:forEach varStatus="vs" var="q" items="${quest.value}">
                                                     <tr>
                                                         <td># ${vs.count}</td>
                                                         <td>${q}</td>
@@ -234,12 +234,12 @@
                                 </c:if>
                                 <c:forEach var="quest" items="${courseBatch.leaQuestionList}" varStatus="v">
                                         <div class="panel panel-default">
-                                            <div class="panel-heading" style="text-align: center"><h4> <code>${v.count}</code> ${quest.left}</h4></div>
+                                            <div class="panel-heading" style="text-align: center"><h4> <code>${v.count}</code> ${quest.key}</h4></div>
                                             <!-- Table -->
                                             <table class="table table-hover table-condensed">
 
                                                 <tbody>
-                                                    <c:forEach varStatus="vs" var="q" items="${quest.right}">
+                                                    <c:forEach varStatus="vs" var="q" items="${quest.value}">
                                                         <tr>
                                                             <td># ${vs.count}</td>
                                                             <td>${q}</td>

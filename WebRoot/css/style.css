@@ -198,3 +198,7 @@ code{
     font-size: 100%;
 }
 
+.question-item > .list-group > .list-group-item{
+    padding: 8px 10px;
+}
+

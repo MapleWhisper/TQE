@@ -62,14 +62,17 @@
                         <div class="bs-callout bs-callout-info">
                             <c:set scope="request" var="userType" value="student"/>
                             <jsp:include page="../model/seasonSelectForm.jsp"/>
-                            <a href="${pageContext.request.contextPath}/admin/student-season/info" class="btn btn-primary show-stu-statistic"> 查看学生统计信息 </a>
+                            <a href="${pageContext.request.contextPath}/admin/student-season/info"
+                               class="btn btn-danger show-stu-statistic" > 查看学生统计信息 </a>
 
                         </div>
 
                         <div id="student-season-statistic" class="bs-callout bs-callout-info" style="display: none">
                             <h4 id="student-season"></h4>
                             <hr>
-                            <h4>学生平均得分:<code id="stu-avgScore"></code>分 &nbsp;&nbsp;  评教人数:<code id="stu-table-num"></code>人  &nbsp;&nbsp; 各批次得分: <code class="stu-avgScore-list"></code></h4>
+                                <h4>学期平均得分:<code id="stu-avgScore"></code> &nbsp;&nbsp;  评教人数:<code id="stu-table-num"></code>  &nbsp;&nbsp;
+                                    各批次平均得分: <code class="stu-avgScore-list"></code>
+                                </h4>
                             <br>
                             <span >得分统计:</span><div  class="eval-process-bar progress avgScore-process-bar" value="" ></div>
 
@@ -84,6 +87,16 @@
                                 <div class="eval-process-bar progress table-item-level" value="" ></div>
                             </div>
 
+                            <hr>
+                            <h4>学生收到的评价：</h4>
+                            <div class="row question-container">
+
+                            </div>
+
+                            <div class="col-sm-6 question-item"  style="display: none">
+                                <ul class="list-group">
+                                </ul>
+                            </div>
                         </div>
 
 
@@ -141,16 +154,49 @@
     <script src="${pageContext.request.contextPath}/js/tqe/course/eval-process-bar.js"></script>
 
 	<script type="text/javascript">
-        $(function(){
-           $(".show-stu-statistic").click(function(e){
-               e.preventDefault();
-               var container = $("#student-season-statistic");
+        function fillTableItem(stuSeason) {
+            var tableItemList = $.parseJSON(stuSeason.resultTableJsonString).tableItemList;
+            var $item = $(".table-item:first");
+            var $itemContainer = $(".table-item-container");
+            $itemContainer.html('');
+            $.each(tableItemList, function () {
+                var item = $item.clone().css("display", "");
+                item.find(".table-item-maxLevel").html(this.maxLevel);
+                item.find(".table-item-percent").html(this.percent + "%");
+                item.find(".table-item-key").html(this.context);
+                item.find(".table-item-avgScore").html(this.avgScore);
+                item.find(".table-item-level").attr("value", "[" + this.scoreLevelCnts + "]");
+                $itemContainer.append(item);
+            });
+        }
+        function fillQuestionList(stuSeason){
 
-               if(!container.is(":hidden")){    //如果已经打开了 那么关闭了 并返回
+            var questList = $.parseJSON(stuSeason.questionListString);
+            var questContainer = $(".question-container");
+            questContainer.html('');
+            var questItem = $(".question-item");
+            $.each(questList,function(){
+                var itemContainer = questItem.clone().css("display","");
+                var qItem = $("<li  class='list-group-item'></li>");
+                itemContainer.find(".list-group").append(qItem.clone().addClass("active").html(this.left));        //问题题目
+                $.each(this.right,function(index,ans){       //问题回答
+                   itemContainer.find(".list-group").append(qItem.clone().html(ans));
+                });
+                questContainer.append(itemContainer);
+            });
+        }
+        $(function(){
+            $(".show-stu-statistic").click(function(e){
+                e.preventDefault();
+                var container = $("#student-season-statistic");
+
+                if(!container.is(":hidden")){    //如果已经打开了 那么关闭了 并返回
                    container.hide();
+                   $(this).html("查看学生评教统计信息");
                    return ;
                }
                container.show();
+               $(this).html("隐藏学生评教统计信息");
                var season = $("#season").val();
                if(season){
                    var sid = $("input[name='sid']").val();
@@ -162,25 +208,14 @@
 
                                var ss = data.item;
                                $("#student-season").html(ss.season);
-                               $("#stu-avgScore").html(ss.avgScore);
+                               $("#stu-avgScore").html(ss.avgScore+"分");
 
                                $(".avgScore-process-bar").attr("value","["+ss.levelCnts+"]");
                                $(".stu-avgScore-list").html(ss.avgScoreList);
-                               $("#stu-table-num").html(ss.resultTableNum);
+                               $("#stu-table-num").html(ss.resultTableNum+"人");
 
-                               var tableItemList = $.parseJSON(ss.resultTableJsonString).tableItemList;
-                               var $item = $(".table-item:first");
-                               var $itemContainer = $(".table-item-container");
-                               $itemContainer.html('');
-                               $.each(tableItemList,function(){
-                                   var item = $item.clone().css("display","");
-                                    item.find(".table-item-maxLevel").html(this.maxLevel);
-                                   item.find(".table-item-percent").html(this.percent+"%");
-                                   item.find(".table-item-key").html(this.context);
-                                   item.find(".table-item-avgScore").html(this.avgScore);
-                                   item.find(".table-item-level").attr("value","["+this.scoreLevelCnts+"]");
-                                   $itemContainer.append(item);
-                               });
+                               fillTableItem(ss);
+                               fillQuestionList(ss);
                                renderProcessBar();
                            } else{
                                showGlobalNotification(data.message);

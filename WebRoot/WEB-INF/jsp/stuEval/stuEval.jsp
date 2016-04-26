@@ -9,7 +9,7 @@
 }
 </style>
 
-<title>我的课程</title>
+<title>学生评教中心</title>
 </head>
 
 <body>
@@ -23,7 +23,7 @@
 			</div>
 			<div class="col-sm-10 ">
 
-				<div class="panel panel-primary">
+				<div class="panel panel-default">
 					<div class="panel-heading">我的课程 | ${batches.name}</div>
 
 					<div class="panel-body">

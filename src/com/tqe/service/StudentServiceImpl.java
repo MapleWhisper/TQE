@@ -212,7 +212,7 @@ public class StudentServiceImpl extends BaseService<Student> {
     }
 
     public void reAnalyseStudentStatistics(String sid) {
-
+        //TODO 一天一次
         studentDao.updateStuAvgScore(sid);
 
     }

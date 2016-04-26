@@ -44,4 +44,9 @@ public class PageVO {
     public void setFilters(HashMap<String, String> filters) {
         this.filters = filters;
     }
+
+    public PageVO put(String key,String value){
+        this.getFilters().put(key,value);
+        return this;
+    }
 }

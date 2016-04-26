@@ -39,34 +39,20 @@ public class CourseBatchServiceImpl extends BaseService<CourseBatch>{
         List<LeaResultTable> leaTableList = evalService.findAllLeaTableWithEvalTable(cid, cno, bid);
         if(stuTableList.size()>0){
             EvalTable stuTable = EvalTable.json2Object(stuTableList.get(0).getJsonString());
-            courseBatch.setStuQuestionList(buildQuestionWithAnsPairList(stuTable.getQuestionNameList(), new ArrayList<ResultTable>(stuTableList)));
+            courseBatch.setStuQuestionList(ResultTableUtils.buildQuestionWithAnsPairList(stuTable.getQuestionNameList(), new ArrayList<ResultTable>(stuTableList)));
         }
         if(teaTableList.size()>0){
             EvalTable teaTable = EvalTable.json2Object(teaTableList.get(0).getJsonString());
-            courseBatch.setTeaQuestionList(buildQuestionWithAnsPairList(teaTable.getQuestionNameList(),new ArrayList<ResultTable>(teaTableList)));
+            courseBatch.setTeaQuestionList(ResultTableUtils.buildQuestionWithAnsPairList(teaTable.getQuestionNameList(),new ArrayList<ResultTable>(teaTableList)));
         }
         if(leaTableList.size()>0){
             EvalTable leaTable = EvalTable.json2Object(leaTableList.get(0).getJsonString());
-            courseBatch.setLeaQuestionList(buildQuestionWithAnsPairList(leaTable.getQuestionNameList(), new ArrayList<ResultTable>(leaTableList)));
+            courseBatch.setLeaQuestionList(ResultTableUtils.buildQuestionWithAnsPairList(leaTable.getQuestionNameList(), new ArrayList<ResultTable>(leaTableList)));
         }
         return courseBatch;
     }
 
-    private List<Pair<String,List<String>>> buildQuestionWithAnsPairList(List<String> questionNameList,List<ResultTable> resultTables){
-        if(questionNameList==null){
-            return null;
-        }
-        List<Pair<String,List<String>>> pairList = new ArrayList<Pair<String, List<String>>>();
-        //对于每个问题 加入说有学生的回答
-        for(int i=0;i<questionNameList.size();i++){
-            Pair<String,List<String>> questionWithAnsListPair = new MutablePair<String, List<String>>(questionNameList.get(i), new ArrayList<String>());
-            for(int j=0;j<resultTables.size();j++){
-                questionWithAnsListPair.getValue().add(resultTables.get(j).getQuestionAnsList().get(i));
-            }
-            pairList.add(questionWithAnsListPair);
-        }
-        return pairList;
-    }
+
 
     /**
      * 重新分析 课程评教的统计信息

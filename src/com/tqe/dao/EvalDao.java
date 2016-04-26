@@ -48,7 +48,7 @@ public interface EvalDao extends BaseDao<EvalTable>{
 	public List<LeaResultTable> findAllLeaTableByCourse(@Param("cid")String cid, @Param("cno")Integer cno, @Param("bid")Integer bid);
 	
     @SelectProvider(type = EvalDaoSqlProvider.class,method = "findTeaStuResultTable")
-	public List<TeaStuResultTable> findTeaStuResultTable(PageVO pageVO);
+	List<TeaStuResultTable> findTeaStuResultTable(PageVO pageVO);
 
     @Select("select * from stutable where cid =#{cid} and cno=#{cno} and bid =#{bid} ")
     List<StuResultTable> findAllStuTableWithJSONString(@Param("cid")String cid, @Param("cno")Integer cno, @Param("bid")Integer bid);

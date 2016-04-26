@@ -53,7 +53,7 @@
 											<%--<span style="top: 7px" class="glyphicon glyphicon-question-sign"--%>
 												  <%--aria-hidden="true" data-toggle="tooltip" data-placement="top"--%>
 												  <%--title="初始密码默认为身份证后8位" ></span>--%>
-                                            <button id="init-pwd" class="btn btn-sm btn-default">初始密码？</button>
+                                            <a href="#" id="init-pwd" class="btn btn-sm btn-default">初始密码？</a>
 									</div>
 								</div>
                                 <c:if test="${ not sessionScope.skipVerify }">
