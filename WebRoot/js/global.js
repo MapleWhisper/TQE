@@ -4,6 +4,9 @@
 /**
  * 关闭当前浏览器TAB页
  */
+
+var echartTheme = 'macarons';
+
 function closeWindow(){
     window.opener = null;
     window.open('', '_self');

@@ -31,7 +31,45 @@ public class Teacher implements Serializable{
 	
 	private Integer departmentId;
 	
-	
+	private Double stuAvgScore;
+    private Double teaAvgScore;
+    private Double leaAvgScore;
+
+    private Date mtime;
+
+    public Date getMtime() {
+        return mtime;
+    }
+
+    public void setMtime(Date mtime) {
+        this.mtime = mtime;
+    }
+
+    public Double getStuAvgScore() {
+        return stuAvgScore;
+    }
+
+    public void setStuAvgScore(Double stuAvgScore) {
+        this.stuAvgScore = stuAvgScore;
+    }
+
+    public Double getTeaAvgScore() {
+        return teaAvgScore;
+    }
+
+    public void setTeaAvgScore(Double teaAvgScore) {
+        this.teaAvgScore = teaAvgScore;
+    }
+
+    public Double getLeaAvgScore() {
+        return leaAvgScore;
+    }
+
+    public void setLeaAvgScore(Double leaAvgScore) {
+        this.leaAvgScore = leaAvgScore;
+    }
+
+
 	
 	public String getId() {
 		return id;
@@ -142,9 +180,29 @@ public class Teacher implements Serializable{
 	public void setDepartmentId(Integer departmentId) {
 		this.departmentId = departmentId;
 	}
-	
-	
-	
-	
 
+
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "id='" + id + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", sex='" + sex + '\'' +
+                ", birthday=" + birthday +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", addr='" + addr + '\'' +
+                ", nation='" + nation + '\'' +
+                ", postId='" + postId + '\'' +
+                ", idType='" + idType + '\'' +
+                ", idNumber='" + idNumber + '\'' +
+                ", politicalStatus='" + politicalStatus + '\'' +
+                ", department='" + department + '\'' +
+                ", title='" + title + '\'' +
+                ", folk='" + folk + '\'' +
+                ", workDate=" + workDate +
+                ", departmentId=" + departmentId +
+                '}';
+    }
 }

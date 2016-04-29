@@ -36,4 +36,11 @@ public interface TeacherDao extends BaseDao<Teacher>{
 	
 	@SelectProvider(type=BaseDaoTemplate.class,method="findTeacherByCondition")
 	public List<Teacher> findByPageVO(PageVO pageVO);
+
+    @Update("update teacher set " +
+            "\t  stuAvgScore = (select avg(cb.stuEvalAvgScore) from coursebatch cb ,course c  where c.teacherId = #{tid} and cb.cid = c.cid and cb.cno = c.cno and cb.stuEvalAvgScore>0 ) ," +
+            "\t  teaAvgScore = (select avg(cb.teaEvalAvgScore) from coursebatch cb ,course c  where c.teacherId = #{tid} and cb.cid = c.cid and cb.cno = c.cno and cb.teaEvalAvgScore>0 ) ," +
+            "\t  leaAvgScore = (select avg(cb.leaEvalAvgScore) from coursebatch cb ,course c  where c.teacherId = #{tid} and cb.cid = c.cid and cb.cno = c.cno and cb.leaEvalAvgScore>0 ) ," +
+            "\t  mtime = now() where id = #{tid};")
+    void updateStatisticsData(String tid);
 }

@@ -52,9 +52,9 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div style="text-align: center">
-                                            <h2><span icon="bookmark"></span>${evalTable.title}</h2>
+                                            <h2><span icon="bookmark"></span>${course.name } -- ${course.teacher.name }</h2>
 
-                                            <h3>${course.name } ---- ${course.teacher.name }</h3>
+                                            <h3>${evalTable.title}</h3>
 
                                         </div>
                                     </div>

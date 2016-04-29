@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import com.tqe.base.BaseResult;
 import com.tqe.base.enums.UserType;
+import com.tqe.po.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,10 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.tqe.po.Admin;
-import com.tqe.po.Student;
-import com.tqe.po.Teacher;
-import com.tqe.po.User;
 import com.tqe.utils.MD5Utils;
 
 import java.util.Date;
@@ -62,6 +59,31 @@ public class IndexController extends BaseController{
     public String resetPwdUI(){
 
         return "model/resetPwd";
+    }
+
+    @RequestMapping("/admin/profile")
+    public String profile(
+            HttpSession session,
+            Model model
+    ) {
+        UserType userType = (UserType) session.getAttribute("userType");
+        if(userType==null){
+            return "redirect:/index";
+        }
+        switch (userType){
+            case ADMIN:
+                return TO_ADMIN_HOME;
+            case STUDENT:
+                Student stu = (Student) session.getAttribute("student");
+                return "redirect:/admin/student/show?sid="+stu.getSid();
+            case TEACHER:
+                Teacher tea = (Teacher) session.getAttribute("teacher");
+                return "redirect:/admin/teacher/show?tid="+tea.getId();
+            case LEADER:
+                return TO_Leader_HOME;
+            default:
+                return sendError(model,"位置的用户类型！");
+        }
     }
 
     /**
@@ -149,4 +171,5 @@ public class IndexController extends BaseController{
         }
         return "error";
     }
+
 }

@@ -29,7 +29,6 @@ public class ResultTable {
 	
 
 
-    protected List<String> questionAnsList = new ArrayList<String>();
 
     protected EvalTable evalTable;  //评教表结果内容
 	
@@ -152,11 +151,4 @@ public class ResultTable {
         this.evalTable = evalTable;
     }
 
-    public List<String> getQuestionAnsList() {
-        return questionAnsList;
-    }
-
-    public void setQuestionAnsList(List<String> questionAnsList) {
-        this.questionAnsList = questionAnsList;
-    }
 }

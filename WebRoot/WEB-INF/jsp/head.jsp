@@ -24,13 +24,21 @@
 			</ul>
 			<form class="navbar-form navbar-left" role="search"></form>
 			<ul class="nav navbar-nav navbar-right">
-				<li class="active">
-					<p class="navbar-text">
-						您好，${sessionScope.teacher.name}
-						${sessionScope.student.name}${sessionScope.admin.name}
-						${sessionScope.leader.name}
-					</p>
-				</li>
+                <li >
+                    <p class="navbar-text">
+                        您好，
+                        ${sessionScope.teacher.name}
+                        ${sessionScope.student.name}${sessionScope.admin.name}
+                        ${sessionScope.leader.name}
+                    </p>
+
+                </li>
+                <li>
+                    <a href="${pageContext.request.contextPath}/admin/profile">
+                        <span class="glyphicon glyphicon-user"></span>
+                        我的信息
+                    </a>
+                </li>
 
 				<%--<li><a--%>
 					<%--href="${pageContext.request.contextPath}/admin/resetPwdUI" ><span--%>

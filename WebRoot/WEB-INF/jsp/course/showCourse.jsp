@@ -23,9 +23,18 @@
 			</div>
 			<div class="col-sm-10 ">
                 <div class="bs-callout bs-callout-danger">
+                    <ol class="breadcrumb">
+                        <li><a href="${pageContext.request.contextPath}/admin/course">课程列表</a></li>
+                        <li class="active">课程详情</li>
+                    </ol>
                     <div class="row">
                         <div class="col-sm-3">
-                            <h4 >${course.teacher.name} -- ${course.name} (${course.season })</h4>
+                            <h4>
+
+                                <a icon="user" href="${pageContext.request.contextPath}/admin/teacher/show?tid=${course.teacher.id}">
+                                    ${course.teacher.name}
+                                </a> -- ${course.name} (${course.season })
+                            </h4>
                             <hr>
                             <h5>${course.department } </h5>
                             <h5>课程号-课序号 :${course.cid}-${course.cno}</h5>
@@ -105,9 +114,13 @@
             src="${pageContext.request.contextPath}/js/datatables/js/jquery.dataTables.min.js"></script>
     <script
             src="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.js"></script>
-    <script src="${pageContext.request.contextPath}/js/tqe/course/eval-process-bar.js"/>
+    <script src="${pageContext.request.contextPath}/js/tqe/course/eval-process-bar.js"></script>
+
     <script  type="text/javascript">
 
+        $(function(){
+            autoAddIcon();
+        });
     </script>
 </body>
 </html>

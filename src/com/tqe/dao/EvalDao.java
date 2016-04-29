@@ -21,20 +21,20 @@ import com.tqe.po.TeaResultTable;
 public interface EvalDao extends BaseDao<EvalTable>{
 	
 	
-	@Insert("INSERT INTO `tqe`.`stutable` (`id`, `sid`, `eid`, `cid`, `cno`, `bid`, `score`, `level`, `jsonString`,`tid`,`sname`,`tname`,`departmentid`,`questionAnsList`) "
-										+ "	VALUES (null, #{sid}, #{eid}, #{cid}, #{cno}, #{bid}, #{score}, #{level}, #{jsonString},#{tid},#{sname},#{tname},#{departmentId},#{questionAnsList});")
+	@Insert("INSERT INTO `tqe`.`stutable` (`id`, `sid`, `eid`, `cid`, `cno`, `bid`, `score`, `level`, `jsonString`,`tid`,`sname`,`tname`,`departmentid`) "
+										+ "	VALUES (null, #{sid}, #{eid}, #{cid}, #{cno}, #{bid}, #{score}, #{level}, #{jsonString},#{tid},#{sname},#{tname},#{departmentId});")
 	public void saveStuTable(StuResultTable stuTable);
 	
-	@Insert("INSERT INTO `tqe`.`teatable` (`id`, `tid`, `eid`, `cid`, `cno`, `bid`, `score`, `level`, `jsonString`,`tname`,`departmentid`,`questionAnsList`) "
-								+ "VALUES (null, #{tid}, #{eid}, #{cid}, #{cno}, #{bid}, #{score}, #{level}, #{jsonString} ,#{tname},#{departmentId},#{questionAnsList});")
+	@Insert("INSERT INTO `tqe`.`teatable` (`id`, `tid`, `eid`, `cid`, `cno`, `bid`, `score`, `level`, `jsonString`,`tname`,`departmentid`) "
+								+ "VALUES (null, #{tid}, #{eid}, #{cid}, #{cno}, #{bid}, #{score}, #{level}, #{jsonString} ,#{tname},#{departmentId});")
 	public void saveTeaTable(TeaResultTable teaTable);
 	
-	@Insert("INSERT INTO `tqe`.`leatable` (`id`,`lid`,  `eid`, `cid`, `cno`, `bid`, `score`, `level`, `jsonString`,`tname`,`departmentid`,`questionAnsList`) "
-							 + "	VALUES (null, #{lid},  #{eid}, #{cid}, #{cno}, #{bid}, #{score}, #{level}, #{jsonString} ,#{tname},#{departmentId},#{questionAnsList});")
+	@Insert("INSERT INTO `tqe`.`leatable` (`id`,`lid`,  `eid`, `cid`, `cno`, `bid`, `score`, `level`, `jsonString`,`tname`,`departmentid`) "
+							 + "	VALUES (null, #{lid},  #{eid}, #{cid}, #{cno}, #{bid}, #{score}, #{level}, #{jsonString} ,#{tname},#{departmentId});")
 	public void saveLeaTable(LeaResultTable leaTable);
 	
-	@Insert("INSERT INTO `tqe`.`teaStutable` (`id`,`tid`,`sid`,  `eid`, `cid`, `cno`, `bid`, `score`, `level`, `jsonString`,`tname`,`sname`,`season`,`departmentid`,`questionAnsList`) "
-						+ "	VALUES (null, #{tid},#{sid},  #{eid}, #{cid}, #{cno}, #{bid}, #{score}, #{level}, #{jsonString} ,#{tname},#{sname}, #{season} , #{departmentId},#{questionAnsList});")
+	@Insert("INSERT INTO `tqe`.`teaStutable` (`id`,`tid`,`sid`,  `eid`, `cid`, `cno`, `bid`, `score`, `level`, `jsonString`,`tname`,`sname`,`season`,`departmentid`) "
+						+ "	VALUES (null, #{tid},#{sid},  #{eid}, #{cid}, #{cno}, #{bid}, #{score}, #{level}, #{jsonString} ,#{tname},#{sname}, #{season} , #{departmentId});")
 	public void saveTeaStuTable(TeaStuResultTable teaStuTable);
 	
 	

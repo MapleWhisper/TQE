@@ -32,6 +32,15 @@
             <input type="hidden" id="cno" name="cno" value="${courseModel.course.cno}"/>
             <input type="hidden" id="bid" name="bid" value="${courseBatch.batch.id}"/>
             <div class="bs-callout bs-callout-danger">
+                <ol class="breadcrumb">
+                    <li><a href="${pageContext.request.contextPath}/admin/course">课程列表</a></li>
+                    <li>
+                        <a href="${pageContext.request.contextPath}/admin/course/show/${courseModel.course.cid}/${courseModel.course.cno}">
+                        课程详情
+                        </a>
+                    </li>
+                    <li class="active">课程统计信息</li>
+                </ol>
                 <div class="row">
                     <div class="col-sm-3">
                         <h4 >${course.teacher.name} -- ${course.name} (${course.season })</h4>
@@ -271,7 +280,7 @@
         $(".stu-eval-progress").find(".progress-bar").css("width",stuEvalPercent);
         $(".stu-eval-progress").find(".progress-bar").html("评教已进行:"+stuEvalPercent+"%");
 
-        var stuEvalLevelCntsChart = echarts.init(document.getElementById('stu-eval-level-cnts'));
+        var stuEvalLevelCntsChart = echarts.init(document.getElementById('stu-eval-level-cnts'),echartTheme);
 
         var stuEvalLevelCnts = courseBatch.stuEvalLevelCnts;
         var teaEvalLevelCnts = courseBatch.teaEvalLevelCnts;
@@ -327,7 +336,7 @@
             {value: teaEvalLevelCnts[3], name: '差'}
         ];
         option.series[0].name = "教师评教等级";
-        var teaEvalLevelCntsChart = echarts.init(document.getElementById('tea-eval-level-cnts'));
+        var teaEvalLevelCntsChart = echarts.init(document.getElementById('tea-eval-level-cnts'),echartTheme);
         teaEvalLevelCntsChart.setOption(option);
 
         //领导评教等级饼图绘制
@@ -338,7 +347,7 @@
             {value: leaEvalLevelCnts[3], name: '差'}
         ];
         option.series[0].name = "领导评教等级";
-        var leaEvalLevelCntsChart = echarts.init(document.getElementById('lea-eval-level-cnts'));
+        var leaEvalLevelCntsChart = echarts.init(document.getElementById('lea-eval-level-cnts'),echartTheme);
         leaEvalLevelCntsChart.setOption(option);
 
 
@@ -354,7 +363,7 @@
      */
     function fillTableItemLevelInfo(courseBatch,type) {
         var id = type+'-eval-table-item-cnts';
-        var evalTableItemChart = echarts.init(document.getElementById(id));
+        var evalTableItemChart = echarts.init(document.getElementById(id),echartTheme);
 
         var evalTable = $.parseJSON(courseBatch.stuEvalTableJsonString);
         if(type=='tea'){
@@ -491,7 +500,8 @@
         $('[data-toggle="tooltip"]').tooltip();
     });
 </script>
-<script src="${pageContext.request.contextPath}/js/echarts.common.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/echarts/echarts.common.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/echarts/macarons.js"></script>
 
 </body>
 </html>

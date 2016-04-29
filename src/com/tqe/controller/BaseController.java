@@ -3,6 +3,8 @@ package com.tqe.controller;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import com.tqe.base.enums.UserType;
+import com.tqe.base.interfaces.BaseViewName;
 import com.tqe.po.Admin;
 import com.tqe.service.*;
 import org.apache.commons.logging.Log;
@@ -13,7 +15,7 @@ import org.springframework.ui.Model;
 import java.text.SimpleDateFormat;
 
 @Component
-public class BaseController {
+public class BaseController implements BaseViewName{
 
 	public SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
@@ -102,4 +104,6 @@ public class BaseController {
         return curAdmin != null && curAdmin.getName().equals("admin");
 
     }
+
+
 }

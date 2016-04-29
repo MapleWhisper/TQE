@@ -38,7 +38,10 @@
                                 <c:forEach items="${b.stuTableList}" var="st">
                                     <tr>
                                         <td>${st.student.sid}</td>
-                                        <td>${st.student.name}</td>
+                                        <td><a target="_blank" href="${pageContext.request.contextPath}/admin/student/show?sid=${st.student.sid}">
+                                                ${st.student.name}
+                                            </a>
+                                        </td>
 
                                         <td>${st.score}</td>
                                         <td>${st.level}</td>

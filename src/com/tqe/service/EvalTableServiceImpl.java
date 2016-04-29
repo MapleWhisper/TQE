@@ -65,20 +65,6 @@ public class EvalTableServiceImpl extends BaseService<EvalTable>{
 
             item.setLevel(StringUtils.join(levelsIntValList.iterator()," "));
         }
-
-        //构建问题名字的List
-        e.getQuestionNameList().clear();
-        for(EvalTable.EvalItem item : e.getQuestionList()){
-            String questionName = item.getContext();
-            if(StringUtils.isNoneBlank(questionName)){
-                questionName = questionName.replaceAll(",","，");    //英文，是数据库分隔符 不能出现
-                e.getQuestionNameList().add(questionName);
-
-            }else{
-                throw new IllegalArgumentException("表单问题和建议的内容不能为空！：evalTable:"+e);
-            }
-
-        }
     }
 
 	public List<EvalTable> findAll(PageVO pageVO) {

@@ -106,6 +106,9 @@ public class ResultTableUtils {
     }
 
     public static  EvalTable processTableItemScoreAndLevelCnt(List<ResultTable> resultTables) {
+        if(resultTables.isEmpty()){
+            return null;
+        }
         //每个表项的平均得分 和 等级统计 结果 ，还有表项的内容
         Map<String, List<Integer>> tableItemLevelMap = new HashMap<String, List<Integer>>();
         Map<String, Integer> tableItemScoreMap = new HashMap<String, Integer>();
@@ -192,30 +195,30 @@ public class ResultTableUtils {
         }
     }
 
-    /**
-     * 根据table的问题，构建问题对应的评教结果表的所有回答
-     * 其中 每个结果表的 nameList 都是相同的，同一批次的结果表 才适用
-     */
-    public static List<Pair<String,List<String>>> buildQuestionWithAnsPairList(
-            List<String> questionNameList,
-            List<ResultTable> resultTables
-    ){
-
-
-        if(questionNameList==null){
-            return null;
-        }
-        List<Pair<String,List<String>>> pairList = new ArrayList<Pair<String, List<String>>>();
-        //对于每个问题 加入所有结果表的回答
-        for(int i=0;i<questionNameList.size();i++){
-            Pair<String,List<String>> questionWithAnsListPair = new MutablePair<String, List<String>>(questionNameList.get(i), new ArrayList<String>());
-            for(int j=0;j<resultTables.size();j++){
-                questionWithAnsListPair.getValue().add(resultTables.get(j).getQuestionAnsList().get(i));
-            }
-            pairList.add(questionWithAnsListPair);
-        }
-        return pairList;
-    }
+//    /**
+//     * 根据table的问题，构建问题对应的评教结果表的所有回答
+//     * 其中 每个结果表的 nameList 都是相同的，同一批次的结果表 才适用
+//     */
+//    public static List<Pair<String,List<String>>> buildQuestionWithAnsPairList(
+//            List<String> questionNameList,
+//            List<ResultTable> resultTables
+//    ){
+//
+//
+//        if(questionNameList==null){
+//            return null;
+//        }
+//        List<Pair<String,List<String>>> pairList = new ArrayList<Pair<String, List<String>>>();
+//        //对于每个问题 加入所有结果表的回答
+//        for(int i=0;i<questionNameList.size();i++){
+//            Pair<String,List<String>> questionWithAnsListPair = new MutablePair<String, List<String>>(questionNameList.get(i), new ArrayList<String>());
+//            for(int j=0;j<resultTables.size();j++){
+//                questionWithAnsListPair.getValue().add(resultTables.get(j).getQuestionAnsList().get(i));
+//            }
+//            pairList.add(questionWithAnsListPair);
+//        }
+//        return pairList;
+//    }
 
     /**
      * 如果结果表的中评教表不相同 那么使用改方法统计 回答的问题

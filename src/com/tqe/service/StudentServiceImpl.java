@@ -4,12 +4,14 @@ import com.tqe.base.enums.ImportType;
 import com.tqe.base.vo.PageVO;
 import com.tqe.po.*;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -102,7 +104,7 @@ public class StudentServiceImpl extends BaseService<Student> {
                             cMap = convertClaListToMap(classDao.findAll());
                         }
                         try {
-                            save(s);                    //保存教师到数据库
+                            save(s);                    //保存学生到数据库
                             result.addSuccessCnt();
                         } catch (DuplicateKeyException e1) {
                             result.addExitCnt();
@@ -118,7 +120,7 @@ public class StudentServiceImpl extends BaseService<Student> {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e);
         }
 
         return result;
@@ -212,8 +214,15 @@ public class StudentServiceImpl extends BaseService<Student> {
     }
 
     public void reAnalyseStudentStatistics(String sid) {
-        //TODO 一天一次
-        studentDao.updateStuAvgScore(sid);
+        Student stu = studentDao.getById(sid);
+        if(stu==null){
+            return ;
+        }
+        if(!DateUtils.isSameDay(stu.getMtime(),new Date())){
+            // 一天一次
+            studentDao.updateStuAvgScore(sid);
+        }
+
 
     }
 }

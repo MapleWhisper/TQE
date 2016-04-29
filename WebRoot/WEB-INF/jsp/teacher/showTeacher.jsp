@@ -32,37 +32,18 @@
 
 			<div class="col-sm-10">
 
-						<table class="table table-hover ">
-                                <tr class="info thead">
-                                    <td>教师名</td>
-                                    <td>教师号</td>
-                                    <td>学院</td>
-                                    <td>职称</td>
-                                </tr>
-                                <tr>
 
-                                    <td>${teacher.name }</td>
-                                    <td>${teacher.id }</td>
-                                    <td>${teacher.department }</td>
-                                    <td>${teacher.title }</td>
-
-                                    <!--
-                                        <td>${batches.name }</td>
-                                        <td><fm:formatDate value="${batches.beginDate}"
-                                                pattern="yyyy-MM-dd" /></td>
-                                        <td><fm:formatDate value="${batches.endDate }"
-                                                pattern="yyyy-MM-dd" /></td>
-                                             -->
-                                </tr>
-                        </table>
-
-
-
-                <div class="panel panel-primary">
+                <div class="panel panel-default">
                     <div class="panel-heading">
-                       教师所教课程
+                       教师详情
                     </div>
                     <div class="panel-body">
+                        <ol class="breadcrumb">
+                            <li><a href="${pageContext.request.contextPath}/admin/teacher">教师列表</a></li>
+                            <li class="active">教师详情</li>
+                        </ol>
+                        <jsp:include page="teacher-info-table.jsp"/>
+
                         <div class="bs-callout bs-callout-info">
                             <c:set scope="request" var="userType" value="teacher"/>
                             <jsp:include page="../model/seasonSelectForm.jsp"/>
@@ -100,7 +81,7 @@
 										 -->
                                     <td><a href="${pageContext.request.contextPath}/admin/course/show/${c.cid}/${c.cno}"
                                            class="btn btn-danger" ><span
-                                            class=" glyphicon glyphicon-zoom-in"></span>查看评教详情</a></td>
+                                            class=" glyphicon glyphicon-zoom-in"></span>查看课程详情</a></td>
                                 </tr>
                             </c:forEach>
 

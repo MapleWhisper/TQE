@@ -35,19 +35,16 @@ public class CourseBatchServiceImpl extends BaseService<CourseBatch>{
     public CourseBatch getByIdWithQuestList(String cid,Integer cno ,Integer bid) {
         CourseBatch courseBatch = courseBatchDao.getById(cid,cno,bid);
         List<StuResultTable> stuTableList = evalService.findAllStuTableWithEvalTable(cid, cno, bid);
-        List<TeaResultTable> teaTableList = evalService.findAllTeaTableByCidAndBid(cid, cno, bid);
+        List<TeaResultTable> teaTableList = evalService.findAllTeaTableWithEvalTable(cid, cno, bid);
         List<LeaResultTable> leaTableList = evalService.findAllLeaTableWithEvalTable(cid, cno, bid);
         if(stuTableList.size()>0){
-            EvalTable stuTable = EvalTable.json2Object(stuTableList.get(0).getJsonString());
-            courseBatch.setStuQuestionList(ResultTableUtils.buildQuestionWithAnsPairList(stuTable.getQuestionNameList(), new ArrayList<ResultTable>(stuTableList)));
+            courseBatch.setStuQuestionList(ResultTableUtils.buildQuestionWithAnsPairList( new ArrayList<ResultTable>(stuTableList)));
         }
         if(teaTableList.size()>0){
-            EvalTable teaTable = EvalTable.json2Object(teaTableList.get(0).getJsonString());
-            courseBatch.setTeaQuestionList(ResultTableUtils.buildQuestionWithAnsPairList(teaTable.getQuestionNameList(),new ArrayList<ResultTable>(teaTableList)));
+            courseBatch.setTeaQuestionList(ResultTableUtils.buildQuestionWithAnsPairList(new ArrayList<ResultTable>(teaTableList)));
         }
         if(leaTableList.size()>0){
-            EvalTable leaTable = EvalTable.json2Object(leaTableList.get(0).getJsonString());
-            courseBatch.setLeaQuestionList(ResultTableUtils.buildQuestionWithAnsPairList(leaTable.getQuestionNameList(), new ArrayList<ResultTable>(leaTableList)));
+            courseBatch.setLeaQuestionList(ResultTableUtils.buildQuestionWithAnsPairList(new ArrayList<ResultTable>(leaTableList)));
         }
         return courseBatch;
     }
@@ -64,8 +61,9 @@ public class CourseBatchServiceImpl extends BaseService<CourseBatch>{
         int stuEvalTotal = scDao.totalStuNumByCidAndCno(cid,cno);
         int stuEvalCnt = evalDao.cntStuEvalByCidCnoBid(cid, cno, bid);
         CourseBatch courseBatch = courseBatchDao.getById(cid,cno,bid);
+        Course course = courseDao.getById(cid,cno);
         if(courseBatch!=null){
-            Course course = courseDao.getById(cid,cno);
+
             Batches batch = batchesDao.getById(bid);
             if(course==null || batch==null) return;
             if(!course.getSeason().equals(SystemUtils.getSeason()) && courseBatch.getMtime().getTime() > batch.getEndDate().getTime()){
@@ -78,7 +76,7 @@ public class CourseBatchServiceImpl extends BaseService<CourseBatch>{
                 }
             }
         }else {  //数据库不存在改记录 那么分析后创建记录
-            courseBatch = new CourseBatch(cid,cno,bid);
+            courseBatch = new CourseBatch(cid,cno,bid,course.getTeacherId());
         }
 
         doAnalyseCourseBatch(courseBatch);
@@ -117,7 +115,7 @@ public class CourseBatchServiceImpl extends BaseService<CourseBatch>{
      *  设置统计数据
      */
     private  void setStatisticsData(List<ResultTable> resultTables , CourseBatch courseBatch , UserType userType){
-
+       
         // 平均分
         double avgScore = ResultTableUtils.calcAvgScore(resultTables);
 

@@ -35,6 +35,8 @@ public class Student implements Serializable{
     private Double avgScore;
 
 	private boolean isEvaled;	//是否已经评价过
+
+    private Date mtime; //最后修改日期
 	
 	
 	public String getSid() {
@@ -216,5 +218,13 @@ public class Student implements Serializable{
 
     public void setAvgScore(Double avgScore) {
         this.avgScore = avgScore;
+    }
+
+    public Date getMtime() {
+        return mtime;
+    }
+
+    public void setMtime(Date mtime) {
+        this.mtime = mtime;
     }
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.tqe.base.vo.PageVO;
 import com.tqe.dao.SqlProvider.BatchesDaoSqlProvider;
+import com.tqe.po.BatchScore;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -33,7 +34,7 @@ public interface BatchesDao extends BaseDao<Batches>{
 	public void update(Batches b);
 	
 	@Select("select * from batches b where now() between b.beginDate and b.endDate and b.season = #{season}")
-	public Batches getAvailableBatches(@Param("season")String season);
+	Batches getAvailableBatches(@Param("season")String season);
 	
 
 	
@@ -47,4 +48,5 @@ public interface BatchesDao extends BaseDao<Batches>{
 
     @SelectProvider(type=BatchesDaoSqlProvider.class, method="checkDateRangeConflict")
     Batches checkDateRangeConflict(@Param("id")Integer id ,@Param("beginDate")Date beginDate ,@Param("endDate")Date endDate);
+
 }

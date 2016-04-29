@@ -22,8 +22,6 @@ public class EvalTable {
 	private Date createDate;	//创建时间
 	private String jsonString;	//序列化表
 
-    private List<String> questionNameList = new ArrayList<String>();
-
 	private String score;	//得分
 	private String level;	//评价结果等级
 
@@ -35,16 +33,8 @@ public class EvalTable {
         this.type = type;
     }
 
-    public List<String> getQuestionNameList() {
-        if(questionNameList == null){
-            questionNameList = new ArrayList<String>();
-        }
-        return questionNameList;
-    }
 
-    public void setQuestionNameList(List<String> questionNameList) {
-        this.questionNameList = questionNameList;
-    }
+
 
     public static class EvalItem {
 		private String context;

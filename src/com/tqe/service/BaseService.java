@@ -63,6 +63,9 @@ public abstract class BaseService<E> {
 
     @Autowired
     public StudentSeasonDao studentSeasonDao;
+
+    @Autowired
+    public BatchScoreDao batchScoreDao;
 	
 	public  E getById(Integer id){
 		return null;

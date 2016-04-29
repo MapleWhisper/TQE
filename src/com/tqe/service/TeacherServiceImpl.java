@@ -1,15 +1,20 @@
 package com.tqe.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import com.tqe.base.enums.ImportType;
 import com.tqe.base.vo.PageVO;
+import com.tqe.po.BatchScore;
 import com.tqe.po.Department;
 import com.tqe.po.ImportResult;
+import com.tqe.vo.TeacherVO;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +26,11 @@ public class TeacherServiceImpl extends BaseService<Teacher>{
 
     private static final Log logger = LogFactory.getLog(TeacherServiceImpl.class);
 
+    @Autowired
+    private BatchScoreServiceImpl batchScoreService;
 
+    @Autowired
+    private CourseBatchServiceImpl courseBatchService;
 	
 	public Teacher getById(String id) {
 		return  teacherDao.getById(id);
@@ -80,9 +89,7 @@ public class TeacherServiceImpl extends BaseService<Teacher>{
 		return teacherDao.login(user);
 	}
 
-	public List<Teacher> findByPage(int start, int length) {
-		return teacherDao.findByPage(start ,length);
-	}
+
 
 	public List<Teacher> findByPageVO(PageVO pageVO) {
 		List<Teacher> teacherList = teacherDao.findByPageVO(pageVO);
@@ -108,4 +115,29 @@ public class TeacherServiceImpl extends BaseService<Teacher>{
 		tea.setDepartmentId(dMap.get(tea.getDepartment()));
 		return reload;
 	}
+
+    public void reAnalyseStatistics(String tid) {
+        Teacher tea = teacherDao.getById(tid);
+        if(tea==null){
+            return ;
+        }
+        if(!DateUtils.isSameDay(tea.getMtime(),new Date())){
+            batchScoreService.updateTeaScore(tid);      //更新教师每学期得分
+            teacherDao.updateStatisticsData(tid);       //更新教师总得分
+
+        }
+
+
+    }
+
+    public TeacherVO getTeacherVO(String tid) {
+        Teacher tea  = teacherDao.getById(tid);
+        if(tea==null){
+            throw null;
+        }
+        TeacherVO vo = new TeacherVO(tea);
+        List<BatchScore> teacherBatchList = batchScoreService.findAll(tid);
+        vo.setBatchScoreList(teacherBatchList);
+        return vo;
+    }
 }

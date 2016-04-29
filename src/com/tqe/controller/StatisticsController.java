@@ -2,6 +2,7 @@ package com.tqe.controller;
 
 import com.tqe.model.CourseModel;
 import com.tqe.po.*;
+import com.tqe.vo.TeacherVO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,7 @@ public class StatisticsController extends  BaseController{
     Log logger = LogFactory.getLog(StatisticsController.class);
 
     /**
-     * 显示 课程的统计图
+     * 显示 课程的统计页面
      */
     @RequestMapping(value={"/statistics/course"})
     public String statisticsCourse(
@@ -52,6 +53,26 @@ public class StatisticsController extends  BaseController{
 
         return "course/courseStatistics";
     }
+
+    /**
+     * 显示 课程的统计页面
+     */
+    @RequestMapping(value={"/statistics/teacher"})
+    public String statisticsCourse(
+            Model model,
+            @RequestParam() String tid
+    ){
+        Teacher tea = teacherService.getById(tid);
+        if(tea==null){
+            return sendError(model,"没有找到指定的教师信息。 tid:"+tid ,logger);
+        }
+        model.addAttribute("teacher",tea);
+
+        return "teacher/teacherStatistics";
+    }
+
+
+
 
 
 

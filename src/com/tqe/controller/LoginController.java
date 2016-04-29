@@ -121,6 +121,7 @@ public class LoginController extends BaseController{
             List<Privilege> pList = privilegeService.findAllByUserType(userType);   //权限信息放入session
             addPrivilege(session, pList);
             removeOtherUser(session, userType);
+            session.setAttribute("userType",userType);
             return viewName;
         }else {
             model.addAttribute("error","用户名或密码错误");

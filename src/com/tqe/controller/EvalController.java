@@ -195,20 +195,6 @@ public class EvalController extends BaseController{
 		if(!StringUtils.hasText(resultTable.getTid())){
 			resultTable.setTid(course.getTeacherId());
 		}
-		try {
 
-            for(EvalTable.EvalItem questionItem :evalTable.getQuestionList()){
-                String ans = questionItem.getAns();
-                if(ans==null){
-                    throw new IllegalArgumentException("问题回答不能为空!question:"+questionItem);
-                }
-                ans = ans.replaceAll(",","，");
-                resultTable.getQuestionAnsList().add(ans);
-            }
-
-		} catch (Exception e2) {
-
-			logger.debug("评教表的问题小于5个");
-		}
 	}
 }

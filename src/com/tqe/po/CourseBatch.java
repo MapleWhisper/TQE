@@ -17,6 +17,8 @@ public class CourseBatch {
     private Integer cno;
     private Integer bid;
 
+    private String tid;
+
 
 
     private Double stuEvalAvgScore=0d;    //学生评教平均分
@@ -52,10 +54,11 @@ public class CourseBatch {
     public CourseBatch() {
     }
 
-    public CourseBatch(String cid, Integer cno, Integer bid) {
+    public CourseBatch(String cid, Integer cno, Integer bid, String tid) {
         this.cid = cid;
         this.cno = cno;
         this.bid = bid;
+        this.tid = tid;
     }
 
     public String getCid() {
@@ -259,5 +262,13 @@ public class CourseBatch {
 
     public void setMtime(Date mtime) {
         this.mtime = mtime;
+    }
+
+    public String getTid() {
+        return tid;
+    }
+
+    public void setTid(String tid) {
+        this.tid = tid;
     }
 }
