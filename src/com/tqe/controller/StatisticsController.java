@@ -55,10 +55,10 @@ public class StatisticsController extends  BaseController{
     }
 
     /**
-     * 显示 课程的统计页面
+     * 显示 教师统计页面
      */
     @RequestMapping(value={"/statistics/teacher"})
-    public String statisticsCourse(
+    public String statisticsTeacher(
             Model model,
             @RequestParam() String tid
     ){
@@ -66,9 +66,28 @@ public class StatisticsController extends  BaseController{
         if(tea==null){
             return sendError(model,"没有找到指定的教师信息。 tid:"+tid ,logger);
         }
+
         model.addAttribute("teacher",tea);
 
         return "teacher/teacherStatistics";
+    }
+
+    /**
+     * 显示 学生统计页面
+     */
+    @RequestMapping(value={"/statistics/student"})
+    public String statisticsStudent(
+            Model model,
+            @RequestParam() String sid
+    ){
+        Student student = studentService.getById(sid);
+        if(student==null){
+            return sendError(model,"没有找到指定的学生信息。 sid:"+sid ,logger);
+        }
+
+        model.addAttribute("student",student);
+
+        return "student/studentStatistics";
     }
 
 

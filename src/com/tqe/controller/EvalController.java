@@ -188,7 +188,9 @@ public class EvalController extends BaseController{
 		EvalTable e = evalTableService.getById(resultTable.getEid()).json2Object();     //从数据库中取出评教表
         e.setJsonString("");
 		e.setAns(e, evalTable);     //将 答卷中的答案放到评教结果表中
+        e.setNote(null);        // 结果表不保存平角须知
 		resultTable.setJsonString(JSON.toJSONString(e));    //将评教表序列化后存入 再重新评教结果表中
+
 		Course course = courseService.getById(resultTable.getCid(), resultTable.getCno());
 		resultTable.setDepartmentId(course.getDepartmentId());
 		resultTable.setTname(course.getTeacher().getName());

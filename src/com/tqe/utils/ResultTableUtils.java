@@ -18,7 +18,7 @@ public class ResultTableUtils {
      * 对评教结果表 求平均成绩
      */
     public static double calcAvgScore(List<ResultTable> resultTables) {
-        int scoreSum = 0;
+        double scoreSum = 0;
         int tableSize = resultTables.size();
 
 

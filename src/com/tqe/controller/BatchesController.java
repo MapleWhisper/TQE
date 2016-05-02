@@ -49,6 +49,7 @@ public class BatchesController extends BaseController {
 	@RequestMapping("/batches/show/{id}")
 	public String showBatch(@PathVariable int id,Model model){
 		model.addAttribute("batches",batchesService.getByIdWithEvalTable(id));
+        batchesService.reAnalyseStatistic(id);  //更新批次的平均得分
 		return "batches/showBatches";
 	}
 	

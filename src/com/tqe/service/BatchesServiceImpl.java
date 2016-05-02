@@ -1,8 +1,11 @@
 package com.tqe.service;
 
+import java.util.Date;
 import java.util.List;
 
+import com.tqe.base.enums.BatchStatus;
 import com.tqe.base.vo.PageVO;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -88,6 +91,25 @@ public class BatchesServiceImpl extends BaseService<Batches>{
         conflictBatch = batchesDao.checkDateRangeConflict(newBatch.getId(),newBatch.getBeginDate(),newBatch.getEndDate());
         return conflictBatch;
 
+
+    }
+
+    public void reAnalyseStatistic(Integer bid){
+        if(bid==null || bid<0){
+            throw  new IllegalArgumentException("unknown bid :"+bid);
+        }
+        Batches batch = batchesDao.getById(bid);
+        if(batch==null){
+            return ;
+        }
+        //如果 批次不是在进行中 并且评教批次的结束时间小于批次的最后修改时间 那么就更新
+        if(!batch.getBatchStatus().equals(BatchStatus.RUNNING.getName())
+                && batch.getMtime().getTime() > batch.getEndDate().getTime()){
+            return ;
+        }
+        if(!DateUtils.isSameDay(batch.getMtime(),new Date())){
+            batchesDao.updateStatistic(bid);
+        }
 
     }
 }

@@ -81,20 +81,20 @@ body {
 .table-condensed > tbody > tr > td,
 .table-condensed > tfoot > tr > td {
     padding: 2px 2px;
-    font-size: 15px;
+    font-size: 14px;
 }
 
 .table-condensed > thead {
     border-top:0px ;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 17px;
 }
 
 .thead ,
 .thead > td {
     border-top:0px !important;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 17px;
 }
 
 .no-border > tbody > tr > td{

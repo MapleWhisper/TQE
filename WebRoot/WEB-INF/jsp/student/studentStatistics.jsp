@@ -4,7 +4,7 @@
 <head>
     <%@ include file="../header.jspf"%>
 
-    <title>教师统计详情</title>
+    <title>学生统计详情</title>
 </head>
 
 <body>
@@ -18,26 +18,26 @@
         </div>
         <div class="col-sm-10 ">
 
-            <input type="hidden" name="tid" id="tid" value="${teacher.id}">
+            <input type="hidden" name="sid" id="sid" value="${student.sid}">
             <div class="bs-callout bs-callout-danger">
                 <ol class="breadcrumb">
-                    <li><a href="${pageContext.request.contextPath}/admin/teacher">教师列表</a></li>
-                    <li><a href="${pageContext.request.contextPath}/admin/teacher/show?tid=${teacher.id}">教师详情</a></li>
-                    <li class="active">教师统计信息</li>
+                    <li><a href="${pageContext.request.contextPath}/admin/student">学生列表</a></li>
+                    <li><a href="${pageContext.request.contextPath}/admin/student/show?sid=${student.sid}">学生详情</a></li>
+                    <li class="active">学生统计信息</li>
                 </ol>
                 <div class="row">
-                    <jsp:include page="teacher-info-table.jsp"/>
+                    <jsp:include page="student-info-table.jsp"/>
                 </div>
             </div>
 
 
             <div class="bs-callout bs-callout-info">
                 <row>
-                    <div id="tea-score-trend-chart" style="height: 400px">
+                    <div id="stu-score-trend-chart" style="height: 400px">
 
                     </div>
                 </row>
-             </div>
+            </div>
         </div>
     </div>
 
@@ -49,22 +49,18 @@
 
 
 
-    function fillTeaScoreTrendChart(teaVO) {
+    function fillStuScoreTrendChart(teaVO) {
         var batchScoreList = teaVO.batchScoreList;
         if(batchScoreList){
-            var teaScoreTrendChart = echarts.init(document.getElementById('tea-score-trend-chart'),echartTheme);
+            var stuScoreTrendChart = echarts.init(document.getElementById('stu-score-trend-chart'),echartTheme);
             var batchNames = [];
-            var stuScores = [];
-            var teaScores = [];
-            var stuAvg = [];    //全局学生平均得分
-            var teaAvg = [];    //全局教师平均得分
+            var teaStuScores = [];
+            var teaStuAvg = [];    //全局教师平均得分
             var bs ;
             $.each(batchScoreList,function(i){
                 batchNames.push(this.batchName);
-                stuScores.push(this.stuAvgScore);
-                teaScores.push(this.teaAvgScore);
-                stuAvg.push(this.stuAvg);
-                teaAvg.push(this.teaAvg);
+                teaStuScores.push(this.teaStuAvgScore);
+                teaStuAvg.push(this.teaStuAvg);
             });
 
             /*debug
@@ -74,14 +70,14 @@
              */
             var option = {
                 title: {
-                    text: '教师评分趋势图',
+                    text: '学生评分趋势图',
                     left: 'center'
                 },
                 tooltip : {
                     trigger: 'axis'
                 },
                 legend: {
-                    data:['学生评分','学生平均','教师评分','教师平均'],
+                    data:['学生评分','学生平均'],
                     left: 'right'
                 },
                 grid: {
@@ -120,7 +116,7 @@
                                 width:3,
                             }
                         },
-                        data:stuScores
+                        data:teaStuScores
                     },
                     {
                         name:'学生平均',
@@ -132,40 +128,11 @@
                                 type:"dashed"
                             }
                         },
-                        data:stuAvg
-                    },
-                    {
-                        name:'教师评分',
-                        type:'line',
-                        label: {
-                            normal: {
-                                show: true,
-                                position: 'top'
-                            }
-                        },
-                        lineStyle:{
-                            normal:{
-                                color:"blue",
-                                width:3,
-                            }
-                        },
-                        data:teaScores
-                    },
-                    {
-                        name:'教师平均',
-                        type:'line',
-                        lineStyle:{
-                            normal:{
-                                color:"blue",
-                                type:"dashed",
-                                width:1,
-                            }
-                        },
-                        data:teaAvg
+                        data:teaStuAvg
                     }
                 ]
             };
-            teaScoreTrendChart.setOption(option);
+            stuScoreTrendChart.setOption(option);
 
         }else{
             showGlobalNotification("没有信息需要展示");
@@ -175,12 +142,12 @@
 
     $(function(){
 
-        var tid= $("#tid").val();
+        var sid= $("#sid").val();
 
-        $.get("../teacher/vo-info",{tid:tid},function(data){
+        $.get("../student/vo-info",{sid:sid},function(data){
             if(data.success){
-                var teaVO = data.item;
-                fillTeaScoreTrendChart(teaVO);
+                var stuVO = data.item;
+                fillStuScoreTrendChart(stuVO);
 
             }else{
                 showGlobalNotification(data.msg);

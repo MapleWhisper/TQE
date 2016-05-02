@@ -5,17 +5,12 @@ import java.util.List;
 
 import com.tqe.base.vo.PageVO;
 import com.tqe.dao.SqlProvider.EvalDaoSqlProvider;
+import com.tqe.po.*;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.springframework.stereotype.Repository;
-
-import com.tqe.po.EvalTable;
-import com.tqe.po.LeaResultTable;
-import com.tqe.po.StuResultTable;
-import com.tqe.po.TeaStuResultTable;
-import com.tqe.po.TeaResultTable;
 
 @Repository
 public interface EvalDao extends BaseDao<EvalTable>{
@@ -92,23 +87,12 @@ public interface EvalDao extends BaseDao<EvalTable>{
     @Select("select count(*) from stutable where cno = #{cno} and cid = #{cid} and bid = #{bid}")
     int cntStuEvalByCidCnoBid(@Param("cid")String cid,@Param("cno")Integer cno,@Param("bid")Integer bid);
 
-	
 
-	
+    @Select("   select b.name 'batchName', b.id 'bid'  , ts.sid 'id' , avg(ts.score) 'teaStuAvgScore' " +
+            "   from batches b , teastutable ts   " +
+            "   where b.id = ts.bid and ts.sid = #{sid}   and bid = #{bid} ")
+    BatchScore getStudentBatchScore(@Param("sid")String sid, @Param("bid")Integer bid);
 
-	
-	
-
-	
-
-	
-
-	
-
-	
-
-
-	
-
-	
+    @Select("select distinct bid from teastutable where sid = #{id} ")
+    List<Integer> findTeaStuBidBySid(String id);
 }

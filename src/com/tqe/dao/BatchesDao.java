@@ -49,4 +49,10 @@ public interface BatchesDao extends BaseDao<Batches>{
     @SelectProvider(type=BatchesDaoSqlProvider.class, method="checkDateRangeConflict")
     Batches checkDateRangeConflict(@Param("id")Integer id ,@Param("beginDate")Date beginDate ,@Param("endDate")Date endDate);
 
+    @Update("   update batches  b" +
+            " set stuAvgScore = ( select  avg(stuAvgScore) from batchscore where bid = b.id  ), " +
+            " teaAvgScore = ( select avg(teaAvgScore) from batchscore where bid = b.id  ), " +
+            " teaStuAvgScore = ( select avg(score) from teaStutable where bid = b.id  ) " +
+            " where b.id = #{bid} ")
+    void updateStatistic(Integer bid);
 }

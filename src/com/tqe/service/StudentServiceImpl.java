@@ -3,6 +3,8 @@ package com.tqe.service;
 import com.tqe.base.enums.ImportType;
 import com.tqe.base.vo.PageVO;
 import com.tqe.po.*;
+import com.tqe.vo.StudentVO;
+import com.tqe.vo.TeacherVO;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.logging.Log;
@@ -23,6 +25,9 @@ public class StudentServiceImpl extends BaseService<Student> {
 
     @Autowired
     private DepartmentServiceImpl departmentService;
+
+    @Autowired
+    private BatchScoreServiceImpl batchScoreService;
 
     /**
      * 得到所有的学生列表
@@ -220,9 +225,23 @@ public class StudentServiceImpl extends BaseService<Student> {
         }
         if(!DateUtils.isSameDay(stu.getMtime(),new Date())){
             // 一天一次
+            batchScoreService.updateStuScore(sid);
             studentDao.updateStuAvgScore(sid);
         }
 
 
     }
+
+    public StudentVO getStudentVO(String sid) {
+        Student stu = studentDao.getById(sid);
+        if(stu == null){
+            return null;
+        }
+        StudentVO vo = new StudentVO(stu);
+        List<BatchScore> teacherBatchList = batchScoreService.findAll(sid);
+        vo.setBatchScoreList(teacherBatchList);
+        return vo;
+    }
+
+
 }

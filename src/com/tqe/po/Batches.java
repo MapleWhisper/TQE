@@ -12,9 +12,14 @@ public class Batches {
 	private Integer curCourseNumber;
 	private String season;
 
+    private Double stuAvgScore;
+    private Double teaAvgScore;
+    private Double teaStuAvgScore;
 
-	
-	private Date beginDate;		//评教开始日期
+
+
+
+    private Date beginDate;		//评教开始日期
 	private Date endDate;		//评教结束日期
 
     private String batchStatus;     //当前批次的状态 (评教中，已结束，未开始)
@@ -30,7 +35,8 @@ public class Batches {
 	
 	private EvalTable teaStuEval;	//默认的教师评价学生表
 	private Integer teaStuEvalId;	//默认的教师评价学生表Id
-	
+
+    private Date mtime;
 	
 	public Integer getId() {
 		return id;
@@ -143,5 +149,37 @@ public class Batches {
 
     public void setBatchStatus(String batchStatus) {
         this.batchStatus = batchStatus;
+    }
+
+    public Double getStuAvgScore() {
+        return stuAvgScore;
+    }
+
+    public void setStuAvgScore(Double stuAvgScore) {
+        this.stuAvgScore = stuAvgScore;
+    }
+
+    public Double getTeaAvgScore() {
+        return teaAvgScore;
+    }
+
+    public void setTeaAvgScore(Double teaAvgScore) {
+        this.teaAvgScore = teaAvgScore;
+    }
+
+    public Double getTeaStuAvgScore() {
+        return teaStuAvgScore;
+    }
+
+    public void setTeaStuAvgScore(Double teaStuAvgScore) {
+        this.teaStuAvgScore = teaStuAvgScore;
+    }
+
+    public Date getMtime() {
+        return mtime;
+    }
+
+    public void setMtime(Date mtime) {
+        this.mtime = mtime;
     }
 }

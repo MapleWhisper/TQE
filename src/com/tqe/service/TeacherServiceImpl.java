@@ -133,7 +133,7 @@ public class TeacherServiceImpl extends BaseService<Teacher>{
     public TeacherVO getTeacherVO(String tid) {
         Teacher tea  = teacherDao.getById(tid);
         if(tea==null){
-            throw null;
+            return null;
         }
         TeacherVO vo = new TeacherVO(tea);
         List<BatchScore> teacherBatchList = batchScoreService.findAll(tid);

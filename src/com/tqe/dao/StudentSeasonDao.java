@@ -25,4 +25,5 @@ public interface StudentSeasonDao {
             " resultTableNum = #{resultTableNum} , resultTableJsonString = #{resultTableJsonString} , mtime = now() ," +
             " questionListString = #{questionListString} where sid = #{sid} and season = #{season}")
     void update(StudentSeason stuSeason);
+
 }

@@ -6,6 +6,7 @@
         <td>教师号</td>
         <td>学院</td>
         <td>职称</td>
+        <td>平均评分(学生/教师)</td>
         <td>操作</td>
     </tr>
     <tr>
@@ -14,6 +15,7 @@
         <td>${teacher.id }</td>
         <td>${teacher.department }</td>
         <td>${teacher.title }</td>
+        <td><code>${teacher.stuAvgScore}分</code>--<code>${teacher.teaAvgScore}分</code></td>
         <td><a class="btn btn-danger" icon="zoom-in" target="_blank"
                href="${pageContext.request.contextPath}/admin/statistics/teacher?tid=${teacher.id}">查看教师统计</a></td>
     </tr>

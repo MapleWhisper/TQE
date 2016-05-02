@@ -73,6 +73,7 @@ public class StudentSeasonServiceImpl extends BaseService<CourseBatch> {
     private void doAnalyseStuSeason(StudentSeason stuSeason, List<TeaStuResultTable> tableList) {
 
         List<ResultTable> resultTableList = new ArrayList<ResultTable>(tableList);
+
         stuSeason.setResultTableNum(tableList.size());
         stuSeason.setAvgScore(ResultTableUtils.calcAvgScore(resultTableList));
         stuSeason.setLevelCnts(Arrays.asList(ResultTableUtils.calcLevelCnt(resultTableList)));

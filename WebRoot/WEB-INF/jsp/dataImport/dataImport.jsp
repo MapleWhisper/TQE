@@ -153,7 +153,7 @@
                                     <li>从教务系统下载的EXCEL必须要转换成兼容的Excel 2003 文件</li>
                                     <li><a target="_blank"
                                            href="${pageContext.request.contextPath}/image/tqe-excel-upload-convert.jpg"
-                                           class="btn btn-danger">点我查看文件上传格式转换说明</a></li>
+                                           class="btn btn-danger btn-sm">点我查看上传格式转换说明</a></li>
                                 </ul>
 
                                 常见错误说明

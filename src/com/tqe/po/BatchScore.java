@@ -14,6 +14,12 @@ public class BatchScore {
     private Double stuAvgScore;
     private Double teaAvgScore;
     private Double leaAvgScore;
+    private Double teaStuAvgScore;
+
+    private Double stuAvg;          //全局平均成绩
+    private Double teaAvg;
+    private Double leaAvg;
+    private Double teaStuAvg;
 
     private Date mtime;
 
@@ -74,5 +80,45 @@ public class BatchScore {
 
     public void setMtime(Date mtime) {
         this.mtime = mtime;
+    }
+
+    public Double getStuAvg() {
+        return stuAvg;
+    }
+
+    public void setStuAvg(Double stuAvg) {
+        this.stuAvg = stuAvg;
+    }
+
+    public Double getTeaAvg() {
+        return teaAvg;
+    }
+
+    public void setTeaAvg(Double teaAvg) {
+        this.teaAvg = teaAvg;
+    }
+
+    public Double getLeaAvg() {
+        return leaAvg;
+    }
+
+    public void setLeaAvg(Double leaAvg) {
+        this.leaAvg = leaAvg;
+    }
+
+    public Double getTeaStuAvgScore() {
+        return teaStuAvgScore;
+    }
+
+    public void setTeaStuAvgScore(Double teaStuAvgScore) {
+        this.teaStuAvgScore = teaStuAvgScore;
+    }
+
+    public Double getTeaStuAvg() {
+        return teaStuAvg;
+    }
+
+    public void setTeaStuAvg(Double teaStuAvg) {
+        this.teaStuAvg = teaStuAvg;
     }
 }

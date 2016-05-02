@@ -16,7 +16,8 @@ import java.util.List;
 public interface BatchScoreDao extends  BaseDao<BatchScore> {
 
 
-    @Select("select bs.* from batchScore bs , batches b  where bs.id = #{id} and bs.bid = b.id  order by b.endDate")
+    @Select("   select bs.* , b.stuAvgScore 'stuAvg' , b.teaAvgScore 'teaAvg'  , b.teaStuAvgScore 'teaStuAvg' " +
+            "   from batchScore bs , batches b  where bs.id = #{id} and bs.bid = b.id  order by b.endDate   ")
     List<BatchScore> findAll(String id);
 
     @Select("select * from batchscore where id = #{id} and bid = #{bid} ")
@@ -24,12 +25,12 @@ public interface BatchScoreDao extends  BaseDao<BatchScore> {
 
 
     @Override
-    @Insert("INSERT INTO `tqe`.`batchscore` (`id`, `bid`, `batchName` ,`stuAvgScore`, `teaAvgScore`, `leaAvgScore` ) " +
-            "VALUES (#{id},#{bid}, #{batchName} , #{stuAvgScore}, #{teaAvgScore}, #{leaAvgScore} );")
+    @Insert("INSERT INTO `tqe`.`batchscore` (`id`, `bid`, `batchName` ,`stuAvgScore`, `teaAvgScore`, `leaAvgScore` , `teaStuAvgScore` ) " +
+            "VALUES (#{id},#{bid}, #{batchName} , #{stuAvgScore}, #{teaAvgScore}, #{leaAvgScore} , #{teaStuAvgScore} );")
     void save(BatchScore batchScore);
 
 
-    @Update("update batchscore set stuAvgScore = #{stuAvgScore} , teaAvgScore = #{teaAvgScore} , leaAvgScore = #{leaAvgScore}" +
-            " where id = #{id} and bid = #{bid}" )
+    @Update("update batchscore set stuAvgScore = #{stuAvgScore} , teaAvgScore = #{teaAvgScore} , leaAvgScore = #{leaAvgScore} ," +
+            " teaStuAvgScore = #{teaStuAvgScore} where id = #{id} and bid = #{bid}" )
     void update(BatchScore batchScore);
 }

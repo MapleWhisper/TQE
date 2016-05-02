@@ -5,6 +5,8 @@ import com.tqe.base.BaseResult;
 import com.tqe.base.enums.DepartmentType;
 import com.tqe.base.vo.PageVO;
 import com.tqe.po.StudentSeason;
+import com.tqe.vo.StudentVO;
+import com.tqe.vo.TeacherVO;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -115,16 +117,21 @@ public class StudentController extends BaseController{
         return BaseResult.createSuccess(studentSeason);
 
     }
-	
-	@RequestMapping("/student/add")
-	public String addStudent(){
-		return "student/addStudent";
-	}
-	
-	@RequestMapping("/student/save")
-	public String saveStudent(){
-		return "redirect:/admin/student";
-	}
+
+
+    @RequestMapping("/student/vo-info")
+    @ResponseBody()
+    public BaseResult getStudentVO(
+            @RequestParam()  String sid
+    ){
+
+        StudentVO studentVO = studentService.getStudentVO(sid);
+        if(studentVO==null){
+            return BaseResult.createFailure("没有找到学生信息：sid:"+sid);
+        }
+        return BaseResult.createSuccess(studentVO);
+
+    }
 	
 	
 }
