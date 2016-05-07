@@ -4,7 +4,7 @@
 
 <!--导航条 -->
 <div  id="global-notification" >
-    <div class="alert alert-warning alert-dismissible" role="alert"  >
+    <div class="alert alert-danger alert-dismissible" role="alert"  >
 
         <span id="global-notification-text"></span>
     </div>

@@ -49,7 +49,7 @@
                                     <input type="hidden" id="condition-season" value="${condition.season}">
                                     <label for="season" >学期:</label>
                                     <select name="season" class="form-control" id="season" >
-                                        <option value="">不限</option>
+                                        <option value="${applicationScope.curSeason}">当前学期：${applicationScope.curSeason}</option>
                                         <c:forEach begin="2015" end="${applicationScope.curYear+1}" step="1" var="s">
                                             <option  value="${s}春">${s}春</option>
                                             <option  value="${s}秋">${s}秋</option>

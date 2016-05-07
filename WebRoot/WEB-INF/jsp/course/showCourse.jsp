@@ -33,7 +33,7 @@
 
                                 <a icon="user" href="${pageContext.request.contextPath}/admin/teacher/show?tid=${course.teacher.id}">
                                     ${course.teacher.name}
-                                </a> -- ${course.name} (${course.season })
+                                </a> <br><span icon="book"> ${course.name}</span> (${course.season })
                             </h4>
                             <hr>
                             <h5>${course.department } </h5>

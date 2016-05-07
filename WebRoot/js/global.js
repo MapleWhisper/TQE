@@ -75,7 +75,9 @@ function showGlobalNotification(msg){
     if(msg){
         var globalNotification = $("#global-notification");
         globalNotification.find("#global-notification-text").html(msg);
+
         globalNotification.fadeIn("fast");
+        $('body').scrollTop($('body').height());
         globalNotification.fadeOut(3000);
     }
 
