@@ -64,7 +64,7 @@
                                                 id="verificationCode" required="required">
                                         </div>
                                         <div class="col-sm-3">
-                                            <img alt="验证码" class="control-label"
+                                            <img alt="验证码" class="control-label" id="valif-image"
                                                 src="${pageContext.request.contextPath}/valifImage">
                                         </div>
                                     </div>
@@ -144,19 +144,27 @@
 		});
 
 		$(function() {
-			//移除空的错误提示框
+			//显示的错误提示框
 			showErrorMessage();
 
 			//根据登录方式显示不同的按钮文字
 			$("input:radio").click(function(){
-				$("#login-btn").html($("input:radio:checked").next().text());
+                var checkedRadio = $("input:radio:checked");
+				$("#login-btn").html(checkedRadio.next().text());
+                reFetchValifImage();
 			});
+
+            $("#valif-image").click(function(){
+                reFetchValifImage();
+
+            })
 
 			//从cookie中获取用户的登录方式
 			var loginType = $.cookie("loginType");
 			if(loginType){
 				$("input[value='"+loginType+"']").attr("checked","checked");
 				$("#login-btn").html($("input:radio:checked").next().text());
+                reFetchValifImage();
 			}
 
             $("#init-pwd").click(function(e){
@@ -169,6 +177,26 @@
 		$(function () {
 			$('[data-toggle="tooltip"]').tooltip();
 		})
+
+        function reFetchValifImage(){
+            var checkedRadio = $("input:radio:checked");
+            var type = checkedRadio.val();
+            if(type){
+                var valifImage = $("#valif-image");
+                var imageSrc = valifImage.attr('src');
+                var lastIndex = imageSrc.lastIndexOf('?');
+                if(lastIndex==-1){
+                    lastIndex = imageSrc.length;
+                }
+                imageSrc = imageSrc.substring(0,lastIndex);
+                if(type =='student' || type == 'teacher'){
+                    valifImage.attr('src',imageSrc+"?random="+Math.random());
+                }else{
+                    valifImage.attr('src',imageSrc+"?type=inner&random="+Math.random());
+                }
+            }
+            $("#verificationCode").val('');
+        }
 
 	</script>
 

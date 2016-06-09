@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import com.tqe.base.vo.PageVO;
 import com.tqe.dao.*;
+import com.tqe.po.Template;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,6 +67,13 @@ public abstract class BaseService<E> {
 
     @Autowired
     public BatchScoreDao batchScoreDao;
+
+    @Autowired
+    public BaseConfigDao baseConfigDao;
+
+    @Autowired
+    public TemplateDao templateDao;
+
 	
 	public  E getById(Integer id){
 		return null;

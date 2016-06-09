@@ -4,9 +4,16 @@ package com.tqe.controller;
 import javax.servlet.http.HttpSession;
 
 import com.tqe.base.BaseResult;
+import com.tqe.base.enums.BaseConfigKye;
+import com.tqe.base.enums.LoginType;
 import com.tqe.base.enums.UserType;
 import com.tqe.po.*;
+import com.tqe.service.BaseConfigServiceImpl;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.poi.ss.formula.functions.Index;
+import org.jsoup.Jsoup;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,11 +23,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tqe.utils.MD5Utils;
 
+import java.io.IOException;
 import java.util.Date;
+import java.util.Map;
 
 @Controller
 public class IndexController extends BaseController{
 
+    private static final Log logger = LogFactory.getLog(IndexController.class);
     /**
 	 * 进入首页 登陆页面
      * @param model
@@ -31,18 +41,48 @@ public class IndexController extends BaseController{
             Model model,
             HttpSession session
     ){
-
-        boolean skipVerify = false;
-        Long lastLoginTime = (Long) session.getAttribute("lastLoginTime");
-        if(lastLoginTime == null || lastLoginTime == 0){  //用户第一次登陆
-            skipVerify = true;
-        }else{
-            Long curTime = new Date().getTime();
-            if( (curTime-lastLoginTime)/(1000*60) >5 ){  //5分钟内重新登录需要验证码
+        LoginType loginType = LoginType.toLoginType(baseConfigService.getConfigValue(BaseConfigKye.LoginType));
+        session.setAttribute(BaseConfigKye.LoginType,loginType);
+        if(LoginType.INNER.equals(loginType)){  //内置登陆
+            boolean skipVerify = false;
+            //默认都要输入验证码
+            /*
+            Long lastLoginTime = (Long) session.getAttribute("lastLoginTime");
+            if(lastLoginTime == null || lastLoginTime == 0){  //用户第一次登陆
                 skipVerify = true;
+            }else{
+                Long curTime = new Date().getTime();
+                if( (curTime-lastLoginTime)/(1000*60) >5 ){  //5分钟内重新登录需要验证码
+                    skipVerify = true;
+                }
             }
+            */
+
+            session.setAttribute("skipVerify",skipVerify);
+        }else{  //学校教务系统登陆
+
+            String jsessionIdString = "";
+
+            Map<String,String> cookies = null;
+            try {
+                cookies = Jsoup.connect("http://202.118.201.228/academic/common/security/login.jsp").execute().cookies();
+                for(Map.Entry<String, String> cookie : cookies.entrySet()){
+                    System.out.println(cookie.getKey()+" "+cookie.getValue());
+                    if(cookie.getKey().equals(JSESSIONID)){
+                        jsessionIdString = cookie.getKey()+"="+cookie.getValue();
+                        session.setAttribute("proxyJsessionId",cookie.getValue());
+                    }
+                }
+                if(StringUtils.isBlank(jsessionIdString)){
+                    sendError(model,"获取JSessionId失败！当前不能进行登陆",logger);
+                }
+                session.setAttribute("proxyJsessionIdString",jsessionIdString);
+            } catch (IOException e) {
+                sendError(model,"连接理工教务在线失败！请稍后再试",logger,e);
+            }
+
+
         }
-        session.setAttribute("skipVerify",skipVerify);
         return "index";
     }
 
@@ -172,4 +212,8 @@ public class IndexController extends BaseController{
         return "error";
     }
 
+    @RequestMapping("test")
+    public String test(){
+        return "test";
+    }
 }

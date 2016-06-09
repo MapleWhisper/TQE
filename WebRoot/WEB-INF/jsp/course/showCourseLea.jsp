@@ -1,9 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<div class="row">
     <c:forEach items="${courseModel.batchesList}" var="b">
-        <div role="tabpanel" class="tab-pane" style="padding: 10px">
             <div class="bs-callout bs-callout-danger">
                 <h4 class="panel-heading">
                     <a
@@ -47,6 +45,4 @@
                     </table>
                 </div>
             </div>
-        </div>
     </c:forEach>
-</div>

@@ -58,13 +58,13 @@
                                     <td>教师评教</td>
                                     <td><code>${course.teaEvalAvgScore}</code>分 </td>
                                     <td> <code>${course.teaEvalScores}</code>分 </td>
-                                    <td> <div class="eval-process-bar" value="${course.teaEvalLevelCnts}"></div> </td>
+                                    <td> <div class="eval-process-bar progress" value="${course.teaEvalLevelCnts}"></div> </td>
                                 </tr>
                                 <tr>
                                     <td>领导评教</td>
                                     <td> <code>${course.leaEvalAvgScore}</code>分</td>
                                     <td> <code>${course.leaEvalScores}</code>分 </td>
-                                    <td> <div class="eval-process-bar" value="${course.leaEvalLevelCnts}"></div> </td>
+                                    <td> <div class="eval-process-bar progress" value="${course.leaEvalLevelCnts}"></div> </td>
                                 </tr>
                             </table>
                         </div>

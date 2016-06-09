@@ -1,20 +1,15 @@
 package com.tqe.controller;
 
+import com.tqe.po.Privilege;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.tqe.po.Privilege;
-
-
-
 /**
- * 后台的管理员账号管理，可以查看列表，添加管理员，初始化密码，删除管理员，修改管理员信息
- * 
+ * 权限管理控制器
  * @author 于广路
- *
  */
 @Controller()
 @RequestMapping("/admin")
@@ -49,20 +44,5 @@ public class PrivilegeController extends BaseController{
 		privilegeService.update(p);
 		return "success";	//保存完成后  跳转到管理员列表页面
 	}
-	
-	
-	/**
-	 * 删除管理员
-	 * @param id 需要删除的管理员id
-	 * @return	返回到管理员列表页面
-	 */
-	/*
-	@RequestMapping("admin/delete/{id}")
-	public String delete(@PathVariable int id){
-		
-		adminService.delete(id);
-		
-		return "redirect:/admin/admin";	//跳到管理员列表页面
-	}
-	*/
+
 }

@@ -96,7 +96,7 @@
 										<td>${tea.department }</td>
 										<td>${tea.title }</td>
 										<td><a href="${pageContext.request.contextPath}/admin/teacher/show?tid=${tea.id}"
-											class="btn btn-danger" ><span
+											class="btn btn-sm btn-danger" ><span
 												class=" glyphicon glyphicon-zoom-in"></span>查看评教详情</a></td>
 										<!--
 										<td><a href="teacherAction!edit?id=${tea.id }"

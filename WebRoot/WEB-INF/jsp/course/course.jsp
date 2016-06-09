@@ -113,7 +113,7 @@
 												class=" glyphicon glyphicon-edit"></span>&nbsp;&nbsp;修改</a></td>
 										 -->
 										<td><a href="${pageContext.request.contextPath}/admin/course/show/${c.cid}/${c.cno}"
-											class="btn btn-danger" ><span
+											class="btn btn-sm btn-danger" ><span
 												class=" glyphicon glyphicon-zoom-in"></span>查看评教详情</a></td>
 									</tr>
 								</c:forEach>

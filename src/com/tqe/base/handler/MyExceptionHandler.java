@@ -1,5 +1,6 @@
 package com.tqe.base.handler;
 
+import com.tqe.base.exception.UserNotExistException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -27,12 +28,18 @@ public class MyExceptionHandler implements HandlerExceptionResolver {
         messageConvertMap.put("Data too long","您输入的数据太长了！");
     }
 
-    public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
-                                         Exception ex) {
+    public ModelAndView resolveException(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            Object handler,
 
+            Exception ex) {
         ModelAndView modelAndView = new ModelAndView("error");
         modelAndView.addObject("msg", messageConvert(ex.getMessage()));
         logger.error("出错了",ex);
+        if(ex instanceof UserNotExistException){
+            modelAndView.addObject("msg", "账号为："+ex.getMessage()+"的用户在系统中不存在，请联系管理员添加");
+        }
         return modelAndView;
     }
 

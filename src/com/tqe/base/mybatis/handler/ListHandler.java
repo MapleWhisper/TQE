@@ -20,7 +20,6 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- *
  * 将数据库中 ,xx,yy,zz 的字符串结构转换成 List结构
  * 类说明：StringArrayHandler
  */
@@ -40,6 +39,8 @@ public class ListHandler extends BaseTypeHandler<List> {
         targetClassFilterList.add(ResultTable.class);
         targetClassFilterList.add(Course.class);
         targetClassFilterList.add(StudentSeason.class);
+        targetClassFilterList.add(Template.class);
+        targetClassFilterList.add(TemplateItem.class);
     }
 
     @Override

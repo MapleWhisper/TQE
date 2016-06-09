@@ -25,6 +25,8 @@
             src="${pageContext.request.contextPath}/js/jquery.validate.min.js"></script>
     <script
             src="${pageContext.request.contextPath}/js/messages_zh.min.js"></script>
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.css"/>
 </head>
 
 <body>
@@ -67,9 +69,13 @@
 							
 							<div class="form-group">
 								<label for="note" class="col-xs-2 control-label">评教须知</label>
-								<div class="col-xs-10">
+								<div class="col-xs-8">
 									<textarea rows="5" cols="100%" class="form-control" name="note" id="note" required="required"></textarea>
 								</div>
+                                <div class="col-xs-2">
+
+                                    <a class="btn btn-primary" id="note-template-btn">插入须知模板</a>
+                                </div>
 							</div>
 							
 							<div class="form-group">
@@ -85,6 +91,13 @@
 												aria-hidden="true">添加新表头项</span>
 										</button>
 									</div>
+                                    <div class="col-xs-4">
+                                        <button class="btn btn-warning" id="removeItem">
+											<span class="glyphicon glyphicon-remove-sign"
+                                                  aria-hidden="true">删除最后一个</span>
+                                        </button>
+
+                                    </div>
 
 								</div>
 
@@ -118,12 +131,25 @@
 										</div>
 									</div>
 
-									<div class="col-xs-3">
+									<div class="col-xs-2">
 										<button class="btn btn-primary" id="addTableItem">
 											<span class="glyphicon glyphicon-plus-sign"
 												aria-hidden="true">添加表单新项</span>
 										</button>
 									</div>
+                                    <div class="col-xs-2">
+                                        <button class="btn btn-primary" id="tableitem-template-btn">
+											<span class="glyphicon glyphicon-plus-sign"
+                                                  aria-hidden="true">插入模板记录</span>
+                                        </button>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <button class="btn btn-warning" id="removeTableItem">
+											<span class="glyphicon glyphicon-remove-sign"
+                                                  aria-hidden="true">删除最后一个</span>
+                                        </button>
+
+                                    </div>
 
 								</div>
 							</div>
@@ -142,6 +168,12 @@
 
 										</button>
 									</div>
+                                    <div class="col-xs-3">
+                                        <button class="btn btn-warning" id="removeQuestion">
+											<span class="glyphicon glyphicon-remove-sign"
+                                                  aria-hidden="true">删除最后一个</span>
+                                        </button>
+                                    </div>
 
 								</div>
 
@@ -168,38 +200,21 @@
 		</div>
 
 	</div>
+    <script
+            src="${pageContext.request.contextPath}/js/datatables/js/jquery.dataTables.min.js"></script>
+    <script
+            src="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/tqe/template.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/tqe/evaltable/edit-evaltable.js"></script>
+
 	<script type="text/javascript">
 	$(function(){
-		$("#addItem").click(function(){
-            var $item = $("#item");
-			var cnt = $item.find(".item").size();
-			var contextName = "itemList["+cnt+"].context";
-			var item = $item.find(".item:last").clone();
-			$(item).children("input").attr("name",contextName);
-            $item.find(".item:last").after(item);
-			return false;
-		});
-		$("#addQuestion").click(function(){
-            var $question = $("#question");
-			var cnt = $question.find(".question").size();
-			var contextName = "questionList["+cnt+"].context";
-			var item = $question.find(".question:last").clone();
-			$(item).children("input").attr("name",contextName);
-            $question.find(".question:last").after(item);
-			return false;
-		});
-		$("#addTableItem").click(function(){
-            var $tableItem = $("#tableItem");
-			var cnt = $tableItem.find(".tableItem").size();
-			var contextName = "tableItemList["+cnt+"].context";
-			var levelName = "tableItemList["+cnt+"].level";
-			var item = $tableItem.find(".tableItem:last").clone();
-			$(item).children(".context").children("input").attr("name",contextName);
-			$(item).children(".level").children("input").attr("name",levelName);
-            $tableItem.find(".tableItem:last").after(item);
-			return false;
-		});
+		initEditEvalTableBtnEvent();
         $("#add-evalTable-form").validate();
+        $("#note-template-btn").click(function(e){
+            e.preventDefault();
+            template("evaltable-note","note");
+        });
 		
 	});
 		

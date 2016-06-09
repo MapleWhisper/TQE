@@ -81,7 +81,7 @@
 					},
 					pwd: {
 						required:true,
-						minlength:2
+						minlength:3
 					},
 					pwd2: {
 						required:true,
@@ -94,7 +94,9 @@
 						required:"请输入原密码"
 					},
 					pwd: {
-						required:"请输入密码"
+						required:"请输入新密码",
+                        minlength:"至少输入3个字符"
+
 					},
 					pwd2: {
 						required:"请输入确认密码",

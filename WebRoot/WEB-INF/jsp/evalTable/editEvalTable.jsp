@@ -35,6 +35,9 @@
 					<div class="panel-heading">修改评教指标</div>
 
 					<div class="panel-body">
+
+
+
 						<form
 							action="${pageContext.request.contextPath }/admin/evalTable/update"
 							class="form-horizontal" role="form" id="form" method="post">
@@ -220,49 +223,12 @@
 		</div>
 
 	</div>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/tqe/template.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/tqe/evaltable/edit-evaltable.js"></script>
 	<script type="text/javascript">
 		$(function() {
-			$("#addItem").click(function() {
-				var cnt = $("#item .item").size();
-				var contextName = "itemList[" + cnt + "].context";
-				var item = $("#item .item:last").clone();
-				$(item).children("input").attr("name", contextName);
-				$("#item .item:last").after(item);
-				return false;
-			});
-			$("#removeItem").click(function() {
-				$("#item .item:last").remove();
-				return false;
-			});
-			$("#addQuestion").click(function() {
-				var cnt = $("#question .question").size();
-				var contextName = "questionList[" + cnt + "].context";
-				var item = $("#question .question:last").clone();
-				$(item).children("input").attr("name", contextName);
-				$("#question .question:last").after(item);
-				return false;
-			});
-			$("#removeQuestion").click(function() {
-				$("#question .question:last").remove();
-				return false;
-			});
-			$("#addTableItem").click(
-					function() {
-						var cnt = $("#tableItem .tableItem").size();
-						var contextName = "tableItemList[" + cnt + "].context";
-						var levelName = "tableItemList[" + cnt + "].level";
-						var item = $("#tableItem .tableItem:last").clone();
-						$(item).children(".context").children("input").attr(
-								"name", contextName);
-						$(item).children(".level").children("input").attr(
-								"name", levelName);
-						$("#tableItem .tableItem:last").after(item);
-						return false;
-					});
-			$("#removeTableItem").click(function() {
-				$("#tableItem .tableItem:last").remove();
-				return false;
-			});
+            initEditEvalTableBtnEvent();
+
             autoSelect();
 
 		});

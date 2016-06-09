@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 public class BaseController implements BaseViewName{
 
 	public SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    public static final String JSESSIONID = "JSESSIONID";
 	
 	@Resource(name="adminServiceImpl")
 	protected AdminServiceImpl adminService;
@@ -69,6 +70,12 @@ public class BaseController implements BaseViewName{
 
     @Autowired
     protected StudentSeasonServiceImpl studentSeasonService;
+
+    @Autowired
+    protected BaseConfigServiceImpl baseConfigService;
+
+    @Autowired
+    protected TemplateServiceImpl templateService;
 	
 	protected void addSearcherResource(Model model){
 		

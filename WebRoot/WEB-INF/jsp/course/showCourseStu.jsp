@@ -2,9 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fm" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<div class="row">
             <c:forEach items="${courseModel.batchesList}" var="b">
-                <div role="tabpanel" class="tab-pane" style="padding: 10px">
+                <%--<div role="tabpanel" class="tab-pane" style="padding: 10px">--%>
                     <div class="bs-callout bs-callout-info">
                         <h4 class="panel-heading">
                             <a
@@ -54,7 +53,6 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                <%--</div>--%>
             </c:forEach>
-        </div>
 <!-- panel panel-primary -->
