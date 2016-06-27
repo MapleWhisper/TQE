@@ -62,6 +62,10 @@ public class LoginFilter implements  Filter{
 		//获取角色拥有的权限
         @SuppressWarnings("unchecked")
 		List<Privilege> plist = (List<Privilege>) session.getAttribute("pList");
+        if(plist==null){
+            resp.sendRedirect(ctxPath+"/index");
+            return;
+        }
 		boolean f = checkPrivilege(path, plist);
 		if(f){
 			chain.doFilter(req, resp);

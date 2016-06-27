@@ -18,10 +18,7 @@ import java.util.List;
 public class TeacherController extends BaseController{
 
 	
-	@RequestMapping("/tea")
-	public String tea(Model model){
-		return "teacher/teacher";
-	}
+
 	
 	/**
 	 * 显示教师列表主页面
@@ -86,7 +83,7 @@ public class TeacherController extends BaseController{
 
         TeacherVO teacherVO = teacherService.getTeacherVO(tid);
         if(teacherVO==null){
-            return BaseResult.createFailure("没有找到教师信息：tid:"+tid);
+            return BaseResult.createFailure("没有找到对应教师：tid:"+tid);
         }
         return BaseResult.createSuccess(teacherVO);
 

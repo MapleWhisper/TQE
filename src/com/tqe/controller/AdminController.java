@@ -41,7 +41,8 @@ public class AdminController extends BaseController{
 	
 
     @RequestMapping("/admin/getInfo")
-    public @ResponseBody BaseResult getAdminById(
+    @ResponseBody
+    public  BaseResult getAdminById(
             @RequestParam Integer id
     ){
         if(id ==null || id< 0 ){
@@ -83,11 +84,12 @@ public class AdminController extends BaseController{
         if(admin == null || admin.getId()==null){
             return sendError(model,"管理员Id不能为空");
         }
-        if(!isSuperAdmin(session)){
+        Admin a = (Admin) session.getAttribute("admin");
+        if(!a.getId().equals(admin.getId())){
             return sendError(model,"您只能修改自己的信息！");
         }
 
-        Admin a = adminService.getById(admin.getId());
+        a = adminService.getById(admin.getId());
         a.setName(admin.getName());
         a.setPosition(admin.getPosition());
         if(!admin.getPassword().contains("*")){   //只有不包含"*"才会继续修改密码

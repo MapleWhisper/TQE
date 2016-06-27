@@ -53,7 +53,8 @@ public class StudentController extends BaseController{
 	@RequestMapping(value={"/student"},method={RequestMethod.POST})
 	public String searchStudent(
 			Model model,
-			PageVO pageVO){
+			PageVO pageVO
+    ){
 		model.addAttribute("departmentList", departmentService.findAvailableDepartmentList(DepartmentType.STUDENT));
 		model.addAttribute("condition", pageVO.getFilters());
 		model.addAttribute("studentList", studentService.findByPageVO(pageVO));

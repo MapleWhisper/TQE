@@ -122,12 +122,12 @@
 									<div class="tableItem row" style="padding-top: 20px;">
 
 										<div class="col-xs-6 context">
-											<input type="text" class="form-control inputxt" required="required"
-												name="tableItemList[0].context">
+											<input type="text" class="form-control tableitem-context" required="required"
+												name="tableItemList[0].context" >
 										</div>
 										<div class="col-xs-6 level">
-											<input type="text" class="form-control inputxt"	required="required"
-												name="tableItemList[0].level">
+											<input type="text" class="form-control tableitem-level"	required="required"
+												name="tableItemList[0].level" >
 										</div>
 									</div>
 
@@ -211,13 +211,8 @@
 	$(function(){
 		initEditEvalTableBtnEvent();
         $("#add-evalTable-form").validate();
-        $("#note-template-btn").click(function(e){
-            e.preventDefault();
-            template("evaltable-note","note");
-        });
-		
+
 	});
-		
 	</script>
 	<%@ include file="../buttom.jsp"%>
 </body>

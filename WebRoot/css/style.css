@@ -124,6 +124,15 @@ div[role="tabpanel"] {
 .bs-callout-info h4 {
     color: #1b809e;
 }
+.bs-callout-grey {
+    border-left-color: grey;
+}
+.bs-callout-grey > h4 {
+    color: grey;
+}
+.bs-callout-grey > h4  a{
+    color: grey;
+}
 .bs-callout-danger {
     border-left-color: #ce4844;
 }

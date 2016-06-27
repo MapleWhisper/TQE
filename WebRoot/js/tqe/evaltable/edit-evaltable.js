@@ -44,4 +44,29 @@ function initEditEvalTableBtnEvent(){
         $("#tableItem .tableItem:last").remove();
         return false;
     });
+
+    $("#note-template-btn").click(function(e){
+        e.preventDefault();
+        template("evaltable-note","note");
+    });
+    $("#tableitem-template-btn").click(function(e){
+        e.preventDefault();
+        //先插入一行
+        template("evaltable-tableitem",null,function(data){
+            log(data);
+
+            var $tableItem = $("#tableItem");
+            var item = $tableItem.find(".tableItem:last");
+            var contextInput = item.find('.tableitem-context');
+            var levelInput = item.find('.tableitem-level');
+            if(contextInput.val() || levelInput.val()){
+                $("#addTableItem").click();
+                item = $tableItem.find(".tableItem:last");
+                contextInput = item.find('.tableitem-context');
+                levelInput = item.find('.tableitem-level');
+            }
+            contextInput.val(data[0]);
+            levelInput.val(data[1]);
+        });
+    });
 }

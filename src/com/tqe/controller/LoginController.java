@@ -5,6 +5,7 @@ import com.tqe.base.enums.LoginType;
 import com.tqe.base.enums.UserType;
 import com.tqe.base.exception.UserNotExistException;
 import com.tqe.po.*;
+import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -131,8 +133,6 @@ public class LoginController extends BaseController {
                 Leader leader = leaderService.login(user);
                 if (leader != null) {
                     session.setAttribute("leader", leader);
-                    List<Privilege> pList = privilegeService.findLeaderAll();
-                    addPrivilege(session, pList);
                     viewName = "redirect:/admin/leaEval";
                     loginSuccess = true;
                 }
@@ -145,7 +145,7 @@ public class LoginController extends BaseController {
 
         if (loginSuccess) {
             List<Privilege> pList = privilegeService.findAllByUserType(userType);
-            addPrivilege(session, pList);   //权限信息放入session
+            addPrivilege(session, pList , userType);   //权限信息放入session
             removeOtherUser(session, userType); //移除当前session中其他已经登陆的用户
             session.setAttribute("userType", userType);  //设置当前用户的类型
             return viewName;    //返回到用户主页
@@ -165,14 +165,33 @@ public class LoginController extends BaseController {
 
     /**
      * 添加权限信息到session中 用于前台进行权限的显示的判断
+     * 但是如果角色获取的权限信息在数据库中没有发生变化
+     * 那么就拷贝applicationScope中的一个引用
      */
-    private void addPrivilege(HttpSession session, List<Privilege> pList) {
-        session.setAttribute("pList", pList);
-        HashMap<String, Boolean> map = new HashMap<String, Boolean>();
-        for (Privilege p : pList) {
-            map.put(p.getUrl().substring(1), true);
+    private void addPrivilege(HttpSession session, List<Privilege> pList, UserType userType) {
+        ServletContext application =  session.getServletContext();
+        List<Privilege> applicationPList = (List<Privilege>) application.getAttribute(userType.getName()+"pList");
+        HashMap<String, Boolean> applicationPMap = (HashMap<String, Boolean>) application.getAttribute(userType.getName()+"pMap");
+
+        //如果application没有存在对应角色的权限数据 或者存在的数据和当前获取的角色权限数据不一致
+        //就把从数据库中获取到的新权限数据放到application中
+        if(applicationPList==null || applicationPMap==null || !ListUtils.isEqualList(applicationPList,pList)){
+
+            applicationPList = pList;
+            application.setAttribute(userType.getName()+"pList",applicationPList);
+
+            HashMap<String, Boolean> map = new HashMap<String, Boolean>();
+            for (Privilege p : pList) {
+                map.put(p.getUrl().substring(1), true);
+            }
+            applicationPMap = map;
+            application.setAttribute(userType.getName()+"pMap",map);
+            logger.info("update application privilegeList and privilegeMap , userType:"+userType);
+
         }
-        session.setAttribute("pMap", map);
+
+        session.setAttribute("pList", applicationPList);
+        session.setAttribute("pMap", applicationPMap);
     }
 
     /**

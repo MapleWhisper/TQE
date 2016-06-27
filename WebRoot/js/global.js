@@ -83,6 +83,9 @@ function showGlobalNotification(msg){
 
 }
 
+/**
+ * 评教批次状态 颜色渲染
+ */
 function batchStatusRender(){
     var batchStatus = $(".batch-status");
 
@@ -125,10 +128,35 @@ function autoAddIcon(){
 
 }
 
+function ajaxSuccessHandler(data,isReload){
+    if(data){
+        if(data.success){
+            if(isReload){
+                location.reload();
+            }
+            showGlobalNotification(data.message);
+        }else{
+            alert(data.message);
+        }
+    }
+}
+
+function ajaxSubmitForm($form,options){
+    if($form){
+        if(!options){
+            options = {};
+        }
+        $.post($form.attr('action'),$form.serialize(),function(data){
+            ajaxSuccessHandler(data,options.reload);
+        });
+    }
+}
+
+
 var dataTableDefaultOptions = {
     "language": {
         "lengthMenu": "每页显示 _MENU_ 条纪录 ",
-        "zeroRecords": "抱歉,没有找到数据",
+        "zeroRecords": "<h2>抱歉,没有找到数据</h2>",
         "info": "显示 _START_ - _END_ /共 _TOTAL_ 条记录",
         "infoEmpty": "",
         "infoFiltered": "(过滤自  _MAX_ 条纪录)",

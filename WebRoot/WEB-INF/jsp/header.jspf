@@ -19,8 +19,8 @@
 	href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
 <link rel="stylesheet"  href="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.css"/>
 
-<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
-<script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 
 
 <!--[if lte IE 9]>
@@ -39,6 +39,9 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/non-responsive.css" />
  -->
+
+<c:set var="contextPath" scope="request" value="${pageContext.request.contextPath}" />
+
 <style type="text/css">
 input.error {
 	border: 1px solid red;

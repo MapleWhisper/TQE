@@ -142,11 +142,16 @@
 	<script
 		src="${pageContext.request.contextPath}/js/datatables/js/jquery.dataTables.min.js"></script>
 	<script
-		src="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.js"></script>
+		src="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.nodefault.js"></script>
 
     <script type="text/javascript">
         $(function(){
             autoSeasonSelect();
+            $('table').has("thead").dataTable($.extend(true,dataTableDefaultOptions,{
+                language:{
+                    zeroRecords:'<h2>请从上面搜索栏中选择要查看的数据</h2>'
+                }
+            }));
         });
     </script>
 </body>

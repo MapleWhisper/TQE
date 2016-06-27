@@ -1,5 +1,6 @@
 package com.tqe.service;
 
+import com.tqe.base.enums.BatchStatus;
 import com.tqe.base.enums.ImportType;
 import com.tqe.base.vo.PageVO;
 import com.tqe.model.CourseModel;
@@ -209,6 +210,10 @@ public class CourseServiceImpl extends BaseService<Course> {
         List<Batches> batchesList = batchesService.findAllBySeason(course.getSeason());	//默认得到课程所在学期的所有批次
 
         for(Batches b : batchesList){	//遍历所有得到的批次列表
+            //如果批次还没开始 那么不显示批次结果
+            if(b.getBatchStatus().equals(BatchStatus.PENDING.getName())){
+                continue;
+            }
             List<StuResultTable> stuTableList = evalService.findAllStuTableByCidAndBid(cid, cno, b.getId());
             List<TeaResultTable> teaTableList = evalService.findAllTeaTableByCidAndBid(cid, cno, b.getId());
             List<LeaResultTable> leaTableList = evalService.findAllLeaTableByCidAndBid(cid, cno, b.getId());

@@ -81,7 +81,6 @@
             </div>
             <div class="bs-callout bs-callout-info">
                 <h4>该课程的所有批次:</h4>
-                <div class="row">
                     <table
                             class="table table-hover table-striped  table-condensed">
                         <thead>
@@ -109,7 +108,6 @@
                               </c:forEach>
                         </tbody>
                     </table>
-                </div>
             </div>
 
             <div class="bs-callout bs-callout-info">
@@ -168,7 +166,7 @@
                 </div>
                 <hr>
 
-                <div class="row" style="margin-top: 20px">
+                <div style="margin-top: 20px">
                     <div role="tabpanel">
 
                         <!-- Nav tabs -->

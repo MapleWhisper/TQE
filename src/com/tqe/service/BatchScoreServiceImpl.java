@@ -48,8 +48,9 @@ public class BatchScoreServiceImpl extends BaseService<BatchScore> {
         }else if(userType.equals(UserType.STUDENT)){
             bs = evalDao.getStudentBatchScore(id,bid);
         }
-
-
+        if(bs==null || bs.getId()==null){
+            return ;
+        }
         if(batchScore == null){     //如果数据库不存在 那么就插入
             batchScoreDao.save(bs);
         }else{

@@ -101,6 +101,11 @@
                                     class="glyphicon glyphicon-leaf"></i> <a
                                     href="${pageContext.request.contextPath}/admin/dataImport">数据导入</a></span>
                             </li>
+                            <li
+                                    style="display: ${sessionScope.pMap.template==true ? '' : 'none'}"><span><i
+                                    class="glyphicon glyphicon-leaf"></i> <a
+                                    href="${pageContext.request.contextPath}/admin/template">模板管理</a></span>
+                            </li>
                         </ul>
                     </li>
                 </c:if>

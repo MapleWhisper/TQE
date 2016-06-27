@@ -25,9 +25,7 @@
                     <li><a href="${pageContext.request.contextPath}/admin/teacher/show?tid=${teacher.id}">教师详情</a></li>
                     <li class="active">教师统计信息</li>
                 </ol>
-                <div class="row">
                     <jsp:include page="teacher-info-table.jsp"/>
-                </div>
             </div>
 
 

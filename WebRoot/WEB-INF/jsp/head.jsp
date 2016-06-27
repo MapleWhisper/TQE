@@ -43,9 +43,11 @@
 				<%--<li><a--%>
 					<%--href="${pageContext.request.contextPath}/admin/resetPwdUI" ><span--%>
                         <%--class="glyphicon glyphicon-edit"></span>  修改密码</a></li>--%>
-                <li><a data-toggle="modal" data-target="#reset-pwd" href="#"
-                       data-remote="${pageContext.request.contextPath}/admin/resetPwdUI">
-                    <span class="glyphicon glyphicon-edit"></span>  修改密码</a></li>
+                <c:if test="${sessionScope.admin!=null}">
+                    <li><a data-toggle="modal" data-target="#reset-pwd" href="#"
+                           data-remote="${pageContext.request.contextPath}/admin/resetPwdUI">
+                        <span class="glyphicon glyphicon-edit"></span>  修改密码</a></li>
+                </c:if>
 
 				<li ><a
 					href="${pageContext.request.contextPath}/logout"><span

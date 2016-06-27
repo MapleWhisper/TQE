@@ -21,6 +21,12 @@
 	height: 60px
 }
 </style>
+    <script
+            src="${pageContext.request.contextPath}/js/jquery.validate.min.js"></script>
+    <script
+            src="${pageContext.request.contextPath}/js/messages_zh.min.js"></script>
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.css"/>
 </head>
 
 <body>
@@ -35,9 +41,6 @@
 					<div class="panel-heading">修改评教指标</div>
 
 					<div class="panel-body">
-
-
-
 						<form
 							action="${pageContext.request.contextPath }/admin/evalTable/update"
 							class="form-horizontal" role="form" id="form" method="post">
@@ -67,10 +70,14 @@
 
 							<div class="form-group">
 								<label class="col-xs-2 control-label">评教须知</label>
-								<div class="col-xs-10">
+								<div class="col-xs-8">
 									<textarea rows="5" cols="100%" name="note" class="form-control"
-										required="required">${evalTable.note}</textarea>
+										required="required" id="note">${evalTable.note}</textarea>
 								</div>
+                                <div class="col-xs-2">
+
+                                    <a class="btn btn-primary" id="note-template-btn">插入须知模板</a>
+                                </div>
 							</div>
 
 							<div class="form-group">
@@ -130,12 +137,12 @@
 
 
 											<div class="col-xs-6 context">
-												<input type="text" class="form-control" required="required"
+												<input type="text" class="form-control tableitem-context " required="required"
 													name="tableItemList[${s.index }].context"
 													value="${item.context }">
 											</div>
 											<div class="col-xs-6 level">
-												<input type="text" class="form-control" required="required"
+												<input type="text" class="form-control tableitem-levle" required="required"
 													name="tableItemList[${s.index }].level"
 													value="${item.level }">
 											</div>
@@ -151,6 +158,12 @@
 										</button>
 
 									</div>
+                                    <div class="col-xs-2">
+                                        <button class="btn btn-primary" id="tableitem-template-btn">
+											<span class="glyphicon glyphicon-plus-sign"
+                                                  aria-hidden="true">插入模板记录</span>
+                                        </button>
+                                    </div>
 									<div class="col-xs-3">
 										<button class="btn btn-warning" id="removeTableItem">
 											<span class="glyphicon glyphicon-remove-sign"
@@ -184,6 +197,7 @@
 										</button>
 										
 									</div>
+
 									<div class="col-xs-3">
 										<button class="btn btn-warning" id="removeQuestion">
 											<span class="glyphicon glyphicon-remove-sign"
@@ -223,14 +237,19 @@
 		</div>
 
 	</div>
+    <script
+            src="${pageContext.request.contextPath}/js/datatables/js/jquery.dataTables.min.js"></script>
+    <script
+            src="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/tqe/template.js"></script>
+
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/tqe/evaltable/edit-evaltable.js"></script>
 	<script type="text/javascript">
 		$(function() {
             initEditEvalTableBtnEvent();
 
             autoSelect();
-
+            $("#edit-evalTable-form").validate();
 		});
 	</script>
 	<%@ include file="../buttom.jsp"%>

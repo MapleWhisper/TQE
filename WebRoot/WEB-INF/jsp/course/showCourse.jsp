@@ -6,12 +6,19 @@
 <%@ include file="../header.jspf"%>
 
 <title>课程评教详情|${course.name}</title>
+
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.css"></link>
 </head>
 <style>
 	.tab-pane{
 		padding-top: 5px;
 	}
+    .course-batch-bs-callout{
+        padding-bottom: 50px;
+    }
 </style>
+
 <body>
 	<div class="container-fluid">
         <div class="row">

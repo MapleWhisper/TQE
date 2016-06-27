@@ -1,9 +1,7 @@
 package com.tqe.service;
 
-import com.tqe.po.Clazz;
 import com.tqe.po.Template;
 import com.tqe.po.TemplateItem;
-import org.springframework.expression.common.TemplateAwareExpressionParser;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,6 +39,33 @@ public class TemplateServiceImpl extends BaseService<Template>{
     }
 
     public List<TemplateItem> findItemsByTypeId(Integer typeId) {
-        return templateDao.findItemsByTypeId(typeId);
+        List<TemplateItem> items = templateDao.findItemsByTypeId(typeId);
+        //解决 ListHandler 解析时将数字当成整形来处理，需要全部转换成字符串
+        // 否则 序列化字符串全部为数字时候，Json解析会报错
+        for(TemplateItem item : items){
+            List values = item.getValues();
+            for(int i=0;i<values.size();i++){
+                Object value = values.get(i);
+                if(value instanceof  Integer){
+                    values.set(i,value.toString());
+                }
+                if(value instanceof  Double){
+                    values.set(i,value.toString());
+                }
+            }
+        }
+        return items;
+    }
+
+    public void saveItem(TemplateItem item) {
+        templateDao.saveItem(item);
+    }
+
+    public TemplateItem getItemById(Integer itemId) {
+        return templateDao.getItemById(itemId);
+    }
+
+    public void updateItem(TemplateItem templateItem) {
+        templateDao.updateItem(templateItem);
     }
 }

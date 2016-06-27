@@ -3,6 +3,7 @@ package com.tqe.po;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.util.StringUtils;
 
 import com.tqe.utils.MD5Utils;
@@ -12,6 +13,7 @@ public class Student implements Serializable{
 	private String name;
 	private String password;
 	private String sex;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date birthday;
 	private String idNumber;
 	private String nation;
@@ -57,6 +59,7 @@ public class Student implements Serializable{
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
+
 
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;

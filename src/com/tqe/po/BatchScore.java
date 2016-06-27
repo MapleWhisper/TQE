@@ -4,6 +4,8 @@ import java.util.Date;
 
 /**
  * Created by Maple on 2016/4/28.
+ * 每一个批次的成绩统计
+ * 包含学生对应每个批次的成绩和 教师对应的每个批次的成绩
  */
 public class BatchScore {
 

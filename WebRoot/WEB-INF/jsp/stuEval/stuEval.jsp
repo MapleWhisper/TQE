@@ -42,8 +42,11 @@
                                 <tbody>
                                     <c:forEach items="${courseList}" var="c">
                                         <tr>
-
-                                            <td>${c.name }</td>
+                                            <td>
+                                                <a href="${pageContext.request.contextPath}/admin/course/show/${c.cid}/${c.cno}" target="_blank">
+                                                    ${c.name }
+                                                </a>
+                                            </td>
                                             <td>${c.teacher.name }</td>
                                             <td>${c.department }</td>
                                             <td>${c.season }</td>

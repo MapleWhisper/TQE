@@ -1,8 +1,8 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" pageEncoding="UTF-8" %>
 
 <html>
 <head>
-    <%@ include file="../header.jspf"%>
+    <%@ include file="../header.jspf" %>
 
     <title>学生统计详情</title>
 </head>
@@ -10,11 +10,11 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-        <%@ include file="../head.jsp"%>
+        <%@ include file="../head.jsp" %>
     </div>
-    <div class="row " >
+    <div class="row ">
         <div class="col-sm-2">
-            <%@ include file="../left.jsp"%>
+            <%@ include file="../left.jsp" %>
         </div>
         <div class="col-sm-10 ">
 
@@ -25,9 +25,7 @@
                     <li><a href="${pageContext.request.contextPath}/admin/student/show?sid=${student.sid}">学生详情</a></li>
                     <li class="active">学生统计信息</li>
                 </ol>
-                <div class="row">
-                    <jsp:include page="student-info-table.jsp"/>
-                </div>
+                <jsp:include page="student-info-table.jsp"/>
             </div>
 
 
@@ -42,22 +40,21 @@
     </div>
 
 </div>
-<%@ include file="../buttom.jsp"%>
+<%@ include file="../buttom.jsp" %>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/tqe/course/eval-process-bar.js"></script>
 <script type="text/javascript">
 
 
-
     function fillStuScoreTrendChart(teaVO) {
         var batchScoreList = teaVO.batchScoreList;
-        if(batchScoreList){
-            var stuScoreTrendChart = echarts.init(document.getElementById('stu-score-trend-chart'),echartTheme);
+        if (batchScoreList) {
+            var stuScoreTrendChart = echarts.init(document.getElementById('stu-score-trend-chart'), echartTheme);
             var batchNames = [];
             var teaStuScores = [];
             var teaStuAvg = [];    //全局教师平均得分
-            var bs ;
-            $.each(batchScoreList,function(i){
+            var bs;
+            $.each(batchScoreList, function (i) {
                 batchNames.push(this.batchName);
                 teaStuScores.push(this.teaStuAvgScore);
                 teaStuAvg.push(this.teaStuAvg);
@@ -73,11 +70,11 @@
                     text: '学生评分趋势图',
                     left: 'center'
                 },
-                tooltip : {
+                tooltip: {
                     trigger: 'axis'
                 },
                 legend: {
-                    data:['学生评分','学生平均'],
+                    data: ['学生评分', '学生平均'],
                     left: 'right'
                 },
                 grid: {
@@ -86,70 +83,70 @@
                     bottom: '3%',
                     containLabel: true
                 },
-                xAxis : [
+                xAxis: [
                     {
-                        type : 'category',
-                        boundaryGap : false,
-                        data : batchNames
+                        type: 'category',
+                        boundaryGap: false,
+                        data: batchNames
                     }
                 ],
-                yAxis : [
+                yAxis: [
                     {
-                        type : 'value',
-                        min : 'dataMin',
-                        max : 100
+                        type: 'value',
+                        min: 'dataMin',
+                        max: 100
                     }
                 ],
-                series : [
+                series: [
                     {
-                        name:'学生评分',
-                        type:'line',
+                        name: '学生评分',
+                        type: 'line',
                         label: {
                             normal: {
                                 show: true,
                                 position: 'top'
                             }
                         },
-                        lineStyle:{
-                            normal:{
-                                color:"red",
-                                width:3,
+                        lineStyle: {
+                            normal: {
+                                color: "red",
+                                width: 3,
                             }
                         },
-                        data:teaStuScores
+                        data: teaStuScores
                     },
                     {
-                        name:'学生平均',
-                        type:'line',
-                        lineStyle:{
-                            normal:{
-                                color:"red",
-                                width:1,
-                                type:"dashed"
+                        name: '学生平均',
+                        type: 'line',
+                        lineStyle: {
+                            normal: {
+                                color: "red",
+                                width: 1,
+                                type: "dashed"
                             }
                         },
-                        data:teaStuAvg
+                        data: teaStuAvg
                     }
                 ]
             };
             stuScoreTrendChart.setOption(option);
 
-        }else{
+        } else {
             showGlobalNotification("没有信息需要展示");
         }
     }
 
 
-    $(function(){
+    $(function () {
 
-        var sid= $("#sid").val();
+        var sid = $("#sid").val();
 
-        $.get("../student/vo-info",{sid:sid},function(data){
-            if(data.success){
+        $.get("../student/vo-info", {sid: sid}, function (data) {
+            if (data.success) {
                 var stuVO = data.item;
                 fillStuScoreTrendChart(stuVO);
 
-            }else{
+            } else {
                 showGlobalNotification(data.msg);
             }
         });

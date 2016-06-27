@@ -35,27 +35,22 @@
 							<form class="form-inline" method="post" action="${pageContext.request.contextPath}/admin/student">
 								<div class="form-group">
 									<label >学院:</label>
-									<select  class="form-control" id="department" name="did" >
+									<select  class="form-control auto-select" id="department" name="did" value="${condition.did}">
 										<option value="" selected="selected">不限</option>
 											<c:forEach items="${ departmentList}" var="dep" >
-												<c:if test="${dep.id != condition.did}">
 													<option value="${dep.id}">${dep.name }</option>
-												</c:if>
-												<c:if test="${dep.id == condition.did}">
-													<option value="${dep.id}" selected="selected">${dep.name }</option>
-												</c:if>
 											</c:forEach>
 									</select>
 								</div>
 								<div class="form-group">
 									<label for="major" >专业:</label>
-									  <select  class="form-control" id="major" name="mid">
+									  <select  class="form-control auto-select" id="major" name="mid" value="${condition.mid}">
 									  <option value="" selected="selected">不限</option>
 									</select>
 								</div>
                                 <div class="form-group">
                                     <label for="grade" >年级</label>
-                                    <select  class="form-control" id="grade" name="grade">
+                                    <select  class="form-control auto-select" id="grade" name="grade" value="${condition.grade}">
                                         <option value="" selected="selected">不限</option>
                                         <c:forEach begin="2012" end="${applicationScope.curYear}"  var="g">
                                             <option  value="${g}级">${g}级</option>
@@ -64,7 +59,7 @@
                                 </div>
 								<div class="form-group">
 									<label for="clazz" >班级:</label>
-										<select  class="form-control" id="clazz" name="cid">
+										<select  class="form-control auto-select" id="clazz" name="cid" value="${condition.cid}">
 									  <option value="" selected="selected">不限</option>
 									  </select>
 								</div>
@@ -140,11 +135,20 @@
 	<script
 		src="${pageContext.request.contextPath}/js/datatables/js/jquery.dataTables.min.js"></script>
 	<script
-		src="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.js"></script>
+		src="${pageContext.request.contextPath}/js/datatables/dataTables.bootstrap.nodefault.js"></script>
 
 	<script type="text/javascript">
 		$(function(){
-			
+
+            $('table').has("thead").dataTable($.extend(true,dataTableDefaultOptions,{
+                language:{
+                    zeroRecords:'<h2>请从上面搜索栏中选择要查看的数据</h2>'
+                }
+            }));
+
+            autoSelect();
+
+
 			//点击部门 动态加载专业列表
 			$("#department").change(function(){
 				fetchMajorList();
@@ -153,19 +157,23 @@
 			$("#major").change(function(){
 				fetchClassList();
 			});
-
+            //年级变化时候 加载班级列表
             $("#grade").change(function(){
                 fetchClassList();
             });
 
-			fetchMajorList();
-			fetchClassList();
+            
+            fetchMajorList();
+            fetchClassList();
 
             autoAddIcon();
+
+
 		});
 
 		function fetchMajorList(){
 			var did = $("#department option:selected").val();
+            console.log('did:'+did);
 			if(did){
 				$.post("../getMajor/"+did,function(data){
 					//alert(data);
@@ -178,11 +186,13 @@
 
 							$("#major").append(opt);
 						});
+                        autoSelect();
 					}
 
 				});
 				$("#major option[value='']:selected");
 				$("#clazz option[value='']:selected");
+
 			}
 		}
 
@@ -206,11 +216,13 @@
 							var opt = $("<option value="+this.id+">"+this.name+"</option>")
 							$("#clazz").append(opt);
 						});
+                        autoSelect();
 					}
 
 				});
 				$("#major option[value='']:selected");
 				$("#clazz option[value='']:selected");
+
 			}
 		}
 	</script>

@@ -74,13 +74,5 @@ public class StuEvalController extends BaseController{
 		return "redirect:/admin/stuEval";
 	}
 	
-	@RequestMapping("/stuEval/show/{id}")
-	public String addstuEval(@PathVariable int id,Model model){
-		return "stuEval/showstuEval";
-	}
-	
-	@RequestMapping("/stuEval/save")
-	public String savestuEval(){
-		return "redirect:/admin/stuEval";
-	}
+
 }

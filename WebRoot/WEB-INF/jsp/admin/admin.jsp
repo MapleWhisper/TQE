@@ -139,7 +139,7 @@
                 var button = $(event.relatedTarget);
                 var adminId = button.attr('admin-id');
                 var modal = $(this);
-                $.get("/admin/admin/getInfo",{id:adminId},function(data){
+                $.get("${contextPath}/admin/admin/getInfo",{id:adminId},function(data){
                     if(data.success){
                         var admin = data.item;
                         modal.find("#edit-username").html(admin.username);

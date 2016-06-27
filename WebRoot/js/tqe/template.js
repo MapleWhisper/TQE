@@ -74,7 +74,7 @@ function renderModalBody(options){
     modalBody.append($modalTable);
 
     $(function(){
-        $.get("../template/getInfo",
+        $.get("/TQE/admin/template/getInfo",
             {type:options.type},
             function(data){
                 if(data.success){
@@ -96,8 +96,9 @@ function insertBtnClickEvent(modalTable,$modalTable,options){
     $modalTable.find('tbody').on( 'click', 'button', function () {
         var data = modalTable.row( $(this).parents('tr') ).data();
         if(data){
-            data.pop();
-            log(data);
+            if(data[data.length-1]==null){
+                data.pop();
+            }
             if(options.callback){
                 options.callback(data); //调用回调函数
             }
@@ -110,10 +111,9 @@ function insertBtnClickEvent(modalTable,$modalTable,options){
                         }
                     }
                 }
-            };
-
+            }
+            options.container.modal('hide');
         }
-
     } );
 }
 
@@ -130,7 +130,7 @@ function renderTable(template){
     for(var i=0;i<items.length;i++){
         if(items[i] && items[i].values ){
             var data = items[i].values;
-            data.push(null);
+            data.push(null);    // null for operation
             dataArr.push(data);
         }
     }
@@ -153,6 +153,6 @@ function renderTable(template){
             "defaultContent": "<button class='btn btn-primary'>插入</button>"
         } ]
     });
-    log(options);
+
     return $("#"+template.type+"-table").DataTable(options);
 }

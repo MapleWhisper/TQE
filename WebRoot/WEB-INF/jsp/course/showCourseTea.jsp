@@ -3,7 +3,7 @@
 
 
     <c:forEach items="${courseModel.batchesList}" var="b">
-            <div class="bs-callout bs-callout-warning">
+            <div class="bs-callout bs-callout-${b.batches.batchStatus=='已结束'?'grey':'warning'} course-batch-bs-callout">
                 <h4 class="panel-heading">
                     <a
                             href="${pageContext.request.contextPath}/admin/batches/show/${b.batches.id}"
@@ -11,16 +11,15 @@
                     <a style="padding-left: 30px;">
                         <span class="glyphicon glyphicon-time"></span> 评教时间: <fm:formatDate value="${b.batches.beginDate}"  dateStyle="medium"/> ~ <fm:formatDate value="${b.batches.endDate}"  dateStyle="medium"/>
                     </a>
-                    <a style="" class="btn btn-info"
+                    <button style="" class="btn btn-info"
                        href="${pageContext.request.contextPath}/admin/evalTable/show/${b.batches.teaEvalId}"
-                       target="_blank"><span class="glyphicon glyphicon-file"></span> 点我查看评教表</a>
-                    <a style="" class="btn btn-danger" href="${pageContext.request.contextPath}/admin/statistics/course?cid=${course.cid}&cno=${course.cno}&bid=${b.batches.id}"
-                       target="_blank"><span class="glyphicon glyphicon-stats"></span> 点我查看课程统计</a>
+                       target="_blank"><span class="glyphicon glyphicon-file"></span> 点我查看评教表</button>
+                    <button style="" class="btn btn-danger" href="${pageContext.request.contextPath}/admin/statistics/course?cid=${course.cid}&cno=${course.cno}&bid=${b.batches.id}"
+                       target="_blank"><span class="glyphicon glyphicon-stats"></span> 点我查看课程统计</button>
                 </h4>
                 <h5>
 
                 </h5>
-                <div class="row">
                     <table
                             class="table table-hover table-striped  table-condensed">
                         <thead>
@@ -47,6 +46,5 @@
                         </c:forEach>
                         </tbody>
                     </table>
-                </div>
             </div>
     </c:forEach>

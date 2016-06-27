@@ -8,14 +8,10 @@ import javax.annotation.Resource;
 
 import com.tqe.base.vo.PageVO;
 import com.tqe.dao.*;
-import com.tqe.po.Template;
+import com.tqe.po.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.tqe.po.Clazz;
-import com.tqe.po.Department;
-import com.tqe.po.Major;
 
 @Component
 @Transactional

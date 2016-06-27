@@ -63,4 +63,34 @@ public class Privilege implements  Serializable{
 	public void setEditable(Integer editable) {
 		this.editable = editable;
 	}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Privilege privilege = (Privilege) o;
+
+        if (url != null ? !url.equals(privilege.url) : privilege.url != null) return false;
+        if (name != null ? !name.equals(privilege.name) : privilege.name != null) return false;
+        if (stu != null ? !stu.equals(privilege.stu) : privilege.stu != null) return false;
+        if (tea != null ? !tea.equals(privilege.tea) : privilege.tea != null) return false;
+        if (adm != null ? !adm.equals(privilege.adm) : privilege.adm != null) return false;
+        if (lea != null ? !lea.equals(privilege.lea) : privilege.lea != null) return false;
+        return editable != null ? editable.equals(privilege.editable) : privilege.editable == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (url != null ? url.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (stu != null ? stu.hashCode() : 0);
+        result = 31 * result + (tea != null ? tea.hashCode() : 0);
+        result = 31 * result + (adm != null ? adm.hashCode() : 0);
+        result = 31 * result + (lea != null ? lea.hashCode() : 0);
+        result = 31 * result + (editable != null ? editable.hashCode() : 0);
+        return result;
+    }
 }
