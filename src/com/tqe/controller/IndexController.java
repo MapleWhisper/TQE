@@ -185,6 +185,17 @@ public class IndexController extends BaseController{
         return majorService.findAllByDid(did);
     }
 
+
+    /**
+     * 根据学院获取所有的专业
+     */
+    @RequestMapping("getStudent")
+    @ResponseBody
+    public Object getStudent(
+            @RequestParam String id){
+        return studentService.getById(id);
+    }
+
     /**
      * 根据 学院 专业 年级 获取所有的班级
      */
