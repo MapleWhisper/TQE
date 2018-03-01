@@ -47,7 +47,13 @@
 		<property name="removeAbandonedTimeout" value="${removeAbandonedTimeout}" />
 		<property name="logAbandoned" value="${logAbandoned}" />
 
-	</bean>
+        <property name="proxyFilters">
+            <list>
+                <ref bean="wall-filter"/>
+            </list>
+        </property>
+
+    </bean>
 
 	<!-- 创建SqlSessionFactory，同时指定数据源 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -60,7 +66,17 @@
 		<property name="basePackage" value="com.tqe.dao" />
 	</bean>
 
+    <bean id="wall-filter" class="com.alibaba.druid.wall.WallFilter">
+        <property name="dbType" value="mysql" />
+        <property name="config" ref="wall-filter-config" />
+        <property name="throwException" value="false"/>
+    </bean>
 
+    <bean id="wall-filter-config" class="com.alibaba.druid.wall.WallConfig" init-method="init">
+        <property name="selectWhereAlwayTrueCheck" value="false"/>
+        <property name="selectUnionCheck" value="false"/>
+        <property name="dir" value="META-INF/druid/wall/mysql" />
+    </bean>
 
 
 
